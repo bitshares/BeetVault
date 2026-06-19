@@ -1164,7 +1164,7 @@ export default async function beautify(
     } else if (opType == 18) {
         // asset_global_settle
         let issuer = accountResults.find(
-            (resAcc) => resAcc.id === opContents.account
+            (resAcc) => resAcc.id === opContents.issuer
         ).accountName;
         let assetToSettle = assetResults.find(
             (assRes) => assRes.id === opContents.asset_to_settle
@@ -1181,8 +1181,9 @@ export default async function beautify(
         );
 
         if (issuer && assetToSettle && baseAsset && quoteAsset) {
-            let price =
-                humanReadableFloat(
+            let price = opContents.settle_price.quote.amount === 0 || opContents.settle_price.quote.amount === "0"
+                ? 0
+                : humanReadableFloat(
                     opContents.settle_price.base.amount,
                     baseAsset.precision
                 ) /
@@ -1190,11 +1191,13 @@ export default async function beautify(
                     opContents.settle_price.quote.amount,
                     quoteAsset.precision
                 );
+            
+            console.log({price})
 
             currentOperation["rows"] = [
                 {
                     key: "issuer",
-                    params: { issuer: issuer, issuerOP: opContents.account },
+                    params: { issuer: issuer, issuerOP: opContents.issuer },
                 },
                 {
                     key: "asset_to_settle",
@@ -1233,25 +1236,28 @@ export default async function beautify(
         );
 
         if (publisher && baseAsset && quoteAsset) {
-            let coreExchangeRate =
-                humanReadableFloat(
-                    opContents.feed.core_exchange_rate.base.amount,
-                    baseAsset.precision
-                ) /
-                humanReadableFloat(
-                    opContents.feed.core_exchange_rate.quote.amount,
-                    quoteAsset.precision
-                );
+            let coreExchangeRate = opContents.feed.core_exchange_rate.quote.amount === 0 || opContents.feed.core_exchange_rate.quote.amount === "0" ||
+                                   opContents.feed.core_exchange_rate.base.amount === 0 || opContents.feed.core_exchange_rate.base.amount === "0"
+                                    ? 0
+                                    : humanReadableFloat(
+                                        opContents.feed.core_exchange_rate.base.amount,
+                                        baseAsset.precision
+                                    ) /
+                                    humanReadableFloat(
+                                        opContents.feed.core_exchange_rate.quote.amount,
+                                        quoteAsset.precision
+                                    );
 
-            let settlementPrice =
-                humanReadableFloat(
-                    opContents.feed.settlement_price.base.amount,
-                    baseAsset.precision
-                ) /
-                humanReadableFloat(
-                    opContents.feed.settlement_price.quote.amount,
-                    quoteAsset.precision
-                );
+            let settlementPrice = opContents.feed.settlement_price.quote.amount === 0 || opContents.feed.settlement_price.quote.amount === "0"
+                                    ? 0
+                                    : humanReadableFloat(
+                                        opContents.feed.settlement_price.base.amount,
+                                        baseAsset.precision
+                                    ) /
+                                    humanReadableFloat(
+                                        opContents.feed.settlement_price.quote.amount,
+                                        quoteAsset.precision
+                                    );
 
             currentOperation["rows"] = [
                 {
