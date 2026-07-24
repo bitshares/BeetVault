@@ -38,13 +38,30 @@ module.exports = function(env) {
                 'typeface-roboto',
                 'typeface-rajdhani',
                 '@babel/runtime',
-                'mitt'
+                'mitt',
+                'balm-ui',
+                'flatpickr',
+                'reka-ui',
+                'clsx',
+                'tailwind-merge',
+                'class-variance-authority',
+                'tw-animate-css',
+                '@lucide/vue',
+                'vaul-vue',
+                'vee-validate',
+                '@vee-validate/zod',
+                'zod',
+                '@tanstack/vue-table',
+                'embla-carousel-vue',
+                'vue-sonner',
+                'vue-input-otp',
+                '@vueuse/core'
             ]
         })],
         
         resolve: {
             extensions: ['.*', '.js', '.mjs', '.vue', '.json', '.css', '.scss'],
-            mainFields: ["browser"],
+            mainFields: ["browser", "module", "main"],
             alias: {
                 vue: "vue/dist/vue.esm-browser.js",
                 "balm-gui": "balm-ui/dist/balm-ui.js",
@@ -53,7 +70,8 @@ module.exports = function(env) {
                 "balm-ui-css": "balm-ui/dist/balm-ui.css",
                 vue$: 'vue/dist/vue.min.js',
                 env: path.resolve(__dirname, `../config/env_${env}.json`),
-                '~': path.resolve(__dirname, '../src/')
+                '~': path.resolve(__dirname, '../src/'),
+                '@': path.resolve(__dirname, '../src/')
             }
         },
 
@@ -79,7 +97,7 @@ module.exports = function(env) {
             },
             {
                 test: /\.css$/i,
-                use: ["style-loader", "css-loader"]
+                use: ["style-loader", "css-loader", "postcss-loader"]
             },
             {
                 test: /\.s[ac]ss$/i,

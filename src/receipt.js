@@ -1,6 +1,8 @@
 import { createApp } from 'vue';
 import mitt from 'mitt';
 
+import './styles/globals.css';
+
 import BalmUI from 'balm-gui';
 import BalmUIPlus from 'balm-ui-plus';
 import 'balm-ui-css';
