@@ -2,11 +2,11 @@
     import { watchEffect, ref, computed, onMounted, watch, toRaw } from 'vue';
     import { useI18n } from 'vue-i18n';
     import { Button } from '@/components/ui/ui/button';
-    import { Card } from '@/components/ui/ui/card';
+    import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/ui/card';
     import { Input } from '@/components/ui/ui/input';
     import { Alert, AlertDescription } from '@/components/ui/ui/alert';
     import { Badge } from '@/components/ui/ui/badge';
-    import { Shield, Clock, Loader2 } from 'lucide-vue-next';
+    import { Shield, Clock, Loader2, Copy, X } from 'lucide-vue-next';
     import { useClipboard } from '@vueuse/core';
 
 
@@ -97,11 +97,11 @@
         window.electron.resetTimer();
         chosenScope.value = null;
         selectedRows.value = null;
-        //
         timestamp.value = null;
         newCodeRequested.value = null;
         timeLimit.value = null;
         progress.value = 0;
+        showWarning.value = false;
     }
 
     let timestamp = ref();
@@ -111,7 +111,7 @@
         newCodeRequested.value = true;
         timestamp.value = new Date();
     }
- 
+  
     let timeLimit = ref();
     function setTime(time) {
         timeLimit.value = time;
@@ -138,6 +138,7 @@
     });
 
     let currentCode = ref();
+    let showWarning = ref(false);
     let copyContents = ref();
     watchEffect(() => {
         async function getNewCode() {
@@ -161,6 +162,7 @@
 
             const { code } = blockchainResponse;
             currentCode.value = code;
+            showWarning.value = true;
             copyContents.value = {text: code, success: () => {console.log('copied code')}};
         }
 
@@ -226,157 +228,112 @@
 
 <template>
     <div class="bottom p-0">
-        <span v-if="compatible">
+        <div v-if="compatible" class="px-4 py-3 space-y-4">
             <AccountSelect />
-            <span v-if="deepLinkInProgress">
-                <p style="marginBottom:0px;">
-                    {{ t('common.totp.inProgress') }}
-                </p>
-                <Card
-                    class="shadow-md border"
-                    style="marginTop: 5px;"
-                >
-                    <br>
-                    <Loader2 class="h-6 w-6 animate-spin" />
-                    <br>
-                </Card>
-            </span>
-            <span v-else>
-                <p style="marginBottom:0px;">
-                    {{ t('common.totp.label') }}
-                </p>
-                <p style="marginBottom:0px;">
-                    {{ t('common.totp.desc') }}
-                </p>
-                <Card
-                    class="shadow-md border"
-                    style="marginTop: 5px;"
-                >
-                    <span v-if="!chosenScope">
-                        <p>
-                            {{ t('common.chosenScope.title.totp') }}
-                        </p>
-                        <Button
-                            style="margin-right:5px; margin-bottom: 5px;"
-                            @click="setScope('Configure')"
-                        >
-                            {{ t('common.chosenScope.yes') }}
-                        </Button>
-                        <Button
-                            style="margin-right:5px; margin-bottom: 5px;"
-                            @click="setScope('AllowAll')"
-                        >
-                            {{ t('common.chosenScope.no') }}
-                        </Button>
-                    </span>
-                    <span v-else-if="chosenScope == 'Configure' && !selectedRows">
-                        <Operations
-                            :ops="operationTypes"
-                            :chain="chain"
-                            @selected="(ops) => selectedRows = ops"
-                            @exit="() => {
-                                chosenScope = null;
-                                selectedRows = null;
-                            }"
-                        />
-                    </span>
 
-                    <span v-if="chosenScope && selectedRows">
-                        <div class="flex flex-wrap gap-2">
-                            <Badge variant="secondary" class="flex items-center gap-1" style="margin-left:30px;">
-                                <Shield class="h-3 w-3" />
-                                {{ selectedRows ? selectedRows.length : 0 }} {{ t('common.totp.chosen') }}
-                            </Badge>
-                            <Badge
-                                v-if="selectedRows && selectedRows.length && newCodeRequested"
-                                variant="secondary"
-                                class="flex items-center gap-1"
-                            >
-                                <Clock class="h-3 w-3" />
-                                {{ t('common.totp.time') }}: {{ timeLimit - progress.toFixed(0) }}s
-                            </Badge>
+            <div v-if="deepLinkInProgress" class="flex flex-col items-center gap-2">
+                <p class="mb-0">{{ t('common.totp.inProgress') }}</p>
+                <Card class="w-full max-w-sm shadow-sm border">
+                    <CardContent class="flex flex-col items-center py-4">
+                        <Loader2 class="h-6 w-6 animate-spin" />
+                    </CardContent>
+                </Card>
+            </div>
+
+            <div v-else class="space-y-4">
+                <p class="mb-0">{{ t('common.totp.label') }}</p>
+                <p class="mb-0">{{ t('common.totp.desc') }}</p>
+
+                <Card class="w-full shadow-sm border">
+                    <CardContent class="space-y-4 p-4">
+                        <div v-if="!chosenScope">
+                            <p class="mb-3">{{ t('common.chosenScope.title.totp') }}</p>
+                            <div class="flex flex-wrap gap-2">
+                                <Button @click="setScope('Configure')">
+                                    {{ t('common.chosenScope.yes') }}
+                                </Button>
+                                <Button variant="outline" @click="setScope('AllowAll')">
+                                    {{ t('common.chosenScope.no') }}
+                                </Button>
+                            </div>
                         </div>
-                        <span
-                            v-if="!newCodeRequested && selectedRows && selectedRows.length > 0 && !timeLimit"
-                            style="padding-left: 20px;"
-                        >
-                            <Button
-                                style="margin-right:10px; margin-bottom: 10px;"
-                                @click="setTime(60)"
-                            >
-                                60s
-                            </Button>
-                            <Button
-                                style="margin-right:10px; margin-bottom: 10px;"
-                                @click="setTime(180)"
-                            >
-                                3m
-                            </Button>
-                            <Button
-                                style="margin-bottom: 10px;"
-                                @click="setTime(600)"
-                            >
-                                10m
-                            </Button>
-                        </span>
-                        <span>
-                            <Button
-                                v-if="!newCodeRequested && selectedRows && selectedRows.length > 0 && timeLimit"
-                                style="margin-left: 30px; margin-right:5px; margin-bottom: 10px;"
-                                @click="requestCode"
-                            >
-                                {{ t('common.totp.request') }}
-                            </Button>
-                        </span>
-                        <div v-if="currentCode && newCodeRequested" class="flex items-center gap-1" style="margin:5px;">
-                            <Input
-                                v-model="currentCode"
-                                readonly
-                                class="flex-1"
+
+                        <div v-else-if="chosenScope == 'Configure' && !selectedRows">
+                            <Operations
+                                :ops="operationTypes"
+                                :chain="chain"
+                                @selected="(ops) => selectedRows = ops"
+                                @exit="() => {
+                                    chosenScope = null;
+                                    selectedRows = null;
+                                }"
                             />
-                            <Button
-                                variant="outline"
-                                size="icon"
-                                @click="copyToClipboard"
-                            >
-                                content_copy
-                            </Button>
                         </div>
-                        <Alert
-                            v-if="currentCode && newCodeRequested"
-                            class="border-yellow-500 bg-yellow-50"
-                            style="margin:10px;"
-                        >
-                            <AlertDescription class="flex items-center justify-between">
-                                {{ t('common.totp.warning') }}
-                                <button @click="currentCode = null" class="ml-2">×</button>
-                            </AlertDescription>
-                        </Alert>
-                    </span>
-                </Card>
-            </span>
 
-            <Button
-                v-if="chosenScope && selectedRows"
-                style="margin-right:5px"
-                @click="goBack"
-            >
-                {{ t('common.qr.back') }}
-            </Button>
-            <router-link
-                :to="'/dashboard'"
-                replace
-            >
-                <Button
-                    variant="outline"
-                    class="step_btn"
-                >
+                        <div v-if="chosenScope && selectedRows" class="space-y-3">
+                            <div class="flex flex-wrap gap-2">
+                                <Badge variant="secondary" class="flex items-center gap-1">
+                                    <Shield class="h-3 w-3" />
+                                    {{ selectedRows ? selectedRows.length : 0 }} {{ t('common.totp.chosen') }}
+                                </Badge>
+                                <Badge
+                                    v-if="selectedRows && selectedRows.length && newCodeRequested"
+                                    variant="secondary"
+                                    class="flex items-center gap-1"
+                                >
+                                    <Clock class="h-3 w-3" />
+                                    {{ t('common.totp.time') }}: {{ timeLimit - progress.toFixed(0) }}s
+                                </Badge>
+                            </div>
+
+                            <div v-if="!newCodeRequested && selectedRows && selectedRows.length > 0 && !timeLimit" class="flex flex-wrap gap-2">
+                                <Button variant="outline" @click="setTime(60)">60s</Button>
+                                <Button variant="outline" @click="setTime(180)">3m</Button>
+                                <Button variant="outline" @click="setTime(600)">10m</Button>
+                            </div>
+
+                            <div v-if="!newCodeRequested && selectedRows && selectedRows.length > 0 && timeLimit">
+                                <Button @click="requestCode">
+                                    {{ t('common.totp.request') }}
+                                </Button>
+                            </div>
+
+                            <div v-if="currentCode && newCodeRequested" class="flex items-center gap-2">
+                                <Input
+                                    v-model="currentCode"
+                                    readonly
+                                    class="flex-1"
+                                />
+                                <Button variant="outline" size="icon" @click="copyToClipboard" :aria-label="t('common.copy')">
+                                    <Copy class="h-4 w-4" />
+                                </Button>
+                            </div>
+
+                            <Alert v-if="currentCode && newCodeRequested && showWarning" variant="secondary" class="border-yellow-500 bg-yellow-50">
+                                <AlertDescription class="flex items-center justify-between">
+                                    {{ t('common.totp.warning') }}
+                                    <Button variant="ghost" size="icon" class="h-5 w-5" @click="showWarning = false" :aria-label="t('common.close')">
+                                        <X class="h-4 w-4" />
+                                    </Button>
+                                </AlertDescription>
+                            </Alert>
+                        </div>
+                    </CardContent>
+                </Card>
+            </div>
+
+            <div class="flex flex-wrap gap-2 pt-2">
+                <Button v-if="chosenScope && selectedRows" variant="outline" @click="goBack">
+                    {{ t('common.qr.back') }}
+                </Button>
+                <Button variant="outline" @click="router.replace('/dashboard')">
                     {{ t('common.totp.exit') }}
                 </Button>
-            </router-link>
-        </span>
-        <span v-else>
+            </div>
+        </div>
+
+        <div v-else class="px-4 py-3">
             {{ t('common.totp.unsupported') }}
-        </span>
+        </div>
     </div>
 </template>

@@ -1,8 +1,8 @@
 <script setup>
     import { computed } from "vue";
     import { Button } from '@/components/ui/ui/button';
-    import { useI18n } from 'vue-i18n';
     import { Textarea } from '@/components/ui/ui/textarea';
+    import { useI18n } from 'vue-i18n';
 
     const { t } = useI18n({ useScope: 'global' });
 
@@ -63,25 +63,21 @@
 </script>
 
 <template>
-    <div style="padding:5px">
-        {{ requestText }}
+    <div class="space-y-3 p-1">
+        <p class="text-sm">{{ requestText }}</p>
         <Textarea
             v-model="textFieldContents"
             disabled
             class="w-full"
             rows="5"
         />
-        <br>
-        <Button
-            style="margin-right:5px"
-            @click="_clickedAllow()"
-        >
-            {{ t("operations.message.accept_btn") }}
-        </Button>
-        <Button
-            @click="_clickedDeny()"
-        >
-            {{ t("operations.message.reject_btn") }}
-        </Button>
+        <div class="flex flex-wrap gap-2">
+            <Button @click="_clickedAllow()">
+                {{ t("operations.message.accept_btn") }}
+            </Button>
+            <Button variant="outline" @click="_clickedDeny()">
+                {{ t("operations.message.reject_btn") }}
+            </Button>
+        </div>
     </div>
 </template>

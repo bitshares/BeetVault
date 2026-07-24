@@ -22,4 +22,12 @@ contextBridge.exposeInMainWorld('electron', {
         func(data);
     });
   },
+  getError: (id) => {
+    ipcRenderer.send(`get:error:${id}`);
+  },
+  onError: (id, func) => {
+    ipcRenderer.on(`respond:error:${id}`, (event, data) => {
+        func(data);
+    });
+  },
 });

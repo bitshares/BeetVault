@@ -7,7 +7,29 @@
         "reconnect": "Reconnect",
         "empty": "No balances in account",
         "connecting": "Connecting to blockchain",
-        "error": "Couldn't to connect to blockchain"
+        "error": "Couldn't to connect to blockchain",
+        "asset_name": "Asset",
+        "balance": "Balance"
+    },
+    "operations": {
+        "id": "ID",
+        "method": "Method",
+        "info": "Info"
+    },
+    "testnet_prefix": "Testnet:",
+    "noImportOption": "No import option found",
+    "chain": {
+        "unsupported": "Unsupported chain."
+    },
+    "copy": "Copy",
+    "close": "Close",
+    "yes": "Yes",
+    "no": "No",
+    "table": {
+        "name": "Name",
+        "active": "Active",
+        "owner": "Owner",
+        "memoKey": "Memo Key"
     },
     "nodes": {
         "prompt": "Select a node to connect to",
@@ -47,7 +69,8 @@
         "label": "Raw deeplink page",
         "desc": "This page processes incoming deeplink prompts without time-sensitive encryption.",
         "promptFailure": "A Raw deeplink was rejected. If intended, navigate to the Raw link page and try again.",
-        "exit": "Exit deeplink page"
+        "exit": "Exit deeplink page",
+        "ready": "Ready for raw links!"
     },
     "totp": {
         "label": "Time-limited and encrypted deeplink prompt page",
@@ -149,7 +172,27 @@
         "details": "View details",
         "language": "Language",
         "chainOperations": "Chain operations",
-        "copy": "Copy to clipboard"
+        "copy": "Copy to clipboard",
+        "loadError": "Error: Unable to load prompt.",
+        "error": {
+            "title": "Operation failed",
+            "defaultMessage": "An unexpected error occurred while processing your request.",
+            "context": "What were you trying to do?",
+            "terminalError": "Error details",
+            "consoleLogs": "Console logs",
+            "close": "Close",
+            "popupCreationFailed": "Popup creation failed",
+            "popupCreationFailedDesc": "Unable to open the approval prompt for this operation. Please try again.",
+            "broadcastFailed": "Broadcast failed",
+            "broadcastFailedDesc": "The transaction could not be broadcast to the network.",
+            "signAndBroadcastFailed": "Sign & broadcast failed",
+            "signAndBroadcastFailedDesc": "The transaction could not be signed or broadcast to the network.",
+            "noResultDesc": "The operation did not return a result. This may indicate a network issue.",
+            "keyRetrievalFailed": "Key retrieval failed",
+            "keyRetrievalFailedDesc": "Unable to retrieve the required signing key for this operation.",
+            "keyDecryptionFailed": "Key decryption failed",
+            "keyDecryptionFailedDesc": "Unable to decrypt the signing key. Please check your wallet password."
+        }
     },
     "abHome": "Home",
     "abNew": "New",

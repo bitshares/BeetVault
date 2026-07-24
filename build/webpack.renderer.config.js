@@ -9,6 +9,7 @@ module.exports = function(env) {
         entry: {
             modal: "./src/modal.js",
             receipt: "./src/receipt.js",
+            error: "./src/error.js",
             app: "./src/app.js",
         },
         output: {

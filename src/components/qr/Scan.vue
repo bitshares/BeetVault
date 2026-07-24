@@ -1,7 +1,7 @@
 <script setup>
     import { ref, onMounted } from 'vue';
     import { Button } from '@/components/ui/ui/button';
-    import { Card } from '@/components/ui/ui/card';
+    import { Card, CardContent } from '@/components/ui/ui/card';
     import { useI18n } from 'vue-i18n';
     import { Loader2 } from 'lucide-vue-next';
     import { QrcodeStream } from 'vue-qrcode-reader'
@@ -32,10 +32,6 @@
     }
 
     let QRresult = ref();
-    /**
-     * Parsing the contents of the scanned QR code
-     * @param {String} content
-     */
     async function onDetect (detectedBarcodes) {
         if (!QRresult.value && detectedBarcodes.length > 0) {
             await timeout(1000);
@@ -45,10 +41,6 @@
         }
     }
 
-    /**
-     * Try to switch between front/back camera
-     * If camera is off -> turn it on
-     */
     async function switchCamera () {
         if (camera.value === 'off') {
             console.log('turning on camera')
@@ -67,11 +59,6 @@
         }
     }
 
-    /**
-     * Overlaying branding on detected qr
-     * @param {Array} detectedCodes
-     * @param {Canvas} ctx
-     */
     function paintQR (detectedCodes, ctx) {
         for (const detectedCode of detectedCodes) {
             const [ firstPoint, ...otherPoints ] = detectedCode.cornerPoints
@@ -97,10 +84,6 @@
         }
     }
 
-    /**
-     * Waiting to paint branding
-     * @param {Number} ms 
-     */
     function timeout (ms) {
         return new Promise(resolve => {
             window.setTimeout(resolve, ms)
@@ -114,81 +97,66 @@
 </script>
 
 <template>
-    <div>
-        <span
-            v-if="!QRresult && camera !== 'off' && !cameraError"
-            style="height: 300px;"
-        >
-            <p>
-                {{ t('common.qr.scan.title') }}
-            </p>
-            <div style="display: flex; justify-content: center;">
-                <Card
-                    class="shadow-lg border"
-                    style="height: 300px; width: 300px; border: 1px solid #C7088E;"
-                >
+    <div class="space-y-4">
+        <div v-if="!QRresult && camera !== 'off' && !cameraError" class="flex flex-col items-center gap-3">
+            <p>{{ t('common.qr.scan.title') }}</p>
+            <Card class="w-72 h-72 shadow-md border overflow-hidden">
+                <CardContent class="p-0 relative">
                     <qrcode-stream
                         :camera="camera"
                         :track="paintQR"
-                        class="qrcode-stream-wrapper"
+                        class="qrcode-stream-wrapper w-full h-full"
                         @camera-on="onCameraOn"
                         @camera-off="onCameraOff"
                         @error="onError"
                         @detect="onDetect"
                     >
-                        <span v-if="cameraInitializing">
-                            <Loader2 class="h-6 w-6 animate-spin" style="padding-top: 65px;" />
+                        <span v-if="cameraInitializing" class="absolute inset-0 flex items-center justify-center bg-background/50">
+                            <Loader2 class="h-6 w-6 animate-spin" />
                         </span>
 
-                        <div style="display:none;">
+                        <div class="hidden">
                             <img
                                 id="beetScan"
                                 src="img/beetSmall.png"
+                                alt="Beet logo"
                             >
                         </div>
 
                         <video
-                            class="qrcode-stream-camera"
+                            class="qrcode-stream-camera w-full h-full object-cover"
                             autoplay
                             playsinline
-                            object-fit="cover"
                         />
                     </qrcode-stream>
-                </Card>
-            </div>
-            <Button
-                v-if="videoDevices && videoDevices.length > 1"
-                @click="switchCamera"
-            >
+                </CardContent>
+            </Card>
+            <Button v-if="videoDevices && videoDevices.length > 1" variant="outline" @click="switchCamera">
                 {{ t('common.qr.scan.switch') }}
             </Button>
-        </span>
-        <span v-else>
-            <span v-if="cameraError">
-                <p>
-                    {{ t('common.qr.scan.initFail') }}
-                </p>
+        </div>
+
+        <div v-else class="space-y-3 text-center">
+            <div v-if="cameraError" class="space-y-3">
+                <p>{{ t('common.qr.scan.initFail') }}</p>
                 <Button @click="switchCamera">
                     {{ t('common.qr.scan.again') }}
                 </Button>
-            </span>
-            <span v-else>
-                <p>
-                    {{ t('common.qr.scan.scanned') }}
-                </p>
-                <Button @click="switchCamera">
+            </div>
+            <div v-else class="space-y-3">
+                <p>{{ t('common.qr.scan.scanned') }}</p>
+                <Button variant="outline" @click="switchCamera">
                     {{ t('common.qr.scan.another') }}
                 </Button>
-            </span>
-
-        </span>
+            </div>
+        </div>
     </div>
 </template>
 
-<style>
+<style scoped>
 .qrcode-stream-wrapper {
-    max-width: 300px;
-    max-height: 300px;
+    max-width: 100%;
+    max-height: 100%;
     overflow: hidden;
 }
 

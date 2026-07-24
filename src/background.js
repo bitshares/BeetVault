@@ -41,6 +41,7 @@ let mainWindow;
 let modalWindows = {};
 let modalRequests = {};
 let receiptWindows = {};
+let errorWindow = null;
 
 var isDevMode = process.execPath.match(/[\\/]electron/);
 const logger = new Logger(isDevMode ? 3 : 0);
@@ -259,6 +260,80 @@ const createReceipt = async (arg, modalEvent) => {
         if (receiptWindows[id]) {
             delete receiptWindows[id];
         }
+    });
+};
+
+/*
+ * Creating an error browser window popup for failed operations
+ */
+const createError = async (arg, errorEvent) => {
+    let modalHeight = 600;
+    let modalWidth = 800;
+    if (!mainWindow) {
+        logger.debug(`No window`);
+        throw "No main window";
+    }
+
+    if (errorWindow) {
+        throw "Error window already open";
+    }
+
+    let id = arg.id;
+    if (!id) {
+        throw "No error id";
+    }
+
+    let title = arg.title || "Unknown error";
+    let errorMessage = arg.errorMessage || "An unexpected error occurred.";
+    let terminalError = arg.terminalError || "";
+    let consoleLogs = arg.consoleLogs || [];
+    let timestamp = arg.timestamp || new Date().toISOString();
+    let context = arg.context || "";
+
+    let targetURL = `file://${__dirname}/error.html?id=${encodeURIComponent(id)}`;
+
+    ipcMain.on(`get:error:${id}`, (event) => {
+        event.reply(`respond:error:${id}`, {
+            id,
+            title,
+            errorMessage,
+            terminalError,
+            consoleLogs,
+            timestamp,
+            context,
+        });
+    });
+
+    errorWindow = new BrowserWindow({
+        parent: mainWindow,
+        title: "BeetEOS error",
+        width: modalWidth,
+        height: modalHeight,
+        minWidth: modalWidth,
+        minHeight: modalHeight,
+        maxWidth: modalWidth,
+        maximizable: true,
+        maxHeight: modalHeight,
+        useContentSize: true,
+        webPreferences: {
+            nodeIntegration: false,
+            contextIsolation: true,
+            enableRemoteModule: false,
+            sandbox: true,
+            preload: path.join(__dirname, "preloadModal.js"),
+        },
+        icon: __dirname + "/img/beet-taskbar.png",
+    });
+
+    errorWindow.loadURL(targetURL);
+
+    errorWindow.once("ready-to-show", () => {
+        console.log("ready to show error window");
+        errorWindow.show();
+    });
+
+    errorWindow.on("closed", () => {
+        errorWindow = null;
     });
 };
 
@@ -489,7 +564,7 @@ async function _parseDeeplink(
  * Creating the primary window, only runs once.
  */
 const createWindow = async () => {
-    let width = 480;
+    let width = 525;
     let height = 695;
     mainWindow = new BrowserWindow({
         width: width,
@@ -1144,6 +1219,17 @@ const createWindow = async () => {
     ipcMain.on("createReceipt", async (event, arg) => {
         try {
             await createReceipt(arg, event);
+        } catch (error) {
+            console.log(error);
+        }
+    });
+
+    /*
+     * Create error popup for failed operations
+     */
+    ipcMain.on("createError", async (event, arg) => {
+        try {
+            await createError(arg, event);
         } catch (error) {
             console.log(error);
         }

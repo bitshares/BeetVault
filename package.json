@@ -12,7 +12,8 @@
   "browser": {
     "app": "app/app.js",
     "modal": "app/modal.js",
-    "receipt": "app/receipt.js"
+    "receipt": "app/receipt.js",
+    "error": "app/error.js"
   },
   "build": {
     "appId": "beeteos",

@@ -4,6 +4,8 @@
 
     import AccountSelect from "./account-select";
     import { Button } from '@/components/ui/ui/button';
+    import { Input } from '@/components/ui/ui/input';
+    import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/ui/card';
 
     import store from '../store/index.js';
     import router from '../router/index.js';
@@ -46,7 +48,7 @@
                 walletpass.value = "";
             })
             .catch(() => {
-                passincorrect.value = "is-invalid";
+                passincorrect.value = "border-red-500 ring-red-500";
                 window.electron.notify(t('common.start.invalid_password'));
             });
     }
@@ -62,72 +64,48 @@
 </script>
 
 <template>
-    <div
-        class="dapp-list mt-2"
-        style="text-align: center; margin-top: auto; margin-bottom: auto;"
-    >
-        <p>
-            <u>{{ t('common.settings.label') }}</u>
-        </p>
-        <AccountSelect />
-        <div
-            v-if="accountQuantity && accountQuantity > 1"
-            class="grid grid-cols-12 row px-4"
-        >
-            <div
-                class="col-span-12 largeHeader"
-            >
-                <p class="small text-justify">
-                    {{ t('common.settings.prompt') }}
-                </p>
-            </div>
-            <div class="col-span-3" />
-            <div class="col-span-6">
-                <input
-                    id="inputPassword"
-                    v-model="walletpass"
-                    style="width:97%;"
-                    type="password"
-                    class="form-control mb-4 px-3"
-                    :placeholder=" t('common.password_placeholder')"
-                    required
-                    :class="passincorrect"
-                    @focus="passincorrect=''"
-                >
-                <br>
-                <Button
-                    class="step_btn"
-                    type="button"
-                    @click="deleteAccount"
-                >
-                    {{ t('common.settings.button') }}
-                </Button><br>
-                <router-link
-                    :to="'/dashboard'"
-                    style="text-decoration: none;"
-                    replace
-                >
-                    <Button
-                        variant="outline"
-                        class="step_btn"
-                    >
-                        {{ t('common.settings.exit') }}
-                    </Button>
-                </router-link>
-            </div>
-            <div class="col-span-3" />
-        </div>
-        <div
-            v-else
-            class="grid grid-cols-12 row px-4"
-        >
-            <div
-                class="col-span-12 largeHeader"
-            >
-                <p class="small text-justify">
-                    {{ t('common.settings.insufficient') }}
-                </p>
-            </div>
+    <div class="bottom p-0">
+        <div class="content px-4 py-3">
+            <Card class="w-full max-w-md mx-auto">
+                <CardHeader>
+                    <CardTitle>
+                        <span class="underline font-semibold">{{ t('common.settings.label') }}</span>
+                    </CardTitle>
+                </CardHeader>
+                <CardContent class="space-y-4">
+                    <AccountSelect />
+
+                    <div v-if="accountQuantity && accountQuantity > 1" class="space-y-4">
+                        <p class="text-sm text-justify">{{ t('common.settings.prompt') }}</p>
+
+                        <div class="space-y-2">
+                            <Input
+                                id="inputPassword"
+                                v-model="walletpass"
+                                type="password"
+                                class="w-full"
+                                :placeholder="t('common.password_placeholder')"
+                                required
+                                :class="passincorrect"
+                                @focus="passincorrect = ''"
+                            />
+                        </div>
+
+                        <div class="flex justify-end gap-2 pt-2">
+                            <Button type="button" @click="deleteAccount">
+                                {{ t('common.settings.button') }}
+                            </Button>
+                            <Button variant="outline" @click="router.replace('/dashboard')">
+                                {{ t('common.settings.exit') }}
+                            </Button>
+                        </div>
+                    </div>
+
+                    <div v-else class="space-y-4">
+                        <p class="text-sm text-justify">{{ t('common.settings.insufficient') }}</p>
+                    </div>
+                </CardContent>
+            </Card>
         </div>
     </div>
 </template>

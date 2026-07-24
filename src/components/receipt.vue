@@ -3,7 +3,7 @@ import { ref, watchEffect, watch } from "vue";
 import queryString from "query-string";
 import { useI18n } from "vue-i18n";
 import { Button } from '@/components/ui/ui/button';
-import { Card, CardContent, CardFooter } from '@/components/ui/ui/card';
+import { Card, CardContent, CardHeader, CardTitle, CardFooter } from '@/components/ui/ui/card';
 import { Textarea } from '@/components/ui/ui/textarea';
 import { Pagination, PaginationContent, PaginationItem, PaginationPrevious, PaginationNext } from '@/components/ui/ui/pagination';
 import { Dialog, DialogContent, DialogTitle } from '@/components/ui/ui/dialog';
@@ -84,12 +84,10 @@ watchEffect(() => {
             result.value = data.result;
 
             if (["EOS", "TLOS", "BEOS"].includes(data.request.payload.chain)) {
-                // EOS based
                 resultID.value = data.result.transaction_id;
                 resultBlockNum.value = data.result.processed.block_num;
                 resultTrxNum.value = 0;
             } else {
-                // BTS based
                 resultID.value = data.result[0].id;
                 resultBlockNum.value = data.result[0].block_num;
                 resultTrxNum.value = data.result[0].trx_num;
@@ -141,7 +139,6 @@ watch(
             );
         }
         if (["EOS", "TLOS", "BEOS"].includes(chain.value)) {
-            // EOS based
             if (newResult) {
                 resultData.value = JSON.stringify(
                     newResult.processed,
@@ -175,55 +172,37 @@ async function copyToClipboard(_data) {
 </script>
 
 <template>
-    <div style="overflow-y: auto; width: 750px">
+    <div class="w-full max-w-3xl mx-auto overflow-y-auto">
         <Collapsible default-open>
-            <CollapsibleTrigger class="flex items-center gap-2 w-full p-2 hover:bg-accent rounded-md text-left">
+            <CollapsibleTrigger class="flex items-center gap-2 w-full p-3 hover:bg-accent rounded-md text-left">
                 <ChevronDown class="h-4 w-4" />
                 <span>{{ t("common.popup.evaluate") }}</span>
             </CollapsibleTrigger>
             <CollapsibleContent>
-            <div
-                style="
-                    overflow-y: auto;
-                    padding-right: 25px;
-                    padding-left: 5px;
-                    padding-bottom: 15px;
-                "
-            >
-                <div>
-                    {{ notifyTXT }}
-                </div>
+                <div class="pr-2 pl-1 pb-4">
+                    <div>{{ notifyTXT }}</div>
 
-                <div
-                    v-if="!!visualizedParams"
-                    class="text-left custom-content"
-                    style="margintop: 10px"
-                >
-                    <Card>
-                        <CardContent>
-                                <div
-                                    v-if="visualizedParams.length > 1"
-                                    class="text-lg font-semibold"
-                                >
-                                    <b>{{
+                    <div
+                        v-if="!!visualizedParams"
+                        class="text-left"
+                    >
+                        <Card>
+                            <CardHeader>
+                                <CardTitle class="text-lg">
+                                    <span class="font-bold">{{
                                         t(
                                             visualizedParams[
                                                 page > 0 ? page - 1 : 0
                                             ].title
                                         )
-                                    }}</b>
-                                    ({{ page }}/{{ visualizedParams.length }})
-                                </div>
-                                <div v-else class="text-lg font-semibold">
-                                    <b>{{
-                                        t(
-                                            visualizedParams[
-                                                page > 0 ? page - 1 : 0
-                                            ].title
-                                        )
-                                    }}</b>
-                                </div>
-                                <div style="margin-bottom: 5px">
+                                    }}</span>
+                                    <span v-if="visualizedParams.length > 1">
+                                        ({{ page }}/{{ visualizedParams.length }})
+                                    </span>
+                                </CardTitle>
+                            </CardHeader>
+                            <CardContent class="space-y-2">
+                                <p class="text-sm text-muted-foreground">
                                     {{
                                         t(
                                             `operations.injected.${
@@ -237,8 +216,8 @@ async function copyToClipboard(_data) {
                                             }.headers.result`
                                         )
                                     }}
-                                </div>
-                                <div
+                                </p>
+                                <p
                                     v-for="row in visualizedParams[
                                         page > 0 ? page - 1 : 0
                                     ].rows"
@@ -259,79 +238,83 @@ async function copyToClipboard(_data) {
                                             row.params
                                         )
                                     }}
+                                </p>
+                            </CardContent>
+                            <CardFooter>
+                                <div class="flex flex-wrap gap-2">
+                                    <Button variant="outline" @click="openOPReq = true">
+                                        {{ t("common.popup.request") }}
+                                    </Button>
+                                    <Button variant="outline" @click="openOPRes = true">
+                                        {{ t("common.popup.result") }}
+                                    </Button>
+                                    <Button variant="outline" @click="openOpDetails = true">
+                                        {{ t("common.popup.details") }}
+                                    </Button>
                                 </div>
-                        </CardContent>
-                        <CardFooter>
-                            <div class="flex gap-2">
-                                <Button variant="outline" @click="openOPReq = true">
-                                    {{ t("common.popup.request") }}
-                                </Button>
-                                <Button
-                                    variant="outline"
-                                    @click="openOPRes = true"
-                                >
-                                    {{ t("common.popup.result") }}
-                                </Button>
-                                <Button
-                                    variant="outline"
-                                    @click="openOpDetails = true"
-                                >
-                                    {{ t("common.popup.details") }}
-                                </Button>
-                            </div>
-                        </CardFooter>
-                    </Card>
-                    <Pagination
-                        v-if="visualizedParams.length > 1"
-                        v-model:page="page"
-                        :total="visualizedParams.length"
-                        :items-per-page="1"
-                        :sibling-count="0"
-                        show-edges
-                    >
-                        <PaginationContent v-slot="{ items }">
-                            <PaginationPrevious />
-                            <template v-for="(item, index) in items" :key="index">
-                                <PaginationItem :value="item.value" :is-active="item.value === page" @click="page = item.value">
-                                    {{ item.value }}
-                                </PaginationItem>
-                            </template>
-                            <PaginationNext />
-                        </PaginationContent>
-                    </Pagination>
+                            </CardFooter>
+                        </Card>
+
+                        <Pagination
+                            v-if="visualizedParams.length > 1"
+                            v-model:page="page"
+                            :total="visualizedParams.length"
+                            :items-per-page="1"
+                            :sibling-count="0"
+                            show-edges
+                        >
+                            <PaginationContent v-slot="{ items }">
+                                <PaginationPrevious />
+                                <template v-for="(item, index) in items" :key="index">
+                                    <PaginationItem :value="item.value" :is-active="item.value === page" @click="page = item.value">
+                                        {{ item.value }}
+                                    </PaginationItem>
+                                </template>
+                                <PaginationNext />
+                            </PaginationContent>
+                        </Pagination>
+                    </div>
                 </div>
-            </div>
             </CollapsibleContent>
         </Collapsible>
+
         <Collapsible v-if="result">
-            <CollapsibleTrigger class="flex items-center gap-2 w-full p-2 hover:bg-accent rounded-md text-left">
+            <CollapsibleTrigger class="flex items-center gap-2 w-full p-3 hover:bg-accent rounded-md text-left">
                 <ChevronRight class="h-4 w-4" />
                 <span>{{ t("common.popup.result") }}</span>
             </CollapsibleTrigger>
             <CollapsibleContent>
-                <Button variant="outline" @click="openResult = true">
-                    {{ t("common.popup.result") }}
-                </Button>
+                <div class="px-1 pb-2">
+                    <Button variant="outline" @click="openResult = true">
+                        {{ t("common.popup.result") }}
+                    </Button>
+                </div>
             </CollapsibleContent>
         </Collapsible>
+
         <Collapsible v-if="moreRequest">
-            <CollapsibleTrigger class="flex items-center gap-2 w-full p-2 hover:bg-accent rounded-md text-left">
+            <CollapsibleTrigger class="flex items-center gap-2 w-full p-3 hover:bg-accent rounded-md text-left">
                 <ChevronRight class="h-4 w-4" />
                 <span>{{ t("common.popup.request") }}</span>
             </CollapsibleTrigger>
             <CollapsibleContent>
-                <Button variant="outline" @click="openMoreRequest = true">
-                    {{ t("common.popup.request") }}
-                </Button>
+                <div class="px-1 pb-2">
+                    <Button variant="outline" @click="openMoreRequest = true">
+                        {{ t("common.popup.request") }}
+                    </Button>
+                </div>
             </CollapsibleContent>
         </Collapsible>
+
         <Collapsible>
-            <CollapsibleTrigger class="flex items-center gap-2 w-full p-2 hover:bg-accent rounded-md text-left">
+            <CollapsibleTrigger class="flex items-center gap-2 w-full p-3 hover:bg-accent rounded-md text-left">
                 <ChevronRight class="h-4 w-4" />
                 <span>{{ t("common.abSettings") }}</span>
             </CollapsibleTrigger>
             <CollapsibleContent>
-                <langSelect location="prompt" />
+                <div class="px-1 pb-2">
+                    <langSelect location="prompt" />
+                </div>
             </CollapsibleContent>
         </Collapsible>
     </div>
@@ -346,7 +329,7 @@ async function copyToClipboard(_data) {
             <DialogTitle v-else>
                 {{ t("common.popup.keywords.request") }}
             </DialogTitle>
-            <div>
+            <div class="space-y-3">
                 <Textarea
                     v-model="jsonData"
                     disabled
@@ -370,7 +353,7 @@ async function copyToClipboard(_data) {
             <DialogTitle v-else>
                 {{ t("common.popup.keywords.result") }}
             </DialogTitle>
-            <div>
+            <div class="space-y-3">
                 <Textarea
                     v-model="resultData"
                     disabled
@@ -389,21 +372,12 @@ async function copyToClipboard(_data) {
             <DialogTitle>
                 {{ t("common.popup.details") }}
             </DialogTitle>
-            <div>
-                <span> {{ t("operations.receipt.id", { resultID }) }}<br /> </span>
-                <span>
-                    {{ t("operations.receipt.block", { resultBlockNum }) }}<br />
-                </span>
-                <span v-if="resultTrxNum">
-                    {{ t("operations.receipt.trxNum", { resultTrxNum }) }}<br />
-                </span>
-                <span v-if="resultExpiration">
-                    {{ t("operations.receipt.expiration", { resultExpiration })
-                    }}<br />
-                </span>
-                <span v-if="resultSignatures">
-                    {{ t("operations.receipt.signatures", { resultSignatures }) }}
-                </span>
+            <div class="space-y-2">
+                <p>{{ t("operations.receipt.id", { resultID }) }}</p>
+                <p>{{ t("operations.receipt.block", { resultBlockNum }) }}</p>
+                <p v-if="resultTrxNum">{{ t("operations.receipt.trxNum", { resultTrxNum }) }}</p>
+                <p v-if="resultExpiration">{{ t("operations.receipt.expiration", { resultExpiration }) }}</p>
+                <p v-if="resultSignatures">{{ t("operations.receipt.signatures", { resultSignatures }) }}</p>
             </div>
         </DialogContent>
     </Dialog>
@@ -413,7 +387,7 @@ async function copyToClipboard(_data) {
             <DialogTitle>
                 {{ t("common.popup.result") }}
             </DialogTitle>
-            <div>
+            <div class="space-y-3">
                 <Textarea
                     v-model="moreResult"
                     disabled
@@ -432,7 +406,7 @@ async function copyToClipboard(_data) {
             <DialogTitle>
                 {{ t("common.popup.request") }}
             </DialogTitle>
-            <div>
+            <div class="space-y-3">
                 <Textarea
                     v-model="moreRequest"
                     disabled

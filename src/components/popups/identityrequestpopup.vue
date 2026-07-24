@@ -1,8 +1,9 @@
 <script setup>
-    import { computed } from "vue";
+    import { computed, ref } from "vue";
     import { Button } from '@/components/ui/ui/button';
     import { Tooltip, TooltipContent, TooltipTrigger } from '@/components/ui/ui/tooltip';
     import { useI18n } from 'vue-i18n';
+    import { Info } from 'lucide-vue-next';
 
     const { t } = useI18n({ useScope: 'global' });
 
@@ -84,27 +85,24 @@
 </script>
 
 <template>
-    <div style="padding:5px">
+    <div class="space-y-3">
         <Tooltip>
             <TooltipTrigger as-child>
-                <div>
-                    {{ requestText }} &#10068;
+                <div class="text-sm">
+                    {{ requestText }} <Info class="inline h-3 w-3" />
                 </div>
             </TooltipTrigger>
             <TooltipContent>
                 <p>{{ t('operations.identity.request_tooltip') }}</p>
             </TooltipContent>
         </Tooltip>
-        <Button
-            style="margin-right:5px"
-            @click="_clickedAllow()"
-        >
-            {{ t('operations.account_id.accept_btn') }}
-        </Button>
-        <Button
-            @click="_clickedDeny()"
-        >
-            {{ t('operations.account_id.reject_btn') }}
-        </Button>
+        <div class="flex flex-wrap gap-2">
+            <Button @click="_clickedAllow()">
+                {{ t('operations.account_id.accept_btn') }}
+            </Button>
+            <Button variant="outline" @click="_clickedDeny()">
+                {{ t('operations.account_id.reject_btn') }}
+            </Button>
+        </div>
     </div>
 </template>

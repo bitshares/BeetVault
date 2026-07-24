@@ -4,6 +4,12 @@ import BeetDB from '../../lib/BeetDB.js';
 
 const LOAD_SETTINGS = 'LOAD_SETTINGS';
 
+function getCoreSymbol(chain) {
+    if (!chain) return chain;
+    const blockchain = Object.values(blockchains).find(b => b.identifier === chain);
+    return blockchain ? blockchain.coreSymbol : chain;
+}
+
 function decodeMessage(bytes) {
     const decoder = new TextDecoder('utf-8');
     return decoder.decode(new Uint8Array(bytes));
@@ -41,6 +47,7 @@ const actions = {
         commit
     }, payload) {
         return new Promise(async (resolve, reject) => {
+            const coreSymbol = getCoreSymbol(payload.chain);
 
             BeetDB.settings.get({id: 'settings'}).then((settings) => {
                 if (settings && settings.length > 0) {
@@ -55,19 +62,19 @@ const actions = {
                 }
   
                 try {
-                  settings.selected_node[payload.chain] = payload.node;
+                  settings.selected_node[coreSymbol] = payload.node;
                 } catch (error) {
                   console.log(`setNode: ${error}`)
                 }
 
-                let chainNodeList = settings.chainNodes[payload.chain];
+                let chainNodeList = settings.chainNodes[coreSymbol];
                 if (chainNodeList && chainNodeList.length > payload.node) {
                     let node = chainNodeList.splice(payload.node, 1)[0];
                     chainNodeList.unshift(node);
                 }
                 
                 try {
-                    settings.chainNodes[payload.chain] = chainNodeList;
+                    settings.chainNodes[coreSymbol] = chainNodeList;
                 } catch (error) {
                     console.log(`setNodeList: ${error}`)
                 }
@@ -114,6 +121,8 @@ const actions = {
         commit
     }, payload) {
         return new Promise(async (resolve, reject) => {
+            const coreSymbol = getCoreSymbol(payload.chain);
+
             BeetDB.settings.get({id: 'settings'}).then((settings) => {
                 if (settings && settings.length > 0) {
                     settings = JSON.parse(settings)
@@ -124,13 +133,13 @@ const actions = {
                 if (!Object.prototype.hasOwnProperty.call(settings, 'chainPermissions')) {
                     settings['chainPermissions'] = {
                         BTS: [],
-                        BTS_TEST: [],
+                        TEST: [],
                         EOS: [],
                         BEOS: [],
                         TLOS: []
                     }
                 }
-                settings.chainPermissions[payload.chain] = payload.rows;
+                settings.chainPermissions[coreSymbol] = payload.rows;
                 BeetDB.settings.put({id: 'settings', value: JSON.stringify(settings)}).then(() => {
                     commit(LOAD_SETTINGS, settings);
                     resolve();
@@ -153,16 +162,18 @@ const getters = {
     getNode: (state) => state.settings.selected_node,
     getLocale: (state) => state.settings.locale,
     getChainPermissions: (state) => (chain) => {
+        const coreSymbol = getCoreSymbol(chain);
         if (!Object.prototype.hasOwnProperty.call(state.settings, 'chainPermissions')) {
             return [];
         }
-        return state.settings.chainPermissions[chain];
+        return state.settings.chainPermissions[coreSymbol];
     },
     getNodes: (state) => (chain) => {
+        const coreSymbol = getCoreSymbol(chain);
         if (!Object.prototype.hasOwnProperty.call(state.settings, 'chainNodes')) {
-            return initialState.settings.chainNodes[chain];
+            return initialState.settings.chainNodes[coreSymbol];
         }
-        return state.settings.chainNodes[chain];
+        return state.settings.chainNodes[coreSymbol];
     }
 };
 

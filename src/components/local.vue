@@ -2,7 +2,8 @@
 import { ref, computed, onMounted, watch, toRaw } from "vue";
 import { useI18n } from "vue-i18n";
 import { Button } from '@/components/ui/ui/button';
-import { Card } from '@/components/ui/ui/card';
+import { Card, CardContent } from '@/components/ui/ui/card';
+import { Input } from '@/components/ui/ui/input';
 import { Loader2 } from 'lucide-vue-next';
 
 import AccountSelect from "./account-select";
@@ -60,24 +61,6 @@ onMounted(async () => {
             inProgress.value = false;
             window.electron.notify(t("common.local.promptFailure"));
             console.log("BlockchainRequest failure");
-            return;
-        }
-
-        /*
-        console.log({
-            blockchainResponse,
-            input: {
-                methods: ["supportsLocal", "getOperationTypes"],
-                chain: chain.value,
-                location: "local",
-            },
-        });
-        */
-
-        if (!blockchainResponse) {
-            console.log("No blockchain response");
-            inProgress.value = false;
-            window.electron.notify(t("common.local.promptFailure"));
             return;
         }
 
@@ -164,87 +147,75 @@ onMounted(() => {
 
 <template>
     <div class="bottom p-0">
-        <span v-if="supportsLocal">
-            <span>
-                <AccountSelect />
-                <p v-if="!chosenScope" style="marginbottom: 0px">
-                    {{ t("common.local.label") }}
-                </p>
-                <p v-if="!chosenScope" style="marginbottom: 0px">
-                    {{ t("common.local.desc") }}
-                </p>
+        <div v-if="supportsLocal" class="px-4 py-3 space-y-4">
+            <AccountSelect />
 
-                <Card
-                    v-if="!selectedRows"
-                    class="shadow-md border"
-                    style="margintop: 5px"
-                >
-                    <span v-if="!chosenScope">
-                        <p>
-                            {{ t("common.chosenScope.title.local") }}
-                        </p>
-                        <Button
-                            style="margin-right: 5px; margin-bottom: 5px"
-                            @click="setScope('Configure')"
-                        >
-                            {{ t("common.chosenScope.yes") }}
-                        </Button>
-                        <Button
-                            style="margin-right: 5px; margin-bottom: 5px"
-                            @click="setScope('AllowAll')"
-                        >
-                            {{ t("common.chosenScope.no") }}
-                        </Button>
-                    </span>
-                    <span
-                        v-else-if="chosenScope == 'Configure' && !selectedRows"
-                    >
-                        <Operations
-                            :ops="operationTypes"
-                            :chain="chain"
-                            @selected="(ops) => (selectedRows = ops)"
-                            @exit="
-                                () => {
-                                    chosenScope = null;
-                                    selectedRows = null;
-                                }
-                            "
-                        />
-                    </span>
+            <div v-if="!chosenScope" class="space-y-3">
+                <p class="mb-0">{{ t("common.local.label") }}</p>
+                <p class="mb-0">{{ t("common.local.desc") }}</p>
+
+                <Card class="w-full shadow-sm border">
+                    <CardContent class="space-y-4 p-4">
+                        <div v-if="!selectedRows">
+                            <p class="mb-3">{{ t("common.chosenScope.title.local") }}</p>
+                            <div class="flex flex-wrap gap-2">
+                                <Button @click="setScope('Configure')">
+                                    {{ t("common.chosenScope.yes") }}
+                                </Button>
+                                <Button variant="outline" @click="setScope('AllowAll')">
+                                    {{ t("common.chosenScope.no") }}
+                                </Button>
+                            </div>
+                        </div>
+
+                        <div v-else-if="chosenScope == 'Configure' && !selectedRows">
+                            <Operations
+                                :ops="operationTypes"
+                                :chain="chain"
+                                @selected="(ops) => (selectedRows = ops)"
+                                @exit="
+                                    () => {
+                                        chosenScope = null;
+                                        selectedRows = null;
+                                    }
+                                "
+                            />
+                        </div>
+                    </CardContent>
                 </Card>
-            </span>
+            </div>
 
-            <span v-if="chosenScope && selectedRows">
-                <span v-if="!inProgress">
+            <div v-if="chosenScope && selectedRows" class="space-y-4">
+                <div v-if="!inProgress" class="space-y-3">
                     <p>{{ t("common.local.label") }}</p>
-
                     <p>{{ t("common.local.desc") }}</p>
+                    <h4 class="text-lg font-bold">{{ t("common.local.upload") }}</h4>
+                    <Input
+                        type="file"
+                        accept="application/json"
+                        @change="onFileUpload($event)"
+                        class="w-full"
+                    />
+                </div>
 
-                    <h4>{{ t("common.local.upload") }}</h4>
-                    <input type="file" accept="application/json" @change="onFileUpload($event)" class="block w-full text-sm text-gray-500 file:mr-4 file:py-2 file:px-4 file:rounded-md file:border-0 file:text-sm file:font-semibold file:bg-primary file:text-primary-foreground hover:file:bg-primary/90" />
-                </span>
-                <span v-else>
+                <div v-else class="flex flex-col items-center gap-2 py-4">
                     <Loader2 class="h-6 w-6 animate-spin" />
-                    <h3>{{ t("common.local.progress") }}</h3>
-                </span>
-            </span>
+                    <p class="text-lg font-bold">{{ t("common.local.progress") }}</p>
+                </div>
+            </div>
 
-            <br />
-            <Button
-                v-if="chosenScope && selectedRows"
-                style="margin-right: 5px"
-                @click="goBack"
-            >
-                {{ t("common.local.back") }}
-            </Button>
-            <router-link :to="'/dashboard'" replace>
-                <Button variant="outline" class="step_btn">
+            <div class="flex flex-wrap gap-2 pt-2">
+                <Button v-if="chosenScope && selectedRows" variant="outline" @click="goBack">
+                    {{ t("common.local.back") }}
+                </Button>
+                <Button variant="outline" @click="router.replace('/dashboard')">
                     {{ t("common.local.exit") }}
                 </Button>
-            </router-link>
-        </span>
-        <span v-else>
+            </div>
+        </div>
+
+        <div v-else class="px-4 py-3">
             {{ t("common.local.unsupported") }}
-        </span>
+        </div>
     </div>
 </template>

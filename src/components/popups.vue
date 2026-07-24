@@ -3,6 +3,7 @@
     import queryString from "query-string";
     import { useI18n } from "vue-i18n";
     import { Textarea } from '@/components/ui/ui/textarea';
+    import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/ui/card';
 
     import * as Actions from "../lib/Actions";
 
@@ -94,11 +95,13 @@
 <template>
     <div
         v-if="type && type !== '' && request"
-        style="overflow-y: auto; width: 750px"
+        class="w-full max-w-3xl mx-auto overflow-y-auto"
     >
-        <div v-show="true" class="border rounded-md mb-2">
-            <div class="font-medium p-2 cursor-default">{{ t("common.popup.preview") }}</div>
-            <div class="p-2">
+        <Card v-show="true" class="mb-4">
+            <CardHeader>
+                <CardTitle>{{ t("common.popup.preview") }}</CardTitle>
+            </CardHeader>
+            <CardContent class="space-y-3">
                 <IdentityRequestPopup
                     v-if="type === Actions.GET_ACCOUNT && request"
                     :request="request"
@@ -111,15 +114,13 @@
                     "
                     :request="request"
                 />
-                <div
-                    v-else-if="
+                <div v-else-if="
                         (type === Actions.REQUEST_SIGNATURE ||
                             type === Actions.INJECTED_CALL) &&
                             request &&
                             visualizedParams &&
                             visualizedAccount
                     "
-                    style="overflow-y: auto; padding-right: 25px"
                 >
                     <TransactionRequestPopup
                         :request="request"
@@ -128,44 +129,48 @@
                         :warning="warning"
                     />
                 </div>
-            </div>
-        </div>
-        <div
-            v-if="moreRequest"
-            class="border rounded-md mb-2"
-        >
-            <div class="font-medium p-2 cursor-default">{{ t("common.popup.request") }}</div>
-            <div class="p-2">
+            </CardContent>
+        </Card>
+
+        <Card v-if="moreRequest" class="mb-4">
+            <CardHeader>
+                <CardTitle>{{ t("common.popup.request") }}</CardTitle>
+            </CardHeader>
+            <CardContent>
                 <Textarea
                     v-model="moreRequest"
                     disabled
                     class="w-full"
                     rows="8"
                 />
-            </div>
-        </div>
-        <div
-            v-if="payload"
-            class="border rounded-md mb-2"
-        >
-            <div class="font-medium p-2 cursor-default">{{ t("common.popup.payload") }}</div>
-            <div class="p-2">
+            </CardContent>
+        </Card>
+
+        <Card v-if="payload" class="mb-4">
+            <CardHeader>
+                <CardTitle>{{ t("common.popup.payload") }}</CardTitle>
+            </CardHeader>
+            <CardContent>
                 <Textarea
                     v-model="payload"
                     disabled
                     class="w-full"
                     rows="8"
                 />
-            </div>
-        </div>
-        <div class="border rounded-md mb-2">
-            <div class="font-medium p-2 cursor-default">{{ t("common.abSettings") }}</div>
-            <div class="p-2">
+            </CardContent>
+        </Card>
+
+        <Card class="mb-4">
+            <CardHeader>
+                <CardTitle>{{ t("common.abSettings") }}</CardTitle>
+            </CardHeader>
+            <CardContent>
                 <langSelect location="prompt" />
-            </div>
-        </div>
+            </CardContent>
+        </Card>
     </div>
-    <div v-else>
-        Error: Unable to load prompt.
+
+    <div v-else class="p-4 text-center">
+        {{ t('common.popup.loadError') }}
     </div>
 </template>

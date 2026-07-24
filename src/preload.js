@@ -53,6 +53,7 @@ contextBridge.exposeInMainWorld('electron', {
         });
     },
     createReceipt: async (receiptData) => ipcRenderer.send('createReceipt', receiptData),
+    createError: async (errorData) => ipcRenderer.send('createError', errorData),
     // Handling injected calls (used by deeplink/QR/TOTP flows via inject.js)
     onInjectedCall: async (func) => {
         ipcRenderer.on("injectedCall", (event, data) => {

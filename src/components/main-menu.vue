@@ -25,6 +25,17 @@
     let lastIndex = ref(0);
     const { t } = useI18n({ useScope: "global" });
 
+    let consoleErrorBuffer = [];
+    window.addEventListener('error', (event) => {
+        consoleErrorBuffer.push({
+            message: event.message,
+            source: event.filename,
+            line: event.lineno,
+            timestamp: new Date().toISOString()
+        });
+        if (consoleErrorBuffer.length > 20) consoleErrorBuffer.shift();
+    });
+
     let items = computed(() => {
         return [
             {
@@ -108,10 +119,19 @@
     }
 
     let logoutTimer = null;
-    function startLogoutTimer() {
+    function clearLogoutTimer() {
         if (logoutTimer) {
             clearTimeout(logoutTimer);
+            logoutTimer = null;
         }
+    }
+
+    function startLogoutTimer() {
+        if (!store.state.WalletStore.isUnlocked) {
+            return;
+        }
+
+        clearLogoutTimer();
 
         logoutTimer = setTimeout(() => {
             console.log("wallet timed logout");
@@ -255,6 +275,15 @@
                     try {
                         window.electron.createPopup(popupContents);
                     } catch (error) {
+                        window.electron.createError({
+                            id: request.id,
+                            title: t('common.popup.error.popupCreationFailed'),
+                            errorMessage: t('common.popup.error.popupCreationFailedDesc'),
+                            terminalError: String(error),
+                            consoleLogs: [...consoleErrorBuffer],
+                            timestamp: new Date().toISOString(),
+                            context: `Attempting to process a ${chain} transaction request`
+                        });
                         window.electron.injectedCallError({
                             id: request.id,
                             result: {
@@ -391,6 +420,15 @@
                                     });
                             } catch (error) {
                                 console.log(error);
+                                window.electron.createError({
+                                    id: _request.id,
+                                    title: t('common.popup.error.broadcastFailed'),
+                                    errorMessage: t('common.popup.error.broadcastFailedDesc'),
+                                    terminalError: String(error),
+                                    consoleLogs: [...consoleErrorBuffer],
+                                    timestamp: new Date().toISOString(),
+                                    context: `Attempting to broadcast a ${chain} transaction`
+                                });
                                 window.electron.injectedCallError({
                                     id: _request.id,
                                     result: {
@@ -403,6 +441,15 @@
                             }
 
                             if (!finalResult || !finalResult.broadcastTransaction) {
+                                window.electron.createError({
+                                    id: _request.id,
+                                    title: t('common.popup.error.broadcastFailed'),
+                                    errorMessage: t('common.popup.error.noResultDesc'),
+                                    terminalError: "No final result returned from broadcast",
+                                    consoleLogs: [...consoleErrorBuffer],
+                                    timestamp: new Date().toISOString(),
+                                    context: `Attempting to broadcast a ${chain} transaction`
+                                });
                                 window.electron.injectedCallError({
                                     id: _request.id,
                                     result: {
@@ -439,6 +486,15 @@
                                     ]();
                             } catch (error) {
                                 console.log(error);
+                                window.electron.createError({
+                                    id: request.id,
+                                    title: t('common.popup.error.keyRetrievalFailed'),
+                                    errorMessage: t('common.popup.error.keyRetrievalFailedDesc'),
+                                    terminalError: String(error),
+                                    consoleLogs: [...consoleErrorBuffer],
+                                    timestamp: new Date().toISOString(),
+                                    context: `Attempting to retrieve active key for a ${chain} transaction`
+                                });
                                 window.electron.injectedCallError({
                                     id: request.id,
                                     result: {
@@ -458,6 +514,15 @@
                             signingKey = await decryptKey(activeKey);
                         } catch (error) {
                             console.log(error);
+                            window.electron.createError({
+                                id: request.id,
+                                title: t('common.popup.error.keyDecryptionFailed'),
+                                errorMessage: t('common.popup.error.keyDecryptionFailedDesc'),
+                                terminalError: String(error),
+                                consoleLogs: [...consoleErrorBuffer],
+                                timestamp: new Date().toISOString(),
+                                context: `Attempting to decrypt signing key for a ${chain} transaction`
+                            });
                             window.electron.injectedCallError({
                                 id: request.id,
                                 result: {
@@ -496,6 +561,15 @@
                                 }
                             } catch (error) {
                                 console.log(error);
+                                window.electron.createError({
+                                    id: request.id,
+                                    title: t('common.popup.error.signAndBroadcastFailed'),
+                                    errorMessage: t('common.popup.error.signAndBroadcastFailedDesc'),
+                                    terminalError: String(error),
+                                    consoleLogs: [...consoleErrorBuffer],
+                                    timestamp: new Date().toISOString(),
+                                    context: `Attempting to sign and broadcast a ${chain} transaction`
+                                });
                                 window.electron.injectedCallError({
                                     id: request.id,
                                     result: {
@@ -510,6 +584,15 @@
                         }
 
                         if (!finalResult || !finalResult.signAndBroadcast) {
+                            window.electron.createError({
+                                id: request.id,
+                                title: t('common.popup.error.signAndBroadcastFailed'),
+                                errorMessage: t('common.popup.error.noResultDesc'),
+                                terminalError: "No final result returned from sign and broadcast",
+                                consoleLogs: [...consoleErrorBuffer],
+                                timestamp: new Date().toISOString(),
+                                context: `Attempting to sign and broadcast a ${chain} transaction`
+                            });
                             window.electron.injectedCallError({
                                 id: request.id,
                                 result: {
@@ -570,6 +653,10 @@
     watch(
         () => router.currentRoute.value,
         (newRoute) => {
+            if (newRoute.path === '/') {
+                clearLogoutTimer();
+            }
+
             const matchingItem = items.value.find(
                 (item) => item.url === newRoute.path
             );
@@ -583,7 +670,7 @@
         () => store.state.WalletStore.isUnlocked,
         (isUnlocked) => {
             if (isUnlocked) {
-                window.electron.timer(() => startLogoutTimer());
+                startLogoutTimer();
                 window.electron.setNode((data) => {
                     const _currentChain = store.getters["AccountStore/getChain"];
                     store.dispatch("SettingsStore/setNode", {

@@ -1,17 +1,16 @@
 <script setup>
-    import { ref, computed, watchEffect, onMounted, toRaw } from 'vue';
+    import { ref, computed, watch, watchEffect, onMounted, toRaw } from 'vue';
     import { useI18n } from 'vue-i18n';
     import { Button } from '@/components/ui/ui/button';
-    import { Card } from '@/components/ui/ui/card';
+    import { Card, CardContent } from '@/components/ui/ui/card';
     import { Badge } from '@/components/ui/ui/badge';
-    import { Shield, ThumbsUp, Loader2 } from 'lucide-vue-next';
+    import { Shield, ThumbsUp, Loader2, Info } from 'lucide-vue-next';
 
     import AccountSelect from "./account-select";
     import Operations from "./blockchains/operations";
     
     import store from '../store/index.js';
     import router from '../router/index.js';
-    import { watch } from 'vue';
 
     const { t } = useI18n({ useScope: 'global' });
 
@@ -147,99 +146,79 @@
 </script>
 
 <template>
-    <div
-        class="bottom p-0"
-    >
-        <span v-if="operationTypes && compatibleChain">
+    <div class="bottom p-0">
+        <div v-if="operationTypes && compatibleChain" class="px-4 py-3 space-y-4">
             <AccountSelect />
-            <span v-if="deepLinkInProgress">
-                <p style="marginBottom:0px;">
-                    {{ t('common.totp.inProgress') }}
-                </p>
-                <Card
-                    class="shadow-md border"
-                    style="marginTop: 5px;"
-                >
-                    <br>
-                    <Loader2 class="h-6 w-6 animate-spin" />
-                    <br>
-                </Card>
-            </span>
-            <span v-else>
-                <p style="marginBottom:0px;">
-                    {{ t('common.raw.label') }}
-                </p>
-                <p style="marginBottom:0px;">
-                    {{ t('common.raw.desc') }}
-                </p>
-                <Card
-                    class="shadow-md border"
-                    style="marginTop: 5px;"
-                >
-                    <span v-if="!chosenScope">
-                        <p>
-                            {{ t('common.chosenScope.title.rawLink') }}
-                        </p>
-                        <Button
-                            style="margin-right:5px; margin-bottom: 5px;"
-                            @click="setScope('Configure')"
-                        >
-                            {{ t('common.chosenScope.yes') }}
-                        </Button>
-                        <Button
-                            style="margin-right:5px; margin-bottom: 5px;"
-                            @click="setScope('AllowAll')"
-                        >
-                            {{ t('common.chosenScope.no') }}
-                        </Button>
-                    </span>
-                    <span v-else-if="chosenScope == 'Configure' && !selectedRows">
-                        <Operations
-                            :ops="operationTypes"
-                            :chain="chain"
-                            @selected="(ops) => selectedRows = ops"
-                            @exit="() => {
-                                chosenScope = null;
-                                selectedRows = null;
-                            }"
-                        />
-                    </span>
 
-                    <span v-if="chosenScope && selectedRows">
-                        <div class="flex flex-wrap gap-2">
-                            <Badge variant="secondary" class="flex items-center gap-1" style="margin-left:30px;">
-                                <Shield class="h-3 w-3" />
-                                {{ selectedRows ? selectedRows.length : 0 }} {{ t('common.totp.chosen') }}
-                            </Badge>
-                            <Badge variant="default" class="flex items-center gap-1">
-                                <ThumbsUp class="h-3 w-3" />
-                                Ready for raw links!
-                            </Badge>
-                        </div>
-                    </span>
+            <div v-if="deepLinkInProgress" class="flex flex-col items-center gap-2">
+                <p class="mb-0">{{ t('common.totp.inProgress') }}</p>
+                <Card class="w-full max-w-sm shadow-sm border">
+                    <CardContent class="flex flex-col items-center py-4">
+                        <Loader2 class="h-6 w-6 animate-spin" />
+                    </CardContent>
                 </Card>
-            </span>
-            <Button
-                v-if="chosenScope && selectedRows"
-                style="margin-right:5px"
-                @click="goBack"
-            >
-                {{ t('common.qr.back') }}
-            </Button>
-            <router-link
-                :to="'/dashboard'"
-                replace
-            >
-                <Button
-                    variant="outline"
-                    class="step_btn"
-                >
-                    {{ t('common.raw.exit') }}
+            </div>
+
+            <div v-else class="space-y-4">
+                <p class="mb-0">{{ t('common.raw.label') }}</p>
+                <p class="mb-0">{{ t('common.raw.desc') }}</p>
+
+                <Card class="w-full shadow-sm border">
+                    <CardContent class="space-y-4 p-4">
+                        <div v-if="!chosenScope">
+                            <p class="mb-3">{{ t('common.chosenScope.title.rawLink') }}</p>
+                            <div class="flex flex-wrap gap-2">
+                                <Button @click="setScope('Configure')">
+                                    {{ t('common.chosenScope.yes') }}
+                                </Button>
+                                <Button variant="outline" @click="setScope('AllowAll')">
+                                    {{ t('common.chosenScope.no') }}
+                                </Button>
+                            </div>
+                        </div>
+
+                        <div v-else-if="chosenScope == 'Configure' && !selectedRows">
+                            <Operations
+                                :ops="operationTypes"
+                                :chain="chain"
+                                @selected="(ops) => selectedRows = ops"
+                                @exit="() => {
+                                    chosenScope = null;
+                                    selectedRows = null;
+                                }"
+                            />
+                        </div>
+
+                        <div v-if="chosenScope && selectedRows" class="space-y-3">
+                            <div class="flex flex-wrap gap-2">
+                                <Badge variant="secondary" class="flex items-center gap-1">
+                                    <Shield class="h-3 w-3" />
+                                    {{ selectedRows ? selectedRows.length : 0 }} {{ t('common.totp.chosen') }}
+                                </Badge>
+                                <Badge variant="default" class="flex items-center gap-1">
+                                    <ThumbsUp class="h-3 w-3" />
+                                    {{ t('common.raw.ready') }}
+                                </Badge>
+                            </div>
+                        </div>
+                    </CardContent>
+                </Card>
+            </div>
+
+            <div class="flex flex-wrap gap-2 pt-2">
+                <Button v-if="chosenScope && selectedRows" variant="outline" @click="goBack">
+                    {{ t('common.qr.back') }}
                 </Button>
-            </router-link>
-        </span>
-        <span v-else>
-            Unsupported chain.
-        </span>
+                <router-link :to="'/dashboard'" replace>
+                    <Button variant="outline">
+                        {{ t('common.raw.exit') }}
+                    </Button>
+                </router-link>
+            </div>
+        </div>
+
+        <div v-else class="px-4 py-3">
+            {{ t('common.chain.unsupported') }}
+        </div>
     </div>
 </template>

@@ -2,6 +2,7 @@
     import { ref, onMounted } from "vue";
     import { useI18n } from 'vue-i18n';
     import { Button } from '@/components/ui/ui/button';
+    import { Input } from '@/components/ui/ui/input';
     import { Alert, AlertDescription } from '@/components/ui/ui/alert';
     import { Checkbox } from '@/components/ui/ui/checkbox';
     import { Label } from '@/components/ui/ui/label';
@@ -76,81 +77,65 @@
 </script>
 
 <template>
-    <div id="step2">
-        <p class="mb-2 font-weight-bold">
-            {{ t('common.account_name', { 'chain' : chain}) }}
-        </p>
-        <input
-            id="inputAccount"
-            v-model="accountname"
-            type="text"
-            class="form-control mb-3"
-            :placeholder="t('common.account_name',{ 'chain' : chain})"
-            required
-        >
-        <p class="my-3 font-weight-normal">
-            {{ t('common.btspass_cta') }}
-        </p>
-        <input
-            id="inputActive"
-            v-model="cloud_pass"
-            type="password"
-            class="form-control mb-3 small"
-            :placeholder="t('common.btspass_placeholder')"
-            required
-        >
-        <br>
-        <br>
+    <div id="step2" class="space-y-3">
+        <div>
+            <p class="mb-1 font-semibold text-sm">
+                {{ t('common.account_name', { 'chain' : chain}) }}
+            </p>
+            <Input
+                id="inputAccount"
+                v-model="accountname"
+                type="text"
+                class="w-full"
+                :placeholder="t('common.account_name',{ 'chain' : chain})"
+                required
+            />
+        </div>
+
+        <div>
+            <p class="mb-1">{{ t('common.btspass_cta') }}</p>
+            <Input
+                id="inputActive"
+                v-model="cloud_pass"
+                type="password"
+                class="w-full"
+                :placeholder="t('common.btspass_placeholder')"
+                required
+            />
+        </div>
+
         <div class="flex items-center gap-2">
             <Checkbox id="legacy" :checked="legacy" @update:checked="legacy = $event" />
-            <Label for="legacy">Legacy key mode</Label>
+            <Label for="legacy">{{ t('common.legacy_key_mode') }}</Label>
         </div>
-        <div class="grid grid-cols-12">
-            <div class="col-span-12">
-                <Button
-                    variant="outline"
-                    class="step_btn"
-                    @click="emit('back')"
-                >
-                    {{ t('common.back_btn') }}
+
+        <div class="flex flex-wrap gap-2 pt-2">
+            <Button variant="outline" @click="emit('back')">
+                {{ t('common.back_btn') }}
+            </Button>
+            <Button
+                v-if="accountname !== '' && cloud_pass !== '' && !inProgress && !errorOcurred"
+                @click="next"
+            >
+                {{ t('common.next_btn') }}
+            </Button>
+            <div v-if="accountname !== '' && cloud_pass !== '' && errorOcurred" class="space-y-2">
+                <Button @click="next">
+                    {{ t('common.next2_btn') }}
                 </Button>
-                <Button
-                    v-if="accountname !== '' && cloud_pass !== '' && !inProgress && !errorOcurred"
-                    class="step_btn"
-                    type="submit"
-                    @click="next"
-                >
-                    {{ t('common.next_btn') }}
-                </Button>
-                <span v-if="accountname !== '' && cloud_pass !== '' && errorOcurred">
-                    <Button
-                        class="step_btn"
-                        type="submit"
-                        @click="next"
-                    >
-                        {{ t('common.next2_btn') }}
-                    </Button>
-                    <br>
-                    <Alert class="border-yellow-500 bg-yellow-50">
-                        <AlertDescription>
-                            {{ t('common.error_text') }}
-                        </AlertDescription>
-                    </Alert>
-                </span>
-                <figure v-if="accountname !== '' && cloud_pass !== '' && inProgress">
-                    <Progress :model-value="0" class="animate-pulse" />
-                    <br>
-                    <figcaption>Connecting to blockchain</figcaption>
-                </figure>
-                <Button
-                    v-if="accountname === '' || cloud_pass === ''"
-                    disabled
-                    class="step_btn"
-                    type="submit"
-                >
-                    {{ t('common.next_btn') }}
-                </Button>
+                <Alert variant="secondary" class="border-yellow-500 bg-yellow-50">
+                    <AlertDescription>
+                        {{ t('common.error_text') }}
+                    </AlertDescription>
+                </Alert>
             </div>
+            <div v-if="accountname !== '' && cloud_pass !== '' && inProgress" class="flex flex-col items-center gap-2">
+                <Progress :model-value="0" class="w-full" />
+                <p class="text-sm text-muted-foreground">{{ t('common.connecting') }}</p>
+            </div>
+            <Button v-if="accountname === '' || cloud_pass === ''" disabled>
+                {{ t('common.next_btn') }}
+            </Button>
         </div>
     </div>
 </template>

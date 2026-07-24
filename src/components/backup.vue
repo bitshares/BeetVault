@@ -5,6 +5,8 @@
     import store from '../store/index.js';
     import router from '../router/index.js';
     import { Button } from '@/components/ui/ui/button';
+    import { Input } from '@/components/ui/ui/input';
+    import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/ui/card';
 
     const { t } = useI18n({ useScope: 'global' });
 
@@ -38,7 +40,7 @@
                 walletpass.value = "";
             })
             .catch(() => {
-                passincorrect.value = "is-invalid";
+                passincorrect.value = "border-red-500 ring-red-500";
                 window.electron.notify(t('common.start.invalid_password'));
             });
     }
@@ -54,56 +56,40 @@
 </script>
 
 <template>
-    <div
-        class="dapp-list mt-2"
-        style="text-align: center; margin-top: auto; margin-bottom: auto;"
-    >
-        <p>
-            <u>{{ t('common.backup_lbl') }}</u>
-        </p>
-        <div class="grid grid-cols-12 row px-4">
-            <div
-                class="col-span-12 largeHeader"
-            >
-                <p class="small text-justify">
-                    {{ t('common.backup_txt') }}
-                </p>
-            </div>
-            <div class="col-span-3" />
-            <div class="col-span-6">
-                <input
-                    id="inputPassword"
-                    v-model="walletpass"
-                    style="width:97%; margin-top: 5px;"
-                    type="password"
-                    class="form-control mb-4 px-3"
-                    :placeholder=" t('common.password_placeholder')"
-                    required
-                    :class="passincorrect"
-                    @focus="passincorrect=''"
-                >
-                <br>
-                <Button
-                    class="step_btn"
-                    type="button"
-                    @click="downloadBackup"
-                >
-                    {{ t('common.backup_btn') }}
-                </Button><br>
-                <router-link
-                    :to="'/dashboard'"
-                    style="text-decoration: none;"
-                    replace
-                >
-                    <Button
-                        variant="outline"
-                        class="step_btn"
-                    >
-                        Exit settings menu
-                    </Button>
-                </router-link>
-            </div>
-            <div class="col-span-3" />
+    <div class="bottom p-0">
+        <div class="content px-4 py-3">
+            <Card class="w-full max-w-md mx-auto">
+                <CardHeader>
+                    <CardTitle class="text-center">
+                        <span class="underline font-semibold">{{ t('common.backup_lbl') }}</span>
+                    </CardTitle>
+                </CardHeader>
+                <CardContent class="space-y-4">
+                    <p class="text-sm text-justify">{{ t('common.backup_txt') }}</p>
+
+                    <div class="space-y-2">
+                        <Input
+                            id="inputPassword"
+                            v-model="walletpass"
+                            type="password"
+                            class="w-full"
+                            :placeholder="t('common.password_placeholder')"
+                            required
+                            :class="passincorrect"
+                            @focus="passincorrect = ''"
+                        />
+                    </div>
+
+                    <div class="flex justify-end gap-2 pt-2">
+                        <Button type="button" @click="downloadBackup">
+                            {{ t('common.backup_btn') }}
+                        </Button>
+                        <Button variant="outline" @click="router.replace('/dashboard')">
+                            {{ t('common.settings.exit') }}
+                        </Button>
+                    </div>
+                </CardContent>
+            </Card>
         </div>
     </div>
 </template>
