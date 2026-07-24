@@ -1,6 +1,9 @@
 <script setup>
 import { ref, computed, onMounted, watch, toRaw } from "vue";
 import { useI18n } from "vue-i18n";
+import { Button } from '@/components/ui/ui/button';
+import { Card } from '@/components/ui/ui/card';
+import { Loader2 } from 'lucide-vue-next';
 
 import AccountSelect from "./account-select";
 import Operations from "./blockchains/operations";
@@ -171,30 +174,27 @@ onMounted(() => {
                     {{ t("common.local.desc") }}
                 </p>
 
-                <ui-card
+                <Card
                     v-if="!selectedRows"
-                    v-shadow="3"
-                    outlined
+                    class="shadow-md border"
                     style="margintop: 5px"
                 >
                     <span v-if="!chosenScope">
                         <p>
                             {{ t("common.chosenScope.title.local") }}
                         </p>
-                        <ui-button
-                            raised
+                        <Button
                             style="margin-right: 5px; margin-bottom: 5px"
                             @click="setScope('Configure')"
                         >
                             {{ t("common.chosenScope.yes") }}
-                        </ui-button>
-                        <ui-button
-                            raised
+                        </Button>
+                        <Button
                             style="margin-right: 5px; margin-bottom: 5px"
                             @click="setScope('AllowAll')"
                         >
                             {{ t("common.chosenScope.no") }}
-                        </ui-button>
+                        </Button>
                     </span>
                     <span
                         v-else-if="chosenScope == 'Configure' && !selectedRows"
@@ -211,7 +211,7 @@ onMounted(() => {
                             "
                         />
                     </span>
-                </ui-card>
+                </Card>
             </span>
 
             <span v-if="chosenScope && selectedRows">
@@ -221,30 +221,26 @@ onMounted(() => {
                     <p>{{ t("common.local.desc") }}</p>
 
                     <h4>{{ t("common.local.upload") }}</h4>
-                    <ui-file
-                        accept="application/json"
-                        @change="onFileUpload($event)"
-                    />
+                    <input type="file" accept="application/json" @change="onFileUpload($event)" class="block w-full text-sm text-gray-500 file:mr-4 file:py-2 file:px-4 file:rounded-md file:border-0 file:text-sm file:font-semibold file:bg-primary file:text-primary-foreground hover:file:bg-primary/90" />
                 </span>
                 <span v-else>
-                    <ui-spinner active />
+                    <Loader2 class="h-6 w-6 animate-spin" />
                     <h3>{{ t("common.local.progress") }}</h3>
                 </span>
             </span>
 
             <br />
-            <ui-button
+            <Button
                 v-if="chosenScope && selectedRows"
                 style="margin-right: 5px"
-                icon="arrow_back_ios"
                 @click="goBack"
             >
                 {{ t("common.local.back") }}
-            </ui-button>
+            </Button>
             <router-link :to="'/dashboard'" replace>
-                <ui-button outlined class="step_btn">
+                <Button variant="outline" class="step_btn">
                     {{ t("common.local.exit") }}
-                </ui-button>
+                </Button>
             </router-link>
         </span>
         <span v-else>

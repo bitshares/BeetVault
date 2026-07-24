@@ -1,6 +1,10 @@
 <script setup>
     import { ref, computed, watchEffect, toRaw, onMounted } from 'vue';
+    import { Button } from '@/components/ui/ui/button';
+    import { Card } from '@/components/ui/ui/card';
     import { useI18n } from 'vue-i18n';
+    import { Badge } from '@/components/ui/ui/badge';
+    import { ThumbsUp, ThumbsDown } from 'lucide-vue-next';
 
     import AccountSelect from "./account-select";
     
@@ -307,78 +311,79 @@
                     <p>
                         {{ t('common.www.description') }}
                     </p>
-                    <ui-button
-                        raised
+                    <Button
                         style="margin-right:5px; margin-bottom: 5px;"
                         @click="proceed = true"
                     >
                         {{ t('common.www.yes') }}
-                    </ui-button>
+                    </Button>
                     <router-link
                         :to="'/dashboard'"
                         replace
                     >
-                        <ui-button
-                            raised
+                        <Button
                             style="margin-right:5px; margin-bottom: 5px;"
                         >
                             {{ t('common.www.no') }}
-                        </ui-button>
+                        </Button>
                     </router-link>
                 </span>
                 <span v-else>
                     <p>
                         {{ t('common.www.prompt') }}
                     </p>
-                    <ui-card
-                        v-shadow="3"
-                        outlined
+                    <Card
+                        class="shadow-md border"
                         style="marginTop: 5px;"
                     >
-                        <ui-chips
-                            id="input-chip-set"
-                            type="input"
-                            style="display: flex; justify-content: center;"
-                        >
-                            <ui-chip
+                        <div class="flex flex-wrap gap-2" style="display: flex; justify-content: center;">
+                            <Badge
                                 v-if="serverOnline && serverOnline.http"
-                                icon="thumb_up"
+                                variant="default"
+                                class="flex items-center gap-1"
                             >
+                                <ThumbsUp class="h-3 w-3" />
                                 HTTP
-                            </ui-chip>
-                            <ui-chip
+                            </Badge>
+                            <Badge
                                 v-else
-                                icon="thumb_down"
+                                variant="destructive"
+                                class="flex items-center gap-1"
                             >
+                                <ThumbsDown class="h-3 w-3" />
                                 HTTP 
-                            </ui-chip>
+                            </Badge>
                         
-                            <ui-chip
+                            <Badge
                                 v-if="serverOnline && serverOnline.https"
-                                icon="thumb_up"
+                                variant="default"
+                                class="flex items-center gap-1"
                             >
+                                <ThumbsUp class="h-3 w-3" />
                                 HTTPS   
-                            </ui-chip>
-                            <ui-chip
+                            </Badge>
+                            <Badge
                                 v-else
-                                icon="thumb_down"
+                                variant="destructive"
+                                class="flex items-center gap-1"
                             >
+                                <ThumbsDown class="h-3 w-3" />
                                 HTTPS   
-                            </ui-chip>
-                        </ui-chips>
-                    </ui-card>
+                            </Badge>
+                        </div>
+                    </Card>
                 </span>
             </span>
             <router-link
                 :to="'/dashboard'"
                 replace
             >
-                <ui-button
-                    outlined
+                <Button
+                    variant="outline"
                     class="step_btn"
                 >
                     {{ t('common.www.exit') }}
-                </ui-button>
+                </Button>
             </router-link>
         </span>
         <span v-else>

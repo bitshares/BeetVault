@@ -1,6 +1,11 @@
 <script setup>
     import { ref, onMounted } from "vue";
     import { useI18n } from 'vue-i18n';
+    import { Button } from '@/components/ui/ui/button';
+    import { Alert, AlertDescription } from '@/components/ui/ui/alert';
+    import { Checkbox } from '@/components/ui/ui/checkbox';
+    import { Label } from '@/components/ui/ui/label';
+    import { Progress } from '@/components/ui/ui/progress';
 
     const { t } = useI18n({ useScope: 'global' });
 
@@ -96,56 +101,56 @@
         >
         <br>
         <br>
-        <ui-form-field>
-            <ui-checkbox v-model="legacy" />
-            <label>Legacy key mode</label>
-        </ui-form-field>
-        <ui-grid>
-            <ui-grid-cell columns="12">
-                <ui-button
-                    outlined
+        <div class="flex items-center gap-2">
+            <Checkbox id="legacy" :checked="legacy" @update:checked="legacy = $event" />
+            <Label for="legacy">Legacy key mode</Label>
+        </div>
+        <div class="grid grid-cols-12">
+            <div class="col-span-12">
+                <Button
+                    variant="outline"
                     class="step_btn"
                     @click="emit('back')"
                 >
                     {{ t('common.back_btn') }}
-                </ui-button>
-                <ui-button
+                </Button>
+                <Button
                     v-if="accountname !== '' && cloud_pass !== '' && !inProgress && !errorOcurred"
-                    raised
                     class="step_btn"
                     type="submit"
                     @click="next"
                 >
                     {{ t('common.next_btn') }}
-                </ui-button>
+                </Button>
                 <span v-if="accountname !== '' && cloud_pass !== '' && errorOcurred">
-                    <ui-button
-                        raised
+                    <Button
                         class="step_btn"
                         type="submit"
                         @click="next"
                     >
                         {{ t('common.next2_btn') }}
-                    </ui-button>
+                    </Button>
                     <br>
-                    <ui-alert state="warning">
-                        {{ t('common.error_text') }}
-                    </ui-alert>
+                    <Alert class="border-yellow-500 bg-yellow-50">
+                        <AlertDescription>
+                            {{ t('common.error_text') }}
+                        </AlertDescription>
+                    </Alert>
                 </span>
                 <figure v-if="accountname !== '' && cloud_pass !== '' && inProgress">
-                    <ui-progress indeterminate />
+                    <Progress :model-value="0" class="animate-pulse" />
                     <br>
                     <figcaption>Connecting to blockchain</figcaption>
                 </figure>
-                <ui-button
+                <Button
                     v-if="accountname === '' || cloud_pass === ''"
                     disabled
                     class="step_btn"
                     type="submit"
                 >
                     {{ t('common.next_btn') }}
-                </ui-button>
-            </ui-grid-cell>
-        </ui-grid>
+                </Button>
+            </div>
+        </div>
     </div>
 </template>

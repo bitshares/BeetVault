@@ -1,6 +1,9 @@
 <script setup>
     import {ref, onMounted} from "vue";
     import { useI18n } from 'vue-i18n';
+    import { Button } from '@/components/ui/ui/button';
+    import { Progress } from '@/components/ui/ui/progress';
+    import { X } from 'lucide-vue-next';
 
     const { t } = useI18n({ useScope: 'global' });
 
@@ -96,7 +99,7 @@
 <template>
     <div id="step2">
         <template v-if="substep1 && inProgress">
-            <ui-progress indeterminate />
+            <Progress :model-value="0" class="animate-pulse" />
             <br>
             <figcaption>
                 {{ t('common.import_bin_progress') }}
@@ -120,22 +123,22 @@
                 class="form-control mb-3 small"
             >
             <br>
-            <ui-button
+            <Button
                 v-if="wallet_file && bin_file_password"
-                outlined
+                variant="outline"
                 class="step_btn"
                 @click="next"
             >
                 {{ t('common.next_btn') }}
-            </ui-button>
+            </Button>
             <br>
-            <ui-button
-                outlined
+            <Button
+                variant="outline"
                 class="step_btn"
                 @click="emit('back')"
             >
                 {{ t('common.back_btn') }}
-            </ui-button>
+            </Button>
         </template>
         <template v-if="substep2">
             <div class="import-accounts mt-3">
@@ -207,57 +210,58 @@
                                 {{ account.memo.canSend ? 'Y' : 'N' }}
                             </td>
                             <td class="text-center align-middle">
-                                <ui-icon-button
+                                <Button
                                     v-if="account.importable"
-                                    icon="clear"
-                                    outlined
+                                    variant="outline"
+                                    size="icon"
                                     class="step_btn"
                                     @click="removeAccount(account.id)"
-                                />
+                                >
+                                    <X class="h-4 w-4" />
+                                </Button>
                             </td>
                         </tr>
                     </tbody>
                 </table>
 
-                <ui-grid>
-                    <ui-grid-cell columns="12">
-                        <ui-button
-                            outlined
+                <div class="grid grid-cols-12">
+                    <div class="col-span-12">
+                        <Button
+                            variant="outline"
                             class="step_btn"
                             @click="back"
                         >
                             {{ t('common.back_btn') }}
-                        </ui-button>
+                        </Button>
 
-                        <ui-button
+                        <Button
                             v-if="substep1 && (!wallet_file || !bin_file_password)"
                             disabled
                             class="step_btn"
                             type="submit"
                         >
                             {{ t('common.next_btn') }}
-                        </ui-button>
+                        </Button>
                         
-                        <ui-button
+                        <Button
                             v-if="accounts && accounts.length || (substep1 && wallet_file && bin_file_password)"
-                            raised
                             class="step_btn"
                             type="submit"
                             @click="next"
                         >
                             {{ t('common.next_btn') }}
-                        </ui-button>
+                        </Button>
 
-                        <ui-button
+                        <Button
                             v-if="substep2 && (!accounts || !accounts.length)"
                             disabled
                             class="step_btn"
                             type="submit"
                         >
                             {{ t('common.next_btn') }}
-                        </ui-button>
-                    </ui-grid-cell>
-                </ui-grid>
+                        </Button>
+                    </div>
+                </div>
             </div>
             <!--<button-->
             <!--v-if="picked.length>10"-->

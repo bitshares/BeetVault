@@ -1,6 +1,9 @@
 <script setup>
     import { computed} from "vue";
+    import { Button } from '@/components/ui/ui/button';
     import { useI18n } from 'vue-i18n';
+    import { Alert, AlertDescription } from '@/components/ui/ui/alert';
+    import { Tooltip, TooltipContent, TooltipTrigger } from '@/components/ui/ui/tooltip';
 
     const { t } = useI18n({ useScope: 'global' });
 
@@ -69,40 +72,43 @@
         v-if="props.request && props.accounts"
         style="padding:5px"
     >
-        <div v-tooltip="t('operations.relink.request_tooltip')">
-            {{ requestText }} &#10068;
-        </div>
+        <Tooltip>
+            <TooltipTrigger as-child>
+                <div>
+                    {{ requestText }} &#10068;
+                </div>
+            </TooltipTrigger>
+            <TooltipContent>
+                <p>{{ t('operations.relink.request_tooltip') }}</p>
+            </TooltipContent>
+        </Tooltip>
         <br>
-        <ui-button
-            raised
+        <Button
             style="margin-right:5px"
             @click="_clickedAllow()"
         >
             {{ t('operations.link.accept_btn') }}
-        </ui-button>
-        <ui-button
-            raised
+        </Button>
+        <Button
             @click="_clickedDeny()"
         >
             {{ t('operations.link.reject_btn') }}
-        </ui-button>
+        </Button>
     </div>
     <div
         v-else
         style="padding:5px"
     >
-        <ui-alert
-            v-if="!chainOperations"
-            state="error"
-        >
-            {{ t('operations.relink.error') }}
-        </ui-alert>
+        <Alert v-if="!chainOperations" variant="destructive">
+            <AlertDescription>
+                {{ t('operations.relink.error') }}
+            </AlertDescription>
+        </Alert>
         <br>
-        <ui-button
-            raised
+        <Button
             @click="_clickedDeny()"
         >
             {{ t('operations.link.reject_btn') }}
-        </ui-button>
+        </Button>
     </div>
 </template>

@@ -1,5 +1,6 @@
 <script setup>
     import {ref, watchEffect} from "vue";
+    import { Button } from '@/components/ui/ui/button';
     import { useI18n } from 'vue-i18n';
     const { t } = useI18n({ useScope: 'global' });
 
@@ -117,34 +118,33 @@
             {{ t('common.use_only_for_messages_and_proof') }}
         </p>
 
-        <ui-grid>
-            <ui-grid-cell columns="12">
-                <ui-button
-                    outlined
+        <div class="grid grid-cols-12">
+            <div class="col-span-12">
+                <Button
+                    variant="outline"
                     class="step_btn"
                     @click="emit('back')"
                 >
                     {{ t('common.back_btn') }}
-                </ui-button>
+                </Button>
 
-                <ui-button
+                <Button
                     v-if="accountname !== ''"
-                    raised
                     class="step_btn"
                     type="submit"
                     @click="next"
                 >
                     {{ t('common.next_btn') }}
-                </ui-button>
-                <ui-button
+                </Button>
+                <Button
                     v-else
                     disabled
                     class="step_btn"
                     type="submit"
                 >
                     {{ t('common.next_btn') }}
-                </ui-button>
-            </ui-grid-cell>
-        </ui-grid>
+                </Button>
+            </div>
+        </div>
     </div>
 </template>

@@ -1,5 +1,7 @@
 <script setup>
     import { computed } from "vue";
+    import { Button } from '@/components/ui/ui/button';
+    import { Tooltip, TooltipContent, TooltipTrigger } from '@/components/ui/ui/tooltip';
     import { useI18n } from 'vue-i18n';
 
     const { t } = useI18n({ useScope: 'global' });
@@ -83,21 +85,26 @@
 
 <template>
     <div style="padding:5px">
-        <div v-tooltip="t('operations.identity.request_tooltip')">
-            {{ requestText }} &#10068;
-        </div>
-        <ui-button
-            raised
+        <Tooltip>
+            <TooltipTrigger as-child>
+                <div>
+                    {{ requestText }} &#10068;
+                </div>
+            </TooltipTrigger>
+            <TooltipContent>
+                <p>{{ t('operations.identity.request_tooltip') }}</p>
+            </TooltipContent>
+        </Tooltip>
+        <Button
             style="margin-right:5px"
             @click="_clickedAllow()"
         >
             {{ t('operations.account_id.accept_btn') }}
-        </ui-button>
-        <ui-button
-            raised
+        </Button>
+        <Button
             @click="_clickedDeny()"
         >
             {{ t('operations.account_id.reject_btn') }}
-        </ui-button>
+        </Button>
     </div>
 </template>

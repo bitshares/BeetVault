@@ -5,6 +5,8 @@
     import store from '../store/index.js';
     import router from '../router/index.js';
     import {formatAccount} from "../lib/formatter.js";
+    import { Button } from '@/components/ui/ui/button';
+    import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from '@/components/ui/ui/table';
 
     const { t } = useI18n({ useScope: 'global' });
     let tableData = ref();
@@ -99,22 +101,27 @@
             <u>{{ t('common.dapps_lbl') }}</u>
         </p>
         <span v-if="tableData">
-            <ui-table
-                v-shadow="5"
-                :data="tableData.data"
-                :thead="tableData.thead"
-                :tbody="tableData.tbody"
-                style="padding:5px;"
-            >
-                <template #actions="{ data }">
-                    <ui-button
-                        raised
-                        @click="deleteDapp(data.actions)"
-                    >
-                        {{ t('common.delete_btn') }}
-                    </ui-button>
-                </template>
-            </ui-table>
+            <Table class="shadow-xl" style="padding:5px;">
+                <TableHeader>
+                    <TableRow>
+                        <TableHead v-for="(header, idx) in tableData.thead" :key="idx">{{ header }}</TableHead>
+                    </TableRow>
+                </TableHeader>
+                <TableBody>
+                    <TableRow v-for="(row, idx) in tableData.data" :key="idx">
+                        <TableCell v-for="(key, colIdx) in tableData.tbody" :key="colIdx">
+                            <template v-if="key.slot === 'actions'">
+                                <Button @click="deleteDapp(row.actions)">
+                                    {{ t('common.delete_btn') }}
+                                </Button>
+                            </template>
+                            <template v-else>
+                                {{ row[key] }}
+                            </template>
+                        </TableCell>
+                    </TableRow>
+                </TableBody>
+            </Table>
         </span>
         <span v-else>
             <em>{{ t('common.no_dapps_linked') }}</em>
@@ -125,13 +132,13 @@
             replace
             style="text-decoration: none;"
         >
-            <ui-button
-                outlined
+            <Button
+                variant="outline"
                 class="step_btn"
                 style="margin-top:20px;"
             >
                 Exit dApps
-            </ui-button>
+            </Button>
         </router-link>
     </div>
 </template>

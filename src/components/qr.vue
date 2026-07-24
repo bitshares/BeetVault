@@ -1,6 +1,9 @@
 <script setup>
     import { ref, computed, watchEffect, inject, watch, onMounted, toRaw } from 'vue';
     import { useI18n } from 'vue-i18n';
+    import { Button } from '@/components/ui/ui/button';
+    import { Card } from '@/components/ui/ui/card';
+    import { Loader2 } from 'lucide-vue-next';
 
     import AccountSelect from "./account-select";
     import Operations from "./blockchains/operations";
@@ -152,7 +155,7 @@
                 <p>
                     {{ t('common.qr.progress') }}
                 </p>
-                <ui-spinner active />
+                <Loader2 class="h-6 w-6 animate-spin" />
             </span>
             <span v-else>
                 <AccountSelect />
@@ -162,30 +165,27 @@
                 >
                     {{ t('common.qr.label') }}
                 </p>
-                <ui-card
+                <Card
                     v-if="!selectedRows"
-                    v-shadow="3"
-                    outlined
+                    class="shadow-md border"
                     style="marginTop: 5px;"
                 >
                     <span v-if="!chosenScope">
                         <p>
                             {{ t('common.chosenScope.title.qr') }}
                         </p>
-                        <ui-button
-                            raised
+                        <Button
                             style="margin-right:5px; margin-bottom: 5px;"
                             @click="setScope('Configure')"
                         >
                             {{ t('common.chosenScope.yes') }}
-                        </ui-button>
-                        <ui-button
-                            raised
+                        </Button>
+                        <Button
                             style="margin-right:5px; margin-bottom: 5px;"
                             @click="setScope('AllowAll')"
                         >
                             {{ t('common.chosenScope.no') }}
-                        </ui-button>
+                        </Button>
                     </span>
                     <span v-else-if="chosenScope == 'Configure' && !selectedRows">
                         <Operations
@@ -198,7 +198,7 @@
                             }"
                         />
                     </span>
-                </ui-card>
+                </Card>
             </span>
 
             
@@ -206,74 +206,70 @@
                 <span v-if="qrChoice && qrChoice === 'Scan'">
                     <QRScan @detection="(qr) => evaluateQR(qr)" />
                     <br>
-                    <ui-button @click="undoQRChoice()">
+                    <Button @click="undoQRChoice()">
                         {{ t('common.qr.back') }}
-                    </ui-button>
+                    </Button>
                 </span>
                 <span v-else-if="qrChoice && qrChoice === 'Drag'">
                     <QRDrag @detection="(qr) => evaluateQR(qr)" />
                     <br>
-                    <ui-button @click="undoQRChoice()">
+                    <Button @click="undoQRChoice()">
                         {{ t('common.qr.back') }}
-                    </ui-button>
+                    </Button>
                 </span>
                 <span v-else-if="qrChoice && qrChoice === 'Upload'">
                     <QRUpload @detection="(qr) => evaluateQR(qr)" />
                     <br>
-                    <ui-button @click="undoQRChoice()">
+                    <Button @click="undoQRChoice()">
                         {{ t('common.qr.back') }}
-                    </ui-button>
+                    </Button>
                 </span>
                 <span v-else>
                     <p style="marginBottom:0px;">
                         {{ t('common.qr.main.title') }}
                     </p>
                     <br>
-                    <ui-button
-                        raised
+                    <Button
                         style="margin-bottom: 10px;"
                         @click="setChoice('Drag')"
                     >
                         {{ t('common.qr.main.drag') }}
-                    </ui-button>
+                    </Button>
                     <br>
-                    <ui-button
-                        raised
+                    <Button
                         style="margin-bottom: 10px;"
                         @click="setChoice('Scan')"
                     >
                         {{ t('common.qr.main.scan') }}
-                    </ui-button>
+                    </Button>
                     <br>
-                    <ui-button
-                        raised
+                    <Button
                         style="margin-bottom: 10px;"
                         @click="setChoice('Upload')"
                     >
                         {{ t('common.qr.main.upload') }}
-                    </ui-button>
+                    </Button>
                 </span>
             </span>
 
             <br>
-            <ui-button
+            <Button
                 v-if="chosenScope && selectedRows && !qrChoice"
                 style="margin-right:5px"
-                icon="arrow_back_ios"
                 @click="goBack"
             >
                 {{ t('common.qr.back') }}
-            </ui-button>
+            </Button>
             <router-link
                 :to="'/dashboard'"
                 replace
             >
-                <ui-button
-                    outlined
+                <Button
+                    variant="outline"
                     class="step_btn"
                 >
                     {{ t('common.qr.exit') }}
-                </ui-button>
+                </Button>
             </router-link>
         </span>
         <span v-else>

@@ -4,6 +4,7 @@
 
     import store from '../store/index.js';
     import {formatChain, formatAccount} from "../lib/formatter.js";
+    import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/ui/select';
     const { t } = useI18n({ useScope: 'global' });
 
     let chosenAccount = ref(store.getters["AccountStore/getCurrentIndex"]);
@@ -65,23 +66,25 @@
 </script>
 
 <template>
-    <div style="padding:5px">
-        <ui-card
-            v-shadow="1"
-            outlined
-            style="padding:5px; text-align: center;"
+    <div class="w-full px-2 py-2">
+        <Select
+            v-if="accountOptions.length"
+            id="account_select"
+            v-model="chosenAccount"
+            required
         >
-            <ui-select
-                v-if="accountOptions.length"
-                id="account_select"
-                v-model="chosenAccount"
-                style="width:100%;"
-                :options="accountOptions"
-                required
-                full-bleed
-            >
-                {{ t('common.account') }}
-            </ui-select>
-        </ui-card>
+            <SelectTrigger class="w-full">
+                <SelectValue :placeholder="t('common.account')" />
+            </SelectTrigger>
+            <SelectContent>
+                <SelectItem
+                    v-for="option in accountOptions"
+                    :key="option.value"
+                    :value="option.value"
+                >
+                    {{ option.label }}
+                </SelectItem>
+            </SelectContent>
+        </Select>
     </div>
 </template>

@@ -1,6 +1,9 @@
 <script setup>
     import { ref } from 'vue';
+    import { Button } from '@/components/ui/ui/button';
+    import { Card } from '@/components/ui/ui/card';
     import { useI18n } from 'vue-i18n';
+    import { Alert, AlertDescription } from '@/components/ui/ui/alert';
     import { QrcodeDropZone } from 'vue-qrcode-reader'
 
     const { t } = useI18n({ useScope: 'global' });
@@ -53,29 +56,28 @@
             <p>
                 {{ t('common.qr.drag.successPrompt') }}
             </p>           
-            <ui-button @click="tryAgain">
+            <Button @click="tryAgain">
                 {{ t('common.qr.drag.successBtn') }}
-            </ui-button>
+            </Button>
         </span>
         <span v-else-if="!result && error">
-            <ui-alert
-                state="warning"
-                closable
-            >
-                {{ error }}
-            </ui-alert>           
-            <ui-button @click="tryAgain">
+            <Alert class="border-yellow-500 bg-yellow-50">
+                <AlertDescription class="flex items-center justify-between">
+                    {{ error }}
+                    <button @click="tryAgain" class="ml-2">×</button>
+                </AlertDescription>
+            </Alert>           
+            <Button @click="tryAgain">
                 {{ t('common.qr.drag.successBtn') }}
-            </ui-button>
+            </Button>
         </span>
         <span v-else>
             <p>
                 {{ t('common.qr.drag.title') }}
             </p>
 
-            <ui-card
-                v-shadow="5"
-                outlined
+            <Card
+                class="shadow-lg border"
                 style="height: 100px; width: 200px; margin-left: 115px; border: 1px solid #C7088E;"
             >
                 <qrcode-drop-zone
@@ -91,7 +93,7 @@
                         {{ t('common.qr.drag.prompt') }}
                     </div>
                 </qrcode-drop-zone>
-            </ui-card>
+            </Card>
         </span>
     </div>
 </template>

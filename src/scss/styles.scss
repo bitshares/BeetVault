@@ -1,3 +1,5 @@
+@use "sass:color";
+
 /* Fixed Layout */
 html,
 body {
@@ -188,8 +190,8 @@ body {
 .btn-secondary:focus,
 .btn-secondary:not(:disabled):not(.disabled).active,
 .btn-secondary:not(:disabled):not(.disabled):active {
-    background: darken($secondary,15%);
-    border: 1px solid darken($secondary,15%);
+    background: color.adjust($secondary, $lightness: -15%);
+    border: 1px solid color.adjust($secondary, $lightness: -15%);
     outline: none !important;
     box-shadow: none !important;
     color:white;

@@ -3,10 +3,6 @@ import mitt from 'mitt';
 
 import './styles/globals.css';
 
-import BalmUI from 'balm-gui';
-import BalmUIPlus from 'balm-ui-plus';
-import 'balm-ui-css';
-
 import 'typeface-roboto';
 import 'typeface-rajdhani';
 
@@ -36,13 +32,6 @@ window.t = (key, params) => {
     return i18n.global.t(key, params)
 }
 
-app.use(BalmUI, {
-    $theme: {
-        primary: '#C7088E'
-    }
-});
-
-app.use(BalmUIPlus);
 app.mount('#receipt');
 
 emitter.on('i18n', (data) => {

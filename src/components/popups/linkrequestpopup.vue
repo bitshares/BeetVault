@@ -1,5 +1,7 @@
 <script setup>
     import { ref, computed, onMounted } from "vue";
+    import { Button } from '@/components/ui/ui/button';
+    import { Tooltip, TooltipContent, TooltipTrigger } from '@/components/ui/ui/tooltip';
     import {formatChain, formatAccount} from "../../lib/formatter.js";
 
     import { useI18n } from 'vue-i18n';
@@ -90,9 +92,16 @@
 
 <template>
     <div style="padding:5px">
-        <div v-tooltip="t('operations.link.request_tooltip')">
-            {{ requestText }}
-        </div>
+        <Tooltip>
+            <TooltipTrigger as-child>
+                <div>
+                    {{ requestText }}
+                </div>
+            </TooltipTrigger>
+            <TooltipContent>
+                <p>{{ t('operations.link.request_tooltip') }}</p>
+            </TooltipContent>
+        </Tooltip>
         <br>
         <div v-if="existingLinks && existingLinks.length > 0">
             {{ secondText }}
@@ -117,9 +126,7 @@
                     :key="account.value"
                     :value="account.value"
                 >
-                    <span>
-                        {{ account.label }}
-                    </span>
+                    {{ account.label }}
                 </option>
             </select>
         </div>
@@ -128,33 +135,30 @@
         </div>
         <br>
         <div v-if="chosenAccount == -1">
-            <ui-button
-                style="margin-right:5px"
+            <Button
                 disabled
+                style="margin-right:5px"
             >
                 {{ t('operations.link.accept_btn') }}
-            </ui-button>
-            <ui-button
-                raised
+            </Button>
+            <Button
                 @click="_clickedDeny()"
             >
                 {{ t('operations.link.reject_btn') }}
-            </ui-button>
+            </Button>
         </div>
         <div v-else>
-            <ui-button
-                raised
+            <Button
                 style="margin-right:5px"
                 @click="_clickedAllow()"
             >
                 {{ t('operations.link.accept_btn') }}
-            </ui-button>
-            <ui-button
-                raised
+            </Button>
+            <Button
                 @click="_clickedDeny()"
             >
                 {{ t('operations.link.reject_btn') }}
-            </ui-button>
+            </Button>
         </div>
     </div>
 </template>

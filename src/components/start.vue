@@ -1,5 +1,8 @@
 <script setup>
     import { ref, onMounted, computed } from 'vue';
+    import { Button } from '@/components/ui/ui/button';
+    import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/ui/select';
+    import { Separator } from '@/components/ui/ui/separator';
 
     import { useI18n } from 'vue-i18n';
     const { t } = useI18n({ useScope: 'global' });
@@ -73,9 +76,9 @@
                 to="/create"
                 replace
             >
-                <ui-button raised>
+                <Button>
                     {{ t('common.start_cta') }}
-                </ui-button>
+                </Button>
             </router-link>
 
             <p
@@ -90,76 +93,62 @@
                 to="/restore"
                 replace
             >
-                <ui-button raised>
+                <Button>
                     {{ t('common.restore_cta') }}
-                </ui-button>
+                </Button>
             </router-link>
-            <section :dir="null">
-                <ui-select
-                    v-if="hasWallet"
-                    id="wallet-select"
-                    v-model="selectedWallet"
-                    style="width:100%"
-                    :options="walletOptions"
-                    full-bleed
-                    @change="passincorrect=''"
-                >
-                    {{ t('common.start.wallet_name') }}
-                </ui-select>
-            </section>
-            <input
-                v-if="hasWallet"
-                id="inputPassword"
-                v-model="walletpass"
-                style="width:97%; margin-top: 5px;"
-                type="password"
-                class="form-control mb-4 px-3"
-                :placeholder=" t('common.password_placeholder')"
-                required
-                :class="passincorrect"
-                @keypress.enter="unlockWallet"
-                @focus="passincorrect=''"
-            >
-            <br>
-            <ui-button
-                v-if="hasWallet"
-                type="submit"
-                raised
-                style="margin-top: 10px; margin-bottom: 5px;"
-                @click="unlockWallet"
-            >
-                {{ t('common.unlock_cta') }}
-            </ui-button>
 
-            <ui-divider class="divider" />
-
-            <router-link
-                v-if="hasWallet"
-                to="/create"
-                replace
-            >
-                <ui-button
-                    class="step_btn"
-                    raised
+            <div v-if="hasWallet" class="w-full px-2 mt-2">
+                <Select v-model="selectedWallet" @update:model-value="passincorrect=''">
+                    <SelectTrigger class="w-full">
+                        <SelectValue :placeholder="t('common.start.wallet_name')" />
+                    </SelectTrigger>
+                    <SelectContent>
+                        <SelectItem v-for="option in walletOptions" :key="option.value" :value="option.value">
+                            {{ option.label }}
+                        </SelectItem>
+                    </SelectContent>
+                </Select>
+            </div>
+            <div v-if="hasWallet" class="w-full px-2 mt-3">
+                <input
+                    id="inputPassword"
+                    v-model="walletpass"
+                    class="w-full px-3 py-2 border rounded-md text-sm"
+                    type="password"
+                    :placeholder="t('common.password_placeholder')"
+                    required
+                    :class="passincorrect"
+                    @keypress.enter="unlockWallet"
+                    @focus="passincorrect=''"
                 >
-                    {{ t('common.create_cta') }}
-                </ui-button>
-            </router-link>
-            <router-link
-                v-if="hasWallet"
-                to="/restore"
-                replace
-            >
-                <ui-button
-                    class="step_btn"
-                    raised
+            </div>
+            <div v-if="hasWallet" class="mt-4">
+                <Button
+                    type="submit"
+                    @click="unlockWallet"
                 >
-                    {{ t('common.restore_cta') }}
-                </ui-button>
-            </router-link>
+                    {{ t('common.unlock_cta') }}
+                </Button>
+            </div>
+        </div>
+        <div v-if="hasWallet" class="mb-2">
+            <Separator class="my-3" />
+            <div class="flex justify-center gap-2 mb-3">
+                <router-link to="/create" replace>
+                    <Button class="step_btn">
+                        {{ t('common.create_cta') }}
+                    </Button>
+                </router-link>
+                <router-link to="/restore" replace>
+                    <Button class="step_btn">
+                        {{ t('common.restore_cta') }}
+                    </Button>
+                </router-link>
+            </div>
         </div>
         <p class="mt-2 mb-2 small">
-            &copy; 2019-2023 BitShares
+            &copy; 2019-2026 BitShares
         </p>
     </div>
 </template>

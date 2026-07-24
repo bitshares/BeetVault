@@ -5,6 +5,8 @@
 
     import store from '../store/index.js';
     import router from '../router/index.js';
+    import { Button } from '@/components/ui/ui/button';
+    import { Tooltip, TooltipContent, TooltipTrigger } from '@/components/ui/ui/tooltip';
 
     let backupPass = ref("");
     let fileError = ref(false);
@@ -93,12 +95,18 @@
             <h4 class="h4 mt-3 font-weight-bold">
                 {{ t('common.restore_lbl') }}
             </h4>
-            <p
-                v-tooltip="t('common.tooltip_backupfile_cta')"
-                class="my-3 font-weight-bold"
-            >
-                {{ t('common.backupfile_cta') }} &#10068;
-            </p>
+            <Tooltip>
+                <TooltipTrigger as-child>
+                    <p
+                        class="my-3 font-weight-bold"
+                    >
+                        {{ t('common.backupfile_cta') }} &#10068;
+                    </p>
+                </TooltipTrigger>
+                <TooltipContent>
+                    <p>{{ t('common.tooltip_backupfile_cta') }}</p>
+                </TooltipContent>
+            </Tooltip>
             <input
                 id="restoreWallet"
                 type="file"
@@ -111,12 +119,18 @@
             >
                 {{ t('common.invalidFile') }}
             </p>
-            <p
-                v-tooltip="t('common.tooltip_backuppass_cta')"
-                class="my-3 font-weight-bold"
-            >
-                {{ t('common.backuppass_cta') }} &#10068;
-            </p>
+            <Tooltip>
+                <TooltipTrigger as-child>
+                    <p
+                        class="my-3 font-weight-bold"
+                    >
+                        {{ t('common.backuppass_cta') }} &#10068;
+                    </p>
+                </TooltipTrigger>
+                <TooltipContent>
+                    <p>{{ t('common.tooltip_backuppass_cta') }}</p>
+                </TooltipContent>
+            </Tooltip>
 
             <input
                 id="backupPass"
@@ -134,29 +148,28 @@
                 {{ t('common.invalidPass') }}
             </p>
 
-            <ui-grid>
-                <ui-grid-cell columns="12">
+            <div class="grid grid-cols-12">
+                <div class="col-span-12">
                     <router-link
                         to="/"
                         replace
                     >
-                        <ui-button
-                            outlined
+                        <Button
+                            variant="outline"
                             class="step_btn"
                         >
                             {{ t('common.cancel_btn') }}
-                        </ui-button>
+                        </Button>
                     </router-link>
-                    <ui-button
-                        raised
+                    <Button
                         class="step_btn"
                         type="submit"
                         @click="restore"
                     >
                         {{ t('common.restore_go_cta') }}
-                    </ui-button>
-                </ui-grid-cell>
-            </ui-grid>
+                    </Button>
+                </div>
+            </div>
         </div>
     </div>
 </template>

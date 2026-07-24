@@ -2,6 +2,7 @@
     import {ref, inject, computed, watchEffect} from "vue";
 
     import { useI18n } from 'vue-i18n';
+    import { Button } from '@/components/ui/ui/button';
     import store from '../../store/index.js';
     const { t } = useI18n({ useScope: 'global' });
 
@@ -121,45 +122,44 @@
             >
         </template>
 
-        <ui-grid>
-            <ui-grid-cell columns="12">
-                <ui-button
-                    outlined
+        <div class="grid grid-cols-12">
+            <div class="col-span-12">
+                <Button
+                    variant="outline"
                     class="step_btn"
                     @click="emit('back')"
                 >
                     {{ t('common.back_btn') }}
-                </ui-button>
+                </Button>
 
                 <span v-if="requiredFields && requiredFields.privateKey">
-                    <ui-button
+                    <Button
                         v-if="accountname !== '' && privateKey !== ''"
-                        raised
                         class="step_btn"
                         type="submit"
                         @click="next"
                     >
                         {{ t('common.next_btn') }}
-                    </ui-button>
-                    <ui-button
+                    </Button>
+                    <Button
                         v-else
                         disabled
                         class="step_btn"
                         type="submit"
                     >
                         {{ t('common.next_btn') }}
-                    </ui-button>
+                    </Button>
                 </span>
                 <span v-else>
-                    <ui-button
+                    <Button
                         disabled
                         class="step_btn"
                         type="submit"
                     >
                         {{ t('common.next_btn') }}
-                    </ui-button>
+                    </Button>
                 </span>
-            </ui-grid-cell>
-        </ui-grid>
+            </div>
+        </div>
     </div>
 </template>

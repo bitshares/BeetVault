@@ -1,6 +1,9 @@
 <script setup>
     import { ref, onMounted } from 'vue';
+    import { Button } from '@/components/ui/ui/button';
+    import { Card } from '@/components/ui/ui/card';
     import { useI18n } from 'vue-i18n';
+    import { Loader2 } from 'lucide-vue-next';
     import { QrcodeStream } from 'vue-qrcode-reader'
 
     const { t } = useI18n({ useScope: 'global' });
@@ -120,9 +123,8 @@
                 {{ t('common.qr.scan.title') }}
             </p>
             <div style="display: flex; justify-content: center;">
-                <ui-card
-                    v-shadow="5"
-                    outlined
+                <Card
+                    class="shadow-lg border"
                     style="height: 300px; width: 300px; border: 1px solid #C7088E;"
                 >
                     <qrcode-stream
@@ -135,10 +137,7 @@
                         @detect="onDetect"
                     >
                         <span v-if="cameraInitializing">
-                            <ui-spinner
-                                style="padding-top: 65px;"
-                                active
-                            />
+                            <Loader2 class="h-6 w-6 animate-spin" style="padding-top: 65px;" />
                         </span>
 
                         <div style="display:none;">
@@ -155,31 +154,31 @@
                             object-fit="cover"
                         />
                     </qrcode-stream>
-                </ui-card>
+                </Card>
             </div>
-            <ui-button
+            <Button
                 v-if="videoDevices && videoDevices.length > 1"
                 @click="switchCamera"
             >
                 {{ t('common.qr.scan.switch') }}
-            </ui-button>
+            </Button>
         </span>
         <span v-else>
             <span v-if="cameraError">
                 <p>
                     {{ t('common.qr.scan.initFail') }}
                 </p>
-                <ui-button @click="switchCamera">
+                <Button @click="switchCamera">
                     {{ t('common.qr.scan.again') }}
-                </ui-button>
+                </Button>
             </span>
             <span v-else>
                 <p>
                     {{ t('common.qr.scan.scanned') }}
                 </p>
-                <ui-button @click="switchCamera">
+                <Button @click="switchCamera">
                     {{ t('common.qr.scan.another') }}
-                </ui-button>
+                </Button>
             </span>
 
         </span>

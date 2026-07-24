@@ -3,6 +3,7 @@
     import { useI18n } from 'vue-i18n';
 
     import AccountSelect from "./account-select";
+    import { Button } from '@/components/ui/ui/button';
 
     import store from '../store/index.js';
     import router from '../router/index.js';
@@ -49,39 +50,38 @@
         style="text-align: center; margin-top: auto; margin-bottom: auto;"
     >
         <AccountSelect />
-        <ui-grid class="row px-4">
-            <ui-grid-cell
-                class="largeHeader"
-                columns="12"
+        <div class="grid grid-cols-12 row px-4">
+            <div
+                class="col-span-12 largeHeader"
             >
                 <p class="small text-justify">
                     {{ t('common.nodes.prompt') }}
                 </p>
-            </ui-grid-cell>
-            <ui-grid-cell columns="6">
+            </div>
+            <div class="col-span-6">
                 <div style="max-height: 200px; overflow-y: auto;">
-                    <ui-list>
-                        <ui-item v-for="(node, index) in storedNodes" :key="index" @click="handleClick(index)">
-                            <ui-item-text-content>{{ index === 0 ? "✔️" : "" }} {{ storedNodes[index].url }}</ui-item-text-content>
-                        </ui-item>
-                    </ui-list>
+                    <div class="flex flex-col">
+                        <div v-for="(node, index) in storedNodes" :key="index" class="flex items-center p-2 hover:bg-accent rounded-md cursor-pointer" @click="handleClick(index)">
+                            <div class="flex-1">{{ index === 0 ? "✔️" : "" }} {{ storedNodes[index].url }}</div>
+                        </div>
+                    </div>
                 </div>
-            </ui-grid-cell>
-            <ui-grid-cell columns="6">
+            </div>
+            <div class="col-span-6">
                 <router-link
                     :to="'/dashboard'"
                     style="text-decoration: none;"
                     replace
                 >
-                    <ui-button
-                        outlined
+                    <Button
+                        variant="outline"
                         class="step_btn"
                     >
                         {{ t('common.nodes.exit') }}
-                    </ui-button>
+                    </Button>
                 </router-link>
-            </ui-grid-cell>
-            <ui-grid-cell columns="3" />
-        </ui-grid>
+            </div>
+            <div class="col-span-3" />
+        </div>
     </div>
 </template>

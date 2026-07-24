@@ -1,6 +1,10 @@
 <script setup>
     import { ref, computed, watchEffect, onMounted, toRaw } from 'vue';
     import { useI18n } from 'vue-i18n';
+    import { Button } from '@/components/ui/ui/button';
+    import { Card } from '@/components/ui/ui/card';
+    import { Badge } from '@/components/ui/ui/badge';
+    import { Shield, ThumbsUp, Loader2 } from 'lucide-vue-next';
 
     import AccountSelect from "./account-select";
     import Operations from "./blockchains/operations";
@@ -152,15 +156,14 @@
                 <p style="marginBottom:0px;">
                     {{ t('common.totp.inProgress') }}
                 </p>
-                <ui-card
-                    v-shadow="3"
-                    outlined
+                <Card
+                    class="shadow-md border"
                     style="marginTop: 5px;"
                 >
                     <br>
-                    <ui-progress indeterminate />
+                    <Loader2 class="h-6 w-6 animate-spin" />
                     <br>
-                </ui-card>
+                </Card>
             </span>
             <span v-else>
                 <p style="marginBottom:0px;">
@@ -169,29 +172,26 @@
                 <p style="marginBottom:0px;">
                     {{ t('common.raw.desc') }}
                 </p>
-                <ui-card
-                    v-shadow="3"
-                    outlined
+                <Card
+                    class="shadow-md border"
                     style="marginTop: 5px;"
                 >
                     <span v-if="!chosenScope">
                         <p>
                             {{ t('common.chosenScope.title.rawLink') }}
                         </p>
-                        <ui-button
-                            raised
+                        <Button
                             style="margin-right:5px; margin-bottom: 5px;"
                             @click="setScope('Configure')"
                         >
                             {{ t('common.chosenScope.yes') }}
-                        </ui-button>
-                        <ui-button
-                            raised
+                        </Button>
+                        <Button
                             style="margin-right:5px; margin-bottom: 5px;"
                             @click="setScope('AllowAll')"
                         >
                             {{ t('common.chosenScope.no') }}
-                        </ui-button>
+                        </Button>
                     </span>
                     <span v-else-if="chosenScope == 'Configure' && !selectedRows">
                         <Operations
@@ -206,43 +206,36 @@
                     </span>
 
                     <span v-if="chosenScope && selectedRows">
-                        <ui-chips
-                            id="input-chip-set"
-                            type="input"
-                        >
-                            <ui-chip
-                                icon="security"
-                                style="margin-left:30px;"
-                            >
+                        <div class="flex flex-wrap gap-2">
+                            <Badge variant="secondary" class="flex items-center gap-1" style="margin-left:30px;">
+                                <Shield class="h-3 w-3" />
                                 {{ selectedRows ? selectedRows.length : 0 }} {{ t('common.totp.chosen') }}
-                            </ui-chip>
-                            <ui-chip
-                                icon="thumb_up"
-                            >
+                            </Badge>
+                            <Badge variant="default" class="flex items-center gap-1">
+                                <ThumbsUp class="h-3 w-3" />
                                 Ready for raw links!
-                            </ui-chip>
-                        </ui-chips>
+                            </Badge>
+                        </div>
                     </span>
-                </ui-card>
+                </Card>
             </span>
-            <ui-button
+            <Button
                 v-if="chosenScope && selectedRows"
                 style="margin-right:5px"
-                icon="arrow_back_ios"
                 @click="goBack"
             >
                 {{ t('common.qr.back') }}
-            </ui-button>
+            </Button>
             <router-link
                 :to="'/dashboard'"
                 replace
             >
-                <ui-button
-                    outlined
+                <Button
+                    variant="outline"
                     class="step_btn"
                 >
                     {{ t('common.raw.exit') }}
-                </ui-button>
+                </Button>
             </router-link>
         </span>
         <span v-else>

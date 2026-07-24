@@ -2,6 +2,12 @@
     import { computed, ref, watchEffect, onMounted } from "vue";
     import { useI18n } from 'vue-i18n';
     import { formatChain } from "../../lib/formatter.js";
+    import { Button } from '@/components/ui/ui/button';
+import { Card, CardContent, CardFooter } from '@/components/ui/ui/card';
+import { Textarea } from '@/components/ui/ui/textarea';
+import { Pagination, PaginationContent, PaginationItem, PaginationPrevious, PaginationNext } from '@/components/ui/ui/pagination';
+import { Switch } from '@/components/ui/ui/switch';
+import { Dialog, DialogContent, DialogTitle } from '@/components/ui/ui/dialog';
 
     const { t } = useI18n({ useScope: 'global' });
 
@@ -113,18 +119,17 @@
         class="text-left custom-content"
         style="margin-top: 10px;"
     >
-        <ui-card>
-            <ui-card-content>
-                <ui-card-text>
+        <Card>
+            <CardContent>
                     <div
                         v-if="total > 1"
-                        :class="$tt('subtitle1')"
+                        class="text-lg font-semibold"
                     >
                         <b>{{ t(parsedParameters[page - 1].title) }}</b> ({{ page }}/{{ total }})
                     </div>
                     <div
                         v-else
-                        :class="$tt('subtitle1')"
+                        class="text-lg font-semibold"
                     >
                         <b>{{ t(parsedParameters[page - 1].title) }}</b>
                     </div>
@@ -134,39 +139,47 @@
                     <div
                         v-for="row in parsedParameters[page - 1].rows"
                         :key="row.key"
-                        :class="$tt('subtitle2')"
+                        class="text-sm font-medium text-muted-foreground"
                     >
                         {{ t(`operations.injected.${props.request.payload.chain === "BTS_TEST" ? "BTS" : props.request.payload.chain}.${parsedParameters[page - 1].method}.rows.${row.key}`, row.params) }}
                     </div>
-                </ui-card-text>
-            </ui-card-content>
-            <ui-card-actions>
-                <ui-card-buttons>
-                    <ui-button
-                        outlined
+            </CardContent>
+            <CardFooter>
+                <div class="flex gap-2">
+                    <Button
+                        variant="outline"
                         @click="open = true"
                     >
                         {{ t('common.popup.request') }}
-                    </ui-button>
-                </ui-card-buttons>
-                <ui-card-icons />
-            </ui-card-actions>
-        </ui-card>
-        <ui-pagination
-            v-model="page"
+                    </Button>
+                </div>
+            </CardFooter>
+        </Card>
+        <Pagination
+            v-model:page="page"
             :total="total"
-            mini
-            show-total
-            :page-size="[1]"
-            position="center"
-        />
+            :items-per-page="1"
+            :sibling-count="0"
+            show-edges
+        >
+            <PaginationContent v-slot="{ items }">
+                <PaginationPrevious />
+                <template v-for="(item, index) in items" :key="index">
+                    <PaginationItem :value="item.value" :is-active="item.value === page" @click="page = item.value">
+                        {{ item.value }}
+                    </PaginationItem>
+                </template>
+                <PaginationNext />
+            </PaginationContent>
+        </Pagination>
 
         <h4 class="h4 beet-typo-small">
             {{ t('operations.rawsig.receipt.title') }}
         </h4>
-        <ui-switch
-            v-model="receipt"
-            input-id="enable-receipt"
+        <Switch
+            :checked="receipt"
+            @update:checked="receipt = $event"
+            id="enable-receipt"
             style="margin-bottom: 5px;"
         />
         <label
@@ -183,37 +196,33 @@
             v-if="!!parsedParameters"
             style="padding-bottom: 25px;"
         >
-            <ui-button
-                raised
+            <Button
                 style="margin-right:5px"
                 @click="_clickedAllow()"
             >
                 {{ buttonText }}
-            </ui-button>
-            <ui-button
-                raised
+            </Button>
+            <Button
                 @click="_clickedDeny()"
             >
                 {{ t('operations.rawsig.reject_btn') }}
-            </ui-button>
+            </Button>
         </div>
         <div
             v-else
             style="padding-bottom: 25px;"
         >
-            <ui-button
-                raised
+            <Button
                 style="margin-right:5px"
                 disabled
             >
                 {{ buttonText }}
-            </ui-button>
-            <ui-button
-                raised
+            </Button>
+            <Button
                 @click="_clickedDeny()"
             >
                 {{ t('operations.rawsig.reject_btn') }}
-            </ui-button>
+            </Button>
         </div>
     </div>
     <div
@@ -225,24 +234,20 @@
         </pre>
     </div>
 
-    <ui-dialog
-        v-model="open"
-        fullscreen
-    >
-        <ui-dialog-title v-if="total > 1">
+    <Dialog v-model:open="open">
+        <DialogTitle v-if="total > 1">
             {{ t(parsedParameters[page - 1].title) }} ({{ page }}/{{ total }})
-        </ui-dialog-title>
-        <ui-dialog-title v-else>
+        </DialogTitle>
+        <DialogTitle v-else>
             {{ t(parsedParameters[page - 1].title) }}
-        </ui-dialog-title>
-        <ui-dialog-content>
-            <ui-textfield
+        </DialogTitle>
+        <DialogContent>
+            <Textarea
                 v-model="jsonData"
-                input-type="textarea"
-                fullwidth
                 disabled
+                class="w-full"
                 rows="8"
             />
-        </ui-dialog-content>
-    </ui-dialog>
+        </DialogContent>
+    </Dialog>
 </template>

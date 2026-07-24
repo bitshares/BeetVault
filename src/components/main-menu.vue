@@ -5,6 +5,24 @@
     import router from "../router/index.js";
     import store from "../store/index.js";
     import langSelect from "./lang-select.vue";
+    import { Button } from '@/components/ui/ui/button';
+    import { DropdownMenu, DropdownMenuContent, DropdownMenuItem, DropdownMenuTrigger } from '@/components/ui/ui/dropdown-menu';
+    import { Menu, Home, Plus, Globe, KeyRound, Upload, Code, QrCode, AppWindow, Download, Settings, Network, LogOut } from 'lucide-vue-next';
+
+    const iconMap = {
+        home: Home,
+        add: Plus,
+        web: Globe,
+        generating_tokens: KeyRound,
+        upload: Upload,
+        raw_on: Code,
+        qr_code_2: QrCode,
+        app_registration: AppWindow,
+        download: Download,
+        settings: Settings,
+        lan: Network,
+        logout: LogOut,
+    };
 
     let open = ref(false);
     let lastIndex = ref(0);
@@ -1083,55 +1101,36 @@
 </script>
 
 <template>
-    <div>
-        <ui-menu-anchor
-            absolute
-            position="BOTTOM_START"
+    <div class="relative">
+        <Button
+            v-if="store.state.WalletStore.isUnlocked"
+            size="icon-sm"
+            class="rounded-full"
+            @click="open = true"
         >
-            <ui-fab
-                v-if="store.state.WalletStore.isUnlocked"
-                style="margin-bottom: 10px"
-                icon="menu"
-                mini
-                @click="open = true"
-            />
-            <langSelect location="small" />
+            <Menu class="h-4 w-4" />
+        </Button>
 
-            <ui-menu
-                v-model="open"
+        <DropdownMenu :open="open" @update:open="open = $event">
+            <DropdownMenuTrigger as-child>
+                <span />
+            </DropdownMenuTrigger>
+            <DropdownMenuContent
                 style="border: 1px solid #c7088e"
-                position="BOTTOM_START"
-                @selected="onChange"
             >
-                <ui-menuitem
+                <DropdownMenuItem
                     v-for="item in items"
                     :key="item.icon"
-                    nested
+                    @click="onChange(item)"
                 >
-                    <ui-menuitem
-                        v-if="lastIndex === item.index"
-                        selected
-                    >
-                        <ui-menuitem-icon dark>
-                            <ui-icon style="color: #707070">
-                                {{ item.icon }}
-                            </ui-icon>
-                        </ui-menuitem-icon>
-                        <ui-menuitem-text>{{ item.text }}</ui-menuitem-text>
-                    </ui-menuitem>
-                    <ui-menuitem v-else>
-                        <ui-menuitem-icon dark>
-                            <ui-icon
-                                dark
-                                style="visibility: visible"
-                            >
-                                {{ item.icon }}
-                            </ui-icon>
-                        </ui-menuitem-icon>
-                        <ui-menuitem-text>{{ item.text }}</ui-menuitem-text>
-                    </ui-menuitem>
-                </ui-menuitem>
-            </ui-menu>
-        </ui-menu-anchor>
+                    <component
+                        :is="iconMap[item.icon]"
+                        class="h-4 w-4"
+                        :class="lastIndex === item.index ? 'text-gray-500' : ''"
+                    />
+                    <span>{{ item.text }}</span>
+                </DropdownMenuItem>
+            </DropdownMenuContent>
+        </DropdownMenu>
     </div>
 </template>

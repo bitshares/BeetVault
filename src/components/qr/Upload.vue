@@ -2,6 +2,8 @@
     import { ref } from 'vue';
     import { useI18n } from 'vue-i18n';
     import { QrcodeCapture } from 'vue-qrcode-reader'
+    import { Button } from '@/components/ui/ui/button'
+    import { Card } from '@/components/ui/ui/card'
 
     const emit = defineEmits(['detection']);
     const { t } = useI18n({ useScope: 'global' });
@@ -26,23 +28,22 @@
         <p>
             {{ t('common.qr.scan.scanned') }}
         </p>
-        <ui-button @click="uploadAnother">
+        <Button @click="uploadAnother">
             {{ t('common.qr.scan.another') }}
-        </ui-button>
+        </Button>
     </span>
     <span v-else>
         <p>
             {{ t('common.qr.upload.title') }}
         </p>
-        <ui-card
-            v-shadow="5"
-            outlined
+        <Card
+            class="shadow-lg border"
             style="height: 45px; width: 200px; margin-left: 100px; padding-top: 10px; padding-left: 5px; padding-right: 5px; border: 1px solid #C7088E;"
         >
             <qrcode-capture
                 :capture="selected"
                 @detect="onDecode"
             />
-        </ui-card>
+        </Card>
     </span>
 </template>

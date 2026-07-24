@@ -4,6 +4,7 @@
     
     import store from '../store/index.js';
     import router from '../router/index.js';
+    import { Button } from '@/components/ui/ui/button';
 
     const { t } = useI18n({ useScope: 'global' });
 
@@ -60,17 +61,16 @@
         <p>
             <u>{{ t('common.backup_lbl') }}</u>
         </p>
-        <ui-grid class="row px-4">
-            <ui-grid-cell
-                class="largeHeader"
-                columns="12"
+        <div class="grid grid-cols-12 row px-4">
+            <div
+                class="col-span-12 largeHeader"
             >
                 <p class="small text-justify">
                     {{ t('common.backup_txt') }}
                 </p>
-            </ui-grid-cell>
-            <ui-grid-cell columns="3" />
-            <ui-grid-cell columns="6">
+            </div>
+            <div class="col-span-3" />
+            <div class="col-span-6">
                 <input
                     id="inputPassword"
                     v-model="walletpass"
@@ -83,28 +83,27 @@
                     @focus="passincorrect=''"
                 >
                 <br>
-                <ui-button
+                <Button
                     class="step_btn"
                     type="button"
-                    raised
                     @click="downloadBackup"
                 >
                     {{ t('common.backup_btn') }}
-                </ui-button><br>
+                </Button><br>
                 <router-link
                     :to="'/dashboard'"
                     style="text-decoration: none;"
                     replace
                 >
-                    <ui-button
-                        outlined
+                    <Button
+                        variant="outline"
                         class="step_btn"
                     >
                         Exit settings menu
-                    </ui-button>
+                    </Button>
                 </router-link>
-            </ui-grid-cell>
-            <ui-grid-cell columns="3" />
-        </ui-grid>
+            </div>
+            <div class="col-span-3" />
+        </div>
     </div>
 </template>

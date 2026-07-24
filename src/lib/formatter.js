@@ -7,7 +7,7 @@ export function formatAccount(account, withTooltip=false) {
         displayString = displayString.substring(0, 20) + "...";
     }
     if (withTooltip) {
-        return `<span v-tooltip="${accountString}">${displayString}</span>`;
+        return `<span title="${accountString}">${displayString}</span>`;
     } else {
         return displayString;
     }

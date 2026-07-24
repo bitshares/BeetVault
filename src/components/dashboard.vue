@@ -29,6 +29,7 @@
         async function lookupBlockchain() {
             isConnecting.value = true;
             isConnected.value = false;
+            _balances.value = [];
             let selectedDifferentChain = !lastBlockchain.value || (lastBlockchain.value && lastBlockchain.value !== selectedAccount.value.chain);
             if (selectedDifferentChain) {
                 lastBlockchain.value = selectedAccount.value.chain;
@@ -87,12 +88,12 @@
 </script>
 
 <template>
-    <span
-        class="container"
+    <div
+        class="container px-2 py-2"
         style="min-height:700px;"
     >
         <AccountSelect />
-        <span v-if="selectedAccount">
+        <div v-if="selectedAccount">
             <AccountDetails
                 :account="selectedAccount"
                 :explorer="_explorer"
@@ -106,6 +107,6 @@
                 :is-connecting="isConnecting"
                 @refresh="() => fetchQty += 1"
             />
-        </span>
-    </span>
+        </div>
+    </div>
 </template>

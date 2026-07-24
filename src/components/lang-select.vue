@@ -3,6 +3,9 @@
     import { useI18n } from 'vue-i18n';
     import { defaultLocale, selectLocales } from "../config/i18n.js";
     import store from '../store/index.js';
+    import { Button } from '@/components/ui/ui/button';
+    import { DropdownMenu, DropdownMenuContent, DropdownMenuItem, DropdownMenuTrigger } from '@/components/ui/ui/dropdown-menu';
+    import { Languages } from 'lucide-vue-next';
 
     const { t } = useI18n({ useScope: 'global' });
     const emitter = inject('emitter');
@@ -41,55 +44,41 @@
 </script>
 
 <template>
-    <ui-menu-anchor
-        v-if="location === 'prompt'"
-        absolute
-    >
-        <ui-button
-            raised
-            icon="translate"
-            @click="menuClick"
-        >
-            {{ t('common.popup.language') }}
-        </ui-button>
-        <ui-menu
-            v-model="open"
-            style="border: 1px solid #C7088E; color: black;"
-            position="BOTTOM_START"
-            @selected="onSelected"
-        >
-            <ui-menuitem
-                v-for="item in selectLocales"
-                :key="item.value"
-                :value="item.value"
-            >
-                {{ item.label }}
-            </ui-menuitem>
-        </ui-menu>
-    </ui-menu-anchor>
-    <ui-menu-anchor
-        v-else
-        absolute
-        position="bottom start"
-    >
-        <ui-fab
-            icon="translate"
-            mini
-            @click="menuClick"
-        />
-        <ui-menu
-            v-model="open"
-            style="border: 1px solid #C7088E;"
-            position="BOTTOM_START"
-            @selected="onSelected"
-        >
-            <ui-menuitem
-                v-for="locale in selectLocales"
-                :key="locale.value"
-                :value="locale.label"
-            >
-                {{ locale.label }}
-            </ui-menuitem>
-        </ui-menu>
-    </ui-menu-anchor>
+    <div v-if="location === 'prompt'" class="relative">
+        <DropdownMenu :open="open" @update:open="open = $event">
+            <DropdownMenuTrigger as-child>
+                <Button @click="menuClick">
+                    <Languages class="h-4 w-4" />
+                    {{ t('common.popup.language') }}
+                </Button>
+            </DropdownMenuTrigger>
+            <DropdownMenuContent style="border: 1px solid #C7088E; color: black;">
+                <DropdownMenuItem
+                    v-for="(item, index) in selectLocales"
+                    :key="item.value"
+                    @click="onSelected({ index })"
+                >
+                    {{ item.label }}
+                </DropdownMenuItem>
+            </DropdownMenuContent>
+        </DropdownMenu>
+    </div>
+    <div v-else class="relative">
+        <DropdownMenu :open="open" @update:open="open = $event">
+            <DropdownMenuTrigger as-child>
+                <Button size="icon-sm" class="rounded-full" @click="menuClick">
+                    <Languages class="h-4 w-4" />
+                </Button>
+            </DropdownMenuTrigger>
+            <DropdownMenuContent style="border: 1px solid #C7088E;">
+                <DropdownMenuItem
+                    v-for="(locale, index) in selectLocales"
+                    :key="locale.value"
+                    @click="onSelected({ index })"
+                >
+                    {{ locale.label }}
+                </DropdownMenuItem>
+            </DropdownMenuContent>
+        </DropdownMenu>
+    </div>
 </template>

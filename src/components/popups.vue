@@ -2,6 +2,7 @@
     import { computed, watchEffect, ref } from "vue";
     import queryString from "query-string";
     import { useI18n } from "vue-i18n";
+    import { Textarea } from '@/components/ui/ui/textarea';
 
     import * as Actions from "../lib/Actions";
 
@@ -224,129 +225,112 @@
         v-if="type && type !== '' && request"
         style="overflow-y: auto; width: 750px"
     >
-        <ui-collapse
-            with-icon
-            ripple
-            model-value="{{True}}"
-        >
-            <template #toggle>
-                <div>{{ t("common.popup.preview") }}</div>
-            </template>
-            <LinkRequestPopup
-                v-if="type === Actions.REQUEST_LINK && request && accounts"
-                :request="request"
-                :accounts="accounts"
-                :existing-links="existingLinks"
-            />
-            <ReLinkRequestPopup
-                v-else-if="
-                    type === Actions.REQUEST_RELINK && request && accounts
-                "
-                :request="request"
-                :accounts="accounts"
-            />
-            <IdentityRequestPopup
-                v-else-if="type === Actions.GET_ACCOUNT && request && accounts"
-                :request="request"
-                :accounts="accounts"
-            />
-            <SignMessageRequestPopup
-                v-else-if="
-                    (type === Actions.SIGN_MESSAGE ||
-                        type === Actions.SIGN_NFT) &&
-                        request &&
-                        accounts
-                "
-                :request="request"
-                :accounts="accounts"
-            />
-            <div
-                v-else-if="
-                    (type === Actions.REQUEST_SIGNATURE ||
-                        type === Actions.INJECTED_CALL) &&
-                        request &&
-                        visualizedParams &&
-                        visualizedAccount
-                "
-                style="overflow-y: auto; padding-right: 25px"
-            >
-                <TransactionRequestPopup
+        <div v-show="true" class="border rounded-md mb-2">
+            <div class="font-medium p-2 cursor-default">{{ t("common.popup.preview") }}</div>
+            <div class="p-2">
+                <LinkRequestPopup
+                    v-if="type === Actions.REQUEST_LINK && request && accounts"
                     :request="request"
-                    :visualized-params="visualizedParams"
-                    :visualized-account="visualizedAccount"
-                    :warning="warning"
+                    :accounts="accounts"
+                    :existing-links="existingLinks"
                 />
+                <ReLinkRequestPopup
+                    v-else-if="
+                        type === Actions.REQUEST_RELINK && request && accounts
+                    "
+                    :request="request"
+                    :accounts="accounts"
+                />
+                <IdentityRequestPopup
+                    v-else-if="type === Actions.GET_ACCOUNT && request && accounts"
+                    :request="request"
+                    :accounts="accounts"
+                />
+                <SignMessageRequestPopup
+                    v-else-if="
+                        (type === Actions.SIGN_MESSAGE ||
+                            type === Actions.SIGN_NFT) &&
+                            request &&
+                            accounts
+                    "
+                    :request="request"
+                    :accounts="accounts"
+                />
+                <div
+                    v-else-if="
+                        (type === Actions.REQUEST_SIGNATURE ||
+                            type === Actions.INJECTED_CALL) &&
+                            request &&
+                            visualizedParams &&
+                            visualizedAccount
+                    "
+                    style="overflow-y: auto; padding-right: 25px"
+                >
+                    <TransactionRequestPopup
+                        :request="request"
+                        :visualized-params="visualizedParams"
+                        :visualized-account="visualizedAccount"
+                        :warning="warning"
+                    />
+                </div>
             </div>
-        </ui-collapse>
-        <ui-collapse
+        </div>
+        <div
             v-if="type === Actions.REQUEST_LINK && chainOperations"
-            with-icon
-            ripple
+            class="border rounded-md mb-2"
         >
-            <template #toggle>
-                <div>{{ t("common.popup.chainOperations") }}</div>
-            </template>
-            <div style="overflow-y: auto; max-height: 200px">
-                <ui-list :type="2">
-                    <ui-item
-                        v-for="item in chainOperations"
-                        :key="'ui-tooltip-' + chainOperations.indexOf(item)"
+            <div class="font-medium p-2 cursor-default">{{ t("common.popup.chainOperations") }}</div>
+            <div style="overflow-y: auto; max-height: 200px" class="p-2">
+                <div class="flex flex-col">
+                    <div
+                        v-for="(item, index) in chainOperations"
+                        :key="'chain-op-' + index"
+                        class="flex items-center p-2"
                     >
-                        <ui-item-text-content>
-                            <ui-item-text1>{{ item.text }}</ui-item-text1>
-                            <ui-item-text2 style="overflow-wrap: break-word">
+                        <div class="flex-1">
+                            <span class="font-medium">{{ item.text }}</span>
+                            <span class="text-sm text-muted-foreground" style="overflow-wrap: break-word">
                                 {{ item.tooltip }}
-                            </ui-item-text2>
-                        </ui-item-text-content>
-                    </ui-item>
-                </ui-list>
+                            </span>
+                        </div>
+                    </div>
+                </div>
             </div>
-        </ui-collapse>
-        <ui-collapse
+        </div>
+        <div
             v-if="moreRequest"
-            with-icon
-            ripple
+            class="border rounded-md mb-2"
         >
-            <template #toggle>
-                <div>{{ t("common.popup.request") }}</div>
-            </template>
-            <div>
-                <ui-textfield
+            <div class="font-medium p-2 cursor-default">{{ t("common.popup.request") }}</div>
+            <div class="p-2">
+                <Textarea
                     v-model="moreRequest"
-                    input-type="textarea"
-                    fullwidth
                     disabled
+                    class="w-full"
                     rows="8"
                 />
             </div>
-        </ui-collapse>
-        <ui-collapse
+        </div>
+        <div
             v-if="payload"
-            with-icon
-            ripple
+            class="border rounded-md mb-2"
         >
-            <template #toggle>
-                <div>{{ t("common.popup.payload") }}</div>
-            </template>
-            <div>
-                <ui-textfield
+            <div class="font-medium p-2 cursor-default">{{ t("common.popup.payload") }}</div>
+            <div class="p-2">
+                <Textarea
                     v-model="payload"
-                    input-type="textarea"
-                    fullwidth
                     disabled
+                    class="w-full"
                     rows="8"
                 />
             </div>
-        </ui-collapse>
-        <ui-collapse
-            with-icon
-            ripple
-        >
-            <template #toggle>
-                <div>{{ t("common.abSettings") }}</div>
-            </template>
-            <langSelect location="prompt" />
-        </ui-collapse>
+        </div>
+        <div class="border rounded-md mb-2">
+            <div class="font-medium p-2 cursor-default">{{ t("common.abSettings") }}</div>
+            <div class="p-2">
+                <langSelect location="prompt" />
+            </div>
+        </div>
     </div>
     <div v-else>
         Error: Unable to load prompt.

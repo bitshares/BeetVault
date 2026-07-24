@@ -3,6 +3,7 @@
     import { useI18n } from 'vue-i18n';
 
     import AccountSelect from "./account-select";
+    import { Button } from '@/components/ui/ui/button';
 
     import store from '../store/index.js';
     import router from '../router/index.js';
@@ -69,20 +70,19 @@
             <u>{{ t('common.settings.label') }}</u>
         </p>
         <AccountSelect />
-        <ui-grid
+        <div
             v-if="accountQuantity && accountQuantity > 1"
-            class="row px-4"
+            class="grid grid-cols-12 row px-4"
         >
-            <ui-grid-cell
-                class="largeHeader"
-                columns="12"
+            <div
+                class="col-span-12 largeHeader"
             >
                 <p class="small text-justify">
                     {{ t('common.settings.prompt') }}
                 </p>
-            </ui-grid-cell>
-            <ui-grid-cell columns="3" />
-            <ui-grid-cell columns="6">
+            </div>
+            <div class="col-span-3" />
+            <div class="col-span-6">
                 <input
                     id="inputPassword"
                     v-model="walletpass"
@@ -95,41 +95,39 @@
                     @focus="passincorrect=''"
                 >
                 <br>
-                <ui-button
+                <Button
                     class="step_btn"
                     type="button"
-                    raised
                     @click="deleteAccount"
                 >
                     {{ t('common.settings.button') }}
-                </ui-button><br>
+                </Button><br>
                 <router-link
                     :to="'/dashboard'"
                     style="text-decoration: none;"
                     replace
                 >
-                    <ui-button
-                        outlined
+                    <Button
+                        variant="outline"
                         class="step_btn"
                     >
                         {{ t('common.settings.exit') }}
-                    </ui-button>
+                    </Button>
                 </router-link>
-            </ui-grid-cell>
-            <ui-grid-cell columns="3" />
-        </ui-grid>
-        <ui-grid
+            </div>
+            <div class="col-span-3" />
+        </div>
+        <div
             v-else
-            class="row px-4"
+            class="grid grid-cols-12 row px-4"
         >
-            <ui-grid-cell
-                class="largeHeader"
-                columns="12"
+            <div
+                class="col-span-12 largeHeader"
             >
                 <p class="small text-justify">
                     {{ t('common.settings.insufficient') }}
                 </p>
-            </ui-grid-cell>
-        </ui-grid>
+            </div>
+        </div>
     </div>
 </template>

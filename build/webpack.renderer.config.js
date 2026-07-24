@@ -18,59 +18,19 @@ module.exports = function(env) {
         target: "electron-renderer",
         mode: env === "production" ? "production" : "development",
 
-        externals: [nodeExternals({
-            allowlist: [
-                'vue',
-                'vuex',
-                'vue-router',
-                'vue-i18n',
-                'vue-qrcode-reader',
-                'dexie',
-                'query-string',
-                'strict-uri-encode',
-                'decode-uri-component',
-                'split-on-first',
-                'filter-obj',
-                '@intlify/shared',
-                '@intlify/core-base',
-                '@intlify/message-compiler',
-                '@vue/devtools-api',
-                'typeface-roboto',
-                'typeface-rajdhani',
-                '@babel/runtime',
-                'mitt',
-                'balm-ui',
-                'flatpickr',
-                'reka-ui',
-                'clsx',
-                'tailwind-merge',
-                'class-variance-authority',
-                'tw-animate-css',
-                '@lucide/vue',
-                'vaul-vue',
-                'vee-validate',
-                '@vee-validate/zod',
-                'zod',
-                '@tanstack/vue-table',
-                'embla-carousel-vue',
-                'vue-sonner',
-                'vue-input-otp',
-                '@vueuse/core'
-            ]
-        })],
+        externals: [],
         
         resolve: {
             extensions: ['.*', '.js', '.mjs', '.ts', '.vue', '.json', '.css', '.scss'],
             mainFields: ["browser", "module", "main"],
             alias: {
                 vue: "vue/dist/vue.esm-browser.js",
-                "balm-gui": "balm-ui/dist/balm-ui.js",
                 "vue-router": "vue-router/dist/vue-router.esm-browser.js",
-                "balm-ui-plus": "balm-ui/dist/balm-ui-plus.js",
-                "balm-ui-css": "balm-ui/dist/balm-ui.css",
                 vue$: 'vue/dist/vue.min.js',
                 env: path.resolve(__dirname, `../config/env_${env}.json`),
                 '~': path.resolve(__dirname, '../src/'),
+                '@/registry/new-york/ui': path.resolve(__dirname, '../src/components/ui/ui'),
+                'lucide-vue-next': '@lucide/vue',
                 '@': path.resolve(__dirname, '../src/')
             }
         },
@@ -84,28 +44,10 @@ module.exports = function(env) {
                 loader: 'vue-loader'
             },
             {
-                test: /\.js$/,
+                test: /\.(js|ts)$/,
                 exclude: /node_modules/,
                 use: {
-                    loader: 'babel-loader',
-                    options: {
-                    presets: [
-                        ['@babel/preset-env', { targets: "defaults" }]
-                    ]
-                    }
-                }
-            },
-            {
-                test: /\.ts$/,
-                exclude: /node_modules/,
-                use: {
-                    loader: 'babel-loader',
-                    options: {
-                    presets: [
-                        ['@babel/preset-env', { targets: "defaults" }],
-                        '@babel/preset-typescript'
-                    ]
-                    }
+                    loader: 'babel-loader'
                 }
             },
             {
@@ -123,8 +65,11 @@ module.exports = function(env) {
                     {
                     loader: "sass-loader",
                     options: {
-                        // Prefer `dart-sass`
                         implementation: sass,
+                        api: "modern-compiler",
+                        sassOptions: {
+                            silenceDeprecations: ["import", "global-builtin", "color-functions"],
+                        },
                     },
                     },
                 ]

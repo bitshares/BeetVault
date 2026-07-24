@@ -1,6 +1,8 @@
 <script setup>
     import { watch, ref, computed } from "vue";
     import { useI18n } from 'vue-i18n';
+    import { Button } from '@/components/ui/ui/button';
+    import { Tooltip, TooltipContent, TooltipTrigger } from '@/components/ui/ui/tooltip';
 
     import ImportCloudPass from "./blockchains/bitshares/ImportCloudPass";
     import ImportBinFile from "./blockchains/bitshares/ImportBinFile";
@@ -243,12 +245,18 @@
                 id="step1"
             >
                 <template v-if="createNewWallet">
-                    <p
-                        v-tooltip="t('common.tooltip_friendly_cta')"
-                        class="my-3 font-weight-bold"
-                    >
-                        {{ t('common.friendly_cta') }} &#10068;
-                    </p>
+                    <Tooltip>
+                        <TooltipTrigger as-child>
+                            <p
+                                class="my-3 font-weight-bold"
+                            >
+                                {{ t('common.friendly_cta') }} &#10068;
+                            </p>
+                        </TooltipTrigger>
+                        <TooltipContent>
+                            <p>{{ t('common.tooltip_friendly_cta') }}</p>
+                        </TooltipContent>
+                    </Tooltip>
                     <input
                         id="inputWallet"
                         v-model="walletname"
@@ -260,12 +268,18 @@
                         @focus="s1c = ''"
                     >
                 </template>
-                <p
-                    v-tooltip="t('common.tooltip_chain_cta')"
-                    class="my-3 font-weight-bold"
-                >
-                    {{ t('common.chain_cta') }} &#10068;
-                </p>
+                <Tooltip>
+                    <TooltipTrigger as-child>
+                        <p
+                            class="my-3 font-weight-bold"
+                        >
+                            {{ t('common.chain_cta') }} &#10068;
+                        </p>
+                    </TooltipTrigger>
+                    <TooltipContent>
+                        <p>{{ t('common.tooltip_chain_cta') }}</p>
+                    </TooltipContent>
+                </Tooltip>
                 <select
                     id="chain-select"
                     v-model="selectedChain"
@@ -324,64 +338,61 @@
                     </select>
                 </div>
 
-                <ui-grid>
-                    <ui-grid-cell columns="12">
+                <div class="grid grid-cols-12">
+                    <div class="col-span-12">
                         <router-link
                             :to="createNewWallet ? '/' : '/dashboard'"
                             replace
                         >
-                            <ui-button
-                                raised
+                            <Button
                                 class="step_btn"
                             >
                                 {{ t('common.cancel_btn') }}
-                            </ui-button>
+                            </Button>
                         </router-link>
 
                         <span v-if="selectedImportOptions.length > 0">
                             <span v-if="selectedImport != 0">
-                                <ui-button
-                                    raised
+                                <Button
                                     class="step_btn"
                                     type="submit"
                                     @click="step2"
                                 >
                                     {{ t('common.next_btn') }}
-                                </ui-button>
+                                </Button>
                             </span>
                             <span v-else>
-                                <ui-button
+                                <Button
                                     disabled
                                     class="step_btn"
                                     type="submit"
                                 >
                                     {{ t('common.next_btn') }}
-                                </ui-button>
+                                </Button>
                             </span>
                         </span>
                         <span v-else>
                             <span v-if="walletname !== '' && selectedChain !== 0">
-                                <ui-button
-                                    raised
+                                <Button
                                     class="step_btn"
                                     type="submit"
                                     @click="step2"
                                 >
                                     {{ t('common.next_btn') }}
-                                </ui-button>
+                                </Button>
                             </span>
                             <span v-else>
-                                <ui-button
+                                <Button
                                     disabled
                                     class="step_btn"
                                     type="submit"
                                 >
                                     {{ t('common.next_btn') }}
-                                </ui-button>
+                                </Button>
                             </span>
                         </span>
-                    </ui-grid-cell>
-                </ui-grid>
+                    </div>
+                </div>
             </div>
             <div
                 v-else-if="step == 2"
@@ -428,17 +439,23 @@
                 id="step3"
             >
                 <div>
-                    <p
-                        v-tooltip="t('common.tooltip_password_cta')"
-                        class="mb-2 font-weight-bold"
-                    >
-                        <span v-if="createNewWallet">
-                            {{ t('common.password_cta') }} &#10068;
-                        </span>
-                        <span v-else>
-                            {{ t('common.unlock_with_password_cta') }} &#10068;
-                        </span>
-                    </p>
+                    <Tooltip>
+                        <TooltipTrigger as-child>
+                            <p
+                                class="mb-2 font-weight-bold"
+                            >
+                                <span v-if="createNewWallet">
+                                    {{ t('common.password_cta') }} &#10068;
+                                </span>
+                                <span v-else>
+                                    {{ t('common.unlock_with_password_cta') }} &#10068;
+                                </span>
+                            </p>
+                        </TooltipTrigger>
+                        <TooltipContent>
+                            <p>{{ t('common.tooltip_password_cta') }}</p>
+                        </TooltipContent>
+                    </Tooltip>
                     <input
                         id="inputPass"
                         v-model="password"
@@ -462,14 +479,13 @@
                     </template>
                 </div>
 
-                <ui-button
-                    raised
+                <Button
                     type="submit"
                     class="step_btn"
                     @click="addAccounts"
                 >
                     {{ t('common.next_btn') }}
-                </ui-button>
+                </Button>
             </div>
         </div>
     </div>
