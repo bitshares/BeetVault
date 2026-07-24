@@ -49,19 +49,6 @@
         "promptFailure": "Et råt dybt link blev afvist. ",
         "exit": "Afslut dyblink-siden"
     },
-    "www": {
-        "label": "Webanmodningsside",
-        "description": "Klar til at behandle eksterne webanmodninger. Tredjeparts apps er nu i stand til at starte prompter om at linke og derefter udsende operationer.",
-        "chosen": "operationer valgt",
-        "ready": "Klar til webforespørgsler!",
-        "loading": "Indlæser stiktjenester...",
-        "exit": "Afslut webanmodningssiden",
-        "unsupported": "Webanmodninger er endnu ikke understøttet for denne kæde, beklager.",
-        "init": "Denne side bruger lokalt hostede websockets til at behandle indgående webanmodninger. Internetudbyderens kompatibilitet kan variere. Vil du fortsætte?",
-        "yes": "Fortsæt",
-        "no": "Gå tilbage",
-        "prompt": "Klar til at behandle eksterne webanmodninger. Tredjeparts apps er nu i stand til at starte prompter om at linke og derefter udsende operationer."
-    },
     "totp": {
         "label": "Tidsbegrænset og krypteret deeplink-promptside",
         "desc": "Denne side behandler indgående deeplink-prompts, som er blevet krypteret på en tidsfølsom måde.",
@@ -83,8 +70,7 @@
             "local": "Ønsker du at konfigurere omfanget af scanbare JSON-filer?",
             "qr": "Ønsker du at konfigurere omfanget af scanbare QR-koder?",
             "rawLink": "Ønsker du at konfigurere omfanget af indgående rå deeplinks?",
-            "totp": "Ønsker du at konfigurere omfanget af indgående dybe links?",
-            "www": "Ønsker du at konfigurere omfanget af indgående webanmodninger?"
+            "totp": "Ønsker du at konfigurere omfanget af indgående dybe links?"
         },
         "yes": "Ja - tilpas omfanget",
         "no": "Nej - tillad alle operationer"
@@ -141,7 +127,6 @@
     "actionBar": {
         "Home": "Hjem",
         "New": "Ny",
-        "WWW": "Webanmodning",
         "TOTP": "TOTP",
         "Local": "Lokal",
         "RAW": "Rå link",
@@ -149,7 +134,6 @@
         "Settings": "Indstillinger",
         "changeNodes": "Skift node",
         "Backup": "Backup",
-        "dapps": "DAAP'er",
         "Logout": "Log ud"
     },
     "popup": {
@@ -254,18 +238,7 @@
     "settings_lbl": "Indstillinger",
     "error_lbl": "Fejl",
     "node_lbl": "Node:",
-    "link_alert": "App: '{appName}' fra '{origin}' ønsker at linke til en {chain}-kæde.",
-    "relink_alert": "App: '{appName}' fra '{origin}' ønsker at linke til en {chain}-kæde igen.",
     "access_alert": "App: '{appName}' fra '{origin}' ønsker at interagere med den linkede konto {chain}:{account_id}.",
-    "dapps_lbl": "Dine tilknyttede dApps",
-    "appname_lbl": "App navn",
-    "operations_lbl": "Tilladte operationer",
-    "origin_lbl": "Vært/domæne",
-    "account_lbl": "Konto/adresse",
-    "chain_lbl": "Blockchain",
-    "actions_lbl": "Handling",
-    "no_dapps_linked": "Du har endnu ikke linket nogen dApps.",
-    "delete_btn": "Fjerne",
     "backup_lbl": "Sikkerhedskopier din tegnebog",
     "backup_btn": "Download sikkerhedskopi",
     "backup_txt": "Klik på knappen 'Download Backup' nedenfor for at gemme en krypteret fil med alle dine tegnebogsnøgler. ",

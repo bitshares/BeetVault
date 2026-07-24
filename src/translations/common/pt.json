@@ -49,19 +49,6 @@
         "promptFailure": "Um deeplink Raw foi rejeitado. ",
         "exit": "Sair da página de deeplink"
     },
-    "www": {
-        "label": "Página de solicitação da Web",
-        "description": "Pronto para processar solicitações externas da web. Aplicativos de terceiros agora são capazes de iniciar prompts para vincular e depois transmitir operações.",
-        "chosen": "operações escolhidas",
-        "ready": "Pronto para solicitações da web!",
-        "loading": "Carregando serviços de soquete...",
-        "exit": "Sair da página de solicitação da web",
-        "unsupported": "As solicitações da Web ainda não são suportadas para esta cadeia, desculpe.",
-        "init": "Esta página usa websockets hospedados localmente para processar solicitações da web recebidas. A compatibilidade do provedor de serviços de Internet pode variar. Você quer prosseguir?",
-        "yes": "Continuar",
-        "no": "Volte",
-        "prompt": "Pronto para processar solicitações externas da web. Aplicativos de terceiros agora são capazes de iniciar prompts para vincular e depois transmitir operações."
-    },
     "totp": {
         "label": "Página de prompt de deeplink criptografada e limitada por tempo",
         "desc": "Esta página processa prompts de deeplink recebidos que foram criptografados de maneira sensível ao tempo.",
@@ -83,8 +70,7 @@
             "local": "Deseja configurar o escopo dos arquivos JSON verificáveis?",
             "qr": "Deseja configurar o escopo dos códigos QR escaneáveis?",
             "rawLink": "Deseja configurar o escopo dos deeplinks brutos recebidos?",
-            "totp": "Deseja configurar o escopo dos deeplinks recebidos?",
-            "www": "Você deseja configurar o escopo das solicitações da web recebidas?"
+            "totp": "Deseja configurar o escopo dos deeplinks recebidos?"
         },
         "yes": "Sim - personalize o escopo",
         "no": "Não - permitir todas as operações"
@@ -141,7 +127,6 @@
     "actionBar": {
         "Home": "Lar",
         "New": "Novo",
-        "WWW": "Solicitação da Web",
         "TOTP": "TOTP",
         "Local": "Local",
         "RAW": "Link Bruto",
@@ -149,7 +134,6 @@
         "Settings": "Configurações",
         "changeNodes": "Alterar nó",
         "Backup": "Cópia de segurança",
-        "dapps": "DAAP",
         "Logout": "Sair"
     },
     "popup": {
@@ -254,18 +238,7 @@
     "settings_lbl": "Configurações",
     "error_lbl": "Erro",
     "node_lbl": "Nó:",
-    "link_alert": "Aplicativo: '{appName}' de '{origin}' deseja vincular a uma cadeia {chain}.",
-    "relink_alert": "Aplicativo: '{appName}' de '{origin}' deseja vincular novamente a uma cadeia {chain}.",
     "access_alert": "Aplicativo: '{appName}' de '{origin}' deseja interagir com a conta vinculada {chain}:{account_id}.",
-    "dapps_lbl": "Seus dApps vinculados",
-    "appname_lbl": "Nome do aplicativo",
-    "operations_lbl": "Operações permitidas",
-    "origin_lbl": "Host/Domínio",
-    "account_lbl": "Conta/Endereço",
-    "chain_lbl": "Blockchain",
-    "actions_lbl": "Ação",
-    "no_dapps_linked": "Você ainda não tem nenhum dApp vinculado.",
-    "delete_btn": "Remover",
     "backup_lbl": "Faça backup da sua carteira",
     "backup_btn": "Baixar backup",
     "backup_txt": "Clique no botão 'Baixar backup' abaixo para salvar um arquivo criptografado com todas as chaves da sua carteira. ",

@@ -9,26 +9,6 @@
     "expiration": "Ablauf: {resultExpiration}",
     "signatures": "Signaturen: {resultSignatures}"
   },
-  "link": {
-    "title": "Anfrage zur Kontoverknüpfung",
-    "result": "Ergebnis der Kontoverknüpfung",
-    "account_select": "Kontoauswahl",
-    "account_missing": "Das angeforderte Konto ist in dieser Wallet nicht vorhanden.",
-    "request": "Die Anwendung „{appName}“ von „{origin}“ fordert Zugriff auf ein {chain}-Konto an.",
-    "request_fresh": "Die Anwendung hat bereits zuvor ein {chain}-Konto verknüpft, wie in der Liste unten markiert.",
-    "request_tooltip": "Die Anwendung erhält Ihre Kontodaten (Name und ID) und richtet einen Wallet-Link ein.",
-    "request_cta": "Wählen Sie das bereitzustellende Konto aus.",
-    "accept_btn": "Erlauben",
-    "reject_btn": "Leugnen",
-    "invalid_operations": "Fehlerhafte Linkanforderung – ungültige Vorgänge."
-  },
-  "relink": {
-    "title": "Anfrage zur erneuten Kontoverknüpfung",
-    "result": "Ergebnis der erneuten Kontoverknüpfung",
-    "error": "Fehler beim Anzeigen der Eingabeaufforderung",
-    "request": "Die Anwendung „{appName}“ von „{origin}“ fordert die erneute Verknüpfung des zuvor verknüpften {chain}-Kontos: {accountId}. ",
-    "request_tooltip": "Die bisherige Verknüpfung zwischen der Anwendung und der Kontoreferenz wird zurückgesetzt."
-  },
   "account_id": {
     "title": "Anfrage zu Kontodetails",
     "result": "Ergebnis der Kontodetails",
@@ -1539,66 +1519,66 @@
       }
     },
     "EOS": {
-        "getAccount": {
-          "method": "getAccount",
-          "title": "Anfrage zu Kontodetails",
-          "result": "Ergebnis der Kontodetails",
-          "headers": {
-            "request": "Möchten Sie Ihre Kontodaten teilen?",
-            "result": "Ihre Kontodaten wurden weitergegeben."
-          },
-          "tooltip": "Fragt Ihr Wallet nach den Details Ihres Blockchain-Kontos"
+      "getAccount": {
+        "method": "getAccount",
+        "title": "Anfrage zu Kontodetails",
+        "result": "Ergebnis der Kontodetails",
+        "headers": {
+          "request": "Möchten Sie Ihre Kontodaten teilen?",
+          "result": "Ihre Kontodaten wurden weitergegeben."
         },
-        "requestSignature": {
-          "method": "requestSignature",
-          "title": "Unterschriftsanfrage",
-          "result": "Signaturergebnis",
-          "headers": {
-            "request": "Möchten Sie Ihre Signatur teilen?",
-            "result": "Ihre Signatur wurde geteilt:"
-          },
-          "tooltip": "Fragt Ihr Wallet nach Blockchain-Signaturen"
+        "tooltip": "Fragt Ihr Wallet nach den Details Ihres Blockchain-Kontos"
+      },
+      "requestSignature": {
+        "method": "requestSignature",
+        "title": "Unterschriftsanfrage",
+        "result": "Signaturergebnis",
+        "headers": {
+          "request": "Möchten Sie Ihre Signatur teilen?",
+          "result": "Ihre Signatur wurde geteilt:"
         },
-        "injectedCall": {
-          "method": "injiziertAnruf",
-          "title": "Eingefügte Anrufanfrage",
-          "result": "Eingefügtes Anrufergebnis",
-          "headers": {
-            "request": "Den folgenden injizierten Anruf genehmigen?",
-            "result": "Der folgende injizierte Anruf wurde genehmigt:"
-          },
-          "tooltip": "Fordert Ihr Wallet auf, einen injizierten Blockchain-Vorgang abzuwickeln"
+        "tooltip": "Fragt Ihr Wallet nach Blockchain-Signaturen"
+      },
+      "injectedCall": {
+        "method": "injiziertAnruf",
+        "title": "Eingefügte Anrufanfrage",
+        "result": "Eingefügtes Anrufergebnis",
+        "headers": {
+          "request": "Den folgenden injizierten Anruf genehmigen?",
+          "result": "Der folgende injizierte Anruf wurde genehmigt:"
         },
-        "voteFor": {
-          "method": "voteFor",
-          "title": "Abstimmungsanfrage",
-          "result": "Abstimmungsergebnis",
-          "headers": {
-            "request": "Den folgenden Abstimmungsantrag genehmigen?",
-            "result": "Der folgende Abstimmungsantrag wurde angenommen"
-          },
-          "tooltip": "Führen Sie eine Blockchain-Abstimmung durch"
+        "tooltip": "Fordert Ihr Wallet auf, einen injizierten Blockchain-Vorgang abzuwickeln"
+      },
+      "voteFor": {
+        "method": "voteFor",
+        "title": "Abstimmungsanfrage",
+        "result": "Abstimmungsergebnis",
+        "headers": {
+          "request": "Den folgenden Abstimmungsantrag genehmigen?",
+          "result": "Der folgende Abstimmungsantrag wurde angenommen"
         },
-        "signMessage": {
-          "method": "signMessage",
-          "title": "Nachrichtenanfrage signieren",
-          "result": "Ergebnis der Signierungsnachricht",
-          "headers": {
-            "request": "Mit der Unterzeichnung der folgenden Nachricht einverstanden sein?",
-            "result": "Die folgende Nachricht wurde signiert:"
-          },
-          "tooltip": "Signieren Sie eine Blockchain-basierte Nachricht"
+        "tooltip": "Führen Sie eine Blockchain-Abstimmung durch"
+      },
+      "signMessage": {
+        "method": "signMessage",
+        "title": "Nachrichtenanfrage signieren",
+        "result": "Ergebnis der Signierungsnachricht",
+        "headers": {
+          "request": "Mit der Unterzeichnung der folgenden Nachricht einverstanden sein?",
+          "result": "Die folgende Nachricht wurde signiert:"
         },
-        "verifyMessage": {
-          "method": "VerifyMessage",
-          "title": "Nachrichtenanfrage überprüfen",
-          "result": "Überprüfen Sie das Nachrichtenergebnis",
-          "headers": {
-            "request": "Möchten Sie die folgende Nachricht überprüfen?",
-            "result": "Die folgende Nachricht wurde überprüft:"
-          },
-          "tooltip": "Überprüfen Sie eine Blockchain-basierte signierte Nachricht"
+        "tooltip": "Signieren Sie eine Blockchain-basierte Nachricht"
+      },
+      "verifyMessage": {
+        "method": "VerifyMessage",
+        "title": "Nachrichtenanfrage überprüfen",
+        "result": "Überprüfen Sie das Nachrichtenergebnis",
+        "headers": {
+          "request": "Möchten Sie die folgende Nachricht überprüfen?",
+          "result": "Die folgende Nachricht wurde überprüft:"
         },
+        "tooltip": "Überprüfen Sie eine Blockchain-basierte signierte Nachricht"
+      },
       "transfer": {
         "method": "Überweisen",
         "title": "Transferanforderung",
@@ -2226,21 +2206,21 @@
         },
         "tooltip": "Rückerstattung des Gebotsvorgangs"
       },
-    "ramtransfer": {
+      "ramtransfer": {
         "method": "RAM-Übertragung",
         "title": "RAM-Übertragungsanforderung",
         "result": "RAM-Übertragungsergebnis",
         "headers": {
-        "request": "RAM von einem Konto auf ein anderes übertragen?",
-        "result": "RAM wurde von einem Konto auf ein anderes übertragen:"
+          "request": "RAM von einem Konto auf ein anderes übertragen?",
+          "result": "RAM wurde von einem Konto auf ein anderes übertragen:"
         },
         "rows": {
-        "from": "Von: {von}",
-        "to": "An: {an}",
-        "bytes": "Bytes: {Bytes}"
+          "from": "Von: {von}",
+          "to": "An: {an}",
+          "bytes": "Bytes: {Bytes}"
         },
         "tooltip": "RAM-Betrieb übertragen"
-    }
+      }
     }
   }
 }

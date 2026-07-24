@@ -32,7 +32,6 @@ import { getSignature } from "./lib/SecureRemote.js";
 import * as Actions from "./lib/Actions.js";
 import getBlockchainAPI from "./lib/blockchains/blockchainFactory.js";
 import BTSWalletHandler from "./lib/blockchains/bitshares/BTSWalletHandler.js";
-import BeetServer from "./lib/BeetServer.js";
 
 import { inject } from "./lib/inject.js";
 
@@ -98,14 +97,6 @@ const createModal = async (arg, modalEvent) => {
     )}`;
     let modalData = { id, type, request };
 
-    if (type === Actions.REQUEST_LINK) {
-        let existingLinks = arg.existingLinks;
-        if (existingLinks) {
-            modalRequests[id]["existingLinks"] = existingLinks;
-            modalData["existingLinks"] = existingLinks;
-        }
-    }
-
     if ([Actions.INJECTED_CALL, Actions.REQUEST_SIGNATURE].includes(type)) {
         let visualizedAccount = arg.visualizedAccount;
         let visualizedParams = arg.visualizedParams;
@@ -120,8 +111,6 @@ const createModal = async (arg, modalEvent) => {
 
     if (
         [
-            Actions.REQUEST_LINK,
-            Actions.REQUEST_RELINK,
             Actions.GET_ACCOUNT,
             Actions.SIGN_MESSAGE,
             Actions.SIGN_NFT,
@@ -552,65 +541,6 @@ const createWindow = async () => {
 
     tray.on("right-click", (event, bounds) => {
         tray.popUpContextMenu(contextMenu);
-    });
-
-    ipcMain.handle("launchServer", async (event, arg) => {
-        const { key, cert } = arg;
-        return BeetServer.initialize(
-            60554,
-            60555,
-            key,
-            cert,
-            mainWindow.webContents
-        )
-            .then(() => {
-                return {
-                    http: BeetServer.httpTerminator ? true : false,
-                    https: BeetServer.httpsTerminator ? true : false,
-                };
-            })
-            .catch((error) => {
-                console.log(error);
-                return {
-                    http: false,
-                    https: false,
-                };
-            });
-    });
-
-    ipcMain.on("closeServer", async (event, arg) => {
-        let _closure;
-        try {
-            _closure = await BeetServer.close();
-        } catch (error) {
-            console.log(error);
-        }
-
-        if (_closure) {
-            console.log(_closure);
-        }
-    });
-
-    ipcMain.handle("fetchSSL", async (event, arg) => {
-        let key;
-        try {
-            key = await fetch(
-                "https://raw.githubusercontent.com/beetapp/beet-certs/master/beet.key"
-            ).then((res) => res.text());
-        } catch (error) {
-            console.log(error);
-        }
-
-        let cert;
-        try {
-            cert = await fetch(
-                "https://raw.githubusercontent.com/beetapp/beet-certs/master/beet.cert"
-            ).then((res) => res.text());
-        } catch (error) {
-            console.log(error);
-        }
-
-        return { key, cert };
     });
 
     ipcMain.handle("memoFromBuffer", async (event, arg) => {

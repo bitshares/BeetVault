@@ -49,19 +49,6 @@
         "promptFailure": "Un lien profond brut a été rejeté. ",
         "exit": "Quitter la page de lien profond"
     },
-    "www": {
-        "label": "Page de demande Web",
-        "description": "Prêt à traiter les demandes Web externes. Les applications tierces sont désormais capables de lancer des invites pour lier puis diffuser des opérations.",
-        "chosen": "opérations choisies",
-        "ready": "Prêt pour les requêtes Web!",
-        "loading": "Chargement des services de socket...",
-        "exit": "Quitter la page de demande Web",
-        "unsupported": "Les requêtes Web ne sont pas encore prises en charge pour cette chaîne, désolé.",
-        "init": "Cette page utilise des websockets hébergés localement pour traiter les requêtes Web entrantes. La compatibilité des fournisseurs de services Internet peut varier. Voulez-vous poursuivre?",
-        "yes": "Procéder",
-        "no": "Retourner",
-        "prompt": "Prêt à traiter les demandes Web externes. Les applications tierces sont désormais capables de lancer des invites pour lier puis diffuser des opérations."
-    },
     "totp": {
         "label": "Page d'invite de lien profond chiffrée et limitée dans le temps",
         "desc": "Cette page traite les invites de liens profonds entrantes qui ont été cryptées de manière temporelle.",
@@ -83,8 +70,7 @@
             "local": "Souhaitez-vous configurer la portée des fichiers JSON analysables ?",
             "qr": "Vous souhaitez paramétrer le périmètre des QR codes scannables ?",
             "rawLink": "Souhaitez-vous paramétrer la portée des deeplinks bruts entrants ?",
-            "totp": "Souhaitez-vous configurer la portée des liens profonds entrants ?",
-            "www": "Souhaitez-vous configurer la portée des requêtes Web entrantes ?"
+            "totp": "Souhaitez-vous configurer la portée des liens profonds entrants ?"
         },
         "yes": "Oui - personnaliser la portée",
         "no": "Non - autoriser toutes les opérations"
@@ -141,7 +127,6 @@
     "actionBar": {
         "Home": "Maison",
         "New": "Nouveau",
-        "WWW": "Demande Web",
         "TOTP": "TOTP",
         "Local": "Local",
         "RAW": "Lien brut",
@@ -149,7 +134,6 @@
         "Settings": "Paramètres",
         "changeNodes": "Changer de nœud",
         "Backup": "Sauvegarde",
-        "dapps": "DAAP",
         "Logout": "Se déconnecter"
     },
     "popup": {
@@ -254,18 +238,7 @@
     "settings_lbl": "Paramètres",
     "error_lbl": "Erreur",
     "node_lbl": "Nœud:",
-    "link_alert": "App : '{appName}' de '{origin}' veut se lier à une chaîne {chain}.",
-    "relink_alert": "App : '{appName}' de '{origin}' veut se reconnecter à une chaîne {chain}.",
     "access_alert": "L'application : '{appName}' de '{origin}' souhaite interagir avec le compte associé {chain} :{account_id}.",
-    "dapps_lbl": "Vos dApps liées",
-    "appname_lbl": "Nom de l'application",
-    "operations_lbl": "Opérations autorisées",
-    "origin_lbl": "Hôte/Domaine",
-    "account_lbl": "Compte/Adresse",
-    "chain_lbl": "Chaîne de blocs",
-    "actions_lbl": "Action",
-    "no_dapps_linked": "Vous n'avez pas encore de dApps liées.",
-    "delete_btn": "Retirer",
     "backup_lbl": "Sauvegardez votre portefeuille",
     "backup_btn": "Télécharger la sauvegarde",
     "backup_txt": "Cliquez sur le bouton \"Télécharger la sauvegarde\" ci-dessous pour enregistrer un fichier crypté avec toutes les clés de votre portefeuille. ",

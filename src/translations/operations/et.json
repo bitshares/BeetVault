@@ -9,26 +9,6 @@
     "expiration": "Aegumine: {resultExpiration}",
     "signatures": "Allkirjad: {resultSignatures}"
   },
-  "link": {
-    "title": "Konto linkimise taotlus",
-    "result": "Konto linkimise tulemus",
-    "account_select": "Konto valimine",
-    "account_missing": "Taotletud kontot selles rahakotis ei ole.",
-    "request": "Rakendus „{appName}” asukohast „{origin}” taotleb juurdepääsu {chain} kontole.",
-    "request_fresh": "Rakendus on juba varem linkinud {chain} konto, nagu on märgitud allolevas loendis.",
-    "request_tooltip": "Rakendus saab teie konto andmed (nimi ja ID) ning loob rahakoti lingi.",
-    "request_cta": "Valige esitatav konto.",
-    "accept_btn": "Lubama",
-    "reject_btn": "Keela",
-    "invalid_operations": "Vigane linkimistaotlus – kehtetu(d) toimingu(d)."
-  },
-  "relink": {
-    "title": "Konto uuesti linkimise taotlus",
-    "result": "Konto uuesti linkimise tulemus",
-    "error": "Viipa kuvamisel tekkis viga",
-    "request": "Rakendus „{appName}” asukohast „{origin}” taotleb varem lingitud {chain} konto uuesti linkimist: {accountId}. ",
-    "request_tooltip": "Eelmine link rakenduse ja kontoviite vahel lähtestatakse."
-  },
   "account_id": {
     "title": "Konto üksikasjade taotlus",
     "result": "Konto üksikasjade tulemus",
@@ -1539,66 +1519,66 @@
       }
     },
     "EOS": {
-        "getAccount": {
-          "method": "hankige konto",
-          "title": "Konto üksikasjade taotlus",
-          "result": "Konto üksikasjade tulemus",
-          "headers": {
-            "request": "Kas soovite oma konto andmeid jagada?",
-            "result": "Teie konto üksikasju jagati."
-          },
-          "tooltip": "Küsib teie rahakotilt plokiahela konto üksikasju"
+      "getAccount": {
+        "method": "hankige konto",
+        "title": "Konto üksikasjade taotlus",
+        "result": "Konto üksikasjade tulemus",
+        "headers": {
+          "request": "Kas soovite oma konto andmeid jagada?",
+          "result": "Teie konto üksikasju jagati."
         },
-        "requestSignature": {
-          "method": "taotlusallkiri",
-          "title": "Allkirjataotlus",
-          "result": "Allkirja tulemus",
-          "headers": {
-            "request": "Kas soovite oma allkirja jagada?",
-            "result": "Teie allkirja jagati:"
-          },
-          "tooltip": "Küsib teie rahakotilt plokiahela allkirju"
+        "tooltip": "Küsib teie rahakotilt plokiahela konto üksikasju"
+      },
+      "requestSignature": {
+        "method": "taotlusallkiri",
+        "title": "Allkirjataotlus",
+        "result": "Allkirja tulemus",
+        "headers": {
+          "request": "Kas soovite oma allkirja jagada?",
+          "result": "Teie allkirja jagati:"
         },
-        "injectedCall": {
-          "method": "süstitud Helista",
-          "title": "Süstitud kõne taotlus",
-          "result": "Süstitud kõne tulemus",
-          "headers": {
-            "request": "Kas kinnitada järgmine süstitud kõne?",
-            "result": "Järgmine süstitud kõne kiideti heaks:"
-          },
-          "tooltip": "Palub teie rahakotil süstitud plokiahela operatsiooniga hakkama saada"
+        "tooltip": "Küsib teie rahakotilt plokiahela allkirju"
+      },
+      "injectedCall": {
+        "method": "süstitud Helista",
+        "title": "Süstitud kõne taotlus",
+        "result": "Süstitud kõne tulemus",
+        "headers": {
+          "request": "Kas kinnitada järgmine süstitud kõne?",
+          "result": "Järgmine süstitud kõne kiideti heaks:"
         },
-        "voteFor": {
-          "method": "hääletama poolt",
-          "title": "Hääletustaotlus",
-          "result": "Hääletustulemus",
-          "headers": {
-            "request": "Kas kinnitada järgmine hääletustaotlus?",
-            "result": "Kiideti heaks järgmine hääletustaotlus"
-          },
-          "tooltip": "Tehke plokiahela hääletus"
+        "tooltip": "Palub teie rahakotil süstitud plokiahela operatsiooniga hakkama saada"
+      },
+      "voteFor": {
+        "method": "hääletama poolt",
+        "title": "Hääletustaotlus",
+        "result": "Hääletustulemus",
+        "headers": {
+          "request": "Kas kinnitada järgmine hääletustaotlus?",
+          "result": "Kiideti heaks järgmine hääletustaotlus"
         },
-        "signMessage": {
-          "method": "märk Sõnum",
-          "title": "Kirjutage sõnumitaotlus alla",
-          "result": "Allkiri Sõnumi tulemus",
-          "headers": {
-            "request": "Kas nõustuda järgmise sõnumi allkirjastamisega?",
-            "result": "Allkirjastati järgmine teade:"
-          },
-          "tooltip": "Allkirjastage plokiahelapõhine sõnum"
+        "tooltip": "Tehke plokiahela hääletus"
+      },
+      "signMessage": {
+        "method": "märk Sõnum",
+        "title": "Kirjutage sõnumitaotlus alla",
+        "result": "Allkiri Sõnumi tulemus",
+        "headers": {
+          "request": "Kas nõustuda järgmise sõnumi allkirjastamisega?",
+          "result": "Allkirjastati järgmine teade:"
         },
-        "verifyMessage": {
-          "method": "kinnita sõnum",
-          "title": "Kinnitage sõnumitaotlus",
-          "result": "Kinnitage sõnumi tulemus",
-          "headers": {
-            "request": "Kas soovite kinnitada järgmist sõnumit?",
-            "result": "Järgmine teade kinnitati:"
-          },
-          "tooltip": "Kinnitage plokiahelapõhine allkirjastatud sõnum"
+        "tooltip": "Allkirjastage plokiahelapõhine sõnum"
+      },
+      "verifyMessage": {
+        "method": "kinnita sõnum",
+        "title": "Kinnitage sõnumitaotlus",
+        "result": "Kinnitage sõnumi tulemus",
+        "headers": {
+          "request": "Kas soovite kinnitada järgmist sõnumit?",
+          "result": "Järgmine teade kinnitati:"
         },
+        "tooltip": "Kinnitage plokiahelapõhine allkirjastatud sõnum"
+      },
       "transfer": {
         "method": "Ülekanne",
         "title": "Ülekandmise taotlus",

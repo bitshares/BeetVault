@@ -49,19 +49,6 @@
         "promptFailure": "Se rechazó un enlace profundo de Raw. ",
         "exit": "Salir de la página de enlace profundo"
     },
-    "www": {
-        "label": "página de solicitud web",
-        "description": "Listo para procesar solicitudes web externas. Las aplicaciones de terceros ahora pueden iniciar mensajes para vincular y luego transmitir operaciones.",
-        "chosen": "operaciones elegidas",
-        "ready": "¡Listo para solicitudes web!",
-        "loading": "Cargando servicios de socket...",
-        "exit": "Salir de la página de solicitud web",
-        "unsupported": "Las solicitudes web aún no son compatibles con esta cadena, lo sentimos.",
-        "init": "Esta página utiliza websockets alojados localmente para procesar las solicitudes web entrantes. La compatibilidad del proveedor de servicios de Internet puede variar. Quieres proceder?",
-        "yes": "Proceder",
-        "no": "Regresa",
-        "prompt": "Listo para procesar solicitudes web externas. Las aplicaciones de terceros ahora pueden iniciar mensajes para vincular y luego transmitir operaciones."
-    },
     "totp": {
         "label": "Página de solicitud de enlace profundo cifrada y por tiempo limitado",
         "desc": "Esta página procesa solicitudes de enlaces profundos entrantes que han sido cifradas de manera urgente.",
@@ -83,8 +70,7 @@
             "local": "¿Desea configurar el alcance de los archivos JSON escaneables?",
             "qr": "¿Desea configurar el alcance de los códigos QR escaneables?",
             "rawLink": "¿Desea configurar el alcance de los enlaces profundos sin procesar entrantes?",
-            "totp": "¿Desea configurar el alcance de los enlaces profundos entrantes?",
-            "www": "¿Desea configurar el alcance de las solicitudes web entrantes?"
+            "totp": "¿Desea configurar el alcance de los enlaces profundos entrantes?"
         },
         "yes": "Sí, personalizar el alcance",
         "no": "No - permitir todas las operaciones"
@@ -141,7 +127,6 @@
     "actionBar": {
         "Home": "Hogar",
         "New": "Nuevo",
-        "WWW": "Solicitud web",
         "TOTP": "TOTP",
         "Local": "Local",
         "RAW": "Enlace sin procesar",
@@ -149,7 +134,6 @@
         "Settings": "Ajustes",
         "changeNodes": "Cambiar nodo",
         "Backup": "Respaldo",
-        "dapps": "DAAP",
         "Logout": "Cerrar sesión"
     },
     "popup": {
@@ -254,18 +238,7 @@
     "settings_lbl": "Ajustes",
     "error_lbl": "Error",
     "node_lbl": "Nodo:",
-    "link_alert": "Aplicación: '{appName}' de '{origin}' quiere vincularse a una cadena {chain}.",
-    "relink_alert": "Aplicación: '{appName}' de '{origin}' quiere volver a vincularse a una cadena {chain}.",
     "access_alert": "Aplicación: '{appName}' de '{origin}' quiere interactuar con la cuenta vinculada {chain}:{account_id}.",
-    "dapps_lbl": "Tus dApps vinculadas",
-    "appname_lbl": "Nombre de la aplicación",
-    "operations_lbl": "Operaciones permitidas",
-    "origin_lbl": "Anfitrión/Dominio",
-    "account_lbl": "Cuenta/Dirección",
-    "chain_lbl": "cadena de bloques",
-    "actions_lbl": "Acción",
-    "no_dapps_linked": "Aún no tienes ninguna dApp vinculada.",
-    "delete_btn": "Eliminar",
     "backup_lbl": "Haz una copia de seguridad de tu billetera",
     "backup_btn": "Descargar copia de seguridad",
     "backup_txt": "Haga clic en el botón 'Descargar copia de seguridad' a continuación para guardar un archivo encriptado con todas las claves de su billetera. ",

@@ -9,26 +9,6 @@
     "expiration": "Expiração: {resultExpiration}",
     "signatures": "Assinaturas: {resultSignatures}"
   },
-  "link": {
-    "title": "Solicitação de vinculação de conta",
-    "result": "Resultado da vinculação da conta",
-    "account_select": "Seleção de conta",
-    "account_missing": "A conta solicitada não está presente nesta carteira.",
-    "request": "O aplicativo '{appName}' de '{origin}' está solicitando acesso a uma conta {chain}.",
-    "request_fresh": "O aplicativo já vinculou uma conta {chain} anteriormente, conforme marcado na lista abaixo.",
-    "request_tooltip": "O aplicativo receberá os dados da sua conta (nome e id) e estabelecerá um link de carteira.",
-    "request_cta": "Selecione a conta a ser fornecida.",
-    "accept_btn": "Permitir",
-    "reject_btn": "Negar",
-    "invalid_operations": "Solicitação de link malformada – operações inválidas."
-  },
-  "relink": {
-    "title": "Solicitação de relink de conta",
-    "result": "Resultado da revinculação da conta",
-    "error": "Erro ao mostrar o prompt",
-    "request": "O aplicativo '{appName}' de '{origin}' está solicitando a vinculação novamente da conta {chain} vinculada anteriormente: {accountId}. ",
-    "request_tooltip": "O link anterior entre o aplicativo e a referência da conta será redefinido."
-  },
   "account_id": {
     "title": "Solicitação de detalhes da conta",
     "result": "Resultado dos detalhes da conta",
@@ -1539,66 +1519,66 @@
       }
     },
     "EOS": {
-        "getAccount": {
-          "method": "obter conta",
-          "title": "Solicitação de detalhes da conta",
-          "result": "Resultado dos detalhes da conta",
-          "headers": {
-            "request": "Quer compartilhar os detalhes da sua conta?",
-            "result": "Os detalhes da sua conta foram compartilhados."
-          },
-          "tooltip": "Solicita à sua carteira detalhes da conta blockchain"
+      "getAccount": {
+        "method": "obter conta",
+        "title": "Solicitação de detalhes da conta",
+        "result": "Resultado dos detalhes da conta",
+        "headers": {
+          "request": "Quer compartilhar os detalhes da sua conta?",
+          "result": "Os detalhes da sua conta foram compartilhados."
         },
-        "requestSignature": {
-          "method": "solicitaçãoAssinatura",
-          "title": "Solicitação de assinatura",
-          "result": "Resultado da assinatura",
-          "headers": {
-            "request": "Quer compartilhar sua assinatura?",
-            "result": "Sua assinatura foi compartilhada:"
-          },
-          "tooltip": "Solicita assinaturas de blockchain à sua carteira"
+        "tooltip": "Solicita à sua carteira detalhes da conta blockchain"
+      },
+      "requestSignature": {
+        "method": "solicitaçãoAssinatura",
+        "title": "Solicitação de assinatura",
+        "result": "Resultado da assinatura",
+        "headers": {
+          "request": "Quer compartilhar sua assinatura?",
+          "result": "Sua assinatura foi compartilhada:"
         },
-        "injectedCall": {
-          "method": "chamada injetada",
-          "title": "Solicitação de chamada injetada",
-          "result": "Resultado da chamada injetada",
-          "headers": {
-            "request": "Aprovar a seguinte chamada injetada?",
-            "result": "A seguinte chamada injetada foi aprovada:"
-          },
-          "tooltip": "Pede à sua carteira para lidar com uma operação de blockchain injetada"
+        "tooltip": "Solicita assinaturas de blockchain à sua carteira"
+      },
+      "injectedCall": {
+        "method": "chamada injetada",
+        "title": "Solicitação de chamada injetada",
+        "result": "Resultado da chamada injetada",
+        "headers": {
+          "request": "Aprovar a seguinte chamada injetada?",
+          "result": "A seguinte chamada injetada foi aprovada:"
         },
-        "voteFor": {
-          "method": "vote para",
-          "title": "Solicitação de voto",
-          "result": "Resultado da votação",
-          "headers": {
-            "request": "Aprova o seguinte pedido de votação?",
-            "result": "O seguinte pedido de votação foi aprovado"
-          },
-          "tooltip": "Realize uma votação blockchain"
+        "tooltip": "Pede à sua carteira para lidar com uma operação de blockchain injetada"
+      },
+      "voteFor": {
+        "method": "vote para",
+        "title": "Solicitação de voto",
+        "result": "Resultado da votação",
+        "headers": {
+          "request": "Aprova o seguinte pedido de votação?",
+          "result": "O seguinte pedido de votação foi aprovado"
         },
-        "signMessage": {
-          "method": "assinarMensagem",
-          "title": "Assinar solicitação de mensagem",
-          "result": "Resultado da mensagem de assinatura",
-          "headers": {
-            "request": "Aprova a assinatura da seguinte mensagem?",
-            "result": "A seguinte mensagem foi assinada:"
-          },
-          "tooltip": "Assine uma mensagem baseada em blockchain"
+        "tooltip": "Realize uma votação blockchain"
+      },
+      "signMessage": {
+        "method": "assinarMensagem",
+        "title": "Assinar solicitação de mensagem",
+        "result": "Resultado da mensagem de assinatura",
+        "headers": {
+          "request": "Aprova a assinatura da seguinte mensagem?",
+          "result": "A seguinte mensagem foi assinada:"
         },
-        "verifyMessage": {
-          "method": "verificarMensagem",
-          "title": "Verifique a solicitação de mensagem",
-          "result": "Resultado da verificação da mensagem",
-          "headers": {
-            "request": "Deseja verificar a seguinte mensagem?",
-            "result": "A seguinte mensagem foi verificada:"
-          },
-          "tooltip": "Verifique uma mensagem assinada baseada em blockchain"
+        "tooltip": "Assine uma mensagem baseada em blockchain"
+      },
+      "verifyMessage": {
+        "method": "verificarMensagem",
+        "title": "Verifique a solicitação de mensagem",
+        "result": "Resultado da verificação da mensagem",
+        "headers": {
+          "request": "Deseja verificar a seguinte mensagem?",
+          "result": "A seguinte mensagem foi verificada:"
         },
+        "tooltip": "Verifique uma mensagem assinada baseada em blockchain"
+      },
       "transfer": {
         "method": "Transferir",
         "title": "Solicitação de transferência",

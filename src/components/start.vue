@@ -34,7 +34,8 @@
         store.dispatch("WalletStore/loadWallets", {}).catch((error) => {
             console.log({error});
         });
-        store.dispatch("OriginStore/loadApps");
+
+
     });
 
     function unlockWallet() {

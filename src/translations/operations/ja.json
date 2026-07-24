@@ -9,26 +9,6 @@
     "expiration": "有効期限: {resultExpiration}",
     "signatures": "署名: {resultSignatures}"
   },
-  "link": {
-    "title": "アカウントリンクリクエスト",
-    "result": "アカウント連携結果",
-    "account_select": "アカウントの選択",
-    "account_missing": "要求されたアカウントはこのウォレットに存在しません。",
-    "request": "「{origin}」のアプリケーション「{appName}」が {chain} アカウントへのアクセスをリクエストしています。",
-    "request_fresh": "以下のリストでマークされているように、アプリケーションはすでに {chain} アカウントをリンクしています。",
-    "request_tooltip": "アプリケーションはアカウントの詳細 (名前と ID) を受け取り、ウォレット リンクを確立します。",
-    "request_cta": "提供するアカウントを選択してください。",
-    "accept_btn": "許可する",
-    "reject_btn": "拒否",
-    "invalid_operations": "不正なリンク要求 - 無効な操作。"
-  },
-  "relink": {
-    "title": "アカウント再リンクリクエスト",
-    "result": "アカウント再リンク結果",
-    "error": "プロンプト表示エラー",
-    "request": "「{origin}」のアプリケーション「{appName}」は、以前にリンクされた {chain} アカウントの再リンクをリクエストしています: {accountId}。",
-    "request_tooltip": "アプリケーションとアカウント参照間の以前のリンクはリセットされます。"
-  },
   "account_id": {
     "title": "アカウント詳細リクエスト",
     "result": "アカウント詳細結果",
@@ -1539,66 +1519,66 @@
       }
     },
     "EOS": {
-        "getAccount": {
-          "method": "アカウントを取得する",
-          "title": "アカウント詳細リクエスト",
-          "result": "アカウント詳細結果",
-          "headers": {
-            "request": "アカウントの詳細を共有しますか?",
-            "result": "アカウントの詳細が共有されました。"
-          },
-          "tooltip": "ウォレットにブロックチェーンアカウントの詳細を要求します"
+      "getAccount": {
+        "method": "アカウントを取得する",
+        "title": "アカウント詳細リクエスト",
+        "result": "アカウント詳細結果",
+        "headers": {
+          "request": "アカウントの詳細を共有しますか?",
+          "result": "アカウントの詳細が共有されました。"
         },
-        "requestSignature": {
-          "method": "要求署名",
-          "title": "署名リクエスト",
-          "result": "署名結果",
-          "headers": {
-            "request": "あなたの署名を共有したいですか?",
-            "result": "あなたの署名が共有されました:"
-          },
-          "tooltip": "ウォレットにブロックチェーン署名を要求します"
+        "tooltip": "ウォレットにブロックチェーンアカウントの詳細を要求します"
+      },
+      "requestSignature": {
+        "method": "要求署名",
+        "title": "署名リクエスト",
+        "result": "署名結果",
+        "headers": {
+          "request": "あなたの署名を共有したいですか?",
+          "result": "あなたの署名が共有されました:"
         },
-        "injectedCall": {
-          "method": "注入されたコール",
-          "title": "挿入された通話リクエスト",
-          "result": "挿入された呼び出しの結果",
-          "headers": {
-            "request": "次の挿入された呼び出しを承認しますか?",
-            "result": "次の挿入された呼び出しが承認されました。"
-          },
-          "tooltip": "挿入されたブロックチェーン操作を処理するようにウォレットに要求します"
+        "tooltip": "ウォレットにブロックチェーン署名を要求します"
+      },
+      "injectedCall": {
+        "method": "注入されたコール",
+        "title": "挿入された通話リクエスト",
+        "result": "挿入された呼び出しの結果",
+        "headers": {
+          "request": "次の挿入された呼び出しを承認しますか?",
+          "result": "次の挿入された呼び出しが承認されました。"
         },
-        "voteFor": {
-          "method": "に投票",
-          "title": "投票リクエスト",
-          "result": "投票結果",
-          "headers": {
-            "request": "次の投票リクエストを承認しますか?",
-            "result": "次の投票リクエストが承認されました"
-          },
-          "tooltip": "ブロックチェーン投票を実行する"
+        "tooltip": "挿入されたブロックチェーン操作を処理するようにウォレットに要求します"
+      },
+      "voteFor": {
+        "method": "に投票",
+        "title": "投票リクエスト",
+        "result": "投票結果",
+        "headers": {
+          "request": "次の投票リクエストを承認しますか?",
+          "result": "次の投票リクエストが承認されました"
         },
-        "signMessage": {
-          "method": "サインメッセージ",
-          "title": "メッセージリクエストに署名する",
-          "result": "署名メッセージの結果",
-          "headers": {
-            "request": "次のメッセージへの署名を承認しますか?",
-            "result": "次のメッセージが署名されました。"
-          },
-          "tooltip": "ブロックチェーンベースのメッセージに署名する"
+        "tooltip": "ブロックチェーン投票を実行する"
+      },
+      "signMessage": {
+        "method": "サインメッセージ",
+        "title": "メッセージリクエストに署名する",
+        "result": "署名メッセージの結果",
+        "headers": {
+          "request": "次のメッセージへの署名を承認しますか?",
+          "result": "次のメッセージが署名されました。"
         },
-        "verifyMessage": {
-          "method": "verifyメッセージ",
-          "title": "メッセージリクエストの確認",
-          "result": "メッセージの結果を確認する",
-          "headers": {
-            "request": "次のメッセージを確認しますか?",
-            "result": "次のメッセージが確認されました。"
-          },
-          "tooltip": "ブロックチェーンベースの署名付きメッセージを検証する"
+        "tooltip": "ブロックチェーンベースのメッセージに署名する"
+      },
+      "verifyMessage": {
+        "method": "verifyメッセージ",
+        "title": "メッセージリクエストの確認",
+        "result": "メッセージの結果を確認する",
+        "headers": {
+          "request": "次のメッセージを確認しますか?",
+          "result": "次のメッセージが確認されました。"
         },
+        "tooltip": "ブロックチェーンベースの署名付きメッセージを検証する"
+      },
       "transfer": {
         "method": "移行",
         "title": "転送依頼",

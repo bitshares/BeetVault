@@ -49,19 +49,6 @@
         "promptFailure": "A Raw deeplink was rejected. If intended, navigate to the Raw link page and try again.",
         "exit": "Exit deeplink page"
     },
-    "www": {
-        "label": "Web request page",
-        "description": "This page processes incoming web requests via locally hosted websocket services. Internet service provider compatibility may vary.",
-        "chosen": "operations chosen",
-        "ready": "Ready for web requests!",
-        "loading": "Loading socket services...",
-        "exit": "Exit web request page",
-        "unsupported": "Web requests are not yet supported for this chain, sorry.",
-        "init": "This page uses locally hosted websockets to process incoming web requests. Internet service provider compatibility may vary. Do you want to proceed?",
-        "yes": "Proceed",
-        "no": "Go back",
-        "prompt": "Ready to process external web requests. Third party apps are now able to launch prompts to link and then broadcast operations."
-    },
     "totp": {
         "label": "Time-limited and encrypted deeplink prompt page",
         "desc": "This page processes incoming deeplink prompts which have been encrypted in a time sensitive manner.",
@@ -83,8 +70,7 @@
             "local": "Do you wish to configure the scope of scannable JSON files?",
             "qr": "Do you wish to configure the scope of scannable QR codes?",
             "rawLink": "Do you wish to configure the scope of incoming raw deeplinks?",
-            "totp": "Do you wish to configure the scope of incoming deeplinks?",
-            "www": "Do you wish to configure the scope of incoming web requests?"
+            "totp": "Do you wish to configure the scope of incoming deeplinks?"
         },
         "yes": "Yes - customize scope",
         "no": "No - allow all operations"
@@ -141,7 +127,6 @@
     "actionBar": {
         "Home": "Home",
         "New": "New",
-        "WWW": "Web request",
         "TOTP": "TOTP",
         "Local": "Local",
         "RAW": "Raw Link",
@@ -149,7 +134,6 @@
         "Settings": "Settings",
         "changeNodes": "Change node",
         "Backup": "Backup",
-        "dapps": "DAAPs",
         "Logout": "Logout"
     },
     "popup": {
@@ -254,18 +238,7 @@
     "settings_lbl": "Settings",
     "error_lbl": "Error",
     "node_lbl": "Node:",
-    "link_alert": "App: '{appName}' from '{origin}' wants to link to a {chain} chain.",
-    "relink_alert": "App: '{appName}' from '{origin}' wants to relink to a {chain} chain.",
     "access_alert": "App: '{appName}' from '{origin}' wants to interact with linked account {chain}:{account_id}.",
-    "dapps_lbl": "Your linked dApps",
-    "appname_lbl": "App Name",
-    "operations_lbl": "Allowed operations",
-    "origin_lbl": "Host/Domain",
-    "account_lbl": "Account/Address",
-    "chain_lbl": "Blockchain",
-    "actions_lbl": "Action",
-    "no_dapps_linked": "You do not have any dApps linked yet.",
-    "delete_btn": "Remove",
     "backup_lbl": "Backup your wallet",
     "backup_btn": "Download Backup",
     "backup_txt": "Click the 'Download Backup' button below to save an encrypted file with all your wallet keys. The backup file will be encrypted with your wallet password and you will need your password to import the backup to a new wallet installation.",

@@ -1,23 +1,20 @@
 <script setup>
-    import { ref, computed, watch, onMounted } from "vue";
+    import { ref, computed, watch } from "vue";
     import { useI18n } from "vue-i18n";
 
     import router from "../router/index.js";
     import store from "../store/index.js";
-    import langSelect from "./lang-select.vue";
     import { Button } from '@/components/ui/ui/button';
     import { DropdownMenu, DropdownMenuContent, DropdownMenuItem, DropdownMenuTrigger } from '@/components/ui/ui/dropdown-menu';
-    import { Menu, Home, Plus, Globe, KeyRound, Upload, Code, QrCode, AppWindow, Download, Settings, Network, LogOut } from 'lucide-vue-next';
+    import { Menu, Home, Plus, KeyRound, Upload, Code, QrCode, Download, Settings, Network, LogOut } from 'lucide-vue-next';
 
     const iconMap = {
         home: Home,
         add: Plus,
-        web: Globe,
         generating_tokens: KeyRound,
         upload: Upload,
         raw_on: Code,
         qr_code_2: QrCode,
-        app_registration: AppWindow,
         download: Download,
         settings: Settings,
         lan: Network,
@@ -43,62 +40,50 @@
                 url: "/add-account"
             },
             {
-                text: t("common.actionBar.WWW"),
-                index: 2,
-                icon: "web",
-                url: "/www"
-            },
-            {
                 text: t("common.actionBar.TOTP"),
-                index: 3,
+                index: 2,
                 icon: "generating_tokens",
                 url: "/totp"
             },
             {
                 text: t("common.actionBar.Local"),
-                index: 4,
+                index: 3,
                 icon: "upload",
                 url: "/local"
             },
             {
                 text: t("common.actionBar.RAW"),
-                index: 5,
+                index: 4,
                 icon: "raw_on",
                 url: "/raw-link"
             },
             {
                 text: t("common.actionBar.QR"),
-                index: 6,
+                index: 5,
                 icon: "qr_code_2",
                 url: "/qr"
             },
             {
-                text: t("common.actionBar.dapps"),
-                index: 7,
-                icon: "app_registration",
-                url: "/dapps"
-            },
-            {
                 text: t("common.actionBar.Backup"),
-                index: 8,
+                index: 6,
                 icon: "download",
                 url: "/backup"
             },
             {
                 text: t("common.actionBar.Settings"),
-                index: 9,
+                index: 7,
                 icon: "settings",
                 url: "/settings"
             },
             {
                 text: t("common.actionBar.changeNodes"),
-                index: 10,
+                index: 8,
                 icon: "lan",
                 url: "/nodes"
             },
             {
                 text: t("common.actionBar.Logout"),
-                index: 11,
+                index: 9,
                 icon: "logout",
                 url: "/"
             }
@@ -111,18 +96,9 @@
     };
 
     function onChange(data) {
-        const newIndex = data.index;
-        if (
-            lastIndex.value &&
-            lastIndex.value === 2 && // WWW
-            newIndex !== 2 // leaving WWW
-        ) {
-            console.log("Automatically shutting down web services");
-            window.electron.closeServer();
-        }
-        lastIndex.value = newIndex;
+        lastIndex.value = data.index;
 
-        if (data.index === 11) {
+        if (data.index === 9) {
             console.log("User logged out.");
             store.dispatch("WalletStore/logout");
             router.replace("/");
@@ -132,16 +108,13 @@
     }
 
     let logoutTimer = null;
-    function startLogoutTimer(newValue) {
+    function startLogoutTimer() {
         if (logoutTimer) {
             clearTimeout(logoutTimer);
         }
 
         logoutTimer = setTimeout(() => {
             console.log("wallet timed logout");
-            if (newValue === 2) {
-                window.electron.closeServer();
-            }
             store.dispatch("WalletStore/logout");
             router.replace("/");
         }, 2 * 60 * 1000);
@@ -158,17 +131,9 @@
                 console.log(`Page ${items.value[newValue].text} is in use...`);
             }
 
-            window.electron.removeAllListeners("signMessage");
-            window.electron.removeAllListeners("signNFT");
             window.electron.removeAllListeners("injectedCall");
-            window.electron.removeAllListeners("requestSignature");
-            window.electron.removeAllListeners("getAccount");
-            window.electron.removeAllListeners("verifyMessage");
 
-            if (
-                store.state.WalletStore.isUnlocked &&
-                [2, 3, 4, 5, 6].includes(newValue)
-            ) {
+            if (store.state.WalletStore.isUnlocked) {
                 const decryptKey = async (encryptedKey) => {
                     return new Promise(async (resolve, reject) => {
                         let signature = await window.electron.getSignature(
@@ -215,261 +180,6 @@
                         return resolve(decryptedKey);
                     });
                 };
-
-                window.electron.onSignMessage((request) => {
-                    let shownBeetApp =
-                        store.getters["OriginStore/getBeetApp"](request);
-                    if (!shownBeetApp) {
-                        window.electron.signMessageError({
-                            id: request.id,
-                            result: {
-                                isError: true,
-                                method: "signMessage.getBeetApp",
-                                error: "No beetApp",
-                            },
-                        });
-                    }
-
-                    let account = store.getters["AccountStore/getSafeAccount"](
-                        JSON.parse(JSON.stringify(shownBeetApp))
-                    );
-                    store.dispatch("WalletStore/notifyUser", {
-                        notify: "request",
-                        message: t("common.apiUtils.signMessage"),
-                    });
-
-                    window.electron.createPopup({
-                        request: request,
-                        accounts: [account],
-                    });
-
-                    window.electron.popupApproved(request.id, async (result) => {
-                        let retrievedKey;
-                        try {
-                            retrievedKey =
-                                store.getters["AccountStore/getSigningKey"](
-                                    request
-                                );
-                        } catch (error) {
-                            window.electron.signMessageError({
-                                id: request.id,
-                                result: {
-                                    isError: true,
-                                    method: "signMessage.getSigningKey",
-                                    error: error,
-                                },
-                            });
-                            return;
-                        }
-
-                        let processedKey;
-                        try {
-                            processedKey = await decryptKey(retrievedKey);
-                        } catch (error) {
-                            window.electron.signMessageError({
-                                id: request.id,
-                                result: {
-                                    isError: true,
-                                    method: "signMessage.getKey",
-                                    error: error,
-                                },
-                            });
-                            return;
-                        }
-
-                        let accountName;
-                        try {
-                            accountName = account.accountName;
-                        } catch (error) {
-                            window.electron.signMessageError({
-                                id: request.id,
-                                result: {
-                                    isError: true,
-                                    method: "signMessage.accountName",
-                                    error: error,
-                                },
-                            });
-                            return;
-                        }
-
-                        let signedMessage;
-                        try {
-                            signedMessage =
-                                await window.electron.executeSignMessage({
-                                    key: processedKey,
-                                    name: accountName,
-                                    params: request.payload.params,
-                                });
-                        } catch (error) {
-                            window.electron.signMessageError({
-                                id: request.id,
-                                result: {
-                                    isError: true,
-                                    method: "signMessage.executeSignMessage",
-                                    error: error,
-                                },
-                            });
-                            return;
-                        }
-
-                        window.electron.signMessageResponse({
-                            result: signedMessage,
-                        });
-                    });
-
-                    window.electron.popupRejected(request.id, (result) => {
-                        window.electron.signMessageError({
-                            id: request.id,
-                            result: {
-                                isError: true,
-                                method: "signMessage.popupRejected",
-                                error: result,
-                            },
-                        });
-                    });
-                });
-
-                window.electron.onSignNFT((request) => {
-                    let shownBeetApp =
-                        store.getters["OriginStore/getBeetApp"](request);
-                    if (!shownBeetApp) {
-                        window.electron.signNFTError({
-                            id: request.id,
-                            result: {
-                                isError: true,
-                                method: "signNFT.getBeetApp",
-                                error: "No beetApp",
-                            },
-                        });
-                        return;
-                    }
-
-                    let account = store.getters["AccountStore/getSafeAccount"](
-                        JSON.parse(JSON.stringify(shownBeetApp))
-                    );
-
-                    store.dispatch("WalletStore/notifyUser", {
-                        notify: "request",
-                        message: t("common.apiUtils.signNFT"),
-                    });
-
-                    window.electron.createPopup({
-                        request: request,
-                        accounts: [account],
-                    });
-
-                    window.electron.popupApproved(request.id, async (result) => {
-                        // `popupApproved_${request.id}`
-                        let retrievedKey;
-                        try {
-                            retrievedKey =
-                                store.getters["AccountStore/getSigningKey"](
-                                    request
-                                );
-                        } catch (error) {
-                            console.log(error);
-                            window.electron.signNFTError({
-                                id: request.id,
-                                result: {
-                                    isError: true,
-                                    method: "signNFT.getSigningKey",
-                                    error: error,
-                                },
-                            });
-                            return;
-                        }
-
-                        if (!retrievedKey) {
-                            window.electron.signNFTError({
-                                id: request.id,
-                                result: {
-                                    isError: true,
-                                    method: "signNFT.getSigningKey",
-                                    error: "No retrievedKey",
-                                },
-                            });
-                            return;
-                        }
-
-                        let processedKey;
-                        try {
-                            processedKey = await decryptKey(retrievedKey);
-                        } catch (error) {
-                            console.log(error);
-                            window.electron.signNFTError({
-                                id: request.id,
-                                result: {
-                                    isError: true,
-                                    method: "signNFT.getKey",
-                                    error: error,
-                                },
-                            });
-                            return;
-                        }
-
-                        if (!processedKey) {
-                            window.electron.signNFTError({
-                                id: request.id,
-                                result: {
-                                    isError: true,
-                                    method: "signNFT.getKey",
-                                    error: "No processedKey",
-                                },
-                            });
-                            return;
-                        }
-
-                        let _request;
-                        try {
-                            _request = await window.electron.blockchainRequest({
-                                methods: ["signNFT"],
-                                account: null,
-                                chain: store.getters["AccountStore/getChain"],
-                                key: processedKey,
-                                target: request.payload.params,
-                            });
-                        } catch (error) {
-                            console.log(error);
-                            window.electron.signNFTError({
-                                id: request.id,
-                                result: {
-                                    isError: true,
-                                    method: "signNFT.executeSignNFT",
-                                    error: error,
-                                },
-                            });
-                            return;
-                        }
-
-                        if (!_request || !_request.signNFT) {
-                            window.electron.signNFTError({
-                                id: request.id,
-                                result: {
-                                    isError: true,
-                                    method: "signNFT.executeSignNFT",
-                                    error: "No signedNFT",
-                                },
-                            });
-                            return;
-                        }
-
-                        window.electron.signNFTResponse({
-                            result: _request.signNFT,
-                        });
-                    });
-
-                    window.electron.popupRejected(request.id, (result) => {
-                        // `popupRejected_${request.id}`
-                        window.electron.signNFTError({
-                            id: request.id,
-                            result: {
-                                isError: true,
-                                method: "signNFT.popupRejected",
-                                error: result,
-                            },
-                        });
-                    });
-                });
 
                 window.electron.onInjectedCall(async (args) => {
                     const {
@@ -576,7 +286,7 @@
                             }
 
                             let _requiredMemoKey = store.getters["AccountStore/getPrivateMemoKey"](fromID, chain);
-                            
+
                             let processedKey;
                             try {
                                 processedKey = await decryptKey(_requiredMemoKey);
@@ -628,7 +338,7 @@
                                     } catch (error) {
                                         console.log(error);
                                     }
-                                    
+
                                     _updatedOperation[1].memo.message = memoFromBuffer;
                                     processedOperations.push(_updatedOperation);
                                 }
@@ -638,7 +348,6 @@
                                 let _updatedRequest = { ...request };
 
                                 let _updatedOperations = [];
-                                // Recalculate fees for each operation
                                 for (let operation of processedOperations) {
                                     try {
                                         let feeRequest = await window.electron.blockchainRequest({
@@ -852,212 +561,8 @@
                         });
                     });
                 });
-
-                window.electron.onRequestSignature(
-                    (request, chain, visualizedParams, visualizedAccount) => {
-                        if (!request || !request.payload) {
-                            window.electron.requestSignatureError({
-                                id: request.id,
-                                result: {
-                                    isError: true,
-                                    method: "requestSignature.inputs",
-                                    error: "input error",
-                                },
-                            });
-                            return;
-                        }
-
-                        store.dispatch("WalletStore/notifyUser", {
-                            notify: "request",
-                            message: `Signature request type: ${request.params[0]}`,
-                        });
-
-                        window.electron.createPopup({
-                            request: request,
-                            visualizedParams: visualizedParams,
-                            visualizedAccount: visualizedAccount,
-                        });
-
-                        window.electron.popupApproved(
-                            request.id,
-                            async (result) => {
-                                let activeKey;
-                                if (["BTS", "BTS_TEST"].includes(chain)) {
-                                    try {
-                                        activeKey = request.payload.account_id
-                                            ? store.getters[
-                                                "AccountStore/getActiveKey"
-                                            ](request)
-                                            : store.getters[
-                                                "AccountStore/getCurrentActiveKey"
-                                            ]();
-                                    } catch (error) {
-                                        console.log(error);
-                                        window.electron.requestSignatureError({
-                                            id: request.id,
-                                            result: {
-                                                isError: true,
-                                                method: "requestSignature.getActiveKey",
-                                                error: error,
-                                            },
-                                        });
-                                        return;
-                                    }
-                                } else if (
-                                    ["EOS", "BEOS", "TLOS"].includes(chain)
-                                ) {
-                                    activeKey =
-                                        store.getters["AccountStore/getEOSKey"]();
-                                }
-
-                                let signingKey;
-                                try {
-                                    signingKey = await decryptKey(activeKey);
-                                } catch (error) {
-                                    console.log(error);
-                                    window.electron.requestSignatureError({
-                                        id: request.id,
-                                        result: {
-                                            isError: true,
-                                            method: "requestSignature.getKey",
-                                            error: error,
-                                        },
-                                    });
-                                    return;
-                                }
-
-                                let transaction;
-                                try {
-                                    if (["BTS", "BTS_TEST"].includes(chain)) {
-                                        transaction =
-                                            await window.electron.requestSignature(
-                                                request.payload.params,
-                                                signingKey
-                                            );
-                                    } else if (
-                                        ["EOS", "BEOS", "TLOS"].includes(chain)
-                                    ) {
-                                        transaction =
-                                            await window.electron.requestSignature(
-                                                JSON.parse(
-                                                    request.payload.params[1]
-                                                ),
-                                                signingKey
-                                            );
-                                    }
-                                } catch (error) {
-                                    console.log(error);
-                                    window.electron.injectedCallError({
-                                        id: request.id,
-                                        result: {
-                                            isError: true,
-                                            method: "injectedCall.blockchain.sign",
-                                            error: error,
-                                        },
-                                    });
-                                    return;
-                                }
-
-                                if (!transaction || !transaction.toObject()) {
-                                    window.electron.requestSignatureError({
-                                        id: request.id,
-                                        result: {
-                                            isError: true,
-                                            method: "requestSignature.finalResult",
-                                            error: "No final result",
-                                        },
-                                    });
-                                    return;
-                                }
-
-                                store.dispatch("WalletStore/notifyUser", {
-                                    notify: "request",
-                                    message: t("common.apiUtils.sign"),
-                                });
-                                window.electron.requestSignatureResponse({
-                                    id: request.id,
-                                    result: { result: transaction.toObject() },
-                                });
-                            }
-                        );
-
-                        window.electron.popupRejected(request.id, (result) => {
-                            window.electron.requestSignatureError({
-                                id: request.id,
-                                result: {
-                                    isError: true,
-                                    method: "requestSignature.popupRejected",
-                                    error: result,
-                                },
-                            });
-                        });
-                    }
-                );
-
-                window.electron.onGetAccount((request) => {
-                    let shownBeetApp =
-                        store.getters["OriginStore/getBeetApp"](request);
-                    if (!shownBeetApp) {
-                        window.electron.getAccountError({
-                            id: request.id,
-                            result: {
-                                isError: true,
-                                method: "getAccount.getBeetApp",
-                                error: "No beetApp",
-                            },
-                        });
-                    }
-
-                    let account = store.getters["AccountStore/getSafeAccount"](
-                        JSON.parse(JSON.stringify(shownBeetApp))
-                    );
-
-                    window.electron.createPopup({
-                        request: request,
-                        accounts: [account],
-                    });
-
-                    window.electron.popupApproved(request.id, async (result) => {
-                        window.electron.getAccountResponse(result);
-                    });
-
-                    window.electron.popupRejected(request.id, (result) => {
-                        window.electron.getAccountError({
-                            id: request.id,
-                            result: {
-                                isError: true,
-                                method: "getAccount.popupRejected",
-                                error: result,
-                            },
-                        });
-                    });
-                });
-
-                window.electron.onVerifyMessage((request) => {
-                    if (!store.state.WalletStore.isUnlocked) {
-                        window.electron.verifyMessageError({
-                            id: request.id,
-                            result: {
-                                isError: true,
-                                method: "verifyMessage.verify",
-                                error: "Wallet is locked",
-                            },
-                        });
-                        store.dispatch("WalletStore/notifyUser", {
-                            notify: "request",
-                            message: window.t("common.apiUtils.msgVerify"),
-                        });
-                        return;
-                    }
-
-                    store.dispatch("WalletStore/notifyUser", {
-                        notify: "request",
-                        message: window.t("common.apiUtils.msgVerify"),
-                    });
-                    window.electron.verifyMessageResponse();
-                });
             }
-            startLogoutTimer(newValue);
+            startLogoutTimer();
         },
         { immediate: true }
     );
@@ -1069,9 +574,6 @@
                 (item) => item.url === newRoute.path
             );
             if (matchingItem) {
-                if (lastIndex.value === 2) {
-                    window.electron.closeServer();
-                }
                 lastIndex.value = matchingItem.index;
             }
         }
@@ -1081,7 +583,7 @@
         () => store.state.WalletStore.isUnlocked,
         (isUnlocked) => {
             if (isUnlocked) {
-                window.electron.timer(() => startLogoutTimer(lastIndex.value));
+                window.electron.timer(() => startLogoutTimer());
                 window.electron.setNode((data) => {
                     const _currentChain = store.getters["AccountStore/getChain"];
                     store.dispatch("SettingsStore/setNode", {

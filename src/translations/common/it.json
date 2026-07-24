@@ -49,19 +49,6 @@
         "promptFailure": "Un collegamento diretto non elaborato è stato rifiutato. ",
         "exit": "Esci dalla pagina del collegamento diretto"
     },
-    "www": {
-        "label": "Pagina di richiesta web",
-        "description": "Pronto per elaborare richieste web esterne. Le app di terze parti sono ora in grado di avviare richieste di collegamento e quindi di trasmissione di operazioni.",
-        "chosen": "operazioni scelte",
-        "ready": "Pronto per le richieste web!",
-        "loading": "Caricamento servizi socket...",
-        "exit": "Esci dalla pagina di richiesta web",
-        "unsupported": "Le richieste web non sono ancora supportate per questa catena, siamo spiacenti.",
-        "init": "Questa pagina utilizza websocket ospitati localmente per elaborare le richieste web in entrata. La compatibilità del provider di servizi Internet può variare. Vuoi procedere?",
-        "yes": "Procedere",
-        "no": "Torna indietro",
-        "prompt": "Pronto per elaborare richieste web esterne. Le app di terze parti sono ora in grado di avviare richieste di collegamento e quindi di trasmissione di operazioni."
-    },
     "totp": {
         "label": "Pagina di richiesta del deeplink crittografata e limitata nel tempo",
         "desc": "Questa pagina elabora le richieste di collegamento diretto in arrivo che sono state crittografate in modo sensibile al tempo.",
@@ -83,8 +70,7 @@
             "local": "Desideri configurare l'ambito dei file JSON analizzabili?",
             "qr": "Desideri configurare l'ambito dei codici QR scansionabili?",
             "rawLink": "Desideri configurare l'ambito dei deeplink non elaborati in entrata?",
-            "totp": "Desideri configurare l'ambito dei deeplink in entrata?",
-            "www": "Desideri configurare l'ambito delle richieste web in entrata?"
+            "totp": "Desideri configurare l'ambito dei deeplink in entrata?"
         },
         "yes": "Sì, personalizza l'ambito",
         "no": "No - consenti tutte le operazioni"
@@ -141,7 +127,6 @@
     "actionBar": {
         "Home": "Casa",
         "New": "Nuovo",
-        "WWW": "Richiesta web",
         "TOTP": "TOP",
         "Local": "Locale",
         "RAW": "Collegamento grezzo",
@@ -149,7 +134,6 @@
         "Settings": "Impostazioni",
         "changeNodes": "Cambia nodo",
         "Backup": "Backup",
-        "dapps": "DAAP",
         "Logout": "Disconnettersi"
     },
     "popup": {
@@ -254,18 +238,7 @@
     "settings_lbl": "Impostazioni",
     "error_lbl": "Errore",
     "node_lbl": "Nodo:",
-    "link_alert": "App: '{appName}' da '{origin}' desidera collegarsi a una catena {chain}.",
-    "relink_alert": "App: '{appName}' da '{origin}' vuole ricollegarsi a una catena {chain}.",
     "access_alert": "App: '{appName}' da '{origin}' vuole interagire con l'account collegato {chain}:{account_id}.",
-    "dapps_lbl": "Le tue dApp collegate",
-    "appname_lbl": "Nome dell'applicazione",
-    "operations_lbl": "Operazioni consentite",
-    "origin_lbl": "Host/Dominio",
-    "account_lbl": "Conto/Indirizzo",
-    "chain_lbl": "Blockchain",
-    "actions_lbl": "Azione",
-    "no_dapps_linked": "Non hai ancora nessuna dApp collegata.",
-    "delete_btn": "Rimuovere",
     "backup_lbl": "Fai il backup del tuo portafoglio",
     "backup_btn": "Scarica Sostegno",
     "backup_txt": "Fai clic sul pulsante \"Scarica backup\" in basso per salvare un file crittografato con tutte le chiavi del tuo portafoglio. ",
