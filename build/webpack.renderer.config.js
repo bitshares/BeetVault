@@ -60,7 +60,7 @@ module.exports = function(env) {
         })],
         
         resolve: {
-            extensions: ['.*', '.js', '.mjs', '.vue', '.json', '.css', '.scss'],
+            extensions: ['.*', '.js', '.mjs', '.ts', '.vue', '.json', '.css', '.scss'],
             mainFields: ["browser", "module", "main"],
             alias: {
                 vue: "vue/dist/vue.esm-browser.js",
@@ -91,6 +91,19 @@ module.exports = function(env) {
                     options: {
                     presets: [
                         ['@babel/preset-env', { targets: "defaults" }]
+                    ]
+                    }
+                }
+            },
+            {
+                test: /\.ts$/,
+                exclude: /node_modules/,
+                use: {
+                    loader: 'babel-loader',
+                    options: {
+                    presets: [
+                        ['@babel/preset-env', { targets: "defaults" }],
+                        '@babel/preset-typescript'
                     ]
                     }
                 }
