@@ -146,7 +146,16 @@ const actions = {
                         TEST: [],
                         EOS: [],
                         BEOS: [],
-                        TLOS: []
+                        TLOS: [],
+            WAX: [],
+            WAXTEST: [],
+                        EOSTEST: [],
+                        FIO: [],
+                        FIOTEST: [],
+                        LIBRE: [],
+                        LIBRETEST: [],
+                        XPR: [],
+                        XPRTEST: []
                     }
                 }
                 settings.chainPermissions[coreSymbol] = payload.rows;
@@ -198,14 +207,32 @@ const initialState = {
             TEST: [],
             EOS: [],
             BEOS: [],
-            TLOS: []
+            TLOS: [],
+            WAX: [],
+            WAXTEST: [],
+            EOSTEST: [],
+            FIO: [],
+            FIOTEST: [],
+            LIBRE: [],
+            LIBRETEST: [],
+            XPR: [],
+            XPRTEST: []
         },
         chainNodes: {
             BTS: blockchains.BTS.nodeList,
             TEST: blockchains.BTS_TEST.nodeList,
             EOS: blockchains.EOS.nodeList,
             BEOS: blockchains.BEOS.nodeList,
-            TLOS: blockchains.TLOS.nodeList
+            TLOS: blockchains.TLOS.nodeList,
+            WAX: blockchains.WAX.nodeList,
+            WAXTEST: blockchains.WAXTEST.nodeList,
+            EOSTEST: blockchains.EOSTEST.nodeList,
+            FIO: blockchains.FIO.nodeList,
+            FIOTEST: blockchains.FIOTEST.nodeList,
+            LIBRE: blockchains.LIBRE.nodeList,
+            LIBRETEST: blockchains.LIBRETEST.nodeList,
+            XPR: blockchains.XPR.nodeList,
+            XPRTEST: blockchains.XPRTEST.nodeList
         }
     }
 };

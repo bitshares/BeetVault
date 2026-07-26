@@ -53,6 +53,7 @@ var isDevMode = process.execPath.match(/[\\/]electron/);
 const logger = new Logger(isDevMode ? 3 : 0);
 let tray = null;
 let regexBTS = /1.2.\d+/g;
+const eosFamily = ["EOS", "BEOS", "TLOS", "WAX", "WAXTEST", "EOSTEST", "FIO", "FIOTEST", "LIBRE", "LIBRETEST", "XPR", "XPRTEST"];
 
 async function _readFile(filePath) {
     return new Promise((resolve, reject) => {
@@ -516,7 +517,7 @@ async function _parseDeeplink(
                     }
                 }
             }
-        } else if (["EOS", "BEOS", "TLOS"].includes(chain)) {
+        } else if (eosFamily.includes(chain)) {
             if (request.payload.params && request.payload.params.length > 1) {
                 const actions = JSON.parse(request.payload.params[1]).actions;
 
@@ -998,7 +999,7 @@ const createWindow = async () => {
                         break;
                     }
                 }
-            } else if (["EOS", "BEOS", "TLOS"].includes(chain)) {
+            } else if (eosFamily.includes(chain)) {
                 const ops = parsedData.actions;
                 for (let i = 0; i < ops.length; i++) {
                     let operation = ops[i];

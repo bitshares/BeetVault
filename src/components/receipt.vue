@@ -83,7 +83,7 @@ watchEffect(() => {
 
             result.value = data.result;
 
-            if (["EOS", "TLOS", "BEOS"].includes(data.request.payload.chain)) {
+            if (["EOS", "TLOS", "BEOS", "WAX", "WAXTEST", "EOSTEST", "FIO", "FIOTEST", "LIBRE", "LIBRETEST", "XPR", "XPRTEST"].includes(data.request.payload.chain)) {
                 resultID.value = data.result.transaction_id;
                 resultBlockNum.value = data.result.processed.block_num;
                 resultTrxNum.value = 0;
@@ -138,7 +138,7 @@ watch(
                 4
             );
         }
-        if (["EOS", "TLOS", "BEOS"].includes(chain.value)) {
+        if (["EOS", "TLOS", "BEOS", "WAX", "WAXTEST", "EOSTEST", "FIO", "FIOTEST", "LIBRE", "LIBRETEST", "XPR", "XPRTEST"].includes(chain.value)) {
             if (newResult) {
                 resultData.value = JSON.stringify(
                     newResult.processed,

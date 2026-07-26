@@ -2,6 +2,10 @@ const lookupPrecision = {
     "EOS": 4,
     "TLOS": 4,
     "BEOS": 4,
+    "WAX": 8,
+    "FIO": 9,
+    "LIBRE": 8,
+    "XPR": 4,
     "BTS": 5,
     "BTS_TEST": 5
 };
