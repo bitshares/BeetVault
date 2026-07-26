@@ -173,7 +173,9 @@ let _blockchains = {
         chainId: "1eaa0824707c8c16bd25145493bf062aecddfeb56c736f6ba6397f3195f33c9f",
         nodeList: [
             { url: "https://telostestnet.greymass.com/" },
-            { url: "https://telos-testnet.eosphere.io" }
+            { url: "https://telos-testnet.eosphere.io" },
+            { url: "https://testnet.telos.net" },
+            { url: "https://test.telos.eosusa.io" },
         ],
     },
     WAX: {

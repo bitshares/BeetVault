@@ -53,7 +53,7 @@ var isDevMode = process.execPath.match(/[\\/]electron/);
 const logger = new Logger(isDevMode ? 3 : 0);
 let tray = null;
 let regexBTS = /1.2.\d+/g;
-const eosFamily = ["EOS", "BEOS", "TLOS", "WAX", "WAXTEST", "EOSTEST", "FIO", "FIOTEST", "LIBRE", "LIBRETEST", "XPR", "XPRTEST"];
+const eosFamily = ["EOS", "BEOS", "TLOS", "TLOSTEST", "WAX", "WAXTEST", "EOSTEST", "FIO", "FIOTEST", "LIBRE", "LIBRETEST", "XPR", "XPRTEST"];
 
 async function _readFile(filePath) {
     return new Promise((resolve, reject) => {

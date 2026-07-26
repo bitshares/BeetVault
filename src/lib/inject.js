@@ -93,7 +93,7 @@ export async function inject(blockchain, request, webContents) {
             }
         }
     } else if (
-        ["EOS", "BEOS", "TLOS", "WAX", "WAXTEST", "EOSTEST", "FIO", "FIOTEST", "LIBRE", "LIBRETEST", "XPR", "XPRTEST"].includes(blockchain._config.identifier)
+        ["EOS", "BEOS", "TLOS", "TLOSTEST", "WAX", "WAXTEST", "EOSTEST", "FIO", "FIOTEST", "LIBRE", "LIBRETEST", "XPR", "XPRTEST"].includes(blockchain._config.identifier)
     ) {
         const params = request.payload.params[1];
         const _actions =

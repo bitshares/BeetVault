@@ -3,6 +3,7 @@ import { blockchains } from "../../config/config.js";
 import BitShares from "./BitShares.js";
 import EOSmainnet from "./EOSmainnet.js";
 import TLOS from "./TLOS.js";
+import TLOStest from "./TLOStest.js";
 import BEOS from "./BEOS.js";
 import WAX from "./WAX.js";
 import WAXtest from "./WAXtest.js";
@@ -42,6 +43,8 @@ export default function getBlockchainAPI(chain = null, node = null) {
                 storedChain = new BEOS(config, node);
             } else if (chain === "TLOS") {
                 storedChain = new TLOS(config, node);
+            } else if (chain === "TLOSTEST") {
+                storedChain = new TLOStest(config, node);
             } else if (chain === "WAX") {
                 storedChain = new WAX(config, node);
             } else if (chain === "WAXTEST") {
