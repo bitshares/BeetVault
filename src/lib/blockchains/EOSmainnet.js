@@ -10,11 +10,7 @@ import beautify from "./EOS/beautify.js";
 import * as Actions from "../Actions.js";
 
 const operations = [
-    Actions.GET_ACCOUNT,
-    Actions.REQUEST_SIGNATURE,
     Actions.INJECTED_CALL,
-    Actions.SIGN_MESSAGE,
-    Actions.VERIFY_MESSAGE,
     "setalimits",
     "setacctram",
     "setacctnet",

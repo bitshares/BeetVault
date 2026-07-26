@@ -69,7 +69,7 @@ module.exports = function(env) {
                         implementation: sass,
                         api: "modern-compiler",
                         sassOptions: {
-                            silenceDeprecations: ["import", "global-builtin", "color-functions"],
+                            silenceDeprecations: ["global-builtin", "color-functions"],
                         },
                     },
                     },

@@ -1,10 +1,20 @@
 @use "sass:color";
 
+$primary:       #C7088E;
+$alternate:     #960069;
+$secondary:     #707070;
+$success:       #4CAF50;
+$info:          #00BCD4;
+$warning:       #FF9800;
+$danger:        #F44336;
+$light:         #E5EAED;
+$dark:          #29324A;
+$white:         #F4F8FB;
+
 /* Fixed Layout */
 html,
 body {
     height: 100%;
-    border-radius: 8px;
     overflow: hidden;
     background: rgba(255, 255, 255, 0);
     font-family: 'Roboto';
@@ -33,7 +43,6 @@ body {
     align-items: center;
     border: 1px solid $dark;
     overflow: hidden;
-    border-radius: 0.4rem;
 
     .wideCard {
       min-width: 100%;

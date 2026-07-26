@@ -6,6 +6,7 @@
     import { Button } from '@/components/ui/ui/button';
     import { Input } from '@/components/ui/ui/input';
     import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/ui/card';
+    import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/ui/select';
 
     import store from '../store/index.js';
     import router from '../router/index.js';
@@ -28,6 +29,29 @@
         }
         return store.getters["AccountStore/getAccountQuantity"];
     })
+
+    let selectedTimeout = ref("5");
+
+    onMounted(() => {
+        let stored = store.getters["SettingsStore/getLogoutTimeout"];
+        selectedTimeout.value = String(stored);
+    });
+
+    function updateLogoutTimeout(value) {
+        selectedTimeout.value = value;
+        store.dispatch("SettingsStore/setLogoutTimeout", {
+            timeout: Number(value)
+        });
+    }
+
+    const logoutOptions = [
+        { value: "1", label: "1 min" },
+        { value: "2", label: "2 min" },
+        { value: "5", label: "5 min" },
+        { value: "10", label: "10 min" },
+        { value: "15", label: "15 min" },
+        { value: "0", label: "Never" }
+    ];
 
     async function deleteAccount() {
         if (!store.state.WalletStore.isUnlocked || router.currentRoute.value.path != "/settings") {
@@ -65,14 +89,14 @@
 
 <template>
     <div class="bottom p-0">
-        <div class="content px-4 py-3">
+        <div class="content px-4 py-3 space-y-4 overflow-y-auto min-h-0">
             <Card class="w-full max-w-md mx-auto">
-                <CardHeader>
+                <CardHeader class="pb-2">
                     <CardTitle>
                         <span class="underline font-semibold">{{ t('common.settings.label') }}</span>
                     </CardTitle>
                 </CardHeader>
-                <CardContent class="space-y-4">
+                <CardContent class="space-y-3 p-4 pt-0">
                     <AccountSelect />
 
                     <div v-if="accountQuantity && accountQuantity > 1" class="space-y-4">
@@ -104,6 +128,28 @@
                     <div v-else class="space-y-4">
                         <p class="text-sm text-justify">{{ t('common.settings.insufficient') }}</p>
                     </div>
+                </CardContent>
+            </Card>
+
+            <Card class="w-full max-w-md mx-auto">
+                <CardHeader class="pb-2">
+                    <CardTitle>
+                        <span class="underline font-semibold">{{ t('common.settings.logoutTitle') }}</span>
+                    </CardTitle>
+                </CardHeader>
+                <CardContent class="space-y-3 p-4 pt-0">
+                    <p class="text-sm text-justify">{{ t('common.settings.logoutDesc') }}</p>
+
+                    <Select :model-value="selectedTimeout" @update:model-value="updateLogoutTimeout">
+                        <SelectTrigger class="w-full">
+                            <SelectValue :placeholder="t('common.settings.logoutPlaceholder')" />
+                        </SelectTrigger>
+                        <SelectContent>
+                            <SelectItem v-for="option in logoutOptions" :key="option.value" :value="option.value">
+                                {{ option.label }}
+                            </SelectItem>
+                        </SelectContent>
+                    </Select>
                 </CardContent>
             </Card>
         </div>

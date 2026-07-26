@@ -9,22 +9,7 @@
     "expiration": "Expiration: {resultExpiration}",
     "signatures": "Signatures: {resultSignatures}"
   },
-  "account_id": {
-    "title": "Account Details Request",
-    "result": "Account details result",
-    "request": "App: '{appName}' from '{origin}' is requesting access to the linked identity (account ID & account name) of account: {chain}: {accountName} ({accountId}).",
-    "request_tooltip": "By default an anonymous link is provided. Certain apps/websites require access to your account id/name (e.g. for sign-in purposes). If this is the case, it is safe to 'Allow' here.",
-    "accept_btn": "Allow",
-    "reject_btn": "Deny"
-  },
-  "any_account_id": {
-    "title": "Account Details Request",
-    "result": "Account details result",
-    "request": "App: '{appName}' from '{origin}' is requesting access to an account.",
-    "request_cta": "Select account to provide.",
-    "accept_btn": "Allow",
-    "reject_btn": "Deny"
-  },
+
   "transfer": {
     "title": "Transfer Request",
     "result": "Transfer result",

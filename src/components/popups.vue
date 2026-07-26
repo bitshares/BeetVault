@@ -7,8 +7,6 @@
 
     import * as Actions from "../lib/Actions";
 
-    import IdentityRequestPopup from "./popups/identityrequestpopup";
-    import SignMessageRequestPopup from "./popups/signedmessagepopup";
     import TransactionRequestPopup from "./popups/transactionrequestpopup";
     import langSelect from "./lang-select.vue";
 
@@ -102,21 +100,8 @@
                 <CardTitle>{{ t("common.popup.preview") }}</CardTitle>
             </CardHeader>
             <CardContent class="space-y-3">
-                <IdentityRequestPopup
-                    v-if="type === Actions.GET_ACCOUNT && request"
-                    :request="request"
-                />
-                <SignMessageRequestPopup
-                    v-else-if="
-                        (type === Actions.SIGN_MESSAGE ||
-                            type === Actions.SIGN_NFT) &&
-                            request
-                    "
-                    :request="request"
-                />
-                <div v-else-if="
-                        (type === Actions.REQUEST_SIGNATURE ||
-                            type === Actions.INJECTED_CALL) &&
+                <div v-if="
+                        type === Actions.INJECTED_CALL &&
                             request &&
                             visualizedParams &&
                             visualizedAccount

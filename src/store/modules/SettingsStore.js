@@ -28,11 +28,14 @@ const actions = {
         return new Promise(async (resolve, reject) => {
             try {
                 BeetDB.settings.get({id: 'settings'}).then((settings) => {
-                    if (settings && settings.length > 0) {
-                        commit(LOAD_SETTINGS, JSON.parse(settings));
+                    if (settings) {
+                        let parsed = JSON.parse(settings.value);
+                        // merge with initialState to pick up any new keys
+                        let merged = Object.assign({}, initialState.settings, parsed);
+                        commit(LOAD_SETTINGS, merged);
                     } else {
                         BeetDB.settings.put({id: 'settings', value: JSON.stringify(initialState.settings)}).then(() => {
-                            commit(LOAD_SETTINGS, JSON.parse(initialState.settings));
+                            commit(LOAD_SETTINGS, JSON.parse(JSON.stringify(initialState.settings)));
                         })
                     }
                 });
@@ -43,18 +46,33 @@ const actions = {
             }
         });
     },
+    setLogoutTimeout({
+        commit
+    }, payload) {
+        return new Promise(async (resolve, reject) => {
+            BeetDB.settings.get({id: 'settings'}).then((record) => {
+                let settings = record ? JSON.parse(record.value) : Object.assign({}, initialState.settings);
+
+                settings.logoutTimeout = payload.timeout;
+
+                BeetDB.settings.put({id: 'settings', value: JSON.stringify(settings)}).then(() => {
+                    commit(LOAD_SETTINGS, settings);
+                    resolve();
+                })
+            }).catch((error) => {
+                console.log(`setLogoutTimeout: ${error}`)
+                reject(error);
+            });
+        });
+    },
     setNode({
         commit
     }, payload) {
         return new Promise(async (resolve, reject) => {
             const coreSymbol = getCoreSymbol(payload.chain);
 
-            BeetDB.settings.get({id: 'settings'}).then((settings) => {
-                if (settings && settings.length > 0) {
-                    settings = JSON.parse(settings)
-                } else {
-                    settings = initialState.settings;
-                }
+            BeetDB.settings.get({id: 'settings'}).then((record) => {
+                let settings = record ? JSON.parse(record.value) : Object.assign({}, initialState.settings);
   
                 // backwards compatibility
                 if (typeof settings.selected_node === "string") {
@@ -94,12 +112,8 @@ const actions = {
     }, payload) {
         return new Promise(async (resolve, reject) => {
 
-            BeetDB.settings.get({id: 'settings'}).then((settings) => {
-                if (settings && settings.length > 0) {
-                    settings = JSON.parse(settings)
-                } else {
-                    settings = initialState.settings;
-                }
+            BeetDB.settings.get({id: 'settings'}).then((record) => {
+                let settings = record ? JSON.parse(record.value) : Object.assign({}, initialState.settings);
 
                 settings.locale = payload.locale;
 
@@ -123,12 +137,8 @@ const actions = {
         return new Promise(async (resolve, reject) => {
             const coreSymbol = getCoreSymbol(payload.chain);
 
-            BeetDB.settings.get({id: 'settings'}).then((settings) => {
-                if (settings && settings.length > 0) {
-                    settings = JSON.parse(settings)
-                } else {
-                    settings = initialState.settings;
-                }
+            BeetDB.settings.get({id: 'settings'}).then((record) => {
+                let settings = record ? JSON.parse(record.value) : Object.assign({}, initialState.settings);
     
                 if (!Object.prototype.hasOwnProperty.call(settings, 'chainPermissions')) {
                     settings['chainPermissions'] = {
@@ -161,6 +171,7 @@ const actions = {
 const getters = {
     getNode: (state) => state.settings.selected_node,
     getLocale: (state) => state.settings.locale,
+    getLogoutTimeout: (state) => state.settings.logoutTimeout || 5,
     getChainPermissions: (state) => (chain) => {
         const coreSymbol = getCoreSymbol(chain);
         if (!Object.prototype.hasOwnProperty.call(state.settings, 'chainPermissions')) {
@@ -180,6 +191,7 @@ const getters = {
 const initialState = {
     settings: {
         locale: defaultLocale,
+        logoutTimeout: 5,
         selected_node: {},
         chainPermissions: {
             BTS: [],

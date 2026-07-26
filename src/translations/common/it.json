@@ -19,7 +19,10 @@
         "label": "Rimuovere l'account dal portafoglio?",
         "prompt": "Conferma la tua password qui sotto per rimuovere irreversibilmente questo account dal tuo portafoglio.",
         "button": "Eliminare l'account",
-        "insufficient": "Impossibile eliminare l'ultimo account in un portafoglio, mi spiace."
+        "insufficient": "Impossibile eliminare l'ultimo account in un portafoglio, mi spiace.",
+        "logoutTitle": "Timeout di disconnessione automatica",
+        "logoutDesc": "Imposta per quanto tempo il portafoglio rimane sbloccato prima della disconnessione automatica.",
+        "logoutPlaceholder": "Seleziona timeout"
     },
     "start": {
         "wallet_name": "Nome del portafoglio",
@@ -131,6 +134,8 @@
         "Local": "Locale",
         "RAW": "Collegamento grezzo",
         "QR": "QR",
+        "SignMsg": "Firma Msg",
+        "VerifyMsg": "Verifica Msg",
         "Settings": "Impostazioni",
         "changeNodes": "Cambia nodo",
         "Backup": "Backup",
@@ -245,5 +250,29 @@
     "tooltip_lock": "Fare clic per bloccare questo portafoglio/disconnettersi e tornare alla schermata di selezione del portafoglio.",
     "tooltip_refresh": "Riconnettiti alla blockchain e aggiorna il saldo del conto",
     "invalidFile": "Tipo di file non valido, seleziona un altro file.",
-    "invalidPass": "Password non valida, riprova."
+    "invalidPass": "Password non valida, riprova.",
+    "copied": "Copiato!",
+    "signMessage": {
+        "title": "Firma messaggio",
+        "desc": "Firma un messaggio di testo con la chiave privata del tuo account blockchain. Il messaggio firmato può essere condiviso per dimostrare la paternità.",
+        "messageLabel": "Messaggio da firmare",
+        "placeholder": "Inserisci il messaggio che vuoi firmare...",
+        "resultLabel": "Messaggio firmato (JSON)",
+        "signBtn": "Firma messaggio",
+        "clearBtn": "Pulisci"
+    },
+    "verifyMessage": {
+        "title": "Verifica messaggio",
+        "desc": "Incolla un messaggio firmato in JSON qui sotto per verificarne l'autenticità. Il JSON deve contenere i campi 'chain', 'publickey', 'message' e 'signature'.",
+        "inputLabel": "JSON del messaggio firmato",
+        "placeholder": "Incolla qui il JSON del messaggio firmato...",
+        "parseError": "Formato JSON non valido. Per favore incolla un messaggio firmato valido.",
+        "missingFields": "Campi obbligatori mancanti: {fields}",
+        "valid": "La firma è valida",
+        "invalid": "La firma non è valida",
+        "verified": "Verificato",
+        "failed": "Non riuscito",
+        "verifyBtn": "Verifica messaggio",
+        "clearBtn": "Pulisci"
+    }
 }

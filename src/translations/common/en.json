@@ -41,7 +41,10 @@
         "label": "Remove account from wallet?",
         "prompt": "Confirm your password below to irreversibly remove this account from your wallet.",
         "button": "Delete account",
-        "insufficient": "Cannot delete the last account in a wallet, sorry."
+        "insufficient": "Cannot delete the last account in a wallet, sorry.",
+        "logoutTitle": "Auto-logout timeout",
+        "logoutDesc": "Set how long the wallet stays unlocked before automatically logging out.",
+        "logoutPlaceholder": "Select timeout"
     },
     "start": {
         "wallet_name": "Wallet name",
@@ -154,6 +157,8 @@
         "Local": "Local",
         "RAW": "Raw Link",
         "QR": "QR",
+        "SignMsg": "Sign Msg",
+        "VerifyMsg": "Verify Msg",
         "Settings": "Settings",
         "changeNodes": "Change node",
         "Backup": "Backup",
@@ -288,5 +293,29 @@
     "tooltip_lock": "Click to lock this wallet / logout and return to the wallet selection screen.",
     "tooltip_refresh": "Reconnect to the blockchain and refresh the account balance",
     "invalidFile": "Invalid file type, please select another file.",
-    "invalidPass": "Invalid password, please try again."
+    "invalidPass": "Invalid password, please try again.",
+    "copied": "Copied!",
+    "signMessage": {
+        "title": "Sign Message",
+        "desc": "Sign a text message with your blockchain account's private key. The signed message can be shared to prove authorship.",
+        "messageLabel": "Message to sign",
+        "placeholder": "Enter the message you want to sign...",
+        "resultLabel": "Signed message (JSON)",
+        "signBtn": "Sign Message",
+        "clearBtn": "Clear"
+    },
+    "verifyMessage": {
+        "title": "Verify Message",
+        "desc": "Paste a signed message JSON below to verify its authenticity. The JSON must contain 'chain', 'publickey', 'message', and 'signature' fields.",
+        "inputLabel": "Signed message JSON",
+        "placeholder": "Paste the signed message JSON here...",
+        "parseError": "Invalid JSON format. Please paste a valid signed message.",
+        "missingFields": "Missing required fields: {fields}",
+        "valid": "Signature is valid",
+        "invalid": "Signature is invalid",
+        "verified": "Verified",
+        "failed": "Failed",
+        "verifyBtn": "Verify Message",
+        "clearBtn": "Clear"
+    }
 }

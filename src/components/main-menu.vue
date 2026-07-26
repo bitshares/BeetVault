@@ -6,7 +6,7 @@
     import store from "../store/index.js";
     import { Button } from '@/components/ui/ui/button';
     import { DropdownMenu, DropdownMenuContent, DropdownMenuItem, DropdownMenuTrigger } from '@/components/ui/ui/dropdown-menu';
-    import { Menu, Home, Plus, KeyRound, Upload, Code, QrCode, Download, Settings, Network, LogOut } from 'lucide-vue-next';
+    import { Menu, Home, Plus, KeyRound, Upload, Code, QrCode, PenLine, ShieldCheck, Download, Settings, Network, LogOut } from 'lucide-vue-next';
 
     const iconMap = {
         home: Home,
@@ -15,6 +15,8 @@
         upload: Upload,
         raw_on: Code,
         qr_code_2: QrCode,
+        pen_line: PenLine,
+        shield_check: ShieldCheck,
         download: Download,
         settings: Settings,
         lan: Network,
@@ -75,26 +77,38 @@
                 url: "/qr"
             },
             {
-                text: t("common.actionBar.Backup"),
+                text: t("common.actionBar.SignMsg"),
                 index: 6,
+                icon: "pen_line",
+                url: "/sign-message"
+            },
+            {
+                text: t("common.actionBar.VerifyMsg"),
+                index: 7,
+                icon: "shield_check",
+                url: "/verify-message"
+            },
+            {
+                text: t("common.actionBar.Backup"),
+                index: 8,
                 icon: "download",
                 url: "/backup"
             },
             {
                 text: t("common.actionBar.Settings"),
-                index: 7,
+                index: 9,
                 icon: "settings",
                 url: "/settings"
             },
             {
                 text: t("common.actionBar.changeNodes"),
-                index: 8,
+                index: 10,
                 icon: "lan",
                 url: "/nodes"
             },
             {
                 text: t("common.actionBar.Logout"),
-                index: 9,
+                index: 11,
                 icon: "logout",
                 url: "/"
             }
@@ -109,7 +123,7 @@
     function onChange(data) {
         lastIndex.value = data.index;
 
-        if (data.index === 9) {
+        if (data.index === 11) {
             console.log("User logged out.");
             store.dispatch("WalletStore/logout");
             router.replace("/");
@@ -133,11 +147,16 @@
 
         clearLogoutTimer();
 
+        let timeoutMinutes = store.getters["SettingsStore/getLogoutTimeout"];
+        if (!timeoutMinutes || timeoutMinutes <= 0) {
+            return;
+        }
+
         logoutTimer = setTimeout(() => {
             console.log("wallet timed logout");
             store.dispatch("WalletStore/logout");
             router.replace("/");
-        }, 2 * 60 * 1000);
+        }, timeoutMinutes * 60 * 1000);
     }
 
     watch(

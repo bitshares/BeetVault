@@ -19,7 +19,10 @@
         "label": "Konto aus Wallet entfernen?",
         "prompt": "Bestätigen Sie unten Ihr Passwort, um dieses Konto unwiderruflich aus Ihrem Wallet zu entfernen.",
         "button": "Konto löschen",
-        "insufficient": "Das letzte Konto in einer Wallet kann leider nicht gelöscht werden."
+        "insufficient": "Das letzte Konto in einer Wallet kann leider nicht gelöscht werden.",
+        "logoutTitle": "Automatische Abmeldezeit",
+        "logoutDesc": "Legen Sie fest, wie lange das Wallet entsperrt bleibt, bevor es automatisch abgemeldet wird.",
+        "logoutPlaceholder": "Zeitlimit auswählen"
     },
     "start": {
         "wallet_name": "Wallet-Name",
@@ -131,6 +134,8 @@
         "Local": "Lokal",
         "RAW": "Roher Link",
         "QR": "QR",
+        "SignMsg": "Nachricht signieren",
+        "VerifyMsg": "Nachricht verifizieren",
         "Settings": "Einstellungen",
         "changeNodes": "Knoten ändern",
         "Backup": "Sicherung",
@@ -245,5 +250,29 @@
     "tooltip_lock": "Klicken Sie hier, um dieses Wallet zu sperren/abzumelden und zum Wallet-Auswahlbildschirm zurückzukehren.",
     "tooltip_refresh": "Stellen Sie erneut eine Verbindung zur Blockchain her und aktualisieren Sie den Kontostand",
     "invalidFile": "Ungültiger Dateityp. Bitte wählen Sie eine andere Datei aus.",
-    "invalidPass": "Falsche Kennwort. Bitte versuchen Sie es erneut."
+    "invalidPass": "Falsche Kennwort. Bitte versuchen Sie es erneut.",
+    "copied": "Kopiert!",
+    "signMessage": {
+        "title": "Nachricht signieren",
+        "desc": "Signieren Sie eine Textnachricht mit dem privaten Schlüssel Ihres Blockchain-Kontos. Die signierte Nachricht kann geteilt werden, um die Autorenschaft zu beweisen.",
+        "messageLabel": "Zu signierende Nachricht",
+        "placeholder": "Geben Sie die Nachricht ein, die Sie signieren möchten...",
+        "resultLabel": "Signierte Nachricht (JSON)",
+        "signBtn": "Nachricht signieren",
+        "clearBtn": "Löschen"
+    },
+    "verifyMessage": {
+        "title": "Nachricht verifizieren",
+        "desc": "Fügen Sie unten eine signierte Nachricht im JSON-Format ein, um ihre Authentizität zu überprüfen. Das JSON muss die Felder 'chain', 'publickey', 'message' und 'signature' enthalten.",
+        "inputLabel": "Signierte Nachricht JSON",
+        "placeholder": "Fügen Sie hier die signierte Nachricht im JSON-Format ein...",
+        "parseError": "Ungültiges JSON-Format. Bitte fügen Sie eine gültige signierte Nachricht ein.",
+        "missingFields": "Fehlende Pflichtfelder: {fields}",
+        "valid": "Signatur ist gültig",
+        "invalid": "Signatur ist ungültig",
+        "verified": "Verifiziert",
+        "failed": "Fehlgeschlagen",
+        "verifyBtn": "Nachricht verifizieren",
+        "clearBtn": "Löschen"
+    }
 }

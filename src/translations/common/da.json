@@ -19,7 +19,10 @@
         "label": "Vil du fjerne kontoen fra tegnebogen?",
         "prompt": "Bekræft din adgangskode nedenfor for uigenkaldeligt at fjerne denne konto fra din tegnebog.",
         "button": "Slet konto",
-        "insufficient": "Kan ikke slette den sidste konto i en tegnebog, beklager."
+        "insufficient": "Kan ikke slette den sidste konto i en tegnebog, beklager.",
+        "logoutTitle": "Automatisk logout-tidsgrænse",
+        "logoutDesc": "Angiv, hvor længe tegnebogen forbliver låst op, før den automatisk logger ud.",
+        "logoutPlaceholder": "Vælg tidsgrænse"
     },
     "start": {
         "wallet_name": "Tegnebogsnavn",
@@ -131,6 +134,8 @@
         "Local": "Lokal",
         "RAW": "Rå link",
         "QR": "QR",
+        "SignMsg": "Signér Msg",
+        "VerifyMsg": "Verificer Msg",
         "Settings": "Indstillinger",
         "changeNodes": "Skift node",
         "Backup": "Backup",
@@ -245,5 +250,29 @@
     "tooltip_lock": "Klik for at låse denne tegnebog/log ud og vende tilbage til skærmen til valg af tegnebog.",
     "tooltip_refresh": "Genopret forbindelse til blockchain og opdater kontosaldoen",
     "invalidFile": "Ugyldig filtype, vælg venligst en anden fil.",
-    "invalidPass": "Ugyldig adgangskode, prøv venligst igen."
+    "invalidPass": "Ugyldig adgangskode, prøv venligst igen.",
+    "copied": "Kopieret!",
+    "signMessage": {
+        "title": "Signér besked",
+        "desc": "Signér en tekstbesked med din blockchain-kontos private nøgle. Den signerede besked kan deles for at bevise forfatterskabet.",
+        "messageLabel": "Besked der skal signeres",
+        "placeholder": "Indtast den besked, du vil signere...",
+        "resultLabel": "Signeret besked (JSON)",
+        "signBtn": "Signér besked",
+        "clearBtn": "Ryd"
+    },
+    "verifyMessage": {
+        "title": "Verificer besked",
+        "desc": "Indsæt en signeret besked i JSON nedenfor for at verificere dens autenticitet. JSON skal indeholde felterne 'chain', 'publickey', 'message' og 'signature'.",
+        "inputLabel": "Signeret besked JSON",
+        "placeholder": "Indsæt den signeret besked JSON her...",
+        "parseError": "Ugyldigt JSON-format. Indsæt venligst en gyldig signeret besked.",
+        "missingFields": "Manglende påkrævede felter: {fields}",
+        "valid": "Signatur er gyldig",
+        "invalid": "Signatur er ugyldig",
+        "verified": "Verificeret",
+        "failed": "Mislykkedes",
+        "verifyBtn": "Verificer besked",
+        "clearBtn": "Ryd"
+    }
 }

@@ -19,7 +19,10 @@
         "label": "Supprimer le compte du portefeuille ?",
         "prompt": "Confirmez votre mot de passe ci-dessous pour supprimer de manière irréversible ce compte de votre portefeuille.",
         "button": "Supprimer le compte",
-        "insufficient": "Impossible de supprimer le dernier compte d'un portefeuille, désolé."
+        "insufficient": "Impossible de supprimer le dernier compte d'un portefeuille, désolé.",
+        "logoutTitle": "Délai de déconnexion automatique",
+        "logoutDesc": "Définissez la durée pendant laquelle le portefeuille reste déverrouillé avant de se déconnecter automatiquement.",
+        "logoutPlaceholder": "Sélectionner le délai"
     },
     "start": {
         "wallet_name": "Nom du portefeuille",
@@ -131,6 +134,8 @@
         "Local": "Local",
         "RAW": "Lien brut",
         "QR": "QR",
+        "SignMsg": "Signer Msg",
+        "VerifyMsg": "Vérifier Msg",
         "Settings": "Paramètres",
         "changeNodes": "Changer de nœud",
         "Backup": "Sauvegarde",
@@ -245,5 +250,29 @@
     "tooltip_lock": "Cliquez pour verrouiller ce portefeuille/déconnexion et revenir à l'écran de sélection du portefeuille.",
     "tooltip_refresh": "Reconnectez-vous à la blockchain et actualisez le solde du compte",
     "invalidFile": "Type de fichier invalide, veuillez sélectionner un autre fichier.",
-    "invalidPass": "Mot de passe invalide, réessayez."
+    "invalidPass": "Mot de passe invalide, réessayez.",
+    "copied": "Copié !",
+    "signMessage": {
+        "title": "Signer un message",
+        "desc": "Signez un message texte avec la clé privée de votre compte blockchain. Le message signé peut être partagé pour prouver l'auteur.",
+        "messageLabel": "Message à signer",
+        "placeholder": "Entrez le message que vous souhaitez signer...",
+        "resultLabel": "Message signé (JSON)",
+        "signBtn": "Signer le message",
+        "clearBtn": "Effacer"
+    },
+    "verifyMessage": {
+        "title": "Vérifier un message",
+        "desc": "Collez un message signé en JSON ci-dessous pour vérifier son authenticité. Le JSON doit contenir les champs 'chain', 'publickey', 'message' et 'signature'.",
+        "inputLabel": "JSON du message signé",
+        "placeholder": "Collez le JSON du message signé ici...",
+        "parseError": "Format JSON invalide. Veuillez coller un message signé valide.",
+        "missingFields": "Champs requis manquants : {fields}",
+        "valid": "La signature est valide",
+        "invalid": "La signature est invalide",
+        "verified": "Vérifié",
+        "failed": "Échoué",
+        "verifyBtn": "Vérifier le message",
+        "clearBtn": "Effacer"
+    }
 }

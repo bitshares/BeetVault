@@ -19,7 +19,10 @@
         "label": "Remover conta da carteira?",
         "prompt": "Confirme sua senha abaixo para remover irreversivelmente esta conta de sua carteira.",
         "button": "Deletar conta",
-        "insufficient": "Não é possível excluir a última conta de uma carteira, desculpe."
+        "insufficient": "Não é possível excluir a última conta de uma carteira, desculpe.",
+        "logoutTitle": "Tempo de logout automático",
+        "logoutDesc": "Defina por quanto tempo a carteira fica desbloqueada antes de fazer logout automaticamente.",
+        "logoutPlaceholder": "Selecionar tempo"
     },
     "start": {
         "wallet_name": "Nome da carteira",
@@ -131,6 +134,8 @@
         "Local": "Local",
         "RAW": "Link Bruto",
         "QR": "QR",
+        "SignMsg": "Assinar Msg",
+        "VerifyMsg": "Verificar Msg",
         "Settings": "Configurações",
         "changeNodes": "Alterar nó",
         "Backup": "Cópia de segurança",
@@ -245,5 +250,29 @@
     "tooltip_lock": "Clique para bloquear esta carteira/logout e retornar à tela de seleção de carteira.",
     "tooltip_refresh": "Reconecte-se ao blockchain e atualize o saldo da conta",
     "invalidFile": "Tipo de arquivo inválido. Selecione outro arquivo.",
-    "invalidPass": "Senha inválida, por favor tente novamente."
+    "invalidPass": "Senha inválida, por favor tente novamente.",
+    "copied": "Copiado!",
+    "signMessage": {
+        "title": "Assinar mensagem",
+        "desc": "Assine uma mensagem de texto com a chave privada da sua conta blockchain. A mensagem assinada pode ser compartilhada para provar a autoria.",
+        "messageLabel": "Mensagem a assinar",
+        "placeholder": "Digite a mensagem que deseja assinar...",
+        "resultLabel": "Mensagem assinada (JSON)",
+        "signBtn": "Assinar mensagem",
+        "clearBtn": "Limpar"
+    },
+    "verifyMessage": {
+        "title": "Verificar mensagem",
+        "desc": "Cole uma mensagem assinada em JSON abaixo para verificar sua autenticidade. O JSON deve conter os campos 'chain', 'publickey', 'message' e 'signature'.",
+        "inputLabel": "JSON da mensagem assinada",
+        "placeholder": "Cole o JSON da mensagem assinada aqui...",
+        "parseError": "Formato JSON inválido. Por favor, cole uma mensagem assinada válida.",
+        "missingFields": "Campos obrigatórios ausentes: {fields}",
+        "valid": "Assinatura é válida",
+        "invalid": "Assinatura é inválida",
+        "verified": "Verificado",
+        "failed": "Falhou",
+        "verifyBtn": "Verificar mensagem",
+        "clearBtn": "Limpar"
+    }
 }

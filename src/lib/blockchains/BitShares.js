@@ -115,34 +115,9 @@ export default class BitShares extends BlockchainAPI {
         return [
             // Beet based
             {
-                id: Actions.GET_ACCOUNT,
-                from: "",
-                method: Actions.GET_ACCOUNT,
-            },
-            {
-                id: Actions.REQUEST_SIGNATURE,
-                from: "",
-                method: Actions.REQUEST_SIGNATURE,
-            },
-            {
                 id: Actions.INJECTED_CALL,
                 from: "",
                 method: Actions.INJECTED_CALL,
-            },
-            {
-                id: Actions.SIGN_MESSAGE,
-                from: "",
-                method: Actions.SIGN_MESSAGE,
-            },
-            {
-                id: Actions.SIGN_NFT,
-                from: "",
-                method: Actions.SIGN_NFT,
-            },
-            {
-                id: Actions.VERIFY_MESSAGE,
-                from: "",
-                method: Actions.VERIFY_MESSAGE,
             },
             // Blockchain based:
             {
@@ -1553,7 +1528,6 @@ export default class BitShares extends BlockchainAPI {
      * @returns {Boolean}
      */
     _verifyString(signature, publicKey, string) {
-        let _PublicKey = PublicKey;
         let sig = Signature.fromHex(signature);
         let pkey = PublicKey.fromPublicKeyString(
             publicKey,

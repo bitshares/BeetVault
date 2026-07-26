@@ -19,7 +19,10 @@
         "label": "Kas eemaldada konto rahakotist?",
         "prompt": "Selle konto pöördumatult oma rahakotist eemaldamiseks kinnitage allpool oma parool.",
         "button": "Kustuta konto",
-        "insufficient": "Kahjuks ei saa rahakoti viimast kontot kustutada."
+        "insufficient": "Kahjuks ei saa rahakoti viimast kontot kustutada.",
+        "logoutTitle": "Automaatne väljalogimise aeg",
+        "logoutDesc": "Määrake, kui kaua rahakott jääb lukustamata enne automaatset väljalogimist.",
+        "logoutPlaceholder": "Vali aeg"
     },
     "start": {
         "wallet_name": "Rahakoti nimi",
@@ -131,6 +134,8 @@
         "Local": "Kohalik",
         "RAW": "Toores link",
         "QR": "QR",
+        "SignMsg": "Allkirjasta sõnum",
+        "VerifyMsg": "Kinnita sõnum",
         "Settings": "Seaded",
         "changeNodes": "Muuda sõlme",
         "Backup": "Varundamine",
@@ -245,5 +250,29 @@
     "tooltip_lock": "Klõpsake selle rahakoti lukustamiseks / väljalogimiseks ja naasmiseks rahakoti valikukuvale.",
     "tooltip_refresh": "Ühendage uuesti plokiahelaga ja värskendage konto saldot",
     "invalidFile": "Vale failitüüp, palun valige mõni muu fail.",
-    "invalidPass": "Vale parool, proovige uuesti."
+    "invalidPass": "Vale parool, proovige uuesti.",
+    "copied": "Kopeeritud!",
+    "signMessage": {
+        "title": "Allkirjasta sõnum",
+        "desc": "Allkirjasta tekstisõnum oma plokiahela konto privaatvõtmega. Allkirjastatud sõnumit saab jagada autorluse tõendamiseks.",
+        "messageLabel": "Allkirjastatav sõnum",
+        "placeholder": "Sisestage sõnum, mida soovite allkirjastada...",
+        "resultLabel": "Allkirjastatud sõnum (JSON)",
+        "signBtn": "Allkirjasta sõnum",
+        "clearBtn": "Puhasta"
+    },
+    "verifyMessage": {
+        "title": "Kinnita sõnum",
+        "desc": "Kleepige allkirjastatud sõnum JSON allpool, et kontrollida selle autentsust. JSON peab sisaldama välju 'chain', 'publickey', 'message' ja 'signature'.",
+        "inputLabel": "Allkirjastatud sõnum JSON",
+        "placeholder": "Kleepige allkirjastatud sõnum JSON siia...",
+        "parseError": "Vale JSON-vorming. Palun kleepige kehtiv allkirjastatud sõnum.",
+        "missingFields": "Puuduvad kohustuslikud väljad: {fields}",
+        "valid": "Allkiri on kehtiv",
+        "invalid": "Allkiri on kehtetu",
+        "verified": "Kinnitatud",
+        "failed": "Ebaõnnestus",
+        "verifyBtn": "Kinnita sõnum",
+        "clearBtn": "Puhasta"
+    }
 }

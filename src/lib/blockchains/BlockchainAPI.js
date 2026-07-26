@@ -99,29 +99,16 @@ export default class BlockchainAPI {
      * @param {String} messageText
      * @returns {Promise}
      */
-    signMessage(key, accountName, messageText) {
+    signMessage(key, accountName, messageText, chain) {
         return new Promise((resolve,reject) => {
-            // do as a list, to preserve order
-            let message = [
-                "from",
-                accountName,
-                "key",
-                this.getPublicKey(key),
-                "time",
-                new Date().toUTCString(),
-                "text",
-                messageText
-            ];
-            if (this._config.identifier !== message[2].substring(0, 3)) {
-                message.push("chain");
-                message.push(this._config.identifier);
-            }
-            message = JSON.stringify(message);
             try {
+                let signature = this._signString(key, messageText);
+                let publickey = this.getPublicKey(key);
                 resolve({
-                    signed: message,
-                    payload: JSON.parse(message),
-                    signature: this._signString(key, message)
+                    chain: chain,
+                    publickey: publickey,
+                    message: messageText,
+                    signature: signature
                 });
             } catch (err) {
                 reject(err);
@@ -136,67 +123,26 @@ export default class BlockchainAPI {
      */
     verifyMessage(signedMessage) {
         return new Promise((resolve, reject) => {
-            if (typeof signedMessage.payload.params === "string" || signedMessage.payload.params instanceof String) {
-                signedMessage.payload.params = JSON.parse(signedMessage.payload.params);
-            }
-            // parse payload
-            let payload_dict = {};
-            let payload_list = signedMessage.payload.params.payload;
-            if (payload_list[2] == "key") {
-                for (let i = 0; i < payload_list.length - 1; i = i+2) {
-                    payload_dict[payload_list[i]] = payload_list[i + 1];
-                }
-            } else {
-                for (let i = 3; i < payload_list.length - 1; i = i+2) {
-                    payload_dict[payload_list[i]] = payload_list[i + 1];
-                }
-                payload_dict.key = payload_list[2];
-                payload_dict.from = payload_list[1];
+            let params = signedMessage.payload.params;
+
+            if (!params.publickey || !params.message || !params.signature) {
+                reject("Missing required fields: publickey, message, signature");
+                return;
             }
 
-            // validate account and key
-            this._verifyAccountAndKey(payload_dict.from, payload_dict.key).then(
-                found => {
-                    if (found.account == null) {
-                        reject("invalid user");
-                    }
-                    // verify message signed
+            let verified;
+            try {
+                verified = this._verifyString(
+                    params.signature,
+                    params.publickey,
+                    params.message
+                );
+            } catch (err) {
+                reject("Error verifying signature");
+                return;
+            }
 
-                    let signedParams = signedMessage.payload.params;
-
-                    let signature;
-                    try {
-                      signature = signedParams.signature;
-                    } catch (error) {
-                      console.log(error);
-                    }
-
-                    let signed;
-                    try {
-                      signed = signedParams.signed;
-                    } catch (error) {
-                      console.log(error);
-                    }
-
-                    let verified;
-                    try {
-                        verified = this._verifyString(
-                          signature,
-                          payload_dict.key,
-                          signed
-                        );
-                    } catch (err) {
-                        // wrap message that could be raised from Signature
-                        reject("Error verifying signature", err);
-                    }
-                    if (!verified) {
-                        reject("Invalid signature");
-                    }
-                    return resolve({result: verified});
-                }
-            ).catch(err => {
-                reject(err);
-            });
+            return resolve({ result: verified });
         });
     }
 
@@ -407,34 +353,9 @@ export default class BlockchainAPI {
      getOperationTypes() {
         return [
             {
-                id: Actions.GET_ACCOUNT,
-                from: '',
-                method: Actions.GET_ACCOUNT
-            },
-            {
-                id: Actions.REQUEST_SIGNATURE,
-                from: '',
-                method: Actions.REQUEST_SIGNATURE
-            },
-            {
                 id: Actions.INJECTED_CALL,
                 from: '',
                 method: Actions.INJECTED_CALL
-            },
-            {
-                id: Actions.SIGN_MESSAGE,
-                from: '',
-                method: Actions.SIGN_MESSAGE
-            },
-            {
-                id: Actions.SIGN_NFT,
-                from: '',
-                method: Actions.SIGN_NFT
-            },
-            {
-                id: Actions.VERIFY_MESSAGE,
-                from: '',
-                method: Actions.VERIFY_MESSAGE
             }
         ];
     }

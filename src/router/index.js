@@ -9,6 +9,8 @@ import AddAccount from "../components/add-account.vue";
 import Backup from "../components/backup.vue";
 import Totp from "../components/totp.vue";
 import RawLink from "../components/raw-link.vue";
+import SignMessage from "../components/sign-message.vue";
+import VerifyMessage from "../components/verify-message.vue";
 
 import Qr from "../components/qr.vue";
 import Popups from "../components/popups.vue";
@@ -47,14 +49,28 @@ const router = createRouter({
       }
     },
     {
-      path: '/raw-link',
-      components: {
-        default: RawLink,
-        header: HeaderSmall
-      }
+        path: '/raw-link',
+        components: {
+            default: RawLink,
+            header: HeaderSmall
+        }
     },
     {
-      path: '/qr',
+        path: '/sign-message',
+        components: {
+            default: SignMessage,
+            header: HeaderSmall
+        }
+    },
+    {
+        path: '/verify-message',
+        components: {
+            default: VerifyMessage,
+            header: HeaderSmall
+        }
+    },
+    {
+        path: '/qr',
       components: {
         default: Qr,
         header: HeaderSmall

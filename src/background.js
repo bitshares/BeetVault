@@ -14,6 +14,12 @@ import aes from "crypto-js/aes.js";
 import ENC from "crypto-js/enc-utf8.js";
 import Base64 from "crypto-js/enc-base64";
 import * as secp from "@noble/secp256k1";
+import { hexToBytes } from "@noble/hashes/utils.js";
+import { sha256 } from "@noble/hashes/sha2.js";
+import { hmac } from "@noble/hashes/hmac.js";
+
+secp.hashes.sha256 = sha256;
+secp.hashes.hmacSha256 = (key, msg) => hmac(sha256, key, msg);
 
 import {
     app,
@@ -98,7 +104,7 @@ const createModal = async (arg, modalEvent) => {
     )}`;
     let modalData = { id, type, request };
 
-    if ([Actions.INJECTED_CALL, Actions.REQUEST_SIGNATURE].includes(type)) {
+    if ([Actions.INJECTED_CALL].includes(type)) {
         let visualizedAccount = arg.visualizedAccount;
         let visualizedParams = arg.visualizedParams;
         if (!visualizedAccount || !visualizedParams) {
@@ -108,21 +114,6 @@ const createModal = async (arg, modalEvent) => {
         modalRequests[id]["visualizedParams"] = visualizedParams;
         modalData["visualizedAccount"] = visualizedAccount;
         modalData["visualizedParams"] = visualizedParams;
-    }
-
-    if (
-        [
-            Actions.GET_ACCOUNT,
-            Actions.SIGN_MESSAGE,
-            Actions.SIGN_NFT,
-        ].includes(type)
-    ) {
-        let accounts = arg.accounts;
-        if (!accounts) {
-            throw "Missing required accounts field";
-        }
-        modalRequests[id]["accounts"] = accounts;
-        modalData["accounts"] = accounts;
     }
 
     if ([Actions.INJECTED_CALL].includes(type)) {
@@ -703,6 +694,27 @@ const createWindow = async () => {
             }
             if (_verifyMessage) {
                 responses["verifyMessage"] = _verifyMessage;
+            }
+        }
+
+        if (methods.includes("signMessage")) {
+            const { account, messageText, signingKey, chain } = arg;
+            let accountName = account.name
+                ? account.name
+                : account.accountName;
+            let _signMessage;
+            try {
+                _signMessage = await blockchain.signMessage(
+                    signingKey,
+                    accountName,
+                    messageText,
+                    chain
+                );
+            } catch (error) {
+                console.log({ error, location: "signMessage" });
+            }
+            if (_signMessage) {
+                responses["signMessage"] = _signMessage;
             }
         }
 
@@ -1353,7 +1365,7 @@ const createWindow = async () => {
         const { signedMessage, msgHash, pubk } = arg;
         let isValid;
         try {
-            isValid = await secp.verify(signedMessage, msgHash, pubk);
+            isValid = secp.verify(hexToBytes(signedMessage), hexToBytes(msgHash), pubk, {prehash: false});
         } catch (error) {
             console.log(error);
         }
@@ -1385,11 +1397,7 @@ const createWindow = async () => {
 
                 let isValid;
                 try {
-                    isValid = await secp.verify(
-                        response.signedMessage,
-                        response.msgHash,
-                        response.pubk
-                    );
+                    isValid = secp.verify(hexToBytes(response.signedMessage), hexToBytes(response.msgHash), response.pubk, {prehash: false});
                 } catch (error) {
                     console.log(error);
                     return;

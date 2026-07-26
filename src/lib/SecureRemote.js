@@ -1,27 +1,26 @@
 import * as secp from "@noble/secp256k1";
-import sha256 from "crypto-js/sha256.js";
+import { sha256 } from "@noble/hashes/sha2.js";
+import { hexToBytes, bytesToHex } from "@noble/hashes/utils.js";
+import { hmac } from "@noble/hashes/hmac.js";
+import sha256js from "crypto-js/sha256.js";
+
+secp.hashes.sha256 = sha256;
+secp.hashes.hmacSha256 = (key, msg) => hmac(sha256, key, msg);
 
 class proover {
     constructor() {
         this.regen();
     }
 
-    async regen() {
-        this.key = secp.utils.randomPrivateKey();
-        let pubk;
-        try {
-          pubk = await secp.getPublicKey(this.key);
-        } catch (error) {
-          console.error(error);
-          return;
-        }
-        this.pubk = pubk;
+    regen() {
+        this.key = secp.utils.randomSecretKey();
+        this.pubk = secp.getPublicKey(this.key);
     }
 
-    async sign(data) {
+    sign(data) {
         let msgHash;
         try {
-          msgHash = await sha256(data).toString();
+          msgHash = sha256js(data).toString();
         } catch (error) {
           console.log(error);
           return;
@@ -29,11 +28,11 @@ class proover {
 
         let signedMessage;
         try {
-          signedMessage = await secp.sign(
-            msgHash,
+          signedMessage = bytesToHex(secp.sign(
+            hexToBytes(msgHash),
             this.key,
-            {der: true, extraEntropy: true}
-          )
+            {extraEntropy: true, prehash: false}
+          ));
         } catch (error) {
           console.log(error);
           return;
@@ -52,7 +51,7 @@ const proof = new proover();
 export const getSignature = async (data) => {
   let signature;
   try {
-    signature = await proof.sign(data);
+    signature = proof.sign(data);
   } catch (error) {
     console.log(error);
     return;
