@@ -4,9 +4,9 @@ export default class WAX extends EOSmainnet {
 
     getExplorer(object, chain) {
         if (object.accountName) {
-            return "https://waxblock.io/account/" + object.accountName;
+            return `https://eosauthority.com/account/${object.accountName}?network=wax`;
         } else if (object.txid) {
-            return "https://waxblock.io/transaction/" + object.txid;
+            return `https://eosauthority.com/transaction/${object.txid}?network=wax`;
         } else {
             return false;
         }

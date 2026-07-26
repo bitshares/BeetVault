@@ -4,9 +4,9 @@ export default class WAXtest extends EOSmainnet {
 
     getExplorer(object, chain) {
         if (object.accountName) {
-            return "https://testnet.waxblock.io/account/" + object.accountName;
+            return `https://eosauthority.com/account/${object.accountName}?network=waxtest`;
         } else if (object.txid) {
-            return "https://testnet.waxblock.io/transaction/" + object.txid;
+            return `https://eosauthority.com/transaction/${object.txid}?network=waxtest`;
         } else {
             return false;
         }

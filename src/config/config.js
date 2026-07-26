@@ -65,9 +65,10 @@ let _blockchains = {
         testnet: true,
         chainId: "73e4385a2708e6d7048834fbc1079f2fabb17b3c125b146af438971e90716c4d",
         nodeList: [
-            { url: "https://jungle4.cryptolions.io:443" },
-            { url: "https://jungle4.eosphere.io:443" },
-            { url: "https://jungle4.api.eosnation.io:443" },
+            { url: "https://jungle4.cryptolions.io" },
+            { url: "https://jungle4.eosphere.io" },
+            { url: "https://jungle4.api.eosnation.io" },
+            { url: "https://api.jungle4.alohaeos.com" },
         ],
     },
     FIO: {
@@ -107,7 +108,8 @@ let _blockchains = {
         nodeList: [
             { url: "https://test.fio.eosusa.io" },
             { url: "https://fiotestnet.greymass.com/" },
-            { url: "https://fio-testnet.eosphere.io" }
+            { url: "https://fio-testnet.eosphere.io" },
+            { url: "https://api.fiotest.alohaeos.com" }
         ],
     },
     LIBRE: {
