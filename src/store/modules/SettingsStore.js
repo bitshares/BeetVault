@@ -156,7 +156,8 @@ const actions = {
                         LIBRE: [],
                         LIBRETEST: [],
                         XPR: [],
-                        XPRTEST: []
+                        XPRTEST: [],
+                        HIVE: []
                     }
                 }
                 settings.chainPermissions[coreSymbol] = payload.rows;
@@ -217,7 +218,8 @@ const initialState = {
             LIBRE: [],
             LIBRETEST: [],
             XPR: [],
-            XPRTEST: []
+            XPRTEST: [],
+            HIVE: []
         },
         chainNodes: {
             BTS: blockchains.BTS.nodeList,
@@ -234,7 +236,8 @@ const initialState = {
             LIBRE: blockchains.LIBRE.nodeList,
             LIBRETEST: blockchains.LIBRETEST.nodeList,
             XPR: blockchains.XPR.nodeList,
-            XPRTEST: blockchains.XPRTEST.nodeList
+            XPRTEST: blockchains.XPRTEST.nodeList,
+            HIVE: blockchains.HIVE.nodeList
         }
     }
 };

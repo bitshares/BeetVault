@@ -102,6 +102,14 @@ export async function inject(blockchain, request, webContents) {
                 : params.actions;
 
         visualizedAccount = _actions[0].authorization[0].actor;
+    } else if (blockchain._config.identifier === "HIVE") {
+        const params = request.payload.params[1];
+        const _actions =
+            typeof params === "string"
+                ? JSON.parse(params).actions
+                : params.actions;
+
+        visualizedAccount = _actions[0].authorization[0].actor;
     }
 
     const _injectedCall = (

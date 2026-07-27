@@ -267,6 +267,28 @@ let _blockchains = {
             { url: "https://testnet.rockerone.io" },
         ],
     },
+    HIVE: {
+        coreSymbol: "HIVE",
+        name: "Hive",
+        chainId: "beeab0de00000000000000000000000000000000000000000000000000000000",
+        nodeList: [
+            { url: "https://api.openhive.network" },
+            { url: "https://api.hive.blog" },
+            { url: "https://rpc.esteem.app" },
+            { url: "https://hive.roelandp.nl" },
+            { url: "https://api.ctbt.top" },
+            { url: "https://hived.privex.io" },
+            { url: "https://rpc.ausbit.dev" },
+            { url: "https://hive-api.arcange.eu" },
+            { url: "https://api.hivekings.com" },
+            { url: "https://anyx.io" },
+            { url: "https://api.hive.blue" },
+            { url: "https://techcoderx.com" },
+            { url: "https://hive.splinterlands.com" },
+            { url: "https://api.deathwing.cn" },
+            { url: "https://hive-api.wls.ski" },
+        ],
+    },
 };
 
 Object.keys(_blockchains).forEach((key) => {

@@ -14,6 +14,7 @@ import Libre from "./Libre.js";
 import Libretest from "./Libretest.js";
 import XPR from "./XPR.js";
 import XPRtest from "./XPRtest.js";
+import Hive from "./Hive.js";
 
 let storedChain;
 let lastChain;
@@ -63,6 +64,8 @@ export default function getBlockchainAPI(chain = null, node = null) {
                 storedChain = new XPR(config, node);
             } else if (chain === "XPRTEST") {
                 storedChain = new XPRtest(config, node);
+            } else if (chain === "HIVE") {
+                storedChain = new Hive(config, node);
             } else if (chain === "BTS" || chain === "BTS_TEST") {
                 storedChain = new BitShares(config, node);
             }

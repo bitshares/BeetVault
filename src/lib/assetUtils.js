@@ -7,7 +7,10 @@ const lookupPrecision = {
     "LIBRE": 8,
     "XPR": 4,
     "BTS": 5,
-    "BTS_TEST": 5
+    "BTS_TEST": 5,
+    "HIVE": 3,
+    "HBD": 3,
+    "VESTS": 6
 };
 
 export function humanReadableFloat(satoshis, precision) {

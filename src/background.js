@@ -54,6 +54,7 @@ const logger = new Logger(isDevMode ? 3 : 0);
 let tray = null;
 let regexBTS = /1.2.\d+/g;
 const eosFamily = ["EOS", "BEOS", "TLOS", "TLOSTEST", "WAX", "WAXTEST", "EOSTEST", "FIO", "FIOTEST", "LIBRE", "LIBRETEST", "XPR", "XPRTEST"];
+const hiveFamily = ["HIVE"];
 
 async function _readFile(filePath) {
     return new Promise((resolve, reject) => {
@@ -518,6 +519,23 @@ async function _parseDeeplink(
                 }
             }
         } else if (eosFamily.includes(chain)) {
+            if (request.payload.params && request.payload.params.length > 1) {
+                const actions = JSON.parse(request.payload.params[1]).actions;
+
+                if (actions) {
+                    for (let i = 0; i < actions.length; i++) {
+                        let operation = actions[i];
+                        if (
+                            settingsRows &&
+                            settingsRows.includes(operation.name)
+                        ) {
+                            authorizedUse = true;
+                            break;
+                        }
+                    }
+                }
+            }
+        } else if (hiveFamily.includes(chain)) {
             if (request.payload.params && request.payload.params.length > 1) {
                 const actions = JSON.parse(request.payload.params[1]).actions;
 
@@ -1000,6 +1018,18 @@ const createWindow = async () => {
                     }
                 }
             } else if (eosFamily.includes(chain)) {
+                const ops = parsedData.actions;
+                for (let i = 0; i < ops.length; i++) {
+                    let operation = ops[i];
+                    if (
+                        allowedOperations &&
+                        allowedOperations.includes(operation.name)
+                    ) {
+                        authorizedUse = true;
+                        break;
+                    }
+                }
+            } else if (hiveFamily.includes(chain)) {
                 const ops = parsedData.actions;
                 for (let i = 0; i < ops.length; i++) {
                     let operation = ops[i];

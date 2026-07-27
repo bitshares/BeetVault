@@ -254,7 +254,7 @@
                     }
 
                     if (
-                        ["EOS", "BEOS", "TLOS", "TLOSTEST", "WAX", "WAXTEST", "EOSTEST", "FIO", "FIOTEST", "LIBRE", "LIBRETEST", "XPR", "XPRTEST"].includes(chain) &&
+                        ["EOS", "BEOS", "TLOS", "TLOSTEST", "WAX", "WAXTEST", "EOSTEST", "FIO", "FIOTEST", "LIBRE", "LIBRETEST", "XPR", "XPRTEST", "HIVE"].includes(chain) &&
                         !visualizedParams
                     ) {
                         console.log(
@@ -271,7 +271,7 @@
                         return;
                     }
 
-                    const popupContents = ["EOS", "BEOS", "TLOS", "TLOSTEST", "WAX", "WAXTEST", "EOSTEST", "FIO", "FIOTEST", "LIBRE", "LIBRETEST", "XPR", "XPRTEST"].includes(chain)
+                    const popupContents = ["EOS", "BEOS", "TLOS", "TLOSTEST", "WAX", "WAXTEST", "EOSTEST", "FIO", "FIOTEST", "LIBRE", "LIBRETEST", "XPR", "XPRTEST", "HIVE"].includes(chain)
                         ? {
                             request: request,
                             visualizedAccount: visualizedAccount,
@@ -530,6 +530,8 @@
                             }
                         } else if (["EOS", "BEOS", "TLOS", "TLOSTEST", "WAX", "WAXTEST", "EOSTEST", "FIO", "FIOTEST", "LIBRE", "LIBRETEST", "XPR", "XPRTEST"].includes(chain)) {
                             activeKey = store.getters["AccountStore/getEOSKey"]();
+                        } else if (["HIVE"].includes(chain)) {
+                            activeKey = store.getters["AccountStore/getHiveKey"](request);
                         }
 
                         let signingKey;
@@ -569,7 +571,7 @@
                                             signingKey: signingKey,
                                         });
                                 } else if (
-                                    ["EOS", "BEOS", "TLOS", "TLOSTEST", "WAX", "WAXTEST", "EOSTEST", "FIO", "FIOTEST", "LIBRE", "LIBRETEST", "XPR", "XPRTEST"].includes(chain)
+                                    ["EOS", "BEOS", "TLOS", "TLOSTEST", "WAX", "WAXTEST", "EOSTEST", "FIO", "FIOTEST", "LIBRE", "LIBRETEST", "XPR", "XPRTEST", "HIVE"].includes(chain)
                                 ) {
                                     finalResult =
                                         await window.electron.blockchainRequest({

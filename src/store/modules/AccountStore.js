@@ -246,6 +246,21 @@ const getters = {
             console.error("Failed to get private memo key:", error);
         }
         return null;
+    },
+    getHiveKey: (state) => (request) => {
+        let signing = state.accountlist.filter(account => {
+            return (
+                account.accountID == request.payload.account_id &&
+                account.chain == request.payload.chain
+            );
+        });
+
+        if (!signing || !signing.length) {
+            return;
+        }
+
+        let keys = signing.slice()[0].keys;
+        return keys.privateKey || keys.active;
     }
 };
 
