@@ -3,7 +3,6 @@ import { ref, computed, onMounted, watch, toRaw } from "vue";
 import { useI18n } from "vue-i18n";
 import { Button } from '@/components/ui/ui/button';
 import { Card, CardContent } from '@/components/ui/ui/card';
-import { Input } from '@/components/ui/ui/input';
 import { Loader2 } from 'lucide-vue-next';
 
 import AccountSelect from "./account-select";
@@ -93,10 +92,26 @@ async function onFileUpload(a) {
     window.electron.resetTimer();
     inProgress.value = true;
 
+    const files = a.target?.files;
+    if (!files || !files.length) {
+        inProgress.value = false;
+        return;
+    }
+
     let account = store.getters["AccountStore/getCurrentSafeAccount"]();
     if (!account) {
         console.log("No account selected");
         inProgress.value = false;
+        return;
+    }
+
+    let fileContent;
+    try {
+        fileContent = await files[0].text();
+    } catch (error) {
+        console.log({ error });
+        inProgress.value = false;
+        window.electron.notify(t("common.local.promptFailure"));
         return;
     }
 
@@ -105,7 +120,7 @@ async function onFileUpload(a) {
         blockchainResponse = await window.electron.blockchainRequest({
             methods: ["localFileUpload"],
             chain: chain.value,
-            filePath: a[0].sourceFile.path,
+            fileData: fileContent,
             allowedOperations: toRaw(selectedRows.value),
         });
     } catch (error) {
@@ -119,12 +134,6 @@ async function onFileUpload(a) {
         console.log({
             msg: "No blockchain response",
             blockchainResponse,
-            request: {
-                methods: ["localFileUpload"],
-                chain: chain.value,
-                filePath: a[0].sourceFile.path,
-                allowedOperations: toRaw(selectedRows.value),
-            },
         });
         inProgress.value = false;
         window.electron.notify(t("common.local.promptFailure"));
@@ -190,11 +199,11 @@ onMounted(() => {
                     <p>{{ t("common.local.label") }}</p>
                     <p>{{ t("common.local.desc") }}</p>
                     <h4 class="text-lg font-bold">{{ t("common.local.upload") }}</h4>
-                    <Input
+                    <input
                         type="file"
                         accept="application/json"
                         @change="onFileUpload($event)"
-                        class="w-full"
+                        class="flex h-9 w-full rounded-md border border-input bg-transparent px-3 py-1 text-sm shadow-sm transition-colors file:border-0 file:bg-transparent file:text-sm file:font-medium placeholder:text-muted-foreground focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-ring disabled:cursor-not-allowed disabled:opacity-50"
                     />
                 </div>
 

@@ -818,10 +818,15 @@ const createWindow = async () => {
             try {
                 transaction = await blockchain.sign(operation, signingKey);
             } catch (error) {
-                console.log({
-                    error,
+                const errData = {
+                    code: error.code,
+                    message: error.message || "Transaction signing failed",
+                    data: error.data,
                     location: "signAndBroadcast.blockchain.sign",
-                });
+                };
+                const err = new Error(errData.message);
+                err.message = JSON.stringify(errData);
+                throw err;
             }
 
             if (transaction) {
@@ -829,10 +834,17 @@ const createWindow = async () => {
                 try {
                     broadcastResponse = await blockchain.broadcast(transaction);
                 } catch (error) {
-                    console.log({
-                        error,
+                    const errData = {
+                        code: error.code,
+                        message: error.message || "Transaction broadcast failed",
+                        data: error.data,
+                        digest: error.digest,
+                        transaction: error.transaction,
                         location: "signAndBroadcast.blockchain.broadcast",
-                    });
+                    };
+                    const err = new Error(errData.message);
+                    err.message = JSON.stringify(errData);
+                    throw err;
                 }
                 if (broadcastResponse) {
                     responses["signAndBroadcast"] = broadcastResponse;
@@ -846,10 +858,17 @@ const createWindow = async () => {
             try {
                 broadcastResponse = await blockchain.broadcast(operation);
             } catch (error) {
-                console.log({
-                    error,
+                const errData = {
+                    code: error.code,
+                    message: error.message || "Transaction broadcast failed",
+                    data: error.data,
+                    digest: error.digest,
+                    transaction: error.transaction,
                     location: "broadcast",
-                });
+                };
+                const err = new Error(errData.message);
+                err.message = JSON.stringify(errData);
+                throw err;
             }
             if (broadcastResponse) {
                 responses["broadcastTransaction"] = broadcastResponse;
@@ -947,9 +966,9 @@ const createWindow = async () => {
         }
 
         if (methods.includes("localFileUpload")) {
-            const { allowedOperations, filePath } = arg;
+            const { allowedOperations, fileData } = arg;
             try {
-                const data = await fsPromises.readFile(filePath, "utf-8");
+                const data = fileData;
 
                 let apiobj;
                 try {
@@ -978,8 +997,6 @@ const createWindow = async () => {
                     } catch (error) {
                         console.log({ error: error || "No status" });
                     }
-
-                    console.log({ status });
 
                     if (
                         status &&

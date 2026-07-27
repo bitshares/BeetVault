@@ -155,7 +155,7 @@
         </Card>
     </div>
 
-        <div v-else class="p-4 text-left">
+    <div v-else class="p-4 text-left">
         {{ t('common.popup.loadError') }}
     </div>
 </template>

@@ -7,6 +7,53 @@ export function useInjectedCall(lastIndex, { store, consoleErrorBuffer, t, start
     const { getSigningKey, decryptKey } = useKeyManager();
     const { signAndBroadcast, broadcastOnly } = useTransactionSigner();
 
+    function parseErrorData(error) {
+        if (!error) return null;
+
+        const msg = error.message || String(error);
+
+        // Try direct JSON parse first (non-IPC errors)
+        try {
+            const parsed = JSON.parse(msg);
+            if (parsed && typeof parsed === 'object' && (parsed.message || parsed.data)) {
+                return parsed;
+            }
+        } catch (e) {
+            // not pure JSON, continue
+        }
+
+        // Handle IPC-wrapped errors: "Error invoking remote method 'blockchainRequest': Error: {JSON}"
+        const jsonMatch = msg.match(/Error:\s*(\{[\s\S]*\})/);
+        if (jsonMatch) {
+            try {
+                const parsed = JSON.parse(jsonMatch[1]);
+                if (parsed && typeof parsed === 'object') {
+                    return parsed;
+                }
+            } catch (e) {
+                // JSON parse failed
+            }
+        }
+
+        return null;
+    }
+
+    function formatError(error) {
+        const parsed = parseErrorData(error);
+        if (parsed) {
+            return JSON.stringify(parsed, null, 4);
+        }
+        return String(error);
+    }
+
+    function getErrorMessage(error) {
+        const parsed = parseErrorData(error);
+        if (parsed && parsed.message) {
+            return parsed.message;
+        }
+        return String(error);
+    }
+
     watch(
         lastIndex,
         () => {
@@ -168,8 +215,8 @@ export function useInjectedCall(lastIndex, { store, consoleErrorBuffer, t, start
                             window.electron.createError({
                                 id: _request.id,
                                 title: t('common.popup.error.broadcastFailed'),
-                                errorMessage: t('common.popup.error.broadcastFailedDesc'),
-                                terminalError: String(error),
+                                errorMessage: getErrorMessage(error),
+                                terminalError: formatError(error),
                                 consoleLogs: [...consoleErrorBuffer.value],
                                 timestamp: new Date().toISOString(),
                                 context: `Attempting to broadcast a ${chain} transaction`
@@ -228,8 +275,8 @@ export function useInjectedCall(lastIndex, { store, consoleErrorBuffer, t, start
                         window.electron.createError({
                             id: request.id,
                             title: t('common.popup.error.keyRetrievalFailed'),
-                            errorMessage: t('common.popup.error.keyRetrievalFailedDesc'),
-                            terminalError: String(error),
+                            errorMessage: getErrorMessage(error),
+                            terminalError: formatError(error),
                             consoleLogs: [...consoleErrorBuffer.value],
                             timestamp: new Date().toISOString(),
                             context: `Attempting to retrieve active key for a ${chain} transaction`
@@ -253,8 +300,8 @@ export function useInjectedCall(lastIndex, { store, consoleErrorBuffer, t, start
                         window.electron.createError({
                             id: request.id,
                             title: t('common.popup.error.keyDecryptionFailed'),
-                            errorMessage: t('common.popup.error.keyDecryptionFailedDesc'),
-                            terminalError: String(error),
+                            errorMessage: getErrorMessage(error),
+                            terminalError: formatError(error),
                             consoleLogs: [...consoleErrorBuffer.value],
                             timestamp: new Date().toISOString(),
                             context: `Attempting to decrypt signing key for a ${chain} transaction`
@@ -282,8 +329,8 @@ export function useInjectedCall(lastIndex, { store, consoleErrorBuffer, t, start
                             window.electron.createError({
                                 id: request.id,
                                 title: t('common.popup.error.signAndBroadcastFailed'),
-                                errorMessage: t('common.popup.error.signAndBroadcastFailedDesc'),
-                                terminalError: String(error),
+                                errorMessage: getErrorMessage(error),
+                                terminalError: formatError(error),
                                 consoleLogs: [...consoleErrorBuffer.value],
                                 timestamp: new Date().toISOString(),
                                 context: `Attempting to sign and broadcast a ${chain} transaction`

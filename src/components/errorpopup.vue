@@ -43,8 +43,8 @@
     const timestamp = ref("");
     const context = ref("");
 
-    let openTerminalError = ref(false);
-    let openConsoleLogs = ref(false);
+    let openTerminalError = ref(true);
+    let openConsoleLogs = ref(true);
 
     let terminalErrorJSON = ref("");
     let consoleLogsJSON = ref("");
@@ -98,7 +98,7 @@
             <AlertTriangle class="h-4 w-4" />
             <AlertTitle>{{ title || t('common.popup.error.title') }}</AlertTitle>
             <AlertDescription>
-                {{ errorMessage || t('common.popup.error.defaultMessage') }}
+                {{ (errorMessage || t('common.popup.error.defaultMessage')).split('{')[0].trim() }}
             </AlertDescription>
         </Alert>
 
@@ -123,26 +123,26 @@
                         <ChevronRight v-else class="h-4 w-4" />
                         <span>{{ t('common.popup.error.terminalError') }}</span>
                     </CollapsibleTrigger>
+                    <CollapsibleContent>
+                        <div class="space-y-3 pt-3">
+                            <Textarea
+                                :model-value="terminalErrorJSON"
+                                disabled
+                                class="w-full font-mono text-xs"
+                                rows="10"
+                            />
+                            <Button
+                                variant="outline"
+                                size="sm"
+                                @click="copyToClipboard(terminalErrorJSON)"
+                            >
+                                <Copy class="h-3 w-3 mr-1" />
+                                {{ t("common.popup.copy") }}
+                            </Button>
+                        </div>
+                    </CollapsibleContent>
                 </Collapsible>
             </CardHeader>
-            <CardContent>
-                <div class="space-y-3">
-                    <Textarea
-                        :model-value="terminalErrorJSON"
-                        disabled
-                        class="w-full font-mono text-xs"
-                        rows="10"
-                    />
-                    <Button
-                        variant="outline"
-                        size="sm"
-                        @click="copyToClipboard(terminalErrorJSON)"
-                    >
-                        <Copy class="h-3 w-3 mr-1" />
-                        {{ t("common.popup.copy") }}
-                    </Button>
-                </div>
-            </CardContent>
         </Card>
 
         <Card v-if="consoleLogsJSON">
@@ -153,26 +153,26 @@
                         <ChevronRight v-else class="h-4 w-4" />
                         <span>{{ t('common.popup.error.consoleLogs') }}</span>
                     </CollapsibleTrigger>
+                    <CollapsibleContent>
+                        <div class="space-y-3 pt-3">
+                            <Textarea
+                                :model-value="consoleLogsJSON"
+                                disabled
+                                class="w-full font-mono text-xs"
+                                rows="10"
+                            />
+                            <Button
+                                variant="outline"
+                                size="sm"
+                                @click="copyToClipboard(consoleLogsJSON)"
+                            >
+                                <Copy class="h-3 w-3 mr-1" />
+                                {{ t("common.popup.copy") }}
+                            </Button>
+                        </div>
+                    </CollapsibleContent>
                 </Collapsible>
             </CardHeader>
-            <CardContent>
-                <div class="space-y-3">
-                    <Textarea
-                        :model-value="consoleLogsJSON"
-                        disabled
-                        class="w-full font-mono text-xs"
-                        rows="10"
-                    />
-                    <Button
-                        variant="outline"
-                        size="sm"
-                        @click="copyToClipboard(consoleLogsJSON)"
-                    >
-                        <Copy class="h-3 w-3 mr-1" />
-                        {{ t("common.popup.copy") }}
-                    </Button>
-                </div>
-            </CardContent>
         </Card>
 
         <Card>
