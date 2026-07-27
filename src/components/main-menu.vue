@@ -1,5 +1,5 @@
 <script setup>
-    import { ref, computed, watch } from "vue";
+    import { ref, computed, watch, onBeforeUnmount } from "vue";
     import { useI18n } from "vue-i18n";
 
     import router from "../router/index.js";
@@ -139,6 +139,10 @@
             logoutTimer = null;
         }
     }
+
+    onBeforeUnmount(() => {
+        clearLogoutTimer();
+    });
 
     function startLogoutTimer() {
         if (!store.state.WalletStore.isUnlocked) {
@@ -702,6 +706,8 @@
                         store.getters["AccountStore/getCurrentSafeAccount"]();
                     window.electron.getSafeAccountResponse(account);
                 });
+            } else {
+                clearLogoutTimer();
             }
         },
         { immediate: true }
