@@ -38,6 +38,7 @@ import { getSignature } from "./lib/SecureRemote.js";
 import * as Actions from "./lib/Actions.js";
 import getBlockchainAPI from "./lib/blockchains/blockchainFactory.js";
 import BTSWalletHandler from "./lib/blockchains/bitshares/BTSWalletHandler.js";
+import { BTS_FAMILY, EOS_FAMILY, HIVE_FAMILY } from "./lib/blockchains/chainFamilies.js";
 
 import { inject } from "./lib/inject.js";
 
@@ -53,8 +54,6 @@ var isDevMode = process.execPath.match(/[\\/]electron/);
 const logger = new Logger(isDevMode ? 3 : 0);
 let tray = null;
 let regexBTS = /1.2.\d+/g;
-const eosFamily = ["EOS", "BEOS", "TLOS", "TLOSTEST", "WAX", "WAXTEST", "EOSTEST", "FIO", "FIOTEST", "LIBRE", "LIBRETEST", "XPR", "XPRTEST"];
-const hiveFamily = ["HIVE"];
 
 async function _readFile(filePath) {
     return new Promise((resolve, reject) => {
@@ -181,80 +180,76 @@ const createModal = async (arg, modalEvent) => {
     });
 };
 
-/*
- * Creating an optional receipt browser window popup
- */
-const createReceipt = async (arg, modalEvent) => {
-    let modalHeight = 600;
-    let modalWidth = 800;
-    if (!mainWindow) {
-        logger.debug(`No window`);
-        throw "No main window";
-    }
-
-    let request = arg.request;
-    let id = request.id;
-    let result = arg.result;
-    let receipt = arg.receipt;
-    let notifyTXT = arg.notifyTXT;
-    if (!request || !request.id || !result || !notifyTXT || !receipt) {
-        logger.debug(`No request`);
-        throw "No request";
-    }
-
-    if (receiptWindows[id]) {
-        throw "Receipt window exists already!";
-    }
-
-    let targetURL = `file://${__dirname}/receipt.html?id=${encodeURIComponent(
-        id
-    )}`;
-
-    ipcMain.on(`get:receipt:${id}`, (event) => {
-        // The modal window is ready to receive data
-        event.reply(`respond:receipt:${id}`, {
-            id,
-            request,
-            result,
-            receipt,
-            notifyTXT,
-        });
-    });
-
-    receiptWindows[id] = new BrowserWindow({
-        parent: mainWindow,
-        title: "BeetEOS receipt",
-        width: modalWidth,
-        height: modalHeight,
-        minWidth: modalWidth,
-        minHeight: modalHeight,
-        maxWidth: modalWidth,
-        maximizable: true,
-        maxHeight: modalHeight,
-        useContentSize: true,
-        webPreferences: {
-            nodeIntegration: false, // Keep false for security
-            contextIsolation: true, // Keep true for security
-            enableRemoteModule: false, // Keep false for security
-            sandbox: true, // Keep true for security
-            preload: path.join(__dirname, "preloadModal.js"),
-        },
-        icon: __dirname + "/img/beet-taskbar.png",
-    });
-
-    receiptWindows[id].loadURL(targetURL);
-
-    receiptWindows[id].once("ready-to-show", () => {
-        console.log("ready to show modal");
-        receiptWindows[id].show();
-    });
-
-    receiptWindows[id].on("closed", () => {
-        if (receiptWindows[id]) {
-            delete receiptWindows[id];
+    /*
+     * Creating an optional receipt browser window popup
+     */
+    const createReceipt = async (arg, modalEvent) => {
+        let modalHeight = 600;
+        let modalWidth = 800;
+        if (!mainWindow) {
+            throw "No main window";
         }
-    });
-};
+
+        let request = arg.request;
+        let id = request.id;
+        let result = arg.result;
+        let receipt = arg.receipt;
+        let notifyTXT = arg.notifyTXT;
+        if (!request || !request.id || !result || !notifyTXT || !receipt) {
+            logger.debug(`No request`);
+            throw "No request";
+        }
+
+        if (receiptWindows[id]) {
+            throw "Receipt window exists already!";
+        }
+
+        let targetURL = `file://${__dirname}/receipt.html?id=${encodeURIComponent(
+            id
+        )}`;
+        
+        ipcMain.on(`get:receipt:${id}`, (event) => {
+            // The modal window is ready to receive data
+            event.reply(`respond:receipt:${id}`, {
+                id,
+                request,
+                result,
+                receipt,
+                notifyTXT,
+            });
+        });
+
+        receiptWindows[id] = new BrowserWindow({
+            parent: mainWindow,
+            title: "BeetEOS receipt",
+            width: modalWidth,
+            height: modalHeight,
+            minWidth: modalWidth,
+            minHeight: modalHeight,
+            maximizable: true,
+            useContentSize: true,
+            webPreferences: {
+                nodeIntegration: false, // Keep false for security
+                contextIsolation: true, // Keep true for security
+                enableRemoteModule: false, // Keep false for security
+                sandbox: true, // Keep true for security
+                preload: path.join(__dirname, "preloadModal.js"),
+            },
+            icon: __dirname + "/img/beet-taskbar.png",
+        });
+
+        receiptWindows[id].loadURL(targetURL);
+
+        receiptWindows[id].once("ready-to-show", () => {
+            receiptWindows[id].show();
+        });
+
+        receiptWindows[id].on("closed", () => {
+            if (receiptWindows[id]) {
+                delete receiptWindows[id];
+            }
+        });
+    };
 
 /*
  * Creating an error browser window popup for failed operations
@@ -500,7 +495,7 @@ async function _parseDeeplink(
 
     if (request.payload.method === Actions.INJECTED_CALL) {
         let authorizedUse = false;
-        if (["BTS", "BTS_TEST"].includes(chain)) {
+        if (BTS_FAMILY.includes(chain)) {
             let tr;
             try {
                 tr = await blockchain._parseTransactionBuilder(
@@ -518,7 +513,7 @@ async function _parseDeeplink(
                     }
                 }
             }
-        } else if (eosFamily.includes(chain)) {
+        } else if (EOS_FAMILY.includes(chain)) {
             if (request.payload.params && request.payload.params.length > 1) {
                 const actions = JSON.parse(request.payload.params[1]).actions;
 
@@ -535,7 +530,7 @@ async function _parseDeeplink(
                     }
                 }
             }
-        } else if (hiveFamily.includes(chain)) {
+        } else if (HIVE_FAMILY.includes(chain)) {
             if (request.payload.params && request.payload.params.length > 1) {
                 const actions = JSON.parse(request.payload.params[1]).actions;
 
@@ -1005,7 +1000,7 @@ const createWindow = async () => {
 
             let parsedData = JSON.parse(qrData);
             let authorizedUse = false;
-            if (["BTS", "BTS_TEST"].includes(chain)) {
+            if (BTS_FAMILY.includes(chain)) {
                 const ops = parsedData.operations[0].operations;
                 for (let i = 0; i < ops.length; i++) {
                     let operation = ops[i];
@@ -1017,7 +1012,7 @@ const createWindow = async () => {
                         break;
                     }
                 }
-            } else if (eosFamily.includes(chain)) {
+            } else if (EOS_FAMILY.includes(chain)) {
                 const ops = parsedData.actions;
                 for (let i = 0; i < ops.length; i++) {
                     let operation = ops[i];
@@ -1029,7 +1024,7 @@ const createWindow = async () => {
                         break;
                     }
                 }
-            } else if (hiveFamily.includes(chain)) {
+            } else if (HIVE_FAMILY.includes(chain)) {
                 const ops = parsedData.actions;
                 for (let i = 0; i < ops.length; i++) {
                     let operation = ops[i];
@@ -1046,7 +1041,7 @@ const createWindow = async () => {
             if (authorizedUse) {
                 let qrTX;
                 try {
-                    qrTX = ["BTS", "BTS_TEST"].includes(chain)
+                    qrTX = BTS_FAMILY.includes(chain)
                         ? await blockchain.handleQR(
                               JSON.stringify(parsedData.operations[0])
                           )
@@ -1064,7 +1059,7 @@ const createWindow = async () => {
                         origin: "localhost",
                         appName: "qr",
                         browser: qrChoice,
-                        params: ["BTS", "BTS_TEST"].includes(chain)
+                        params: BTS_FAMILY.includes(chain)
                             ? qrTX.toObject()
                             : ["signAndBroadcast", qrTX, []],
                         chain: chain,
