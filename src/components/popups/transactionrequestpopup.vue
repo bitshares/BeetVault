@@ -54,6 +54,7 @@
     let open = ref(false);
     let page = ref(1);
     let receipt = ref(false);
+    let isApproving = ref(false);
 
     let tableTooltip = computed(() => {
         if (!props.request) {
@@ -91,6 +92,8 @@
     });
 
     function _clickedAllow() {
+        if (isApproving.value) return;
+        isApproving.value = true;
         window.electron.clickedAllow({
             result: {
                 success: true,
@@ -194,8 +197,7 @@
             <h4 class="text-lg font-bold">{{ t('operations.rawsig.receipt.title') }}</h4>
             <div class="flex items-center gap-2">
                 <Switch
-                    :checked="receipt"
-                    @update:checked="receipt = $event"
+                    v-model="receipt"
                     id="enable-receipt"
                 />
                 <label for="enable-receipt" class="text-sm">
@@ -221,7 +223,7 @@
             </Alert>
 
             <div v-if="!!parsedParameters" class="flex flex-wrap gap-2">
-                <Button @click="_clickedAllow()">
+                <Button @click="_clickedAllow()" :disabled="isApproving">
                     {{ buttonText }}
                 </Button>
                 <Button variant="outline" @click="_clickedDeny()">

@@ -2,16 +2,64 @@ import beautify from "./Hive/beautify.js";
 import BlockchainAPI from "./BlockchainAPI.js";
 import { Transaction, PrivateKey, Signature, callRPC } from "hive-tx";
 
+// Key type requirements for each operation
+const operationKeyRequirements = {
+  // Posting, Active, or Owner
+  vote: ["posting", "active", "owner"],
+  vote2: ["posting", "active", "owner"],
+  comment: ["posting", "active", "owner"],
+  delete_comment: ["posting", "active", "owner"],
+  custom_json: ["posting", "active", "owner"],
+  comment_options: ["posting", "active", "owner"],
+  claim_reward_balance: ["posting", "active", "owner"],
+  delegate_vesting_shares: ["posting", "active", "owner"],
+  set_withdraw_vesting_route: ["posting", "active", "owner"],
+  create_proposal: ["posting", "active", "owner"],
+  update_proposal_votes: ["posting", "active", "owner"],
+  remove_proposal: ["posting", "active", "owner"],
+  update_proposal: ["posting", "active", "owner"],
+
+  // Active or Owner only
+  transfer: ["active", "owner"],
+  transfer_to_vesting: ["active", "owner"],
+  withdraw_vesting: ["active", "owner"],
+  limit_order_create: ["active", "owner"],
+  limit_order_create2: ["active", "owner"],
+  limit_order_cancel: ["active", "owner"],
+  feed_publish: ["active", "owner"],
+  convert: ["active", "owner"],
+  collateralized_convert: ["active", "owner"],
+  account_update: ["active", "owner"],
+  account_update2: ["active", "owner"],
+  witness_update: ["active", "owner"],
+  witness_set_properties: ["active", "owner"],
+  account_witness_vote: ["active", "owner"],
+  account_witness_proxy: ["active", "owner"],
+  transfer_to_savings: ["active", "owner"],
+  transfer_from_savings: ["active", "owner"],
+  cancel_transfer_from_savings: ["active", "owner"],
+  claim_account: ["active", "owner"],
+  escrow_transfer: ["active", "owner"],
+  escrow_dispute: ["active", "owner"],
+  escrow_release: ["active", "owner"],
+  escrow_approve: ["active", "owner"],
+  recurrent_transfer: ["active", "owner"],
+  prove_authority: ["active", "owner"],
+
+  // Owner only
+  account_create: ["owner"],
+  create_claimed_account: ["owner"],
+  request_account_recovery: ["owner"],
+  recover_account: ["owner"],
+  change_recovery_account: ["owner"],
+  decline_voting_rights: ["owner"],
+};
+
 class Hive extends BlockchainAPI {
-  constructor() {
-    super();
+  constructor(config, node) {
+    super(config, node);
     this.type = "HIVE";
     this.name = "Hive";
-    this.icon = require("../assets/Hive.png");
-    this.networks = this.config.networks;
-    this.chainID = this.config.chainID;
-    this.nodes = this.config.nodes;
-    this.defaultNode = this.config.nodes[0];
   }
 
   _connect = async (node, account) => {
@@ -452,6 +500,131 @@ class Hive extends BlockchainAPI {
       return false;
     }
   };
+
+  getImportOptions() {
+    return [
+      {
+        type: "ImportKeys",
+        translate_key: "import_keys",
+      },
+    ];
+  }
+
+  getSignUpInput() {
+    return {
+      privateKey: true,
+    };
+  }
+
+  getAccessType() {
+    return "account";
+  }
+
+  /**
+   * Get the required key types for an operation
+   * @param {String} operationName - The operation name
+   * @returns {Array|null} Array of allowed key types, or null if operation not found
+   */
+  getOperationKeyRequirements(operationName) {
+    return operationKeyRequirements[operationName] || null;
+  }
+
+  /**
+   * Check if a key type can perform an operation
+   * @param {String} keyType - The key type (owner, active, posting, memo)
+   * @param {String} operationName - The operation name
+   * @returns {Boolean} True if the key type can perform the operation
+   */
+  canKeyPerformOperation(keyType, operationName) {
+    const required = operationKeyRequirements[operationName];
+    if (!required) {
+      // Unknown operation, deny by default
+      return false;
+    }
+    return required.includes(keyType);
+  }
+
+  /**
+   * Detect the key type by checking it against the account's keys
+   * @param {Object} account - The account object from blockchain
+   * @param {String} privateKey - The private key to check
+   * @returns {String|null} The key type (owner, active, posting, memo) or null if not found
+   */
+  detectKeyType(account, privateKey) {
+    let publicKey;
+    try {
+      publicKey = this.getPublicKey(privateKey);
+    } catch (e) {
+      return null;
+    }
+
+    // Check owner key
+    if (account.owner && account.owner.key_auths) {
+      for (const keyAuth of account.owner.key_auths) {
+        if (this._compareKeys(keyAuth[0], publicKey)) {
+          return "owner";
+        }
+      }
+    }
+
+    // Check active key
+    if (account.active && account.active.key_auths) {
+      for (const keyAuth of account.active.key_auths) {
+        if (this._compareKeys(keyAuth[0], publicKey)) {
+          return "active";
+        }
+      }
+    }
+
+    // Check posting key
+    if (account.posting && account.posting.key_auths) {
+      for (const keyAuth of account.posting.key_auths) {
+        if (this._compareKeys(keyAuth[0], publicKey)) {
+          return "posting";
+        }
+      }
+    }
+
+    // Check memo key
+    if (account.memo_key) {
+      if (this._compareKeys(account.memo_key, publicKey)) {
+        return "memo";
+      }
+    }
+
+    return null;
+  }
+
+  async verifyAccount(accountName, credentials) {
+    let account;
+    try {
+      account = await this.getAccount(accountName);
+    } catch (error) {
+      console.log(`getAccount: ${error}`);
+      return;
+    }
+
+    if (!account) {
+      throw { key: "unverified_account_error" };
+    }
+
+    let detectedKeyType = null;
+
+    if (credentials && credentials.privateKey) {
+      detectedKeyType = this.detectKeyType(account, credentials.privateKey);
+      
+      if (!detectedKeyType) {
+        throw { key: "unverified_account_error" };
+      }
+    }
+
+    // Attach detected key type to account for later use
+    if (detectedKeyType) {
+      account._keyType = detectedKeyType;
+    }
+
+    return account;
+  }
 }
 
 export default Hive;

@@ -9,6 +9,7 @@ import { Pagination, PaginationContent, PaginationItem, PaginationPrevious, Pagi
 import { Dialog, DialogContent, DialogTitle } from '@/components/ui/ui/dialog';
 import { Collapsible, CollapsibleContent, CollapsibleTrigger } from '@/components/ui/ui/collapsible';
 import { ChevronDown, ChevronRight } from 'lucide-vue-next';
+import { ALL_EOS_AND_HIVE } from "@/lib/blockchains/chainFamilies.js";
 
 import langSelect from "./lang-select.vue";
 
@@ -69,10 +70,6 @@ watchEffect(() => {
         if (data.receipt) {
             visualizedParams.value = JSON.parse(data.receipt.visualizedParams);
         }
-        console.log({
-            vp: JSON.parse(data.receipt.visualizedParams),
-            result: data.result,
-        });
         if (data.request) {
             request.value = data.request;
             chain.value = data.request.payload.chain;
@@ -83,7 +80,7 @@ watchEffect(() => {
 
             result.value = data.result;
 
-            if (["EOS", "TLOS", "TLOSTEST", "BEOS", "WAX", "WAXTEST", "EOSTEST", "FIO", "FIOTEST", "LIBRE", "LIBRETEST", "XPR", "XPRTEST", "HIVE"].includes(data.request.payload.chain)) {
+            if (ALL_EOS_AND_HIVE.includes(data.request.payload.chain)) {
                 resultID.value = data.result.transaction_id;
                 resultBlockNum.value = data.result.processed.block_num;
                 resultTrxNum.value = 0;
@@ -138,7 +135,7 @@ watch(
                 4
             );
         }
-        if (["EOS", "TLOS", "TLOSTEST", "BEOS", "WAX", "WAXTEST", "EOSTEST", "FIO", "FIOTEST", "LIBRE", "LIBRETEST", "XPR", "XPRTEST", "HIVE"].includes(chain.value)) {
+        if (ALL_EOS_AND_HIVE.includes(chain.value)) {
             if (newResult) {
                 resultData.value = JSON.stringify(
                     newResult.processed,

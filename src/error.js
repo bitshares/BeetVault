@@ -26,6 +26,7 @@ app.config.errorHandler = function (err, vm, info) {
 };
 
 app.component('ErrorPopup', ErrorPopup);
+app.component('error-popup', ErrorPopup);
 app.use(i18n);
 
 window.t = (key, params) => {

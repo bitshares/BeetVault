@@ -1,4 +1,5 @@
 import { ipcMain } from "electron";
+import { BTS_FAMILY, EOS_FAMILY, HIVE_FAMILY } from "./blockchains/chainFamilies.js";
 
 export async function inject(blockchain, request, webContents) {
     let isBlocked = false;
@@ -69,7 +70,7 @@ export async function inject(blockchain, request, webContents) {
 
     let account = "";
     let visualizedAccount;
-    if (["BTS", "BTS_TEST"].includes(blockchain._config.identifier)) {
+    if (BTS_FAMILY.includes(blockchain._config.identifier)) {
         let fromField = types.find((type) => type.method === request.type).from;
         if (!fromField || !fromField.length) {
             const _account = async () => {
@@ -93,7 +94,7 @@ export async function inject(blockchain, request, webContents) {
             }
         }
     } else if (
-        ["EOS", "BEOS", "TLOS", "TLOSTEST", "WAX", "WAXTEST", "EOSTEST", "FIO", "FIOTEST", "LIBRE", "LIBRETEST", "XPR", "XPRTEST"].includes(blockchain._config.identifier)
+        EOS_FAMILY.includes(blockchain._config.identifier)
     ) {
         const params = request.payload.params[1];
         const _actions =
@@ -102,7 +103,7 @@ export async function inject(blockchain, request, webContents) {
                 : params.actions;
 
         visualizedAccount = _actions[0].authorization[0].actor;
-    } else if (blockchain._config.identifier === "HIVE") {
+    } else if (HIVE_FAMILY.includes(blockchain._config.identifier)) {
         const params = request.payload.params[1];
         const _actions =
             typeof params === "string"

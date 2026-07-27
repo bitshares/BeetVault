@@ -93,7 +93,7 @@
 </script>
 
 <template>
-    <div class="w-full max-w-3xl mx-auto overflow-y-auto p-4 space-y-4">
+    <div class="w-full overflow-y-auto p-4 space-y-4 text-left">
         <Alert variant="destructive">
             <AlertTriangle class="h-4 w-4" />
             <AlertTitle>{{ title || t('common.popup.error.title') }}</AlertTitle>

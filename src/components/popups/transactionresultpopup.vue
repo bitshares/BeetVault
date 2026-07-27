@@ -184,8 +184,7 @@
             <h4 class="text-lg font-bold">{{ t('operations.rawsig.receipt.title') }}</h4>
             <div class="flex items-center gap-2">
                 <Switch
-                    :checked="receipt"
-                    @update:checked="receipt = $event"
+                    v-model="receipt"
                     id="enable-receipt"
                 />
                 <label for="enable-receipt" class="text-sm">

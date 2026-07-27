@@ -69,6 +69,11 @@ const actions = {
                     }
                 }
 
+                // Store keyType if provided (for Hive accounts)
+                if (payload.account.keyType) {
+                    payload.account.keyType = payload.account.keyType;
+                }
+
                 dispatch('WalletStore/saveAccountToWallet', payload, {root: true})
                 .then(() => {
                     commit(ADD_ACCOUNT, payload.account);
@@ -259,8 +264,12 @@ const getters = {
             return;
         }
 
-        let keys = signing.slice()[0].keys;
-        return keys.privateKey || keys.active;
+        let account = signing.slice()[0];
+        let keys = account.keys;
+        return {
+            privateKey: keys.privateKey || keys.active,
+            keyType: account.keyType || null
+        };
     }
 };
 

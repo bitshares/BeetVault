@@ -93,7 +93,7 @@
 <template>
     <div
         v-if="type && type !== '' && request"
-        class="w-full max-w-3xl mx-auto overflow-y-auto"
+        class="w-full overflow-y-auto text-left"
     >
         <Card v-show="true" class="mb-4">
             <CardHeader>
@@ -155,7 +155,7 @@
         </Card>
     </div>
 
-    <div v-else class="p-4 text-center">
+        <div v-else class="p-4 text-left">
         {{ t('common.popup.loadError') }}
     </div>
 </template>

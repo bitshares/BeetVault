@@ -84,7 +84,8 @@
                     accountName: accountname.value,
                     accountID: blockchainRequest.verifyAccount.id,
                     chain: props.chain,
-                    keys: authorities
+                    keys: authorities,
+                    keyType: blockchainRequest.verifyAccount._keyType || null
                 }
             }]);
         }
