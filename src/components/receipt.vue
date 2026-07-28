@@ -169,7 +169,7 @@ async function copyToClipboard(_data) {
 </script>
 
 <template>
-    <div class="w-full max-w-3xl mx-auto overflow-y-auto">
+    <div class="w-full overflow-y-auto">
         <Collapsible default-open>
             <CollapsibleTrigger class="flex items-center gap-2 w-full p-3 hover:bg-accent rounded-md text-left">
                 <ChevronDown class="h-4 w-4" />
