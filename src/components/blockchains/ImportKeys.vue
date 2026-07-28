@@ -1,5 +1,5 @@
 <script setup>
-    import {ref, watchEffect} from "vue";
+    import {ref, computed, watchEffect} from "vue";
 
     import { useI18n } from 'vue-i18n';
     import { Button } from '@/components/ui/ui/button';
@@ -48,6 +48,13 @@
 
     let accountname = ref("");
     let privateKey = ref("");
+    let detectedKeyType = ref(null);
+
+    let keyTypeLabel = computed(() => {
+        if (!detectedKeyType.value) return null;
+        return t(`common.key_type_${detectedKeyType.value}`);
+    });
+
     async function next() {
         let authorities = {};
         if (requiredFields.value && requiredFields.value.privateKey) {
@@ -67,13 +74,14 @@
         } catch (error) {
             console.log(error);
             console.log("Account verification error, check your key and try again");
+            detectedKeyType.value = null;
             window.electron.notify(t("common.unverified_account_error"));
             return;
         }
 
         if (blockchainRequest && blockchainRequest.verifyAccount) {
             console.log("Account verified");
-            privateKey.value = "";
+            detectedKeyType.value = blockchainRequest.verifyAccount._keyType || null;
 
             if (store.state.WalletStore.isUnlocked) {
                 window.electron.resetTimer();
@@ -85,7 +93,7 @@
                     accountID: blockchainRequest.verifyAccount.id,
                     chain: props.chain,
                     keys: authorities,
-                    keyType: blockchainRequest.verifyAccount._keyType || null
+                    keyType: detectedKeyType.value
                 }
             }]);
         }
@@ -109,23 +117,25 @@
             />
         </div>
 
-        <div>
-            <p class="mb-1">{{ t('common.keys_cta') }}</p>
-        </div>
-
         <template v-if="requiredFields && requiredFields.privateKey">
             <div>
                 <p class="mb-1 font-semibold text-sm">
-                    {{ t(accessType == 'account' ? 'common.active_authority' : 'common.public_authority') }}
+                    {{ t('common.private_key') }}
                 </p>
                 <Input
-                    id="inputActive"
+                    id="inputPrivateKey"
                     v-model="privateKey"
                     type="password"
                     class="w-full"
-                    :placeholder="t(accessType == 'account' ? 'common.active_authority_placeholder' : 'common.public_authority_placeholder')"
+                    :placeholder="t('common.private_key_placeholder')"
                     required
                 />
+            </div>
+
+            <div v-if="detectedKeyType" class="flex items-center gap-2 text-sm text-muted-foreground bg-muted/50 rounded-md px-3 py-2">
+                <span class="font-medium text-foreground">{{ keyTypeLabel }}</span>
+                <span>&mdash;</span>
+                <span>{{ t('common.key_detected') }}</span>
             </div>
         </template>
 
