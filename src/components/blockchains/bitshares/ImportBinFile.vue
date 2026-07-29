@@ -50,11 +50,7 @@ import { X } from 'lucide-vue-next';
                     accountName: account.name,
                     accountID: account.id,
                     chain: props.chain,
-                    keys: {
-                        active: account.active.key,
-                        owner: account.owner.key,
-                        memo: account.memo.key
-                    }
+                    keys: { _vaultToken: account._vaultToken }
                 }
             });
         }

@@ -1,6 +1,7 @@
 <script setup>
     import { ref, onMounted } from 'vue';
     import { useI18n } from 'vue-i18n';
+    import { sha512 } from '@noble/hashes/sha512';
     
     import store from '../store/index.js';
     import router from '../router/index.js';
@@ -30,10 +31,12 @@
                 let walletName = store.getters['WalletStore/getWalletName'];
                 let accounts = JSON.stringify(store.getters['AccountStore/getAccountList'].slice());
 
+                let walletHash = Buffer.from(sha512(walletpass.value)).toString('hex');
+
                 window.electron.downloadBackup({
                     walletName: walletName,
                     accounts: accounts,
-                    seed: walletpass.value
+                    seed: walletHash
                 });
                 
                 passincorrect.value = "";

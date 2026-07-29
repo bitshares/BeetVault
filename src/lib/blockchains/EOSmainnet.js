@@ -280,7 +280,7 @@ export default class EOS extends BlockchainAPI {
      * @param {string} privateKey
      * @param {string} chain // EOS, TLOS, BEOS (note: chain parameter is not needed by wharfkit, left here for compatibility)
      */
-    async verifyAccount(accountName, privateKey, chain = "EOS") {
+    async verifyAccount(accountName, credentials, chain = "EOS") {
         let fetchedAccount;
         try {
             fetchedAccount = await this.getAccount(accountName);
@@ -294,6 +294,10 @@ export default class EOS extends BlockchainAPI {
             console.log("Account not found");
             return;
         }
+
+        const privateKey = typeof credentials === 'string'
+            ? credentials
+            : credentials.privateKey;
 
         let publicKey;
         try {

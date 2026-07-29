@@ -22,7 +22,7 @@ export default {
         return JSON.parse(request.payload.params[1]);
     },
 
-    async preProcess(_store, request, _chain, _decryptKey) {
+    async preProcess(_store, request, _chain) {
         return request;
     },
 

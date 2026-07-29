@@ -2,7 +2,7 @@ import { getChainHandler } from "./chainFamilies/index.js";
 
 export function useTransactionSigner() {
 
-    async function signAndBroadcast(chain, request, signingKey) {
+    async function signAndBroadcast(chain, request, encryptedKey) {
         const handler = getChainHandler(chain);
         if (!handler || !handler.buildSignParams) {
             throw new Error(`No sign params handler for chain: ${chain}`);
@@ -10,12 +10,10 @@ export function useTransactionSigner() {
 
         const operation = handler.buildSignParams(request);
 
-        return await window.electron.blockchainRequest({
-            methods: ["signAndBroadcast"],
-            account: null,
+        return await window.electron.decryptAndSign({
+            encryptedKey: encryptedKey,
             chain: chain,
             operation: operation,
-            signingKey: signingKey,
         });
     }
 

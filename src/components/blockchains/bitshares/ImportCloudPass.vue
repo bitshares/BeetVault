@@ -70,7 +70,7 @@
                 accountName: accountname.value,
                 accountID: blockchainResponse.verifyCloudAccount.account.id,
                 chain: props.chain,
-                keys: blockchainResponse.verifyCloudAccount.authorities
+                keys: { _vaultToken: blockchainResponse.verifyCloudAccount.token }
             }
         }]);
     }

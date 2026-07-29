@@ -33,7 +33,7 @@ export default {
         return request.payload.params;
     },
 
-    async preProcess(store, request, chain, decryptKey) {
+    async preProcess(store, request, chain) {
         let _request = request;
 
         if (!request.payload.memo) {
@@ -49,14 +49,6 @@ export default {
 
         let _requiredMemoKey = store.getters["AccountStore/getPrivateMemoKey"](fromID, chain);
 
-        let processedKey;
-        try {
-            processedKey = await decryptKey(_requiredMemoKey);
-        } catch (error) {
-            console.log(error);
-            return _request;
-        }
-
         let processedOperations = [];
         for (let operation of operations) {
             if (operation[0] !== 0 || !operation[1].hasOwnProperty("memo")) {
@@ -68,29 +60,23 @@ export default {
             let nonce = memo.nonce;
             let message = hexToString(memo.message);
 
-            let _blockchainRequest;
+            let memoObject;
             try {
-                _blockchainRequest =
-                    await window.electron.blockchainRequest({
-                        methods: ["createMemoObject"],
-                        account: null,
-                        chain,
-                        from,
-                        to,
-                        optionalNonce: nonce ?? undefined,
-                        message,
-                        memoKey: processedKey
-                    });
+                memoObject = await window.electron.decryptAndCreateMemo({
+                    encryptedKey: _requiredMemoKey,
+                    chain,
+                    from,
+                    to,
+                    nonce: nonce ?? undefined,
+                    message
+                });
             } catch (error) {
                 console.log(error);
             }
 
-            if (
-                _blockchainRequest &&
-                _blockchainRequest.createMemoObject
-            ) {
+            if (memoObject) {
                 const _updatedOperation = operation;
-                _updatedOperation[1].memo = _blockchainRequest.createMemoObject;
+                _updatedOperation[1].memo = memoObject;
 
                 let memoFromBuffer;
                 try {

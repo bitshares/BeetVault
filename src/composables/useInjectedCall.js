@@ -4,7 +4,7 @@ import { useKeyManager } from "./useKeyManager.js";
 import { useTransactionSigner } from "./useTransactionSigner.js";
 
 export function useInjectedCall(lastIndex, { store, consoleErrorBuffer, t, startLogoutTimer }) {
-    const { getSigningKey, decryptKey } = useKeyManager();
+    const { getSigningKey } = useKeyManager();
     const { signAndBroadcast, broadcastOnly } = useTransactionSigner();
 
     function parseErrorData(error) {
@@ -196,8 +196,7 @@ export function useInjectedCall(lastIndex, { store, consoleErrorBuffer, t, start
                         _request = await handler.preProcess(
                             store,
                             _request,
-                            chain,
-                            decryptKey
+                            chain
                         );
                     }
 
@@ -292,37 +291,12 @@ export function useInjectedCall(lastIndex, { store, consoleErrorBuffer, t, start
                         return;
                     }
 
-                    let signingKey;
-                    try {
-                        signingKey = await decryptKey(activeKey);
-                    } catch (error) {
-                        console.log(error);
-                        window.electron.createError({
-                            id: request.id,
-                            title: t('common.popup.error.keyDecryptionFailed'),
-                            errorMessage: getErrorMessage(error),
-                            terminalError: formatError(error),
-                            consoleLogs: [...consoleErrorBuffer.value],
-                            timestamp: new Date().toISOString(),
-                            context: `Attempting to decrypt signing key for a ${chain} transaction`
-                        });
-                        window.electron.injectedCallError({
-                            id: request.id,
-                            result: {
-                                isError: true,
-                                method: "injectedCall.getKey",
-                                error: error,
-                            },
-                        });
-                        return;
-                    }
-
                     if (txType == "signAndBroadcast") {
                         try {
                             finalResult = await signAndBroadcast(
                                 chain,
                                 request,
-                                signingKey
+                                activeKey
                             );
                         } catch (error) {
                             console.log(error);

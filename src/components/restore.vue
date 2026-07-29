@@ -1,6 +1,7 @@
 <script setup>
     import { ref, computed } from 'vue';
     import { useI18n } from 'vue-i18n';
+    import { sha512 } from '@noble/hashes/sha512';
     const { t } = useI18n({ useScope: 'global' });
 
     import store from '../store/index.js';
@@ -36,7 +37,7 @@
 
         let _hash;
         try {
-            _hash = window.electron.sha512({data: backupPass.value});
+            _hash = Buffer.from(sha512(backupPass.value)).toString('hex');
         } catch (error) {
             console.log(error);
             fileError.value = false;
@@ -48,12 +49,10 @@
             return;
         }
 
-        backupPass.value = "";
-
         let file = document.getElementById('restoreWallet').files[0].path;
         let parsedData;
         try {
-            parsedData = window.electron.restore({file: file, seed: _hash});
+            parsedData = await window.electron.restore({file: file, seed: _hash});
         } catch (error) {
             console.log(error);
             fileError.value = true;
@@ -85,6 +84,7 @@
                     password: backupPass.value
                 }
             );
+            backupPass.value = "";
             router.replace("/");
         } catch (error) {
             console.log(error);

@@ -69,7 +69,7 @@
                 methods: ["verifyAccount"],
                 accountname: accountname.value,
                 chain: props.chain,
-                authorities: authorities.privateKey
+                authorities: authorities
             });
         } catch (error) {
             console.log(error);
@@ -83,6 +83,9 @@
             console.log("Account verified");
             detectedKeyType.value = blockchainRequest.verifyAccount._keyType || null;
 
+            // Clear plaintext key from memory
+            authorities.privateKey = null;
+
             if (store.state.WalletStore.isUnlocked) {
                 window.electron.resetTimer();
             }
@@ -92,7 +95,7 @@
                     accountName: accountname.value,
                     accountID: blockchainRequest.verifyAccount.id,
                     chain: props.chain,
-                    keys: authorities,
+                    keys: { _vaultToken: blockchainRequest.verifyAccount.token },
                     keyType: detectedKeyType.value
                 }
             }]);

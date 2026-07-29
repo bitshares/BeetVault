@@ -79,7 +79,7 @@
                 accountName: accountname.value,
                 accountID: blockchainRequest.verifyAccount.account.id,
                 chain: props.chain,
-                keys: blockchainRequest.verifyAccount.authorities
+                keys: { _vaultToken: blockchainRequest.verifyAccount.token }
             }
         }]);
     }

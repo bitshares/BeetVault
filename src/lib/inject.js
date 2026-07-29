@@ -5,7 +5,7 @@ export async function inject(blockchain, request, webContents) {
     let isBlocked = false;
     let blockedAccounts;
     let foundIDs = [];
-    let regexBTS = /1.2.\d+/g;
+    let regexBTS = /1\.2\.\d+/g;
 
     if (blockchain._config.identifier === "BTS") {
         // Decentralized warn list

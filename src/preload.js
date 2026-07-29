@@ -19,11 +19,18 @@ contextBridge.exposeInMainWorld('electron', {
     memoFromBuffer: async (args) => await ipcRenderer.invoke('memoFromBuffer', args),
     // Stores
     seed: (args) => ipcRenderer.send('seed', args),
-    decrypt: async (args) => await ipcRenderer.invoke('decrypt', args),
+    clearSeed: async () => await ipcRenderer.send('clearSeed'),
+    encryptPendingKeys: async (args) => await ipcRenderer.invoke('encryptPendingKeys', args),
+    decryptAndSign: async (args) => await ipcRenderer.invoke('decryptAndSign', args),
+    decryptAndCreateMemo: async (args) => await ipcRenderer.invoke('decryptAndCreateMemo', args),
+    decryptAndSignMessage: async (args) => await ipcRenderer.invoke('decryptAndSignMessage', args),
+    // Wallet operations (password pre-hashed by renderer)
+    unlockWallet: async (args) => await ipcRenderer.invoke('unlockWallet', args),
+    encryptAndStore: async (args) => await ipcRenderer.invoke('encryptAndStore', args),
+    decryptWallet: async (args) => await ipcRenderer.invoke('decryptWallet', args),
+    setSeedFromPassword: async (args) => await ipcRenderer.invoke('setSeedFromPassword', args),
+    getSafeStorageBackend: async () => await ipcRenderer.invoke('getSafeStorageBackend'),
     id: async (args) => await ipcRenderer.invoke('id', args),
-    aesEncrypt: async (args) => await ipcRenderer.invoke('aesEncrypt', args),
-    aesDecrypt: async (args) => await ipcRenderer.invoke('aesDecrypt', args),
-    sha512: async (args) => await ipcRenderer.invoke('sha512', args),
     getSignature: async (args) => await ipcRenderer.invoke('getSignature', args),
     verifyCrypto: async (args) => await ipcRenderer.invoke('verifyCrypto', args),
     // Backup and restore functionality

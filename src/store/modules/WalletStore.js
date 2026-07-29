@@ -1,4 +1,5 @@
 import BeetDB from '../../lib/BeetDB.js';
+import { hashPassword } from '../../lib/utils.js';
 
 const GET_WALLET = 'GET_WALLET';
 const CREATE_WALLET = 'CREATE_WALLET';
@@ -56,46 +57,59 @@ const actions = {
         commit,
         state
     }, payload) {
-        return new Promise((resolve, reject) => {
-            BeetDB.wallets_encrypted.get({
-                id: payload.wallet_id
-            }).then(async (wallet) => {
-                let _hash;
-                try {
-                    _hash = await window.electron.sha512({data: payload.wallet_pass});
-                } catch (error) {
-                    console.log({error});
-                    return reject('hash_failure');
-                }
-
-                let decryptedWallet;
-                try {
-                    decryptedWallet = await window.electron.aesDecrypt({data: wallet.data, seed: _hash});
-                } catch (error) {
-                    console.log({error});
-                    return reject(error);
-                }
-
-                window.electron.seed(_hash);
-
-                let public_wallets = state.walletlist.filter((x) => {
-                    return x.id == payload.wallet_id
+        return new Promise(async (resolve, reject) => {
+            let wallet;
+            try {
+                wallet = await BeetDB.wallets_encrypted.get({
+                    id: payload.wallet_id
                 });
+            } catch (error) {
+                console.log({error});
+                return reject('db_failure');
+            }
 
-                commit(GET_WALLET, public_wallets[0]);
-                dispatch(
-                    'AccountStore/loadAccounts',
-                    Array.isArray(decryptedWallet)
-                        ? decryptedWallet
-                        : [decryptedWallet],
-                    {root: true}
-                ).catch(error => {
-                    console.error('Error loading accounts:', error);
+            if (!wallet || !wallet.data) {
+                return reject('wallet_not_found');
+            }
+
+            let decryptedWallet;
+            try {
+                decryptedWallet = await window.electron.unlockWallet({
+                    encryptedData: wallet.data,
+                    password: hashPassword(payload.wallet_pass)
                 });
-                resolve();
-            }).catch((e) => {
-                reject(e);
+            } catch (error) {
+                console.log({error});
+                return reject(error);
+            }
+
+            if (!decryptedWallet) {
+                return reject('decryption_failure');
+            }
+
+            let parsedWallet;
+            try {
+                parsedWallet = JSON.parse(decryptedWallet);
+            } catch (error) {
+                console.log({error});
+                return reject('parse_failure');
+            }
+
+            let public_wallets = state.walletlist.filter((x) => {
+                return x.id == payload.wallet_id
             });
+
+            commit(GET_WALLET, public_wallets[0]);
+            dispatch(
+                'AccountStore/loadAccounts',
+                Array.isArray(parsedWallet)
+                    ? parsedWallet
+                    : [parsedWallet],
+                {root: true}
+            ).catch(error => {
+                console.error('Error loading accounts:', error);
+            });
+            resolve();
         });
     },
     confirmUnlock({
@@ -114,7 +128,7 @@ const actions = {
                 walletid = await window.electron.id();
             } catch (error) {
                 console.log({error});
-                reject('uuid_failure');
+                return reject('uuid_failure');
             }
 
             let newwallet = {
@@ -136,29 +150,28 @@ const actions = {
                     commit(SET_WALLET_STATUS, true);
                     commit(SET_WALLETLIST, wallets);
 
-                    let _hash;
-                    try {
-                        _hash = await window.electron.sha512({data: payload.password});
-                    } catch (error) {
-                        console.log({error});
-                        return;
-                    }
-
                     let _encrypted;
                     try {
-                        _encrypted = await window.electron.aesEncrypt({
+                        _encrypted = await window.electron.encryptAndStore({
                             data: JSON.stringify(payload.backup.walletdata),
-                            seed: _hash
+                            password: hashPassword(payload.password)
                         });
                     } catch (error) {
                         console.log({error});
-                        return;
+                        return reject('encrypt_failure');
                     }
 
                     BeetDB.wallets_encrypted.put({
                         id: walletid,
                         data: _encrypted
                     });
+
+                    // Set the seed for this wallet
+                    try {
+                        await window.electron.setSeedFromPassword({password: hashPassword(payload.password)});
+                    } catch (error) {
+                        console.log({error});
+                    }
 
                     commit(GET_WALLET, newwallet);
                     dispatch('AccountStore/loadAccounts', payload.backup.walletdata, {
@@ -208,36 +221,47 @@ const actions = {
                     commit(SET_WALLET_STATUS, true);
                     commit(SET_WALLETLIST, wallets);
 
-                    let _hash;
-                    try {
-                        _hash = await window.electron.sha512({data: payload.password});
-                    } catch (error) {
-                        console.log({error});   
-                        return reject(error);
-                    }
+                    let keys = payload.walletdata.keys;
 
-                    let keys = Object.keys(payload.walletdata.keys);
-                    for (let i = 0; i < keys.length; i++) {
-                        let keytype = keys[i];
-                        let _encrypted;
+                    // If keys contain a vault token, encrypt via main process
+                    if (keys._vaultToken) {
+                        let encryptedKeys;
                         try {
-                            _encrypted = await window.electron.aesEncrypt({
-                                data: payload.walletdata.keys[keytype],
-                                seed: _hash
+                            encryptedKeys = await window.electron.encryptPendingKeys({
+                                token: keys._vaultToken,
+                                password: hashPassword(payload.password)
                             });
                         } catch (error) {
                             console.log({error});
-                            return reject('AES encryption failure');
+                            return reject('Encryption failure');
                         }
-                    
-                        payload.walletdata.keys[keytype] = _encrypted;
+                        payload.walletdata.keys = encryptedKeys;
+                    } else {
+                        // Legacy path: encrypt each key
+                        let keyTypes = Object.keys(keys);
+                        for (let i = 0; i < keyTypes.length; i++) {
+                            let keytype = keyTypes[i];
+                            let _encrypted;
+                            try {
+                                _encrypted = await window.electron.encryptAndStore({
+                                    data: payload.walletdata.keys[keytype],
+                                    password: hashPassword(payload.password)
+                                });
+                            } catch (error) {
+                                console.log({error});
+                                return reject('AES encryption failure');
+                            }
+                        
+                            payload.walletdata.keys[keytype] = _encrypted;
+                        }
                     }
-                    
+
+                    // Encrypt the entire wallet data blob
                     let _encryptedWalletData;
                     try {
-                        _encryptedWalletData = await window.electron.aesEncrypt({
+                        _encryptedWalletData = await window.electron.encryptAndStore({
                             data: JSON.stringify(payload.walletdata),
-                            seed: _hash
+                            password: hashPassword(payload.password)
                         });
                     } catch (error) {
                         console.log({error});
@@ -275,17 +299,9 @@ const actions = {
             await BeetDB.wallets_encrypted.get({
                 id: state.wallet.id
             }).then(async (wallet) => {
-                let _hash;
+                // Verify we can decrypt (authorization check)
                 try {
-                    _hash = await window.electron.sha512({data: payload.password});
-                } catch (error) {
-                    console.log({error});
-                    return reject('hash_failure');
-                }
-
-                let bytes;
-                try {
-                    bytes = await window.electron.aesDecrypt({data: wallet.data, seed: _hash});
+                    await window.electron.decryptWallet({data: wallet.data});
                 } catch (error) {
                     console.log({error});
                     return reject('decrypt_failure');
@@ -293,9 +309,9 @@ const actions = {
 
                 let encwalletdata;
                 try {
-                    encwalletdata = await window.electron.aesEncrypt({
+                    encwalletdata = await window.electron.encryptAndStore({
                         data: JSON.stringify(newwalletdata),
-                        seed: _hash
+                        password: hashPassword(payload.password)
                     });
                 } catch (error) {
                     console.log(error)
@@ -339,17 +355,9 @@ const actions = {
             await BeetDB.wallets_encrypted.get({
                 id: state.wallet.id
             }).then(async (wallet) => {
-                let _hash;
+                // Verify we can decrypt (authorization check)
                 try {
-                    _hash = await window.electron.sha512({ data: payload.wallet_pass });
-                } catch (error) {
-                    console.log({ error });
-                    return reject('hash_failure');
-                }
-    
-                let authorized;
-                try {
-                    authorized = await window.electron.aesDecrypt({ data: wallet.data, seed: _hash });
+                    await window.electron.decryptWallet({data: wallet.data});
                 } catch (error) {
                     console.log({ error });
                     return reject('decrypt_failure');
@@ -364,9 +372,9 @@ const actions = {
 
                 let encwalletdata;
                 try {
-                    encwalletdata = await window.electron.aesEncrypt({
+                    encwalletdata = await window.electron.encryptAndStore({
                         data: JSON.stringify(newwalletdata),
-                        seed: _hash
+                        password: hashPassword(payload.wallet_pass)
                     });
                 } catch (error) {
                     console.log(error)
@@ -375,7 +383,7 @@ const actions = {
     
                 let updatedWallet = JSON.parse(JSON.stringify(state.wallet))
                 updatedWallet.accounts = updatedWallet.accounts.filter(
-                    account => account.chain !== payload.chain &&
+                    account => account.chain !== payload.chain ||
                                account.accountName !== payload.accountName
                 );
     
@@ -447,6 +455,7 @@ const actions = {
             dispatch('AccountStore/logout', {}, {
                 root: true
             });
+            window.electron.clearSeed();
             resolve();
         });
     }

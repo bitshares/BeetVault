@@ -30,6 +30,7 @@ import {
     ipcMain,
     Notification,
     shell,
+    safeStorage,
 } from "electron";
 
 import Logger from "./lib/Logger.js";
@@ -53,7 +54,7 @@ let errorWindow = null;
 var isDevMode = process.execPath.match(/[\\/]electron/);
 const logger = new Logger(isDevMode ? 3 : 0);
 let tray = null;
-let regexBTS = /1.2.\d+/g;
+let regexBTS = /1\.2\.\d+/g;
 
 async function _readFile(filePath) {
     return new Promise((resolve, reject) => {
@@ -161,6 +162,8 @@ const createModal = async (arg, modalEvent) => {
     });
 
     modalWindows[id].on("closed", () => {
+        ipcMain.removeAllListeners(`get:prompt:${id}`);
+
         if (modalWindows[id]) {
             delete modalWindows[id];
         }
@@ -245,6 +248,8 @@ const createModal = async (arg, modalEvent) => {
         });
 
         receiptWindows[id].on("closed", () => {
+            ipcMain.removeAllListeners(`get:receipt:${id}`);
+
             if (receiptWindows[id]) {
                 delete receiptWindows[id];
             }
@@ -321,6 +326,7 @@ const createError = async (arg, errorEvent) => {
     });
 
     errorWindow.on("closed", () => {
+        ipcMain.removeAllListeners(`get:error:${id}`);
         errorWindow = null;
     });
 };
@@ -515,7 +521,13 @@ async function _parseDeeplink(
             }
         } else if (EOS_FAMILY.includes(chain)) {
             if (request.payload.params && request.payload.params.length > 1) {
-                const actions = JSON.parse(request.payload.params[1]).actions;
+                let actions;
+                try {
+                    actions = JSON.parse(request.payload.params[1]).actions;
+                } catch (error) {
+                    console.log({ error, location: "_parseDeeplink.EOS.parse" });
+                    return;
+                }
 
                 if (actions) {
                     for (let i = 0; i < actions.length; i++) {
@@ -532,7 +544,13 @@ async function _parseDeeplink(
             }
         } else if (HIVE_FAMILY.includes(chain)) {
             if (request.payload.params && request.payload.params.length > 1) {
-                const actions = JSON.parse(request.payload.params[1]).actions;
+                let actions;
+                try {
+                    actions = JSON.parse(request.payload.params[1]).actions;
+                } catch (error) {
+                    console.log({ error, location: "_parseDeeplink.HIVE.parse" });
+                    return;
+                }
 
                 if (actions) {
                     for (let i = 0; i < actions.length; i++) {
@@ -711,27 +729,6 @@ const createWindow = async () => {
             }
         }
 
-        if (methods.includes("signMessage")) {
-            const { account, messageText, signingKey, chain } = arg;
-            let accountName = account.name
-                ? account.name
-                : account.accountName;
-            let _signMessage;
-            try {
-                _signMessage = await blockchain.signMessage(
-                    signingKey,
-                    accountName,
-                    messageText,
-                    chain
-                );
-            } catch (error) {
-                console.log({ error, location: "signMessage" });
-            }
-            if (_signMessage) {
-                responses["signMessage"] = _signMessage;
-            }
-        }
-
         if (methods.includes("getExplorer")) {
             let _explorer;
             try {
@@ -771,84 +768,6 @@ const createWindow = async () => {
             }
             if (_opTypes) {
                 responses["getOperationTypes"] = _opTypes;
-            }
-        }
-
-        if (methods.includes("createMemoObject")) {
-            const { from, to, optionalNonce, message, memoKey } = arg;
-
-            console.log({ from, to, message, optionalNonce })
-
-            let memoObj;
-            try {
-                memoObj = await blockchain._createMemoObject(
-                    from,
-                    to,
-                    optionalNonce,
-                    message,
-                    memoKey
-                );
-            } catch (error) {
-                console.log({ error, location: "createMemoObject" });
-            }
-
-            if (memoObj) {
-                responses["createMemoObject"] = memoObj;
-            }
-        }
-
-        if (methods.includes("signNFT")) {
-            const { key, target } = arg;
-            let signedNFT;
-            try {
-                signedNFT = await blockchain.signNFT(key, target);
-            } catch (error) {
-                console.log(error);
-            }
-
-            if (signedNFT) {
-                responses["signNFT"] = signedNFT;
-            }
-        }
-
-        if (methods.includes("signAndBroadcast")) {
-            const { operation, signingKey } = arg;
-
-            let transaction;
-            try {
-                transaction = await blockchain.sign(operation, signingKey);
-            } catch (error) {
-                const errData = {
-                    code: error.code,
-                    message: error.message || "Transaction signing failed",
-                    data: error.data,
-                    location: "signAndBroadcast.blockchain.sign",
-                };
-                const err = new Error(errData.message);
-                err.message = JSON.stringify(errData);
-                throw err;
-            }
-
-            if (transaction) {
-                let broadcastResponse;
-                try {
-                    broadcastResponse = await blockchain.broadcast(transaction);
-                } catch (error) {
-                    const errData = {
-                        code: error.code,
-                        message: error.message || "Transaction broadcast failed",
-                        data: error.data,
-                        digest: error.digest,
-                        transaction: error.transaction,
-                        location: "signAndBroadcast.blockchain.broadcast",
-                    };
-                    const err = new Error(errData.message);
-                    err.message = JSON.stringify(errData);
-                    throw err;
-                }
-                if (broadcastResponse) {
-                    responses["signAndBroadcast"] = broadcastResponse;
-                }
             }
         }
 
@@ -1015,7 +934,13 @@ const createWindow = async () => {
         if (methods.includes("processQR")) {
             const { qrChoice, qrData, allowedOperations } = arg;
 
-            let parsedData = JSON.parse(qrData);
+            let parsedData;
+            try {
+                parsedData = JSON.parse(qrData);
+            } catch (error) {
+                console.log({ error, location: "processQR.parse" });
+                return responses;
+            }
             let authorizedUse = false;
             if (BTS_FAMILY.includes(chain)) {
                 const ops = parsedData.operations[0].operations;
@@ -1120,7 +1045,8 @@ const createWindow = async () => {
             }
 
             if (account) {
-                responses["verifyAccount"] = { account, authorities };
+                const token = storePendingKey(accountname, chain, authorities);
+                responses["verifyAccount"] = { account, token };
             }
         }
 
@@ -1161,7 +1087,8 @@ const createWindow = async () => {
                 }
 
                 if (account) {
-                    responses["verifyCloudAccount"] = { account, authorities };
+                    const token = storePendingKey(accountname, chain, authorities);
+                    responses["verifyCloudAccount"] = { account, token };
                 }
             }
         }
@@ -1198,6 +1125,25 @@ const createWindow = async () => {
                     }
 
                     if (retrievedAccounts) {
+                        // Store keys in vault and replace with tokens
+                        for (let account of retrievedAccounts) {
+                            const accountKeys = {};
+                            if (account.active && account.active.key) {
+                                accountKeys.active = account.active.key;
+                                delete account.active.key;
+                            }
+                            if (account.owner && account.owner.key) {
+                                accountKeys.owner = account.owner.key;
+                                delete account.owner.key;
+                            }
+                            if (account.memo && account.memo.key) {
+                                accountKeys.memo = account.memo.key;
+                                delete account.memo.key;
+                            }
+                            if (Object.keys(accountKeys).length > 0) {
+                                account._vaultToken = storePendingKey(account.name, chain, accountKeys);
+                            }
+                        }
                         responses["decryptBackup"] = retrievedAccounts;
                     }
                 }
@@ -1212,27 +1158,33 @@ const createWindow = async () => {
     ipcMain.handle("restore", async (event, arg) => {
         const { file, seed } = arg;
 
-        fs.readFile(file, "utf-8", async (error, data) => {
-            if (error) {
-                console.log("Error reading file");
-                return;
-            }
+        if (!file || !file.endsWith('.beet')) {
+            console.log("Invalid restore file path");
+            throw new Error('Invalid file path');
+        }
 
-            let decryptedData;
-            try {
-                decryptedData = await aes.decrypt(data, seed);
-            } catch (error) {
-                console.log(error);
-                return;
-            }
+        let data;
+        try {
+            data = await fsPromises.readFile(file, "utf-8");
+        } catch (error) {
+            console.log("Error reading file");
+            throw new Error('Failed to read file');
+        }
 
-            if (!decryptedData) {
-                console.log("Wallet restore failed");
-                return;
-            }
+        let decryptedData;
+        try {
+            decryptedData = await aes.decrypt(data, seed);
+        } catch (error) {
+            console.log(error);
+            throw new Error('Decryption failed');
+        }
 
-            return decryptedData;
-        });
+        if (!decryptedData) {
+            console.log("Wallet restore failed");
+            throw new Error('Wallet restore failed');
+        }
+
+        return decryptedData.toString();
     });
 
     const safeDomains = [
@@ -1312,85 +1264,297 @@ const createWindow = async () => {
         showNotification();
     });
 
-    ipcMain.handle("aesEncrypt", async (event, arg) => {
-        const { data, seed } = arg;
-
-        let encryptedData;
-        try {
-            encryptedData = aes.encrypt(data, seed).toString();
-        } catch (error) {
-            console.log(error);
-            return;
-        }
-
-        return encryptedData;
-    });
-
-    ipcMain.handle("aesDecrypt", async (event, arg) => {
-        const { data, seed } = arg;
-
-        let decryptedData;
-        try {
-            decryptedData = await aes.decrypt(data, seed);
-        } catch (error) {
-            console.log(error);
-            throw error;
-        }
-
-        let decryptedString;
-        try {
-            decryptedString = JSON.parse(decryptedData.toString(ENC));
-        } catch (error) {
-            console.log(error);
-            throw error;
-        }
-
-        return decryptedString;
-    });
-
-    ipcMain.handle("sha512", async (event, arg) => {
-        const { data } = arg;
-
-        let hash;
-        try {
-            hash = sha512(data).toString();
-        } catch (error) {
-            console.log(error);
-            return;
-        }
-
-        return hash;
-    });
-
     ipcMain.handle("id", (event, arg) => {
         const id = uuidv4();
         return id;
     });
 
-    let _seed;
+    let _encryptedSeed = null;
+
     ipcMain.on("seed", (event, arg) => {
         console.log("SEEDED");
-        _seed = arg;
+        if (!safeStorage.isEncryptionAvailable()) {
+            console.warn("safeStorage encryption not available, falling back to in-memory seed");
+            _encryptedSeed = { fallback: true, seed: arg };
+        } else {
+            const buffer = safeStorage.encryptString(arg);
+            _encryptedSeed = { fallback: false, buffer: buffer };
+        }
     });
 
-    ipcMain.handle("decrypt", async (event, arg) => {
-        let seed;
-        if (arg.seed) {
-            seed = arg.seed;
-        } else if (arg.inject && _seed) {
-            seed = _seed;
-        }
+    ipcMain.on("clearSeed", (event) => {
+        console.log("SEED CLEARED");
+        _encryptedSeed = null;
+        _pendingKeys.clear();
+        _keyCounter = 0;
+    });
 
-        let decryptedData;
-        if (arg.data && seed) {
+    function _decryptSeed() {
+        if (!_encryptedSeed) {
+            return null;
+        }
+        if (_encryptedSeed.fallback) {
+            return _encryptedSeed.seed;
+        }
+        return safeStorage.decryptString(_encryptedSeed.buffer);
+    }
+
+    // Key vault: stores plaintext keys temporarily during import flow
+    const _pendingKeys = new Map();
+    let _keyCounter = 0;
+
+    function storePendingKey(accountname, chain, keys) {
+        const token = `pending_${++_keyCounter}`;
+        _pendingKeys.set(token, {
+            accountname,
+            chain,
+            keys,
+            created: Date.now()
+        });
+        return token;
+    }
+
+    ipcMain.handle("encryptPendingKeys", async (event, arg) => {
+        const { token, password } = arg;
+        const pending = _pendingKeys.get(token);
+        if (!pending) {
+            throw new Error('Invalid or expired token');
+        }
+        _pendingKeys.delete(token);
+
+        const encrypted = {};
+        for (const [keytype, value] of Object.entries(pending.keys)) {
             try {
-                decryptedData = await aes.decrypt(arg.data, seed).toString(ENC);
+                encrypted[keytype] = aes.encrypt(value, password).toString();
             } catch (error) {
-                console.log(error);
+                console.log({error});
+                throw new Error('Encryption failure');
             }
         }
+        return encrypted;
+    });
 
-        return decryptedData;
+    ipcMain.handle("decryptAndSign", async (event, arg) => {
+        const { encryptedKey, chain, operation } = arg;
+
+        // Decrypt the key using stored seed
+        const seed = _decryptSeed();
+        if (!seed) {
+            throw new Error('Wallet not unlocked');
+        }
+
+        let signingKey;
+        try {
+            signingKey = aes.decrypt(encryptedKey, seed).toString(ENC);
+        } catch (error) {
+            console.log({error, location: "decryptAndSign.decrypt"});
+            throw new Error('Key decryption failed');
+        }
+
+        if (!signingKey) {
+            throw new Error('Key decryption returned empty');
+        }
+
+        let blockchain;
+        try {
+            blockchain = await getBlockchainAPI(chain);
+        } catch (error) {
+            console.log({error, location: "decryptAndSign.getBlockchain"});
+            throw new Error('Failed to get blockchain API');
+        }
+
+        // Sign the transaction
+        let transaction;
+        try {
+            transaction = await blockchain.sign(operation, signingKey);
+        } catch (error) {
+            const errData = {
+                code: error.code,
+                message: error.message || "Transaction signing failed",
+                data: error.data,
+                location: "decryptAndSign.blockchain.sign",
+            };
+            const err = new Error(errData.message);
+            err.message = JSON.stringify(errData);
+            throw err;
+        }
+
+        // Broadcast the transaction
+        if (transaction) {
+            let broadcastResponse;
+            try {
+                broadcastResponse = await blockchain.broadcast(transaction);
+            } catch (error) {
+                const errData = {
+                    code: error.code,
+                    message: error.message || "Transaction broadcast failed",
+                    data: error.data,
+                    digest: error.digest,
+                    transaction: error.transaction,
+                    location: "decryptAndSign.blockchain.broadcast",
+                };
+                const err = new Error(errData.message);
+                err.message = JSON.stringify(errData);
+                throw err;
+            }
+            return broadcastResponse;
+        }
+
+        throw new Error('No transaction returned from sign');
+    });
+
+    ipcMain.handle("decryptAndCreateMemo", async (event, arg) => {
+        const { encryptedKey, chain, from, to, nonce, message } = arg;
+
+        const seed = _decryptSeed();
+        if (!seed) {
+            throw new Error('Wallet not unlocked');
+        }
+
+        let memoKey;
+        try {
+            memoKey = aes.decrypt(encryptedKey, seed).toString(ENC);
+        } catch (error) {
+            console.log({error, location: "decryptAndCreateMemo.decrypt"});
+            throw new Error('Key decryption failed');
+        }
+
+        let blockchain;
+        try {
+            blockchain = await getBlockchainAPI(chain);
+        } catch (error) {
+            console.log({error, location: "decryptAndCreateMemo.getBlockchain"});
+            throw new Error('Failed to get blockchain API');
+        }
+
+        let memoObject;
+        try {
+            memoObject = blockchain._createMemoObject(
+                from, to, nonce, message, memoKey
+            );
+        } catch (error) {
+            console.log({error, location: "decryptAndCreateMemo.createMemo"});
+            throw new Error('Memo creation failed');
+        }
+
+        return memoObject;
+    });
+
+    ipcMain.handle("decryptAndSignMessage", async (event, arg) => {
+        const { encryptedKey, chain, accountName, messageText } = arg;
+
+        const seed = _decryptSeed();
+        if (!seed) {
+            throw new Error('Wallet not unlocked');
+        }
+
+        let signingKey;
+        try {
+            signingKey = aes.decrypt(encryptedKey, seed).toString(ENC);
+        } catch (error) {
+            console.log({error, location: "decryptAndSignMessage.decrypt"});
+            throw new Error('Key decryption failed');
+        }
+
+        let blockchain;
+        try {
+            blockchain = await getBlockchainAPI(chain);
+        } catch (error) {
+            console.log({error, location: "decryptAndSignMessage.getBlockchain"});
+            throw new Error('Failed to get blockchain API');
+        }
+
+        let signedMessage;
+        try {
+            signedMessage = await blockchain.signMessage(
+                signingKey,
+                accountName,
+                messageText,
+                chain
+            );
+        } catch (error) {
+            console.log({error, location: "decryptAndSignMessage.signMessage"});
+            throw new Error('Message signing failed');
+        }
+
+        return signedMessage;
+    });
+
+    ipcMain.handle("unlockWallet", async (event, arg) => {
+        const { encryptedData, password } = arg;
+
+        // Store the pre-hashed password as seed via safeStorage
+        if (!safeStorage.isEncryptionAvailable()) {
+            console.warn("safeStorage encryption not available, using fallback");
+            _encryptedSeed = { fallback: true, seed: password };
+        } else {
+            const buffer = safeStorage.encryptString(password);
+            _encryptedSeed = { fallback: false, buffer: buffer };
+        }
+
+        let decryptedWallet;
+        try {
+            decryptedWallet = aes.decrypt(encryptedData, password).toString(ENC);
+        } catch (error) {
+            console.log({error, location: "unlockWallet.decrypt"});
+            throw new Error('Wallet decryption failed');
+        }
+
+        return decryptedWallet;
+    });
+
+    ipcMain.handle("encryptAndStore", async (event, arg) => {
+        const { data, password } = arg;
+
+        let encrypted;
+        try {
+            encrypted = aes.encrypt(data, password).toString();
+        } catch (error) {
+            console.log({error, location: "encryptAndStore.encrypt"});
+            throw new Error('Encryption failed');
+        }
+
+        return encrypted;
+    });
+
+    ipcMain.handle("decryptWallet", async (event, arg) => {
+        const { data } = arg;
+
+        const seed = _decryptSeed();
+        if (!seed) {
+            throw new Error('Wallet not unlocked');
+        }
+
+        let decrypted;
+        try {
+            decrypted = aes.decrypt(data, seed).toString(ENC);
+        } catch (error) {
+            console.log({error, location: "decryptWallet.decrypt"});
+            throw new Error('Decryption failed');
+        }
+
+        return decrypted;
+    });
+
+    ipcMain.handle("setSeedFromPassword", async (event, arg) => {
+        const { password } = arg;
+
+        if (!safeStorage.isEncryptionAvailable()) {
+            console.warn("safeStorage encryption not available, using fallback");
+            _encryptedSeed = { fallback: true, seed: password };
+        } else {
+            const buffer = safeStorage.encryptString(password);
+            _encryptedSeed = { fallback: false, buffer: buffer };
+        }
+
+        return true;
+    });
+
+    ipcMain.handle("getSafeStorageBackend", async (event) => {
+        return {
+            available: safeStorage.isEncryptionAvailable(),
+            backend: safeStorage.getSelectedStorageBackend()
+        };
     });
 
     ipcMain.handle("getSignature", async (event, arg) => {
@@ -1585,7 +1749,7 @@ if (currentOS === "win32" || currentOS === "linux") {
             return;
         }
 
-        let urlType = urlString.contains("raw") ? "rawdeeplink" : "deeplink";
+        let urlType = urlString.includes("raw") ? "rawdeeplink" : "deeplink";
 
         dialog.showErrorBox("Error", urlType);
 

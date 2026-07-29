@@ -1,3 +1,5 @@
+import { hashPassword } from '../../lib/utils.js';
+
 const LOAD_ACCOUNTS = 'LOAD_ACCOUNTS';
 const CHOOSE_ACCOUNT = 'CHOOSE_ACCOUNT';
 const ADD_ACCOUNT = 'ADD_ACCOUNT';
@@ -49,23 +51,40 @@ const actions = {
             );
 
             if (!existingAccount) {
-                let _hash = await window.electron.sha512({data: payload.password});
-                let keys = Object.keys(payload.account.keys);
-                for (let i = 0; i < keys.length; i++) {
-                    let keytype = keys[i];
-                    let _aesResult;
+                let keys = payload.account.keys;
+
+                // If keys contain a vault token, encrypt via main process
+                if (keys._vaultToken) {
+                    let encryptedKeys;
                     try {
-                        _aesResult = await window.electron.aesEncrypt({
-                            data: payload.account.keys[keytype],
-                            seed: _hash
+                        encryptedKeys = await window.electron.encryptPendingKeys({
+                            token: keys._vaultToken,
+                            password: hashPassword(payload.password)
                         });
                     } catch (error) {
                         console.log({error});
-                        throw 'AES encryption failure';
+                        throw 'Encryption failure';
                     }
+                    payload.account.keys = encryptedKeys;
+                } else {
+                    // Legacy path: encrypt each key
+                    let keyTypes = Object.keys(keys);
+                    for (let i = 0; i < keyTypes.length; i++) {
+                        let keytype = keyTypes[i];
+                        let _aesResult;
+                        try {
+                            _aesResult = await window.electron.encryptAndStore({
+                                data: keys[keytype],
+                                password: hashPassword(payload.password)
+                            });
+                        } catch (error) {
+                            console.log({error});
+                            throw 'AES encryption failure';
+                        }
 
-                    if (_aesResult) {
-                        payload.account.keys[keytype] = _aesResult;
+                        if (_aesResult) {
+                            payload.account.keys[keytype] = _aesResult;
+                        }
                     }
                 }
 

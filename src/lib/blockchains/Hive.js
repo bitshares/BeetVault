@@ -465,7 +465,7 @@ class Hive extends BlockchainAPI {
         });
   };
 
-  verifyAccount = async (account) => {
+  _accountExists = async (account) => {
     try {
       const response = await callRPC("condenser_api", "get_accounts", [
         [account]
@@ -475,7 +475,7 @@ class Hive extends BlockchainAPI {
       }
       return false;
     } catch (e) {
-      console.log({ error: e, location: "verifyAccount" });
+      console.log({ error: e, location: "_accountExists" });
       return false;
     }
   };
@@ -550,10 +550,10 @@ class Hive extends BlockchainAPI {
    * @param {String} privateKey - The private key to check
    * @returns {String|null} The key type (owner, active, posting, memo) or null if not found
    */
-  detectKeyType(account, privateKey) {
+  async detectKeyType(account, privateKey) {
     let publicKey;
     try {
-      publicKey = this.getPublicKey(privateKey);
+      publicKey = await this.getPublicKey(privateKey);
     } catch (e) {
       return null;
     }
@@ -611,7 +611,7 @@ class Hive extends BlockchainAPI {
     let detectedKeyType = null;
 
     if (credentials && credentials.privateKey) {
-      detectedKeyType = this.detectKeyType(account, credentials.privateKey);
+      detectedKeyType = await this.detectKeyType(account, credentials.privateKey);
       
       if (!detectedKeyType) {
         throw { key: "unverified_account_error" };

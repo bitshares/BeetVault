@@ -29,11 +29,17 @@
     let walletpass = ref("");
     let selectedWallet = ref(0);
     let passincorrect = ref("");
+    let storageBackend = ref(null);
 
-    onMounted(() => {
+    onMounted(async () => {
         store.dispatch("WalletStore/loadWallets", {}).catch((error) => {
             console.log({error});
         });
+        try {
+            storageBackend.value = await window.electron.getSafeStorageBackend();
+        } catch (error) {
+            console.log({error});
+        }
     });
 
     function unlockWallet() {
@@ -129,6 +135,14 @@
                 >
                     {{ t('common.unlock_cta') }}
                 </Button>
+            </div>
+            <div
+                v-if="storageBackend && storageBackend.backend === 'basic_text'"
+                class="mt-4 p-3 bg-yellow-100 border border-yellow-400 rounded text-yellow-800 text-xs"
+            >
+                <strong>Warning:</strong> Your system does not have a secure keyring (backend: basic_text). 
+                Encryption keys are stored in memory only. For better security, install a keyring 
+                (e.g., GNOME Keyring, KDE Wallet, or libsecret).
             </div>
         </div>
         <div v-if="hasWallet" class="mb-2">

@@ -36,46 +36,6 @@
     let signError = ref(null);
     let copied = ref(false);
 
-    async function decryptKey(encryptedKey) {
-        return new Promise(async (resolve, reject) => {
-            let signature = await window.electron.getSignature("decrypt");
-            if (!signature) {
-                return reject("Signature failure");
-            }
-
-            let isValid;
-            try {
-                isValid = await window.electron.verifyCrypto({
-                    signedMessage: signature.signedMessage,
-                    msgHash: signature.msgHash,
-                    pubk: signature.pubk,
-                });
-            } catch (error) {
-                console.log(error);
-            }
-
-            if (!isValid) {
-                return reject("Invalid signature");
-            }
-
-            let decryptedKey;
-            try {
-                decryptedKey = await window.electron.decrypt({
-                    data: encryptedKey,
-                    inject: true,
-                });
-            } catch (error) {
-                return reject("Decrypt failure");
-            }
-
-            if (!decryptedKey) {
-                return reject("Decryption failure");
-            }
-
-            return resolve(decryptedKey);
-        });
-    }
-
     async function signMessage() {
         if (!selectedAccount.value || !messageText.value.trim()) {
             return;
@@ -96,25 +56,22 @@
                 return;
             }
 
-            let signingKey;
+            let response;
             try {
-                signingKey = await decryptKey(memoKey);
+                response = await window.electron.decryptAndSignMessage({
+                    encryptedKey: memoKey,
+                    chain: chain.value,
+                    accountName: selectedAccount.value.accountName || selectedAccount.value.accountID,
+                    messageText: messageText.value.trim(),
+                });
             } catch (error) {
                 console.log(error);
                 signError.value = String(error);
                 return;
             }
 
-            let response = await window.electron.blockchainRequest({
-                methods: ["signMessage"],
-                account: selectedAccount.value,
-                chain: chain.value,
-                messageText: messageText.value.trim(),
-                signingKey: signingKey,
-            });
-
-            if (response && response.signMessage) {
-                signResult.value = response.signMessage;
+            if (response) {
+                signResult.value = response;
             } else {
                 signError.value = "No result returned from signing.";
             }
