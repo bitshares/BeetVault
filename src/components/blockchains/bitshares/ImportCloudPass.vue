@@ -1,5 +1,5 @@
 <script setup>
-    import { ref, onMounted } from "vue";
+    import { ref, onMounted, watch, computed } from "vue";
     import { useI18n } from 'vue-i18n';
     import { Button } from '@/components/ui/ui/button';
     import { Input } from '@/components/ui/ui/input';
@@ -32,6 +32,26 @@
 
     let inProgress = ref();
     let errorOcurred = ref();
+    let accountError = ref(false);
+    let passError = ref(false);
+
+    watch(accountname, () => {
+        if (accountError.value) accountError.value = false;
+        if (errorOcurred.value) errorOcurred.value = false;
+    });
+
+    watch(cloud_pass, () => {
+        if (passError.value) passError.value = false;
+        if (errorOcurred.value) errorOcurred.value = false;
+    });
+
+    let accountInputClass = computed(() => {
+        return "w-full " + (accountError.value ? "border-red-500 focus-visible:ring-red-500" : "");
+    });
+
+    let passInputClass = computed(() => {
+        return "w-full " + (passError.value ? "border-red-500 focus-visible:ring-red-500" : "");
+    });
 
     async function next() {
         inProgress.value = true;
@@ -49,6 +69,18 @@
         } catch (error) {
             console.log(error);
             console.log("Account verification error, check your cloud account password and try again");
+            errorOcurred.value = true;
+            inProgress.value = false;
+            return;
+        }
+
+        if (blockchainResponse && blockchainResponse.verifyCloudAccountError) {
+            const errorKey = blockchainResponse.verifyCloudAccountError.key;
+            if (errorKey === "account_not_found") {
+                accountError.value = true;
+            } else {
+                passError.value = true;
+            }
             errorOcurred.value = true;
             inProgress.value = false;
             return;
@@ -86,7 +118,7 @@
                 id="inputAccount"
                 v-model="accountname"
                 type="text"
-                class="w-full"
+                :class="accountInputClass"
                 :placeholder="t('common.account_name',{ 'chain' : chain})"
                 required
             />
@@ -98,7 +130,7 @@
                 id="inputActive"
                 v-model="cloud_pass"
                 type="password"
-                class="w-full"
+                :class="passInputClass"
                 :placeholder="t('common.btspass_placeholder')"
                 required
             />

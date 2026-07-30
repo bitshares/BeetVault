@@ -238,6 +238,7 @@
     "missing_account_error": "Você deve especificar o nome da sua conta {chain}.",
     "invalid_key_error": "Formato de chave privada inválido.",
     "unverified_account_error": "Não foi possível verificar as chaves para o nome da conta fornecido. ",
+    "account_not_found": "Conta não encontrada. Por favor, verifique o nome da conta.",
     "confirm_pass_error": "As senhas não coincidem.",
     "account_details_lbl": "Detalhes da conta",
     "account_details_chaim_lbl": "Blockchain",

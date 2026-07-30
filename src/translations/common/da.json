@@ -238,6 +238,7 @@
     "missing_account_error": "Du skal angive dit {chain}-kontonavn.",
     "invalid_key_error": "Ugyldigt privat nøgleformat.",
     "unverified_account_error": "Kunne ikke bekræfte nøglerne til det angivne kontonavn. ",
+    "account_not_found": "Konto ikke fundet. Kontrollér kontonavnet.",
     "confirm_pass_error": "Adgangskoderne stemmer ikke overens.",
     "account_details_lbl": "konto detaljer",
     "account_details_chaim_lbl": "Blockchain",

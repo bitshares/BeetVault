@@ -287,12 +287,11 @@ export default class EOS extends BlockchainAPI {
             // Keys must resolve to one of these types of permissions
         } catch (err) {
             console.log(err);
-            return;
+            throw { key: "account_not_found" };
         }
 
         if (!fetchedAccount) {
-            console.log("Account not found");
-            return;
+            throw { key: "account_not_found" };
         }
 
         const privateKey = typeof credentials === 'string'
@@ -307,12 +306,11 @@ export default class EOS extends BlockchainAPI {
         } catch (err) {
             // key is likely invalid, an exception was thrown
             console.log(err);
-            return;
+            throw { key: "invalid_key_error" };
         }
 
         if (!publicKey) {
-            console.log("Public key not found");
-            return;
+            throw { key: "invalid_key_error" };
         }
 
         const validPermissions = fetchedAccount.permissions.filter((perm) => {
@@ -333,6 +331,8 @@ export default class EOS extends BlockchainAPI {
                 publicKey,
             };
         }
+
+        throw { key: "unverified_account_error" };
     }
 
     getAccount(accountname) {

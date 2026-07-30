@@ -231,6 +231,7 @@
     "missing_account_error": "คุณต้องระบุชื่อบัญชี {chain} ของคุณ",
     "invalid_key_error": "รูปแบบคีย์ส่วนตัวไม่ถูกต้อง",
     "unverified_account_error": "ไม่สามารถยืนยันคีย์สำหรับชื่อบัญชีที่ระบุ ",
+    "account_not_found": "ไม่พบบัญชี กรุณาตรวจสอบชื่อบัญชี",
     "confirm_pass_error": "รหัสผ่านไม่ตรงกัน.",
     "account_details_lbl": "รายละเอียดบัญชี",
     "account_details_chaim_lbl": "บล็อกเชน",

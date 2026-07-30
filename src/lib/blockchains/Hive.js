@@ -70,11 +70,11 @@ class Hive extends BlockchainAPI {
 
   getAccount = async (account) => {
     try {
-      const response = await callRPC("condenser_api", "get_accounts", [
+      const response = await callRPC("condenser_api.get_accounts", [
         [account]
       ]);
-      if (response.result && response.result.length > 0) {
-        return response.result[0];
+      if (response && response.length > 0) {
+        return response[0];
       }
       return undefined;
     } catch (e) {
@@ -85,11 +85,11 @@ class Hive extends BlockchainAPI {
 
   getBalances = async (account) => {
     try {
-      const response = await callRPC("condenser_api", "get_accounts", [
+      const response = await callRPC("condenser_api.get_accounts", [
         [account]
       ]);
-      if (response.result && response.result.length > 0) {
-        const accountData = response.result[0];
+      if (response && response.length > 0) {
+        const accountData = response[0];
         const balances = [];
 
         if (accountData.balance) {
@@ -467,10 +467,10 @@ class Hive extends BlockchainAPI {
 
   _accountExists = async (account) => {
     try {
-      const response = await callRPC("condenser_api", "get_accounts", [
+      const response = await callRPC("condenser_api.get_accounts", [
         [account]
       ]);
-      if (response.result && response.result.length > 0) {
+      if (response && response.length > 0) {
         return true;
       }
       return false;
@@ -555,7 +555,7 @@ class Hive extends BlockchainAPI {
     try {
       publicKey = await this.getPublicKey(privateKey);
     } catch (e) {
-      return null;
+      throw { key: "invalid_key_error" };
     }
 
     // Check owner key
@@ -601,11 +601,11 @@ class Hive extends BlockchainAPI {
       account = await this.getAccount(accountName);
     } catch (error) {
       console.log(`getAccount: ${error}`);
-      return;
+      throw { key: "account_not_found" };
     }
 
     if (!account) {
-      throw { key: "unverified_account_error" };
+      throw { key: "account_not_found" };
     }
 
     let detectedKeyType = null;

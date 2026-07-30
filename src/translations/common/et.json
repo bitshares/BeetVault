@@ -238,6 +238,7 @@
     "missing_account_error": "Peate määrama oma {chain} konto nime.",
     "invalid_key_error": "Vale privaatvõtme vorming.",
     "unverified_account_error": "Esitatud kontonime võtmeid ei saanud kinnitada. ",
+    "account_not_found": "Kontot ei leitud. Palun kontrollige kontonime.",
     "confirm_pass_error": "Paroolid ei kattu.",
     "account_details_lbl": "Konto üksikasjad",
     "account_details_chaim_lbl": "Plokiahel",

@@ -692,9 +692,9 @@ const createWindow = async () => {
      * Handling front end blockchain requests
      */
     ipcMain.handle("blockchainRequest", async (event, arg) => {
-        const { methods, account, chain } = arg;
+        const { methods, account, accountname, chain } = arg;
 
-        console.log({ methods, account, chain });
+        console.log({ methods, accountname, chain });
 
         let blockchain;
         try {
@@ -1074,20 +1074,23 @@ const createWindow = async () => {
         if (methods.includes("verifyAccount")) {
             const { accountname, authorities } = arg;
             let account;
+            let error;
             try {
                 account = await blockchain.verifyAccount(
                     accountname,
                     authorities,
                     chain
                 );
-            } catch (error) {
-                console.log(error);
-                return;
+            } catch (e) {
+                console.log(e);
+                error = e;
             }
 
             if (account) {
                 const token = storePendingKey(accountname, chain, authorities);
                 responses["verifyAccount"] = { account, token };
+            } else if (error) {
+                responses["verifyAccountError"] = error;
             }
         }
 
@@ -1117,19 +1120,22 @@ const createWindow = async () => {
 
             if (authorities) {
                 let account;
+                let error;
                 try {
                     account = await blockchain.verifyAccount(
                         accountname,
                         authorities
                     );
-                } catch (error) {
-                    console.log(error);
-                    return;
+                } catch (e) {
+                    console.log(e);
+                    error = e;
                 }
 
                 if (account) {
                     const token = storePendingKey(accountname, chain, authorities);
                     responses["verifyCloudAccount"] = { account, token };
+                } else if (error) {
+                    responses["verifyCloudAccountError"] = error;
                 }
             }
         }

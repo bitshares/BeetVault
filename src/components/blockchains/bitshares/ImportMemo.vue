@@ -1,5 +1,5 @@
 <script setup>
-    import {ref, watchEffect} from "vue";
+    import {ref, watchEffect, watch, computed} from "vue";
     import { Button } from '@/components/ui/ui/button';
     import { useI18n } from 'vue-i18n';
     const { t } = useI18n({ useScope: 'global' });
@@ -16,6 +16,24 @@
 
     let accountname = ref("");
     let memopk = ref("");
+    let accountError = ref(false);
+    let keyError = ref(false);
+
+    watch(accountname, () => {
+        if (accountError.value) accountError.value = false;
+    });
+
+    watch(memopk, () => {
+        if (keyError.value) keyError.value = false;
+    });
+
+    let accountInputClass = computed(() => {
+        return "form-control mb-3 " + (accountError.value ? "border-red-500" : "");
+    });
+
+    let memoInputClass = computed(() => {
+        return "form-control mb-3 small " + (keyError.value ? "border-red-500" : "");
+    });
 
     let accessType = ref();
     let requiredFields = ref();
@@ -67,6 +85,21 @@
             return;
         }
 
+        if (blockchainRequest && blockchainRequest.verifyAccountError) {
+            const errorKey = blockchainRequest.verifyAccountError.key;
+            if (errorKey === "account_not_found") {
+                accountError.value = true;
+                window.electron.notify(t("common.account_not_found"));
+            } else if (errorKey === "invalid_key_error") {
+                keyError.value = true;
+                window.electron.notify(t("common.invalid_key_error"));
+            } else {
+                keyError.value = true;
+                window.electron.notify(t("common.unverified_account_error"));
+            }
+            return;
+        }
+
         if (!blockchainRequest || !blockchainRequest.verifyAccount) {
             console.log("Account verification error, check your memo key and try again");
             window.electron.notify(t("common.unverified_account_error"));
@@ -94,7 +127,7 @@
             id="inputAccount"
             v-model="accountname"
             type="text"
-            class="form-control mb-3"
+            :class="accountInputClass"
             :placeholder="t('common.account_name', { 'chain' : chain})"
             required
         >
@@ -109,7 +142,7 @@
                 id="inputMemo"
                 v-model="memopk"
                 type="password"
-                class="form-control mb-3 small"
+                :class="memoInputClass"
                 :placeholder="t('common.memo_authority_placeholder')"
                 required
             >

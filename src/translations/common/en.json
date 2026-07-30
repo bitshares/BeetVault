@@ -281,6 +281,7 @@
     "missing_account_error": "You must specify your {chain} account name.",
     "invalid_key_error": "Invalid Private key format.",
     "unverified_account_error": "Could not verify keys for account name provided. Please check.",
+    "account_not_found": "Account not found. Please check the account name.",
     "confirm_pass_error": "Passwords do not match.",
     "account_details_lbl": "Account Details",
     "account_details_chaim_lbl": "Blockchain",

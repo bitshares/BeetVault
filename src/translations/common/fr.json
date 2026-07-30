@@ -238,6 +238,7 @@
     "missing_account_error": "Vous devez spécifier le nom de votre compte {chaîne}.",
     "invalid_key_error": "Format de clé privée non valide.",
     "unverified_account_error": "Impossible de vérifier les clés pour le nom de compte fourni. ",
+    "account_not_found": "Compte non trouvé. Veuillez vérifier le nom du compte.",
     "confirm_pass_error": "Les mots de passe ne correspondent pas.",
     "account_details_lbl": "Détails du compte",
     "account_details_chaim_lbl": "Chaîne de blocs",

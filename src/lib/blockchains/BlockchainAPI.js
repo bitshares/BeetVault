@@ -213,7 +213,11 @@ export default class BlockchainAPI {
           account = await this.getAccount(accountName);
         } catch (error) {
           console.log(`getAccount: ${error}`);
-          return;
+          throw { key: "account_not_found" };
+        }
+
+        if (!account) {
+          throw { key: "account_not_found" };
         }
 
         let required = this.getSignUpInput();

@@ -1,5 +1,5 @@
 <script setup>
-    import {ref, computed, watchEffect} from "vue";
+    import {ref, computed, watchEffect, watch} from "vue";
 
     import { useI18n } from 'vue-i18n';
     import { Button } from '@/components/ui/ui/button';
@@ -49,10 +49,28 @@
     let accountname = ref("");
     let privateKey = ref("");
     let detectedKeyType = ref(null);
+    let accountError = ref(false);
+    let keyError = ref(false);
+
+    watch(accountname, () => {
+        if (accountError.value) accountError.value = false;
+    });
+
+    watch(privateKey, () => {
+        if (keyError.value) keyError.value = false;
+    });
 
     let keyTypeLabel = computed(() => {
         if (!detectedKeyType.value) return null;
         return t(`common.key_type_${detectedKeyType.value}`);
+    });
+
+    let accountInputClass = computed(() => {
+        return "w-full " + (accountError.value ? "border-red-500 focus-visible:ring-red-500" : "");
+    });
+
+    let keyInputClass = computed(() => {
+        return "w-full " + (keyError.value ? "border-red-500 focus-visible:ring-red-500" : "");
     });
 
     async function next() {
@@ -76,6 +94,22 @@
             console.log("Account verification error, check your key and try again");
             detectedKeyType.value = null;
             window.electron.notify(t("common.unverified_account_error"));
+            return;
+        }
+
+        if (blockchainRequest && blockchainRequest.verifyAccountError) {
+            const errorKey = blockchainRequest.verifyAccountError.key;
+            if (errorKey === "account_not_found") {
+                accountError.value = true;
+                window.electron.notify(t("common.account_not_found"));
+            } else if (errorKey === "invalid_key_error") {
+                keyError.value = true;
+                window.electron.notify(t("common.invalid_key_error"));
+            } else {
+                keyError.value = true;
+                window.electron.notify(t("common.unverified_account_error"));
+            }
+            detectedKeyType.value = null;
             return;
         }
 
@@ -114,7 +148,7 @@
                 id="inputAccount"
                 v-model="accountname"
                 type="text"
-                class="w-full"
+                :class="accountInputClass"
                 :placeholder="t(accessType == 'account' ? 'common.account_name' : 'common.address_name', { 'chain' : chain})"
                 required
             />
@@ -129,7 +163,7 @@
                     id="inputPrivateKey"
                     v-model="privateKey"
                     type="password"
-                    class="w-full"
+                    :class="keyInputClass"
                     :placeholder="t('common.private_key_placeholder')"
                     required
                 />
