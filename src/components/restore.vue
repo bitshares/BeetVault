@@ -1,7 +1,7 @@
 <script setup>
     import { ref, computed } from 'vue';
     import { useI18n } from 'vue-i18n';
-    import { sha512 } from '@noble/hashes/sha512';
+    import { sha512 } from '@noble/hashes/sha2.js';
     const { t } = useI18n({ useScope: 'global' });
 
     import store from '../store/index.js';

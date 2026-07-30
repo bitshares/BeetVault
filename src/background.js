@@ -9,13 +9,10 @@ import queryString from "query-string";
 import { PrivateKey } from "bitsharesjs";
 
 import { v4 as uuidv4 } from "uuid";
-import sha512 from "crypto-js/sha512.js";
-import aes from "crypto-js/aes.js";
-import ENC from "crypto-js/enc-utf8.js";
-import Base64 from "crypto-js/enc-base64";
+import { encrypt as opensslEncrypt, decrypt as opensslDecrypt } from "./lib/openssl.js";
 import * as secp from "@noble/secp256k1";
-import { hexToBytes } from "@noble/hashes/utils.js";
-import { sha256 } from "@noble/hashes/sha2.js";
+import { hexToBytes, bytesToHex } from "@noble/hashes/utils.js";
+import { sha256, sha512 } from "@noble/hashes/sha2.js";
 import { hmac } from "@noble/hashes/hmac.js";
 
 secp.hashes.sha256 = sha256;
@@ -43,6 +40,48 @@ import { BTS_FAMILY, EOS_FAMILY, HIVE_FAMILY } from "./lib/blockchains/chainFami
 
 import { inject } from "./lib/inject.js";
 
+const VALID_SENDER_PAGES = ['index.html', 'modal.html', 'receipt.html', 'error.html'];
+
+/**
+ * Validates that an IPC sender is from an allowed HTML page.
+ *
+ * Checks that the sender's URL uses the file: protocol and that the
+ * page filename is in the list of allowed sender pages.
+ *
+ * @param {Electron.WebFrame} senderFrame - The sender frame from the IPC event.
+ * @returns {boolean} True if the sender is from an allowed page.
+ */
+function validateSender(senderFrame) {
+    try {
+        const senderUrl = new URL(senderFrame.url);
+        if (senderUrl.protocol !== 'file:') return false;
+        const filename = senderUrl.pathname.split('/').pop();
+        return VALID_SENDER_PAGES.includes(filename);
+    } catch {
+        return false;
+    }
+}
+
+/**
+ * Validates that an IPC sender is from the main app page (index.html).
+ *
+ * This is a stricter check used for sensitive operations like wallet
+ * unlocking and encryption. Only the main app window is allowed.
+ *
+ * @param {Electron.WebFrame} senderFrame - The sender frame from the IPC event.
+ * @returns {boolean} True if the sender is from index.html.
+ */
+function validateMainSender(senderFrame) {
+    try {
+        const senderUrl = new URL(senderFrame.url);
+        if (senderUrl.protocol !== 'file:') return false;
+        const filename = senderUrl.pathname.split('/').pop();
+        return filename === 'index.html';
+    } catch {
+        return false;
+    }
+}
+
 // Keep a global reference of the window object, if you don't, the window will
 // be closed automatically when the JavaScript object is garbage collected.
 let mainWindow;
@@ -58,11 +97,22 @@ let regexBTS = /1\.2\.\d+/g;
 
 async function _readFile(filePath) {
     return new Promise((resolve, reject) => {
-        if (!filePath || !filePath.includes(".bin")) {
+        if (!filePath || typeof filePath !== 'string') {
             return reject("Invalid file path");
         }
 
-        fs.readFile(filePath, async (err, data) => {
+        const resolved = path.resolve(filePath);
+        const ext = path.extname(resolved);
+
+        if (ext !== '.bin') {
+            return reject("Invalid file type");
+        }
+
+        if (resolved.includes('..') || resolved.includes('\0')) {
+            return reject("Invalid file path");
+        }
+
+        fs.readFile(resolved, async (err, data) => {
             if (err) {
                 console.log({ err });
                 return reject(err);
@@ -128,7 +178,7 @@ const createModal = async (arg, modalEvent) => {
         }
     }
 
-    ipcMain.on(`get:prompt:${id}`, (event) => {
+    ipcMain.once(`get:prompt:${id}`, (event) => {
         // The modal window is ready to receive data
         event.reply(`respond:prompt:${id}`, modalData);
     });
@@ -211,7 +261,7 @@ const createModal = async (arg, modalEvent) => {
             id
         )}`;
         
-        ipcMain.on(`get:receipt:${id}`, (event) => {
+        ipcMain.once(`get:receipt:${id}`, (event) => {
             // The modal window is ready to receive data
             event.reply(`respond:receipt:${id}`, {
                 id,
@@ -285,7 +335,7 @@ const createError = async (arg, errorEvent) => {
 
     let targetURL = `file://${__dirname}/error.html?id=${encodeURIComponent(id)}`;
 
-    ipcMain.on(`get:error:${id}`, (event) => {
+    ipcMain.once(`get:error:${id}`, (event) => {
         event.reply(`respond:error:${id}`, {
             id,
             title,
@@ -403,7 +453,7 @@ async function _parseDeeplink(
         }
 
         try {
-            parsedRequest = Base64.parse(processedRequest).toString(ENC);
+            parsedRequest = Buffer.from(processedRequest, 'base64').toString('utf-8');
         } catch (error) {
             console.log({
                 msg: "Parsing request failed",
@@ -414,17 +464,9 @@ async function _parseDeeplink(
             return;
         }
 
-        let decryptedBytes;
-        try {
-            decryptedBytes = aes.decrypt(parsedRequest, currentCode);
-        } catch (error) {
-            console.log(error);
-            return;
-        }
-
         let decryptedData;
         try {
-            decryptedData = decryptedBytes.toString(ENC);
+            decryptedData = opensslDecrypt(parsedRequest, currentCode);
         } catch (error) {
             console.log(error);
             return;
@@ -797,8 +839,7 @@ const createWindow = async () => {
         if (methods.includes("totpCode")) {
             const { timestamp } = arg;
             const msg = uuidv4();
-            let shaMSG = sha512(msg + timestamp)
-                .toString()
+            let shaMSG = bytesToHex(sha512(new TextEncoder().encode(msg + timestamp)))
                 .substring(0, 15);
             responses["code"] = shaMSG;
         }
@@ -1173,7 +1214,7 @@ const createWindow = async () => {
 
         let decryptedData;
         try {
-            decryptedData = await aes.decrypt(data, seed);
+            decryptedData = opensslDecrypt(data, seed);
         } catch (error) {
             console.log(error);
             throw new Error('Decryption failed');
@@ -1184,7 +1225,7 @@ const createWindow = async () => {
             throw new Error('Wallet restore failed');
         }
 
-        return decryptedData.toString();
+        return decryptedData;
     });
 
     const safeDomains = [
@@ -1272,9 +1313,10 @@ const createWindow = async () => {
     let _encryptedSeed = null;
 
     ipcMain.on("seed", (event, arg) => {
+        if (!validateMainSender(event.senderFrame)) return;
         console.log("SEEDED");
         if (!safeStorage.isEncryptionAvailable()) {
-            console.warn("safeStorage encryption not available, falling back to in-memory seed");
+            console.warn("[SECURITY] safeStorage encryption not available. Seed stored in memory without OS-level protection. Consider configuring a system keychain (GNOME Keyring, KWallet, or Windows Credential Locker).");
             _encryptedSeed = { fallback: true, seed: arg };
         } else {
             const buffer = safeStorage.encryptString(arg);
@@ -1283,6 +1325,7 @@ const createWindow = async () => {
     });
 
     ipcMain.on("clearSeed", (event) => {
+        if (!validateMainSender(event.senderFrame)) return;
         console.log("SEED CLEARED");
         _encryptedSeed = null;
         _pendingKeys.clear();
@@ -1315,6 +1358,7 @@ const createWindow = async () => {
     }
 
     ipcMain.handle("encryptPendingKeys", async (event, arg) => {
+        if (!validateMainSender(event.senderFrame)) throw new Error('Unauthorized');
         const { token, password } = arg;
         const pending = _pendingKeys.get(token);
         if (!pending) {
@@ -1325,7 +1369,7 @@ const createWindow = async () => {
         const encrypted = {};
         for (const [keytype, value] of Object.entries(pending.keys)) {
             try {
-                encrypted[keytype] = aes.encrypt(value, password).toString();
+                encrypted[keytype] = opensslEncrypt(value, password);
             } catch (error) {
                 console.log({error});
                 throw new Error('Encryption failure');
@@ -1335,6 +1379,7 @@ const createWindow = async () => {
     });
 
     ipcMain.handle("decryptAndSign", async (event, arg) => {
+        if (!validateMainSender(event.senderFrame)) throw new Error('Unauthorized');
         const { encryptedKey, chain, operation } = arg;
 
         // Decrypt the key using stored seed
@@ -1345,7 +1390,7 @@ const createWindow = async () => {
 
         let signingKey;
         try {
-            signingKey = aes.decrypt(encryptedKey, seed).toString(ENC);
+            signingKey = opensslDecrypt(encryptedKey, seed);
         } catch (error) {
             console.log({error, location: "decryptAndSign.decrypt"});
             throw new Error('Key decryption failed');
@@ -1404,6 +1449,7 @@ const createWindow = async () => {
     });
 
     ipcMain.handle("decryptAndCreateMemo", async (event, arg) => {
+        if (!validateMainSender(event.senderFrame)) throw new Error('Unauthorized');
         const { encryptedKey, chain, from, to, nonce, message } = arg;
 
         const seed = _decryptSeed();
@@ -1413,7 +1459,7 @@ const createWindow = async () => {
 
         let memoKey;
         try {
-            memoKey = aes.decrypt(encryptedKey, seed).toString(ENC);
+            memoKey = opensslDecrypt(encryptedKey, seed);
         } catch (error) {
             console.log({error, location: "decryptAndCreateMemo.decrypt"});
             throw new Error('Key decryption failed');
@@ -1441,6 +1487,7 @@ const createWindow = async () => {
     });
 
     ipcMain.handle("decryptAndSignMessage", async (event, arg) => {
+        if (!validateMainSender(event.senderFrame)) throw new Error('Unauthorized');
         const { encryptedKey, chain, accountName, messageText } = arg;
 
         const seed = _decryptSeed();
@@ -1450,7 +1497,7 @@ const createWindow = async () => {
 
         let signingKey;
         try {
-            signingKey = aes.decrypt(encryptedKey, seed).toString(ENC);
+            signingKey = opensslDecrypt(encryptedKey, seed);
         } catch (error) {
             console.log({error, location: "decryptAndSignMessage.decrypt"});
             throw new Error('Key decryption failed');
@@ -1480,12 +1527,25 @@ const createWindow = async () => {
         return signedMessage;
     });
 
+    /**
+     * Unlocks a wallet by decrypting its encrypted data.
+     *
+     * The password is expected to be pre-hashed (SHA-512 hex) by the renderer
+     * before being sent to the main process. The password is stored via
+     * Electron's safeStorage for later use in signing operations.
+     *
+     * @param {Electron.IpcMainInvokeEvent} event - The IPC event.
+     * @param {{ encryptedData: string, password: string }} arg - The encrypted wallet data and pre-hashed password.
+     * @returns {Promise<string>} The decrypted wallet data as a JSON string.
+     * @throws {Error} If the sender is unauthorized or decryption fails.
+     */
     ipcMain.handle("unlockWallet", async (event, arg) => {
+        if (!validateMainSender(event.senderFrame)) throw new Error('Unauthorized');
         const { encryptedData, password } = arg;
 
         // Store the pre-hashed password as seed via safeStorage
         if (!safeStorage.isEncryptionAvailable()) {
-            console.warn("safeStorage encryption not available, using fallback");
+            console.warn("[SECURITY] safeStorage encryption not available. Seed stored in memory without OS-level protection. Consider configuring a system keychain (GNOME Keyring, KWallet, or Windows Credential Locker).");
             _encryptedSeed = { fallback: true, seed: password };
         } else {
             const buffer = safeStorage.encryptString(password);
@@ -1494,7 +1554,7 @@ const createWindow = async () => {
 
         let decryptedWallet;
         try {
-            decryptedWallet = aes.decrypt(encryptedData, password).toString(ENC);
+            decryptedWallet = opensslDecrypt(encryptedData, password);
         } catch (error) {
             console.log({error, location: "unlockWallet.decrypt"});
             throw new Error('Wallet decryption failed');
@@ -1504,11 +1564,12 @@ const createWindow = async () => {
     });
 
     ipcMain.handle("encryptAndStore", async (event, arg) => {
+        if (!validateMainSender(event.senderFrame)) throw new Error('Unauthorized');
         const { data, password } = arg;
 
         let encrypted;
         try {
-            encrypted = aes.encrypt(data, password).toString();
+            encrypted = opensslEncrypt(data, password);
         } catch (error) {
             console.log({error, location: "encryptAndStore.encrypt"});
             throw new Error('Encryption failed');
@@ -1518,6 +1579,7 @@ const createWindow = async () => {
     });
 
     ipcMain.handle("decryptWallet", async (event, arg) => {
+        if (!validateMainSender(event.senderFrame)) throw new Error('Unauthorized');
         const { data } = arg;
 
         const seed = _decryptSeed();
@@ -1527,7 +1589,7 @@ const createWindow = async () => {
 
         let decrypted;
         try {
-            decrypted = aes.decrypt(data, seed).toString(ENC);
+            decrypted = opensslDecrypt(data, seed);
         } catch (error) {
             console.log({error, location: "decryptWallet.decrypt"});
             throw new Error('Decryption failed');
@@ -1537,10 +1599,11 @@ const createWindow = async () => {
     });
 
     ipcMain.handle("setSeedFromPassword", async (event, arg) => {
+        if (!validateMainSender(event.senderFrame)) throw new Error('Unauthorized');
         const { password } = arg;
 
         if (!safeStorage.isEncryptionAvailable()) {
-            console.warn("safeStorage encryption not available, using fallback");
+            console.warn("[SECURITY] safeStorage encryption not available. Seed stored in memory without OS-level protection. Consider configuring a system keychain (GNOME Keyring, KWallet, or Windows Credential Locker).");
             _encryptedSeed = { fallback: true, seed: password };
         } else {
             const buffer = safeStorage.encryptString(password);
@@ -1550,10 +1613,20 @@ const createWindow = async () => {
         return true;
     });
 
+    /**
+     * Returns information about the safeStorage encryption backend.
+     *
+     * On Linux, returns the selected password manager backend name (e.g.,
+     * "gnome_libsecret", "kwallet5", "basic_text"). On other platforms,
+     * returns the platform name since `getSelectedStorageBackend()` is
+     * Linux-only.
+     *
+     * @returns {{ available: boolean, backend: string }} Encryption availability and backend name.
+     */
     ipcMain.handle("getSafeStorageBackend", async (event) => {
         return {
             available: safeStorage.isEncryptionAvailable(),
-            backend: safeStorage.getSelectedStorageBackend()
+            backend: process.platform === 'linux' ? safeStorage.getSelectedStorageBackend() : process.platform
         };
     });
 
@@ -1581,7 +1654,13 @@ const createWindow = async () => {
     });
 
     ipcMain.on("downloadBackup", async (event, arg) => {
-        const { walletName, accounts, seed } = arg;
+        if (!validateMainSender(event.senderFrame)) return;
+        const { walletName, accounts } = arg;
+        const seed = _decryptSeed();
+        if (!seed) {
+            console.error("Cannot backup: wallet not unlocked");
+            return;
+        }
         let toLocalPath = path.resolve(
             app.getPath("desktop"),
             `BeetBackup-${walletName}-${new Date()
@@ -1690,15 +1769,32 @@ if (currentOS === "win32" || currentOS === "linux") {
 
             let deeplink;
             try {
-                deeplink = argv.at(-1);
+                deeplink = argv.find(arg =>
+                    typeof arg === 'string' &&
+                    (arg.startsWith('beeteos://') || arg.startsWith('rawbeeteos://'))
+                );
             } catch (error) {
                 console.log(error);
                 return;
             }
 
-            let deeplinkingUrl = deeplink.includes("beeteos://api/")
-                ? deeplink.split("beeteos://api/")[1]
-                : deeplink.split("rawbeeteos://api/")[1];
+            if (!deeplink) {
+                console.log("No deep link found in argv");
+                return;
+            }
+
+            const isRaw = deeplink.startsWith('rawbeeteos://');
+            const apiPrefix = isRaw ? 'rawbeeteos://api/' : 'beeteos://api/';
+            if (!deeplink.includes(apiPrefix)) {
+                console.log("Invalid deep link format");
+                return;
+            }
+
+            let deeplinkingUrl = deeplink.split(apiPrefix)[1];
+            if (!deeplinkingUrl || deeplinkingUrl.length > 4096) {
+                console.log("Deep link URL missing or too long");
+                return;
+            }
 
             let qs;
             try {
