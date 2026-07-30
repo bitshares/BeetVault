@@ -207,8 +207,7 @@ const actions = {
      * @param {string} [payload.tier="medium"] - Security tier ("low", "medium", "high")
      *   or raw `{ t, m, p }` Argon2id parameters.
      * @returns {Promise<void>} Resolves when the wallet is saved.
-     * @throws {string} Error code on failure ('uuid_failure', 'Encryption failure',
-     *   'AES encryption failure').
+     * @throws {string} Error code on failure ('uuid_failure', 'Encryption failure').
      */
     saveWallet({
         commit,
@@ -262,7 +261,7 @@ const actions = {
                         }
                         payload.walletdata.keys = encryptedKeys;
                     } else {
-                        // Legacy path: encrypt each key
+                        // Non-vaulted keys: encrypt individually
                         let keyTypes = Object.keys(keys);
                         for (let i = 0; i < keyTypes.length; i++) {
                             let keytype = keyTypes[i];
@@ -275,7 +274,7 @@ const actions = {
                                 });
                             } catch (error) {
                                 console.log({error});
-                                return reject('AES encryption failure');
+                                return reject('Encryption failure');
                             }
                         
                             payload.walletdata.keys[keytype] = _encrypted;
@@ -292,7 +291,7 @@ const actions = {
                         });
                     } catch (error) {
                         console.log({error});
-                        return reject('AES encryption failure');
+                        return reject('Encryption failure');
                     }
 
                     BeetDB.wallets_encrypted.put({

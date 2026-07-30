@@ -67,7 +67,7 @@ const actions = {
                     }
                     payload.account.keys = encryptedKeys;
                 } else {
-                    // Legacy path: encrypt each key
+                    // Non-vaulted keys: encrypt individually
                     let keyTypes = Object.keys(keys);
                     for (let i = 0; i < keyTypes.length; i++) {
                         let keytype = keyTypes[i];
@@ -79,7 +79,7 @@ const actions = {
                             });
                         } catch (error) {
                             console.log({error});
-                            throw 'AES encryption failure';
+                            throw 'Encryption failure';
                         }
 
                         if (_aesResult) {
