@@ -39,48 +39,7 @@ import BTSWalletHandler from "./lib/blockchains/bitshares/BTSWalletHandler.js";
 import { BTS_FAMILY, EOS_FAMILY, HIVE_FAMILY } from "./lib/blockchains/chainFamilies.js";
 
 import { inject } from "./lib/inject.js";
-
-const VALID_SENDER_PAGES = ['index.html', 'modal.html', 'receipt.html', 'error.html'];
-
-/**
- * Validates that an IPC sender is from an allowed HTML page.
- *
- * Checks that the sender's URL uses the file: protocol and that the
- * page filename is in the list of allowed sender pages.
- *
- * @param {Electron.WebFrame} senderFrame - The sender frame from the IPC event.
- * @returns {boolean} True if the sender is from an allowed page.
- */
-function validateSender(senderFrame) {
-    try {
-        const senderUrl = new URL(senderFrame.url);
-        if (senderUrl.protocol !== 'file:') return false;
-        const filename = senderUrl.pathname.split('/').pop();
-        return VALID_SENDER_PAGES.includes(filename);
-    } catch {
-        return false;
-    }
-}
-
-/**
- * Validates that an IPC sender is from the main app page (index.html).
- *
- * This is a stricter check used for sensitive operations like wallet
- * unlocking and encryption. Only the main app window is allowed.
- *
- * @param {Electron.WebFrame} senderFrame - The sender frame from the IPC event.
- * @returns {boolean} True if the sender is from index.html.
- */
-function validateMainSender(senderFrame) {
-    try {
-        const senderUrl = new URL(senderFrame.url);
-        if (senderUrl.protocol !== 'file:') return false;
-        const filename = senderUrl.pathname.split('/').pop();
-        return filename === 'index.html';
-    } catch {
-        return false;
-    }
-}
+import { validateSender, validateMainSender } from "./lib/senderValidation.js";
 
 // Keep a global reference of the window object, if you don't, the window will
 // be closed automatically when the JavaScript object is garbage collected.
@@ -179,6 +138,7 @@ const createModal = async (arg, modalEvent) => {
     }
 
     ipcMain.once(`get:prompt:${id}`, (event) => {
+        if (!validateSender(event.senderFrame)) return;
         // The modal window is ready to receive data
         event.reply(`respond:prompt:${id}`, modalData);
     });
@@ -262,6 +222,7 @@ const createModal = async (arg, modalEvent) => {
         )}`;
         
         ipcMain.once(`get:receipt:${id}`, (event) => {
+            if (!validateSender(event.senderFrame)) return;
             // The modal window is ready to receive data
             event.reply(`respond:receipt:${id}`, {
                 id,
@@ -336,6 +297,7 @@ const createError = async (arg, errorEvent) => {
     let targetURL = `file://${__dirname}/error.html?id=${encodeURIComponent(id)}`;
 
     ipcMain.once(`get:error:${id}`, (event) => {
+        if (!validateSender(event.senderFrame)) return;
         event.reply(`respond:error:${id}`, {
             id,
             title,
@@ -384,8 +346,9 @@ const createError = async (arg, errorEvent) => {
 /*
  * User approved modal contents. Close window, resolve promise, delete references.
  */
-ipcMain.on("clickedAllow", (event, arg) => {
-    console.log("ipcmain clickedAllow");
+    ipcMain.on("clickedAllow", (event, arg) => {
+        if (!validateSender(event.senderFrame)) return;
+        console.log("ipcmain clickedAllow");
     let id = arg.request.id;
 
     if (modalWindows[id]) {
@@ -402,8 +365,9 @@ ipcMain.on("clickedAllow", (event, arg) => {
 /*
  * User rejected modal contents. Close window, reject promise, delete references.
  */
-ipcMain.on("clickedDeny", (event, arg) => {
-    console.log("ipcmain clickedDeny");
+    ipcMain.on("clickedDeny", (event, arg) => {
+        if (!validateSender(event.senderFrame)) return;
+        console.log("ipcmain clickedDeny");
     let id = arg.request.id;
 
     if (modalWindows[id]) {
@@ -414,20 +378,6 @@ ipcMain.on("clickedDeny", (event, arg) => {
     if (modalRequests[id]) {
         modalRequests[id].event.sender.send(`popupRejected_${id}`, arg);
         delete modalRequests[id];
-    }
-});
-
-/*
- * A modal error occurred. Close window, resolve promise, delete references.
- */
-ipcMain.on("modalError", (event, arg) => {
-    if (modalWindows[arg.id]) {
-        modalWindows[arg.id].close();
-        delete modalWindows[arg.id];
-    }
-    if (modalRequests[arg.id]) {
-        modalRequests[arg.id].reject(arg);
-        delete modalRequests[arg.id];
     }
 });
 
@@ -684,6 +634,7 @@ const createWindow = async () => {
     });
 
     ipcMain.handle("memoFromBuffer", async (event, arg) => {
+        if (!validateSender(event.senderFrame)) throw new Error('Unauthorized');
         const { msg } = arg;
         return Buffer.from(msg).toString('hex');
     });
@@ -692,6 +643,7 @@ const createWindow = async () => {
      * Handling front end blockchain requests
      */
     ipcMain.handle("blockchainRequest", async (event, arg) => {
+        if (!validateSender(event.senderFrame)) throw new Error('Unauthorized');
         const { methods, account, accountname, chain } = arg;
 
         console.log({ methods, accountname, chain });
@@ -1203,6 +1155,7 @@ const createWindow = async () => {
     });
 
     ipcMain.handle("restore", async (event, arg) => {
+        if (!validateMainSender(event.senderFrame)) throw new Error('Unauthorized');
         const { file, seed } = arg;
 
         if (!file || !file.endsWith('.beet')) {
@@ -1241,6 +1194,7 @@ const createWindow = async () => {
         "telos.eosx.io",
     ];
     ipcMain.on("openURL", (event, arg) => {
+        if (!validateSender(event.senderFrame)) return;
         try {
             const parsedUrl = new url.URL(arg);
             const domain = parsedUrl.hostname;
@@ -1260,6 +1214,7 @@ const createWindow = async () => {
      * Create modal popup & wait for user response
      */
     ipcMain.on("createPopup", async (event, arg) => {
+        if (!validateSender(event.senderFrame)) return;
         try {
             await createModal(arg, event);
         } catch (error) {
@@ -1271,6 +1226,7 @@ const createWindow = async () => {
      * Create receipt popup & wait for user response
      */
     ipcMain.on("createReceipt", async (event, arg) => {
+        if (!validateSender(event.senderFrame)) return;
         try {
             await createReceipt(arg, event);
         } catch (error) {
@@ -1282,6 +1238,7 @@ const createWindow = async () => {
      * Create error popup for failed operations
      */
     ipcMain.on("createError", async (event, arg) => {
+        if (!validateSender(event.senderFrame)) return;
         try {
             await createError(arg, event);
         } catch (error) {
@@ -1290,6 +1247,7 @@ const createWindow = async () => {
     });
 
     ipcMain.on("notify", (event, arg) => {
+        if (!validateSender(event.senderFrame)) return;
         logger.debug("notify");
         const NOTIFICATION_TITLE = "Beet wallet notification";
         const NOTIFICATION_BODY =
@@ -1312,6 +1270,7 @@ const createWindow = async () => {
     });
 
     ipcMain.handle("id", (event, arg) => {
+        if (!validateSender(event.senderFrame)) throw new Error('Unauthorized');
         const id = uuidv4();
         return id;
     });
@@ -1630,6 +1589,7 @@ const createWindow = async () => {
      * @returns {{ available: boolean, backend: string }} Encryption availability and backend name.
      */
     ipcMain.handle("getSafeStorageBackend", async (event) => {
+        if (!validateSender(event.senderFrame)) throw new Error('Unauthorized');
         return {
             available: safeStorage.isEncryptionAvailable(),
             backend: process.platform === 'linux' ? safeStorage.getSelectedStorageBackend() : process.platform
@@ -1637,6 +1597,7 @@ const createWindow = async () => {
     });
 
     ipcMain.handle("getSignature", async (event, arg) => {
+        if (!validateSender(event.senderFrame)) throw new Error('Unauthorized');
         let response;
         try {
             response = await getSignature(arg);
@@ -1648,6 +1609,7 @@ const createWindow = async () => {
     });
 
     ipcMain.handle("verifyCrypto", async (event, arg) => {
+        if (!validateSender(event.senderFrame)) throw new Error('Unauthorized');
         const { signedMessage, msgHash, pubk } = arg;
         let isValid;
         try {
@@ -1728,10 +1690,6 @@ const createWindow = async () => {
             .catch((error) => {
                 console.log(error);
             });
-    });
-
-    ipcMain.on("log", (event, arg) => {
-        logger[arg.level](arg.data);
     });
 
     tray.on("click", () => {

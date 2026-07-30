@@ -1,5 +1,6 @@
 import { ipcMain } from "electron";
 import { BTS_FAMILY, EOS_FAMILY, HIVE_FAMILY } from "./blockchains/chainFamilies.js";
+import { validateSender } from "./senderValidation.js";
 
 export async function inject(blockchain, request, webContents) {
     let isBlocked = false;
@@ -77,6 +78,10 @@ export async function inject(blockchain, request, webContents) {
                 return new Promise((resolve, reject) => {
                     webContents.send("getSafeAccount");
                     ipcMain.once("getSafeAccountResponse", (event, arg) => {
+                        if (!validateSender(event.senderFrame)) {
+                            reject(new Error('Unauthorized sender'));
+                            return;
+                        }
                         resolve(arg);
                     });
                 });
@@ -135,9 +140,17 @@ export async function inject(blockchain, request, webContents) {
                 foundIDs: _foundIDs,
             });
             ipcMain.once("injectedCallResponse", (event, arg) => {
+                if (!validateSender(event.senderFrame)) {
+                    reject(new Error('Unauthorized sender'));
+                    return;
+                }
                 return resolve(arg);
             });
             ipcMain.once("injectedCallError", (event, error) => {
+                if (!validateSender(event.senderFrame)) {
+                    reject(new Error('Unauthorized sender'));
+                    return;
+                }
                 return reject(error);
             });
         });

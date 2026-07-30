@@ -1,29 +1,5 @@
-import { ipcRenderer, contextBridge } from 'electron';
-import { isValidSendChannel, isValidInvokeChannel, isValidListenChannel } from './lib/ipcValidate.js';
-
-function safeSend(channel, ...args) {
-    if (!isValidSendChannel(channel)) {
-        console.error(`[SECURITY] IPC send blocked: invalid channel "${channel}"`);
-        return;
-    }
-    return ipcRenderer.send(channel, ...args);
-}
-
-function safeInvoke(channel, ...args) {
-    if (!isValidInvokeChannel(channel)) {
-        console.error(`[SECURITY] IPC invoke blocked: invalid channel "${channel}"`);
-        return Promise.reject(new Error(`Invalid IPC channel: ${channel}`));
-    }
-    return ipcRenderer.invoke(channel, ...args);
-}
-
-function safeOn(channel, callback) {
-    if (!isValidListenChannel(channel)) {
-        console.error(`[SECURITY] IPC on blocked: invalid channel "${channel}"`);
-        return;
-    }
-    return ipcRenderer.on(channel, (event, ...args) => callback(...args));
-}
+import { contextBridge } from 'electron';
+import { safeSend, safeInvoke, safeOn, safeRemoveAllListeners } from './lib/ipcWrapper.js';
 
 contextBridge.exposeInMainWorld('electron', {
     // MISC
@@ -86,9 +62,5 @@ contextBridge.exposeInMainWorld('electron', {
     },
     getSafeAccountResponse: async (args) => safeSend('getSafeAccountResponse', args),
     //
-    removeAllListeners: async (msg) => {
-        if (isValidListenChannel(msg)) {
-            return ipcRenderer.removeAllListeners(msg);
-        }
-    },
+    removeAllListeners: async (msg) => safeRemoveAllListeners(msg),
 });

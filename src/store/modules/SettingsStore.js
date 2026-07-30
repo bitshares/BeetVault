@@ -51,7 +51,9 @@ const actions = {
     }, payload) {
         return new Promise(async (resolve, reject) => {
             BeetDB.settings.get({id: 'settings'}).then((record) => {
-                let settings = record ? JSON.parse(record.value) : Object.assign({}, initialState.settings);
+                let settings = record
+                    ? Object.assign({}, initialState.settings, JSON.parse(record.value))
+                    : Object.assign({}, initialState.settings);
 
                 settings.logoutTimeout = payload.timeout;
 
@@ -72,7 +74,9 @@ const actions = {
             const coreSymbol = getCoreSymbol(payload.chain);
 
             BeetDB.settings.get({id: 'settings'}).then((record) => {
-                let settings = record ? JSON.parse(record.value) : Object.assign({}, initialState.settings);
+                let settings = record
+                    ? Object.assign({}, initialState.settings, JSON.parse(record.value))
+                    : Object.assign({}, initialState.settings);
   
                 // backwards compatibility
                 if (typeof settings.selected_node === "string") {
@@ -113,7 +117,9 @@ const actions = {
         return new Promise(async (resolve, reject) => {
 
             BeetDB.settings.get({id: 'settings'}).then((record) => {
-                let settings = record ? JSON.parse(record.value) : Object.assign({}, initialState.settings);
+                let settings = record
+                    ? Object.assign({}, initialState.settings, JSON.parse(record.value))
+                    : Object.assign({}, initialState.settings);
 
                 settings.locale = payload.locale;
 
@@ -138,7 +144,9 @@ const actions = {
             const coreSymbol = getCoreSymbol(payload.chain);
 
             BeetDB.settings.get({id: 'settings'}).then((record) => {
-                let settings = record ? JSON.parse(record.value) : Object.assign({}, initialState.settings);
+                let settings = record
+                    ? Object.assign({}, initialState.settings, JSON.parse(record.value))
+                    : Object.assign({}, initialState.settings);
     
                 if (!Object.prototype.hasOwnProperty.call(settings, 'chainPermissions')) {
                     settings['chainPermissions'] = {

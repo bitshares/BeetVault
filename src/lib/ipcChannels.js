@@ -25,7 +25,6 @@ export const SEND_CHANNELS = Object.freeze([
     'downloadBackup',
     'clickedAllow',
     'clickedDeny',
-    'log',
 ]);
 
 // Channels that the renderer calls via ipcRenderer.invoke()
