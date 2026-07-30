@@ -9,7 +9,7 @@ import queryString from "query-string";
 import { PrivateKey } from "bitsharesjs";
 
 import { v4 as uuidv4 } from "uuid";
-import { encrypt as opensslEncrypt, decrypt as opensslDecrypt } from "./lib/openssl.js";
+import { encrypt, decrypt } from "./lib/crypto.js";
 import * as secp from "@noble/secp256k1";
 import { hexToBytes, bytesToHex } from "@noble/hashes/utils.js";
 import { sha256, sha512 } from "@noble/hashes/sha2.js";
@@ -416,7 +416,7 @@ async function _parseDeeplink(
 
         let decryptedData;
         try {
-            decryptedData = opensslDecrypt(parsedRequest, currentCode);
+            decryptedData = await decrypt(parsedRequest, currentCode);
         } catch (error) {
             console.log(error);
             return;
@@ -1173,7 +1173,7 @@ const createWindow = async () => {
 
         let decryptedData;
         try {
-            decryptedData = opensslDecrypt(data, seed);
+            decryptedData = await decrypt(data, seed);
         } catch (error) {
             console.log(error);
             throw new Error('Decryption failed');
@@ -1322,9 +1322,27 @@ const createWindow = async () => {
         return token;
     }
 
+    /**
+     * Encrypts pending vault-stored keys and returns the encrypted map.
+     *
+     * During wallet creation, private keys are temporarily stored in a
+     * `_pendingKeys` Map keyed by a UUID token. This handler encrypts each
+     * key with Argon2id + AES-256-GCM, deletes the pending entry, and
+     * returns the encrypted map.
+     *
+     * @param {Electron.IpcMainInvokeEvent} event - The IPC event.
+     * @param {{ token: string, password: string, tier?: string }} arg
+     *   - `token` — UUID identifying the pending keys entry.
+     *   - `password` — Pre-hashed password (SHA-512 hex) for encryption.
+     *   - `tier` — Optional security tier ("low", "medium", "high"). Defaults to "medium".
+     * @returns {Promise<Object<string, string>>} Map of key types to Base64-encoded
+     *   encrypted keys in v3 wire format.
+     * @throws {Error} If the sender is unauthorized, token is invalid/expired,
+     *   or encryption fails.
+     */
     ipcMain.handle("encryptPendingKeys", async (event, arg) => {
         if (!validateMainSender(event.senderFrame)) throw new Error('Unauthorized');
-        const { token, password } = arg;
+        const { token, password, tier } = arg;
         const pending = _pendingKeys.get(token);
         if (!pending) {
             throw new Error('Invalid or expired token');
@@ -1334,7 +1352,7 @@ const createWindow = async () => {
         const encrypted = {};
         for (const [keytype, value] of Object.entries(pending.keys)) {
             try {
-                encrypted[keytype] = opensslEncrypt(value, password);
+                encrypted[keytype] = await encrypt(value, password, tier || "medium");
             } catch (error) {
                 console.log({error});
                 throw new Error('Encryption failure');
@@ -1343,6 +1361,22 @@ const createWindow = async () => {
         return encrypted;
     });
 
+    /**
+     * Decrypts a private key and uses it to sign a blockchain transaction.
+     *
+     * Decrypts the encrypted key using the stored seed, signs the operation
+     * with the blockchain API, broadcasts the signed transaction, and returns
+     * the broadcast response.
+     *
+     * @param {Electron.IpcMainInvokeEvent} event - The IPC event.
+     * @param {{ encryptedKey: string, chain: string, operation: object }} arg
+     *   - `encryptedKey` — Base64-encoded v3 encrypted private key.
+     *   - `chain` — Blockchain identifier (e.g., "eos", "bitshares").
+     *   - `operation` — The blockchain operation object to sign.
+     * @returns {Promise<object>} The broadcast response from the blockchain.
+     * @throws {Error} If the sender is unauthorized, wallet is locked,
+     *   key decryption fails, or signing/broadcasting fails.
+     */
     ipcMain.handle("decryptAndSign", async (event, arg) => {
         if (!validateMainSender(event.senderFrame)) throw new Error('Unauthorized');
         const { encryptedKey, chain, operation } = arg;
@@ -1355,7 +1389,7 @@ const createWindow = async () => {
 
         let signingKey;
         try {
-            signingKey = opensslDecrypt(encryptedKey, seed);
+            signingKey = await decrypt(encryptedKey, seed);
         } catch (error) {
             console.log({error, location: "decryptAndSign.decrypt"});
             throw new Error('Key decryption failed');
@@ -1413,6 +1447,25 @@ const createWindow = async () => {
         throw new Error('No transaction returned from sign');
     });
 
+    /**
+     * Decrypts a memo key and creates an encrypted memo object.
+     *
+     * Decrypts the memo key using the stored seed, then uses the blockchain
+     * API to create an encrypted memo object for transferring messages
+     * between accounts.
+     *
+     * @param {Electron.IpcMainInvokeEvent} event - The IPC event.
+     * @param {{ encryptedKey: string, chain: string, from: string, to: string, nonce: string, message: string }} arg
+     *   - `encryptedKey` — Base64-encoded v3 encrypted memo key.
+     *   - `chain` — Blockchain identifier.
+     *   - `from` — Sender account name.
+     *   - `to` — Recipient account name.
+     *   - `nonce` — Memo nonce for encryption.
+     *   - `message` — Plaintext message to encrypt in the memo.
+     * @returns {Promise<object>} The encrypted memo object.
+     * @throws {Error} If the sender is unauthorized, wallet is locked,
+     *   key decryption fails, or memo creation fails.
+     */
     ipcMain.handle("decryptAndCreateMemo", async (event, arg) => {
         if (!validateMainSender(event.senderFrame)) throw new Error('Unauthorized');
         const { encryptedKey, chain, from, to, nonce, message } = arg;
@@ -1424,7 +1477,7 @@ const createWindow = async () => {
 
         let memoKey;
         try {
-            memoKey = opensslDecrypt(encryptedKey, seed);
+            memoKey = await decrypt(encryptedKey, seed);
         } catch (error) {
             console.log({error, location: "decryptAndCreateMemo.decrypt"});
             throw new Error('Key decryption failed');
@@ -1451,6 +1504,22 @@ const createWindow = async () => {
         return memoObject;
     });
 
+    /**
+     * Decrypts a private key and uses it to sign a text message.
+     *
+     * Decrypts the key using the stored seed, then signs the message using
+     * the blockchain API's signMessage method.
+     *
+     * @param {Electron.IpcMainInvokeEvent} event - The IPC event.
+     * @param {{ encryptedKey: string, chain: string, accountName: string, messageText: string }} arg
+     *   - `encryptedKey` — Base64-encoded v3 encrypted private key.
+     *   - `chain` — Blockchain identifier.
+     *   - `accountName` — Account name that owns the signing key.
+     *   - `messageText` — The text message to sign.
+     * @returns {Promise<object>} The signed message object.
+     * @throws {Error} If the sender is unauthorized, wallet is locked,
+     *   key decryption fails, or message signing fails.
+     */
     ipcMain.handle("decryptAndSignMessage", async (event, arg) => {
         if (!validateMainSender(event.senderFrame)) throw new Error('Unauthorized');
         const { encryptedKey, chain, accountName, messageText } = arg;
@@ -1462,7 +1531,7 @@ const createWindow = async () => {
 
         let signingKey;
         try {
-            signingKey = opensslDecrypt(encryptedKey, seed);
+            signingKey = await decrypt(encryptedKey, seed);
         } catch (error) {
             console.log({error, location: "decryptAndSignMessage.decrypt"});
             throw new Error('Key decryption failed');
@@ -1519,7 +1588,7 @@ const createWindow = async () => {
 
         let decryptedWallet;
         try {
-            decryptedWallet = opensslDecrypt(encryptedData, password);
+            decryptedWallet = await decrypt(encryptedData, password);
         } catch (error) {
             console.log({error, location: "unlockWallet.decrypt"});
             throw new Error('Wallet decryption failed');
@@ -1528,13 +1597,29 @@ const createWindow = async () => {
         return decryptedWallet;
     });
 
+    /**
+     * Encrypts arbitrary data with Argon2id + AES-256-GCM and returns
+     * the Base64-encoded v3 wire format string.
+     *
+     * Used by the renderer to encrypt wallet blobs, individual keys, and
+     * other sensitive data before storing in IndexedDB.
+     *
+     * @param {Electron.IpcMainInvokeEvent} event - The IPC event.
+     * @param {{ data: string, password: string, tier?: string }} arg
+     *   - `data` — Plaintext string to encrypt.
+     *   - `password` — Pre-hashed password (SHA-512 hex) for key derivation.
+     *   - `tier` — Optional security tier ("low", "medium", "high") or raw
+     *     `{ t, m, p }` parameters. Defaults to "medium".
+     * @returns {Promise<string>} Base64-encoded ciphertext in v3 wire format.
+     * @throws {Error} If the sender is unauthorized or encryption fails.
+     */
     ipcMain.handle("encryptAndStore", async (event, arg) => {
         if (!validateMainSender(event.senderFrame)) throw new Error('Unauthorized');
-        const { data, password } = arg;
+        const { data, password, tier } = arg;
 
         let encrypted;
         try {
-            encrypted = opensslEncrypt(data, password);
+            encrypted = await encrypt(data, password, tier || "medium");
         } catch (error) {
             console.log({error, location: "encryptAndStore.encrypt"});
             throw new Error('Encryption failed');
@@ -1543,6 +1628,20 @@ const createWindow = async () => {
         return encrypted;
     });
 
+    /**
+     * Decrypts wallet data using the stored in-memory seed.
+     *
+     * Used for authorization checks (verifying the user knows the password)
+     * and for re-encrypting wallet data after adding/removing accounts.
+     * The seed is the pre-hashed password that was stored during unlockWallet.
+     *
+     * @param {Electron.IpcMainInvokeEvent} event - The IPC event.
+     * @param {{ data: string }} arg
+     *   - `data` — Base64-encoded v3 encrypted wallet data.
+     * @returns {Promise<string>} Decrypted plaintext (usually JSON).
+     * @throws {Error} If the sender is unauthorized, wallet is not unlocked,
+     *   or decryption fails.
+     */
     ipcMain.handle("decryptWallet", async (event, arg) => {
         if (!validateMainSender(event.senderFrame)) throw new Error('Unauthorized');
         const { data } = arg;
@@ -1554,7 +1653,7 @@ const createWindow = async () => {
 
         let decrypted;
         try {
-            decrypted = opensslDecrypt(data, seed);
+            decrypted = await decrypt(data, seed);
         } catch (error) {
             console.log({error, location: "decryptWallet.decrypt"});
             throw new Error('Decryption failed');
@@ -1563,6 +1662,19 @@ const createWindow = async () => {
         return decrypted;
     });
 
+    /**
+     * Stores a pre-hashed password as the in-memory encryption seed.
+     *
+     * Used during wallet restore to set the seed without going through the
+     * unlock flow. The seed is used for subsequent decrypt operations and
+     * for signing transactions.
+     *
+     * @param {Electron.IpcMainInvokeEvent} event - The IPC event.
+     * @param {{ password: string }} arg
+     *   - `password` — Pre-hashed password (SHA-512 hex) to store as seed.
+     * @returns {Promise<boolean>} Always returns true on success.
+     * @throws {Error} If the sender is unauthorized.
+     */
     ipcMain.handle("setSeedFromPassword", async (event, arg) => {
         if (!validateMainSender(event.senderFrame)) throw new Error('Unauthorized');
         const { password } = arg;
@@ -1664,15 +1776,13 @@ const createWindow = async () => {
 
                 let encrypted;
                 try {
-                    encrypted = await aes
-                        .encrypt(
-                            JSON.stringify({
-                                wallet: walletName,
-                                accounts: JSON.parse(accounts),
-                            }),
-                            seed
-                        )
-                        .toString();
+                    encrypted = await encrypt(
+                        JSON.stringify({
+                            wallet: walletName,
+                            accounts: JSON.parse(accounts),
+                        }),
+                        seed
+                    );
                 } catch (error) {
                     console.log(`encrypt: ${error}`);
                     return;

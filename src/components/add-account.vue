@@ -24,6 +24,7 @@
     let importMethod = ref(null);
     let walletname = ref("");
     let password = ref("");
+    let securityTier = ref("medium");
     let step = ref(1);
     let stepMessage = ref(t('common.step_counter', {step_no: 1}));
 
@@ -184,7 +185,8 @@
                     await store.dispatch("WalletStore/saveWallet", {
                         walletname: walletname.value,
                         password: password.value,
-                        walletdata: account.account
+                        walletdata: account.account,
+                        tier: securityTier.value
                     });
                 } catch (error) {
                     console.log(error);
@@ -393,6 +395,35 @@
                                 :placeholder="t('common.confirm_placeholder')"
                                 required
                             />
+                        </template>
+
+                        <template v-if="createNewWallet">
+                            <Tooltip>
+                                <TooltipTrigger as-child>
+                                    <p class="mb-2 font-semibold text-sm">
+                                        {{ t('common.security_tier_cta') }} <Info class="inline h-3 w-3" />
+                                    </p>
+                                </TooltipTrigger>
+                                <TooltipContent>
+                                    <p>{{ t('common.tooltip_security_tier') }}</p>
+                                </TooltipContent>
+                            </Tooltip>
+                            <Select v-model="securityTier">
+                                <SelectTrigger class="w-full mb-3">
+                                    <SelectValue :placeholder="t('common.select_tier')" />
+                                </SelectTrigger>
+                                <SelectContent>
+                                    <SelectItem value="low">
+                                        {{ t('common.tier_low') }}
+                                    </SelectItem>
+                                    <SelectItem value="medium">
+                                        {{ t('common.tier_medium') }}
+                                    </SelectItem>
+                                    <SelectItem value="high">
+                                        {{ t('common.tier_high') }}
+                                    </SelectItem>
+                                </SelectContent>
+                            </Select>
                         </template>
                     </div>
 

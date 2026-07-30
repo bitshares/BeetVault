@@ -187,6 +187,29 @@ const actions = {
         });
 
     },
+    /**
+     * Creates a new wallet and persists it to IndexedDB.
+     *
+     * Generates a UUID, saves the public wallet record (name, account list)
+     * to `wallets_public`, encrypts the private keys (via vault token or
+     * individually) and the entire wallet data blob, then stores the encrypted
+     * blob in `wallets_encrypted`.
+     *
+     * The `tier` parameter controls the Argon2id memory/time cost for
+     * encryption. Higher tiers produce stronger key derivation but take
+     * longer during wallet creation and unlock.
+     *
+     * @param {object} context - Vuex action context.
+     * @param {object} payload
+     * @param {string} payload.walletname - Display name for the wallet.
+     * @param {string} payload.password - Plaintext password (hashed before IPC).
+     * @param {object} payload.walletdata - Account data including keys.
+     * @param {string} [payload.tier="medium"] - Security tier ("low", "medium", "high")
+     *   or raw `{ t, m, p }` Argon2id parameters.
+     * @returns {Promise<void>} Resolves when the wallet is saved.
+     * @throws {string} Error code on failure ('uuid_failure', 'Encryption failure',
+     *   'AES encryption failure').
+     */
     saveWallet({
         commit,
         dispatch
@@ -222,6 +245,7 @@ const actions = {
                     commit(SET_WALLETLIST, wallets);
 
                     let keys = payload.walletdata.keys;
+                    const tier = payload.tier || "medium";
 
                     // If keys contain a vault token, encrypt via main process
                     if (keys._vaultToken) {
@@ -229,7 +253,8 @@ const actions = {
                         try {
                             encryptedKeys = await window.electron.encryptPendingKeys({
                                 token: keys._vaultToken,
-                                password: hashPassword(payload.password)
+                                password: hashPassword(payload.password),
+                                tier: tier
                             });
                         } catch (error) {
                             console.log({error});
@@ -245,7 +270,8 @@ const actions = {
                             try {
                                 _encrypted = await window.electron.encryptAndStore({
                                     data: payload.walletdata.keys[keytype],
-                                    password: hashPassword(payload.password)
+                                    password: hashPassword(payload.password),
+                                    tier: tier
                                 });
                             } catch (error) {
                                 console.log({error});
@@ -261,7 +287,8 @@ const actions = {
                     try {
                         _encryptedWalletData = await window.electron.encryptAndStore({
                             data: JSON.stringify(payload.walletdata),
-                            password: hashPassword(payload.password)
+                            password: hashPassword(payload.password),
+                            tier: tier
                         });
                     } catch (error) {
                         console.log({error});

@@ -48,8 +48,9 @@
     }
   },
   "scripts": {
-    "start": "node build/start.js",
+    "start": "mkdir -p app/lib && cp src/lib/argon-worker.mjs app/lib/argon-worker.mjs && node build/start.js",
     "compile": "webpack --config=build/webpack.main.config.js --config=build/webpack.renderer.config.js --config=build/webpack.preload.config.js --env=production",
+    "postcompile": "mkdir -p app/lib && cp src/lib/argon-worker.mjs app/lib/argon-worker.mjs",
     "build": "npm run compile && electron-builder --publish never",
     "release": "npm run compile && electron-builder --publish never",
     "dist:macos-latest": "npm run-script compile && electron-builder -m --publish never",

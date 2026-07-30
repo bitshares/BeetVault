@@ -16,9 +16,9 @@ export function cn(...inputs) {
 /**
  * Hashes a password using SHA-512 and returns the hex-encoded digest.
  *
- * This function is used to derive a key for AES encryption. The hex-encoded
- * SHA-512 hash is passed to the OpenSSL key derivation function (EVP_BytesToKey)
- * during encryption/decryption.
+ * Used as an IPC obfuscation layer: the renderer sends this hash to the main
+ * process, which then uses it as the passphrase for Argon2id key derivation.
+ * The plaintext password never crosses the IPC boundary.
  *
  * @param {string} password - The plaintext password to hash.
  * @returns {string} A 128-character hex string representing the SHA-512 hash.
