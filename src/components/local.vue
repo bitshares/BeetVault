@@ -13,6 +13,8 @@ import router from "../router/index.js";
 
 const { t } = useI18n({ useScope: "global" });
 
+let hasActivePopup = computed(() => store.getters["PopupStore/hasActivePopup"]);
+
 let chosenScope = ref();
 let selectedRows = ref();
 let inProgress = ref(false);
@@ -157,7 +159,7 @@ onMounted(() => {
 <template>
     <div class="bottom p-0">
         <div v-if="supportsLocal" class="px-4 py-3 space-y-4">
-            <AccountSelect />
+            <AccountSelect :disabled="hasActivePopup" />
 
             <div v-if="!chosenScope" class="space-y-3">
                 <p class="mb-0">{{ t("common.local.label") }}</p>
@@ -203,6 +205,7 @@ onMounted(() => {
                         type="file"
                         accept="application/json"
                         @change="onFileUpload($event)"
+                        :disabled="hasActivePopup"
                         class="flex h-9 w-full rounded-md border border-input bg-transparent px-3 py-1 text-sm shadow-sm transition-colors file:border-0 file:bg-transparent file:text-sm file:font-medium placeholder:text-muted-foreground focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-ring disabled:cursor-not-allowed disabled:opacity-50"
                     />
                 </div>
@@ -214,10 +217,10 @@ onMounted(() => {
             </div>
 
             <div class="flex flex-wrap gap-2 pt-2">
-                <Button v-if="chosenScope && selectedRows" variant="outline" @click="goBack">
+                <Button v-if="chosenScope && selectedRows" variant="outline" @click="goBack" :disabled="hasActivePopup">
                     {{ t("common.local.back") }}
                 </Button>
-                <Button variant="outline" @click="router.replace('/dashboard')">
+                <Button variant="outline" @click="router.replace('/dashboard')" :disabled="hasActivePopup">
                     {{ t("common.local.exit") }}
                 </Button>
             </div>

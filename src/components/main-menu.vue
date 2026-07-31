@@ -13,6 +13,8 @@
 
     const { isProcessing } = useProcessing();
 
+    let hasActivePopup = computed(() => store.getters["PopupStore/hasActivePopup"]);
+
     const iconMap = {
         home: Home,
         add: Plus,
@@ -213,10 +215,10 @@
             v-if="store.state.WalletStore.isUnlocked"
             size="icon-sm"
             class="rounded-full"
-            :disabled="isProcessing"
+            :disabled="isProcessing || hasActivePopup"
             @click="open = true"
         >
-            <Spinner v-if="isProcessing" class="h-4 w-4" />
+            <Spinner v-if="isProcessing || hasActivePopup" class="h-4 w-4" />
             <Menu v-else class="h-4 w-4" />
         </Button>
 

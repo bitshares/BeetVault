@@ -1,11 +1,14 @@
 <script setup>
+    import { computed } from 'vue';
     import { useRouter } from 'vue-router';
     import MainMenu from "./main-menu.vue";
     import langSelect from "./lang-select.vue";
     import { useProcessing } from '../composables/useProcessing.js';
+    import store from '../store/index.js';
 
     const router = useRouter();
     const { isProcessing } = useProcessing();
+    let hasActivePopup = computed(() => store.getters["PopupStore/hasActivePopup"]);
 </script>
 
 <template>
@@ -19,8 +22,8 @@
             </div>
             <div
                 class="flex flex-col items-center"
-                :class="isProcessing ? '' : 'cursor-pointer'"
-                @click="!isProcessing && router.push('/dashboard')"
+                :class="(isProcessing || hasActivePopup) ? '' : 'cursor-pointer'"
+                @click="!(isProcessing || hasActivePopup) && router.push('/dashboard')"
             >
                 <h4 class="h4 beet-typo-small font-extrabold">
                     BeetVault

@@ -18,6 +18,8 @@
 
     const { copy } = useClipboard();
 
+    let hasActivePopup = computed(() => store.getters["PopupStore/hasActivePopup"]);
+
     function copyToClipboard() {
         copy(currentCode.value);
     }
@@ -229,7 +231,7 @@
 <template>
     <div class="bottom p-0">
         <div v-if="compatible" class="px-4 py-3 space-y-4">
-            <AccountSelect />
+            <AccountSelect :disabled="hasActivePopup" />
 
             <div v-if="deepLinkInProgress" class="flex flex-col items-center gap-2">
                 <p class="mb-0">{{ t('common.totp.inProgress') }}</p>
@@ -323,10 +325,10 @@
             </div>
 
             <div class="flex flex-wrap gap-2 pt-2">
-                <Button v-if="chosenScope && selectedRows" variant="outline" @click="goBack">
+                <Button v-if="chosenScope && selectedRows" variant="outline" @click="goBack" :disabled="hasActivePopup">
                     {{ t('common.qr.back') }}
                 </Button>
-                <Button variant="outline" @click="router.replace('/dashboard')">
+                <Button variant="outline" @click="router.replace('/dashboard')" :disabled="hasActivePopup">
                     {{ t('common.totp.exit') }}
                 </Button>
             </div>

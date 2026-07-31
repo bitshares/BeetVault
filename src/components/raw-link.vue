@@ -14,6 +14,8 @@
 
     const { t } = useI18n({ useScope: 'global' });
 
+    let hasActivePopup = computed(() => store.getters["PopupStore/hasActivePopup"]);
+
     let selectedRows = ref();
     let chosenScope = ref();
 
@@ -148,7 +150,7 @@
 <template>
     <div class="bottom p-0">
         <div v-if="operationTypes && compatibleChain" class="px-4 py-3 space-y-4">
-            <AccountSelect />
+            <AccountSelect :disabled="hasActivePopup" />
 
             <div v-if="deepLinkInProgress" class="flex flex-col items-center gap-2">
                 <p class="mb-0">{{ t('common.totp.inProgress') }}</p>
@@ -206,11 +208,11 @@
             </div>
 
             <div class="flex flex-wrap gap-2 pt-2">
-                <Button v-if="chosenScope && selectedRows" variant="outline" @click="goBack">
+                <Button v-if="chosenScope && selectedRows" variant="outline" @click="goBack" :disabled="hasActivePopup">
                     {{ t('common.qr.back') }}
                 </Button>
                 <router-link :to="'/dashboard'" replace>
-                    <Button variant="outline">
+                    <Button variant="outline" :disabled="hasActivePopup">
                         {{ t('common.raw.exit') }}
                     </Button>
                 </router-link>

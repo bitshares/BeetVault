@@ -15,6 +15,8 @@
 
     const { t } = useI18n({ useScope: 'global' });
 
+    let hasActivePopup = computed(() => store.getters["PopupStore/hasActivePopup"]);
+
     let walletpass = ref("");
     let passincorrect = ref("");
     let deleting = ref(false);
@@ -109,7 +111,7 @@
                     </CardTitle>
                 </CardHeader>
                 <CardContent class="space-y-3 p-4 pt-0">
-                    <AccountSelect :disabled="deleting" />
+                    <AccountSelect :disabled="deleting || hasActivePopup" />
 
                     <div v-if="accountQuantity && accountQuantity > 1" class="space-y-4">
                         <p class="text-sm text-justify">{{ t('common.settings.prompt') }}</p>
@@ -133,7 +135,7 @@
                                 <Spinner v-if="deleting" class="mr-2" />
                                 {{ deleting ? t('common.deleting') : t('common.settings.button') }}
                             </Button>
-                            <Button variant="outline" @click="router.replace('/dashboard')" :disabled="deleting">
+                            <Button variant="outline" @click="router.replace('/dashboard')" :disabled="deleting || hasActivePopup">
                                 {{ t('common.settings.exit') }}
                             </Button>
                         </div>

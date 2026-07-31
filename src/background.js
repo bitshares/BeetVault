@@ -1295,6 +1295,13 @@ const createWindow = async () => {
         _encryptedSeed = null;
         _pendingKeys.clear();
         _keyCounter = 0;
+
+        // Close only request (modal) popups on logout
+        Object.keys(modalWindows).forEach((id) => {
+            if (modalWindows[id] && !modalWindows[id].isDestroyed()) {
+                modalWindows[id].close();
+            }
+        });
     });
 
     function _decryptSeed() {

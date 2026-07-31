@@ -140,6 +140,7 @@ export function useInjectedCall(lastIndex, { store, consoleErrorBuffer, t, start
                 const popupContents = handler && handler.buildPopupContents
                     ? handler.buildPopupContents({
                         request,
+                        chain,
                         visualizedAccount,
                         account,
                         visualizedParams,
@@ -154,9 +155,11 @@ export function useInjectedCall(lastIndex, { store, consoleErrorBuffer, t, start
                     };
 
                 // 4. Create popup
+                store.dispatch("PopupStore/popupOpened");
                 try {
                     window.electron.createPopup(popupContents);
                 } catch (error) {
+                    store.dispatch("PopupStore/popupClosed");
                     window.electron.createError({
                         id: request.id,
                         title: t('common.popup.error.popupCreationFailed'),
@@ -188,6 +191,7 @@ export function useInjectedCall(lastIndex, { store, consoleErrorBuffer, t, start
                 window.electron.popupApproved(request.id, async (approvalArgs) => {
                     if (popupApproved) return;
                     popupApproved = true;
+                    store.dispatch("PopupStore/popupClosed");
 
                     let _request = request;
 
@@ -373,6 +377,7 @@ export function useInjectedCall(lastIndex, { store, consoleErrorBuffer, t, start
                 });
 
                 window.electron.popupRejected(request.id, (result) => {
+                    store.dispatch("PopupStore/popupClosed");
                     window.electron.injectedCallError({
                         id: request.id,
                         result: {

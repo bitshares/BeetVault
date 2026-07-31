@@ -1,23 +1,31 @@
 <script setup>
-    import { ref, onMounted } from 'vue';
+    import { ref, computed, onMounted } from 'vue';
     import { useI18n } from 'vue-i18n';
     
     import store from '../store/index.js';
     import router from '../router/index.js';
     import { Button } from '@/components/ui/ui/button';
+    import { Spinner } from '@/components/ui/ui/spinner';
     import { Input } from '@/components/ui/ui/input';
     import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/ui/card';
+    import { useProcessing } from '../composables/useProcessing.js';
 
     const { t } = useI18n({ useScope: 'global' });
+    const { isProcessing, startProcessing, stopProcessing } = useProcessing();
 
     let walletpass = ref("");
     let passincorrect = ref("");
+    let isDownloading = ref(false);
+
+    const canSubmit = computed(() => walletpass.value.length > 0 && !isDownloading.value);
 
     async function downloadBackup() {
-        if (!store.state.WalletStore.isUnlocked || router.currentRoute.value.path != "/backup") {
+        if (!canSubmit.value || !store.state.WalletStore.isUnlocked || router.currentRoute.value.path != "/backup") {
             return;
         }
         window.electron.resetTimer();
+        startProcessing();
+        isDownloading.value = true;
 
         const _id = store.getters['WalletStore/getCurrentID'];
 
@@ -43,6 +51,10 @@
             .catch(() => {
                 passincorrect.value = "border-red-500 ring-red-500";
                 window.electron.notify(t('common.start.invalid_password'));
+            })
+            .finally(() => {
+                isDownloading.value = false;
+                stopProcessing();
             });
     }
 
@@ -82,10 +94,11 @@
                     </div>
 
                     <div class="flex justify-end gap-2 pt-2">
-                        <Button type="button" @click="downloadBackup">
-                            {{ t('common.backup_btn') }}
+                        <Button type="button" :disabled="isProcessing" @click="downloadBackup">
+                            <Spinner v-if="isDownloading" class="h-4 w-4 mr-1" />
+                            {{ isDownloading ? t('common.processing') : t('common.backup_btn') }}
                         </Button>
-                        <Button variant="outline" @click="router.replace('/dashboard')">
+                        <Button variant="outline" :disabled="isProcessing" @click="router.replace('/dashboard')">
                             {{ t('common.settings.exit') }}
                         </Button>
                     </div>

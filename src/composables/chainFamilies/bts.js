@@ -125,7 +125,7 @@ export default {
         return _request;
     },
 
-    buildPopupContents({ request, visualizedAccount, account, visualizedParams, isBlocked, blockedAccounts, foundIDs }) {
+    buildPopupContents({ request, chain, visualizedAccount, account, visualizedParams, isBlocked, blockedAccounts, foundIDs }) {
         const contents = {
             request: request,
             visualizedAccount: visualizedAccount || account.accountName,
@@ -136,7 +136,7 @@ export default {
             contents.isBlockedAccount = isBlocked;
         }
 
-        if (!blockedAccounts || !blockedAccounts.length) {
+        if (chain !== "BTS_TEST" && (!blockedAccounts || !blockedAccounts.length)) {
             contents.serverError = true;
         }
 

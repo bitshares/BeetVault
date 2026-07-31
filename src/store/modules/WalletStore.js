@@ -493,6 +493,9 @@ const actions = {
             dispatch('AccountStore/logout', {}, {
                 root: true
             });
+            dispatch('PopupStore/reset', {}, {
+                root: true
+            });
             window.electron.clearSeed();
             resolve();
         });

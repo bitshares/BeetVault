@@ -16,6 +16,8 @@
 
     const { t } = useI18n({ useScope: 'global' });
 
+    let hasActivePopup = computed(() => store.getters["PopupStore/hasActivePopup"]);
+
     let chosenScope = ref();
     let qrInProgress = ref(false);
     let qrChoice = ref();
@@ -157,7 +159,7 @@
             </div>
 
             <div v-else class="space-y-4">
-                <AccountSelect />
+                <AccountSelect :disabled="hasActivePopup" />
 
                 <div v-if="!chosenScope" class="space-y-3">
                     <p class="mb-0">{{ t('common.qr.label') }}</p>
@@ -194,7 +196,7 @@
                 <div v-if="qrChoice && qrChoice === 'Scan'">
                     <QRScan @detection="(qr) => evaluateQR(qr)" />
                     <div class="flex justify-end pt-2">
-                        <Button variant="outline" @click="undoQRChoice">
+                        <Button variant="outline" @click="undoQRChoice" :disabled="hasActivePopup">
                             {{ t('common.qr.back') }}
                         </Button>
                     </div>
@@ -202,7 +204,7 @@
                 <div v-else-if="qrChoice && qrChoice === 'Drag'">
                     <QRDrag @detection="(qr) => evaluateQR(qr)" />
                     <div class="flex justify-end pt-2">
-                        <Button variant="outline" @click="undoQRChoice">
+                        <Button variant="outline" @click="undoQRChoice" :disabled="hasActivePopup">
                             {{ t('common.qr.back') }}
                         </Button>
                     </div>
@@ -210,7 +212,7 @@
                 <div v-else-if="qrChoice && qrChoice === 'Upload'">
                     <QRUpload @detection="(qr) => evaluateQR(qr)" />
                     <div class="flex justify-end pt-2">
-                        <Button variant="outline" @click="undoQRChoice">
+                        <Button variant="outline" @click="undoQRChoice" :disabled="hasActivePopup">
                             {{ t('common.qr.back') }}
                         </Button>
                     </div>
@@ -218,13 +220,13 @@
                 <div v-else class="space-y-3">
                     <p class="mb-0">{{ t('common.qr.main.title') }}</p>
                     <div class="flex flex-col gap-2">
-                        <Button @click="setChoice('Drag')">
+                        <Button @click="setChoice('Drag')" :disabled="hasActivePopup">
                             {{ t('common.qr.main.drag') }}
                         </Button>
-                        <Button @click="setChoice('Scan')">
+                        <Button @click="setChoice('Scan')" :disabled="hasActivePopup">
                             {{ t('common.qr.main.scan') }}
                         </Button>
-                        <Button @click="setChoice('Upload')">
+                        <Button @click="setChoice('Upload')" :disabled="hasActivePopup">
                             {{ t('common.qr.main.upload') }}
                         </Button>
                     </div>
@@ -232,10 +234,10 @@
             </div>
 
             <div class="flex flex-wrap gap-2 pt-2">
-                <Button v-if="chosenScope && selectedRows && !qrChoice" variant="outline" @click="goBack">
+                <Button v-if="chosenScope && selectedRows && !qrChoice" variant="outline" @click="goBack" :disabled="hasActivePopup">
                     {{ t('common.qr.back') }}
                 </Button>
-                <Button variant="outline" @click="router.replace('/dashboard')">
+                <Button variant="outline" @click="router.replace('/dashboard')" :disabled="hasActivePopup">
                     {{ t('common.qr.exit') }}
                 </Button>
             </div>
