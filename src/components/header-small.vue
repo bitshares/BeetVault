@@ -2,8 +2,10 @@
     import { useRouter } from 'vue-router';
     import MainMenu from "./main-menu.vue";
     import langSelect from "./lang-select.vue";
+    import { useProcessing } from '../composables/useProcessing.js';
 
     const router = useRouter();
+    const { isProcessing } = useProcessing();
 </script>
 
 <template>
@@ -16,8 +18,9 @@
                 <langSelect location="small" />
             </div>
             <div
-                class="flex flex-col items-center cursor-pointer"
-                @click="router.push('/dashboard')"
+                class="flex flex-col items-center"
+                :class="isProcessing ? '' : 'cursor-pointer'"
+                @click="!isProcessing && router.push('/dashboard')"
             >
                 <h4 class="h4 beet-typo-small font-extrabold">
                     BeetEOS

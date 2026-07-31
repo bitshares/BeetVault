@@ -8,6 +8,7 @@
     import { Tooltip, TooltipContent, TooltipTrigger } from '@/components/ui/ui/tooltip';
     import { Separator } from '@/components/ui/ui/separator';
     import { ScrollArea } from '@/components/ui/ui/scroll-area';
+    import { Spinner } from '@/components/ui/ui/spinner';
     import { Info } from 'lucide-vue-next';
 
     import ImportCloudPass from "./blockchains/bitshares/ImportCloudPass";
@@ -18,6 +19,9 @@
     import store from '../store/index.js';
     import router from '../router/index.js';
     import { blockchains } from "../config/config.js";
+    import { useProcessing } from '../composables/useProcessing.js';
+
+    const { startProcessing, stopProcessing } = useProcessing();
 
     const { t } = useI18n({ useScope: 'global' });
 
@@ -43,6 +47,7 @@
 
     let accounts_to_import = ref(null);
     let confirmPassword = ref(null);
+    let saving = ref(false);
 
     let userHasWallet = computed(() => {
         let hasWallet;
@@ -163,18 +168,28 @@
     }
 
     async function addAccounts() {
+        if (saving.value) return;
+        saving.value = true;
+        startProcessing();
+
         if (!accounts_to_import.value) {
             window.electron.notify(t(`common.addAccount.none_selected`));
+            saving.value = false;
+            stopProcessing();
             return;
         }
 
         if (!password.value || password.value === "") {
             window.electron.notify(t(`common.confirm_pass_error`));
+            saving.value = false;
+            stopProcessing();
             return;
         }
 
         if ((!userHasWallet.value || createNewWallet.value) && password.value !== confirmPassword.value) {
             window.electron.notify(t(`common.confirm_pass_error`));
+            saving.value = false;
+            stopProcessing();
             return;
         }
 
@@ -191,6 +206,9 @@
                 } catch (error) {
                     console.log(error);
                     _handleError(error);
+                    saving.value = false;
+                    stopProcessing();
+                    return;
                 }
             } else {
                 account.password = password.value;
@@ -201,9 +219,14 @@
                 } catch (error) {
                     console.log(error);
                     _handleError(error);
+                    saving.value = false;
+                    stopProcessing();
+                    return;
                 }
             }
         }
+
+        stopProcessing();
 
         if (store.state.WalletStore.isUnlocked) {
             store.dispatch("WalletStore/logout");
@@ -244,16 +267,9 @@
                         />
                     </template>
 
-                    <Tooltip>
-                        <TooltipTrigger as-child>
-                            <p class="mb-2 font-semibold text-sm">
-                                {{ t('common.chain_cta') }} <Info class="inline h-3 w-3" />
-                            </p>
-                        </TooltipTrigger>
-                        <TooltipContent>
-                            <p>{{ t('common.tooltip_chain_cta') }}</p>
-                        </TooltipContent>
-                    </Tooltip>
+                    <p class="mb-2 font-semibold text-sm">
+                        {{ t('common.chain_cta') }}
+                    </p>
                     <Select v-model="selectedChain" @update:model-value="s1c = ''">
                         <SelectTrigger class="w-full">
                             <SelectValue :placeholder="t('common.select_chain')" />
@@ -326,6 +342,7 @@
                         @back="() => step -= 1"
                         @continue="() => step = 3"
                         @imported="(x) => accounts_to_import = x"
+                        @processing="(val) => val ? startProcessing() : stopProcessing()"
                     />
                     <ImportCloudPass
                         v-else-if="selectedImportOption.type == 'bitshares/ImportCloudPass'"
@@ -334,6 +351,7 @@
                         @back="() => step -= 1"
                         @continue="() => step = 3"
                         @imported="(x) => accounts_to_import = x"
+                        @processing="(val) => val ? startProcessing() : stopProcessing()"
                     />
                     <ImportBinFile
                         v-else-if="selectedImportOption.type == 'bitshares/ImportBinFile'"
@@ -342,6 +360,7 @@
                         @back="() => step -= 1"
                         @continue="() => step = 3"
                         @imported="(x) => accounts_to_import = x"
+                        @processing="(val) => val ? startProcessing() : stopProcessing()"
                     />
                     <ImportMemo
                         v-else-if="selectedImportOption.type == 'bitshares/ImportMemo'"
@@ -350,29 +369,18 @@
                         @back="() => step -= 1"
                         @continue="() => step = 3"
                         @imported="(x) => accounts_to_import = x"
+                        @processing="(val) => val ? startProcessing() : stopProcessing()"
                     />
                     <div v-else>
                         {{ t('common.noImportOption') }}
                     </div>
                 </div>
 
-                <div v-else-if="step == 3" id="step3" class="space-y-4">
+                    <div v-else-if="step == 3" id="step3" class="space-y-4">
                     <div>
-                        <Tooltip>
-                            <TooltipTrigger as-child>
-                                <p class="mb-2 font-semibold text-sm">
-                                    <span v-if="createNewWallet">
-                                        {{ t('common.password_cta') }} <Info class="inline h-3 w-3" />
-                                    </span>
-                                    <span v-else>
-                                        {{ t('common.unlock_with_password_cta') }} <Info class="inline h-3 w-3" />
-                                    </span>
-                                </p>
-                            </TooltipTrigger>
-                            <TooltipContent>
-                                <p>{{ t('common.tooltip_password_cta') }}</p>
-                            </TooltipContent>
-                        </Tooltip>
+                        <p class="mb-4 text-sm text-muted-foreground">
+                            {{ t('common.add_account_password_cta') }}
+                        </p>
 
                         <Input
                             id="inputPass"
@@ -427,9 +435,21 @@
                         </template>
                     </div>
 
-                    <Button type="submit" @click="addAccounts">
-                        {{ t('common.next_btn') }}
-                    </Button>
+                    <div class="flex flex-wrap gap-2">
+                        <Button variant="outline" @click="step -= 1" :disabled="saving">
+                            {{ t('common.back_btn') }}
+                        </Button>
+
+                        <Button type="submit" @click="addAccounts" :disabled="saving">
+                            <Spinner v-if="saving" class="mr-2" />
+                            <template v-if="saving">
+                                {{ t('common.processing') }}
+                            </template>
+                            <template v-else>
+                                {{ t('common.next_btn') }}
+                            </template>
+                        </Button>
+                    </div>
                 </div>
             </ScrollArea>
         </div>

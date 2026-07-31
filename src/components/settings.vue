@@ -7,14 +7,19 @@
     import { Input } from '@/components/ui/ui/input';
     import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/ui/card';
     import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/ui/select';
+    import { Spinner } from '@/components/ui/ui/spinner';
 
     import store from '../store/index.js';
     import router from '../router/index.js';
+    import { useProcessing } from '../composables/useProcessing.js';
 
     const { t } = useI18n({ useScope: 'global' });
 
     let walletpass = ref("");
     let passincorrect = ref("");
+    let deleting = ref(false);
+
+    const { isProcessing, startProcessing, stopProcessing } = useProcessing();
 
     let selectedAccount = computed(() => {
         if (!store.state.WalletStore.isUnlocked) {
@@ -57,6 +62,9 @@
         if (!store.state.WalletStore.isUnlocked || router.currentRoute.value.path != "/settings") {
             return;
         }
+        if (deleting.value) return;
+        deleting.value = true;
+        startProcessing();
         window.electron.resetTimer();
 
         store
@@ -67,12 +75,16 @@
             })
             .then(async () => {
                 window.electron.notify(t('common.settings.deleted'));
+                deleting.value = false;
+                stopProcessing();
                 router.replace("/");
                 passincorrect.value = "";
                 walletpass.value = "";
             })
             .catch(() => {
                 passincorrect.value = "border-red-500 ring-red-500";
+                deleting.value = false;
+                stopProcessing();
                 window.electron.notify(t('common.start.invalid_password'));
             });
     }
@@ -116,10 +128,11 @@
                         </div>
 
                         <div class="flex justify-end gap-2 pt-2">
-                            <Button type="button" @click="deleteAccount">
-                                {{ t('common.settings.button') }}
+                            <Button type="button" @click="deleteAccount" :disabled="deleting">
+                                <Spinner v-if="deleting" class="mr-2" />
+                                {{ deleting ? t('common.deleting') : t('common.settings.button') }}
                             </Button>
-                            <Button variant="outline" @click="router.replace('/dashboard')">
+                            <Button variant="outline" @click="router.replace('/dashboard')" :disabled="deleting">
                                 {{ t('common.settings.exit') }}
                             </Button>
                         </div>

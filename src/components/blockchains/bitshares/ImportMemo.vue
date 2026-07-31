@@ -1,7 +1,9 @@
 <script setup>
     import {ref, watchEffect, watch, computed} from "vue";
     import { Button } from '@/components/ui/ui/button';
+    import { Spinner } from '@/components/ui/ui/spinner';
     import { useI18n } from 'vue-i18n';
+    import store from '../../../store/index.js';
     const { t } = useI18n({ useScope: 'global' });
 
     const props = defineProps({
@@ -12,12 +14,15 @@
         }
     });
 
-    const emit = defineEmits(['back', 'continue', 'imported']);
+    const emit = defineEmits(['back', 'continue', 'imported', 'processing']);
 
     let accountname = ref("");
     let memopk = ref("");
     let accountError = ref(false);
     let keyError = ref(false);
+    let inProgress = ref(false);
+
+    watch(inProgress, (val) => emit('processing', val));
 
     watch(accountname, () => {
         if (accountError.value) accountError.value = false;
@@ -64,7 +69,24 @@
         }
     });
 
-    async function next() {       
+    async function next() {
+        // Duplicate check: skip if account already exists in wallet
+        if (store.state.WalletStore.isUnlocked) {
+            let chain = props.chain;
+            let accountName = accountname.value;
+            let duplicate = store.state.AccountStore.accountlist.find(
+                x => x.chain === chain &&
+                (x.accountID === accountName || x.accountName === accountName)
+            );
+            if (duplicate) {
+                accountError.value = true;
+                window.electron.notify(t("common.account_already_added"));
+                return;
+            }
+        }
+
+        inProgress.value = true;
+
         let authorities = {};
         if (requiredFields.value.memo != null) {
             authorities.memo = memopk.value;
@@ -81,6 +103,7 @@
         } catch (error) {
             console.log(error);
             console.log("Account verification error, check your memo key and try again");
+            inProgress.value = false;
             window.electron.notify(t("common.unverified_account_error"));
             return;
         }
@@ -97,15 +120,18 @@
                 keyError.value = true;
                 window.electron.notify(t("common.unverified_account_error"));
             }
+            inProgress.value = false;
             return;
         }
 
         if (!blockchainRequest || !blockchainRequest.verifyAccount) {
             console.log("Account verification error, check your memo key and try again");
+            inProgress.value = false;
             window.electron.notify(t("common.unverified_account_error"));
             return;
         }
 
+        inProgress.value = false;
         emit('continue');
         emit('imported', [{
             account: {
@@ -129,6 +155,7 @@
             type="text"
             :class="accountInputClass"
             :placeholder="t('common.account_name', { 'chain' : chain})"
+            :disabled="inProgress"
             required
         >
         <p class="my-3 font-weight-normal">
@@ -144,6 +171,7 @@
                 type="password"
                 :class="memoInputClass"
                 :placeholder="t('common.memo_authority_placeholder')"
+                :disabled="inProgress"
                 required
             >
         </template>
@@ -156,26 +184,33 @@
                 <Button
                     variant="outline"
                     class="step_btn"
+                    :disabled="inProgress"
                     @click="emit('back')"
                 >
                     {{ t('common.back_btn') }}
                 </Button>
 
-                <Button
-                    v-if="accountname !== ''"
-                    class="step_btn"
-                    type="submit"
-                    @click="next"
-                >
-                    {{ t('common.next_btn') }}
-                </Button>
-                <Button
-                    v-else
-                    disabled
-                    class="step_btn"
-                    type="submit"
-                >
-                    {{ t('common.next_btn') }}
+                <template v-if="!inProgress">
+                    <Button
+                        v-if="accountname !== ''"
+                        class="step_btn"
+                        type="submit"
+                        @click="next"
+                    >
+                        {{ t('common.next_btn') }}
+                    </Button>
+                    <Button
+                        v-else
+                        disabled
+                        class="step_btn"
+                        type="submit"
+                    >
+                        {{ t('common.next_btn') }}
+                    </Button>
+                </template>
+                <Button v-else disabled class="step_btn">
+                    <Spinner class="mr-2" />
+                    {{ t('common.processing') }}
                 </Button>
             </div>
         </div>

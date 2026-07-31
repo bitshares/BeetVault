@@ -5,9 +5,13 @@
     import router from "../router/index.js";
     import store from "../store/index.js";
     import { Button } from '@/components/ui/ui/button';
+    import { Spinner } from '@/components/ui/ui/spinner';
     import { DropdownMenu, DropdownMenuContent, DropdownMenuItem, DropdownMenuTrigger } from '@/components/ui/ui/dropdown-menu';
     import { Menu, Home, Plus, KeyRound, Upload, Code, QrCode, PenLine, ShieldCheck, Download, Settings, Network, LogOut } from 'lucide-vue-next';
     import { useInjectedCall } from "@/composables/useInjectedCall.js";
+    import { useProcessing } from "@/composables/useProcessing.js";
+
+    const { isProcessing } = useProcessing();
 
     const iconMap = {
         home: Home,
@@ -209,9 +213,11 @@
             v-if="store.state.WalletStore.isUnlocked"
             size="icon-sm"
             class="rounded-full"
+            :disabled="isProcessing"
             @click="open = true"
         >
-            <Menu class="h-4 w-4" />
+            <Spinner v-if="isProcessing" class="h-4 w-4" />
+            <Menu v-else class="h-4 w-4" />
         </Button>
 
         <DropdownMenu :open="open" @update:open="open = $event">

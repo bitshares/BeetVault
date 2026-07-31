@@ -1,12 +1,13 @@
 <script setup>
-import {ref, onMounted} from "vue";
+import {ref, onMounted, watch} from "vue";
 import { useI18n } from 'vue-i18n';
 import { Button } from '@/components/ui/ui/button';
 import { Input } from '@/components/ui/ui/input';
-import { Progress } from '@/components/ui/ui/progress';
-import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from '@/components/ui/ui/table';
-import { ScrollArea } from '@/components/ui/ui/scroll-area';
-import { X } from 'lucide-vue-next';
+import { Spinner } from '@/components/ui/ui/spinner';
+    import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from '@/components/ui/ui/table';
+    import { ScrollArea } from '@/components/ui/ui/scroll-area';
+    import { X } from 'lucide-vue-next';
+    import store from '../../../store/index.js';
 
     const { t } = useI18n({ useScope: 'global' });
 
@@ -18,7 +19,7 @@ import { X } from 'lucide-vue-next';
         }
     });
 
-    const emit = defineEmits(['back', 'continue', 'imported']);
+    const emit = defineEmits(['back', 'continue', 'imported', 'processing']);
 
     onMounted(() => {
         if (!["BTS", "BTS_TEST"].includes(props.chain)) {
@@ -33,6 +34,8 @@ import { X } from 'lucide-vue-next';
     let bin_file_password = ref(null);
     let accounts = ref([]);
 
+    watch(inProgress, (val) => emit('processing', val));
+
     function removeAccount(id) {
         accounts.value = accounts.value.filter(x => x.id !== id);
     }
@@ -43,8 +46,25 @@ import { X } from 'lucide-vue-next';
 
     function _getPickedAccounts() {
         let pickedAccounts = [];
+        let skipped = 0;
+
         for (let i in accounts.value) {
             let account = accounts.value[i];
+
+            // Duplicate check: skip if account already exists in wallet
+            if (store.state.WalletStore.isUnlocked) {
+                let chain = props.chain;
+                let accountName = account.name;
+                let duplicate = store.state.AccountStore.accountlist.find(
+                    x => x.chain === chain &&
+                    (x.accountID === accountName || x.accountName === accountName)
+                );
+                if (duplicate) {
+                    skipped++;
+                    continue;
+                }
+            }
+
             pickedAccounts.push({
                 account: {
                     accountName: account.name,
@@ -53,6 +73,10 @@ import { X } from 'lucide-vue-next';
                     keys: { _vaultToken: account._vaultToken }
                 }
             });
+        }
+
+        if (skipped > 0) {
+            window.electron.notify(t("common.account_already_added"));
         }
         
         if (pickedAccounts && pickedAccounts.length) {
@@ -97,10 +121,10 @@ import { X } from 'lucide-vue-next';
 <template>
     <div id="step2" class="space-y-3">
         <template v-if="substep1 && inProgress">
-            <Progress :model-value="0" class="w-full" />
-            <p class="text-center text-sm text-muted-foreground">
-                {{ t('common.import_bin_progress') }}
-            </p>
+            <Button disabled class="w-full">
+                <Spinner class="mr-2" />
+                {{ t('common.processing') }}
+            </Button>
         </template>
         <template v-else-if="substep1" class="space-y-3">
             <div>

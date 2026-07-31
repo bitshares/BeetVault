@@ -1,6 +1,7 @@
 <script setup>
     import { ref, onMounted, computed } from 'vue';
     import { Button } from '@/components/ui/ui/button';
+    import { Spinner } from '@/components/ui/ui/spinner';
     import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/ui/select';
     import { Separator } from '@/components/ui/ui/separator';
 
@@ -9,6 +10,9 @@
 
     import store from '../store/index.js';
     import router from '../router/index.js';
+    import { useProcessing } from '../composables/useProcessing.js';
+
+    const { startProcessing, stopProcessing } = useProcessing();
 
     let hasWallet = computed(() => {
         return store.getters['WalletStore/getHasWallet'];
@@ -30,6 +34,7 @@
     let selectedWallet = ref(0);
     let passincorrect = ref("");
     let storageBackend = ref(null);
+    let unlocking = ref(false);
 
     onMounted(async () => {
         store.dispatch("WalletStore/loadWallets", {}).catch((error) => {
@@ -43,6 +48,10 @@
     });
 
     function unlockWallet() {
+        if (unlocking.value) return;
+        unlocking.value = true;
+        startProcessing();
+
         store
             .dispatch("WalletStore/getWallet", {
                 wallet_id: walletlist.value[selectedWallet.value].id,
@@ -53,14 +62,19 @@
                     await store.dispatch("WalletStore/confirmUnlock");
                 } catch (error) {
                     console.log(error);
+                    unlocking.value = false;
+                    stopProcessing();
                     return;
                 }
+                stopProcessing();
                 store.dispatch("WalletStore/setSelectedWalletIndex", selectedWallet.value);
                 walletpass.value = "";
                 router.replace("/dashboard");
             })
             .catch(() => {
                 passincorrect.value = "is-invalid";
+                unlocking.value = false;
+                stopProcessing();
                 window.electron.notify(t('common.start.invalid_password'));
             });
     }
@@ -81,7 +95,7 @@
                 to="/create"
                 replace
             >
-                <Button>
+                <Button :disabled="unlocking">
                     {{ t('common.start_cta') }}
                 </Button>
             </router-link>
@@ -98,7 +112,7 @@
                 to="/restore"
                 replace
             >
-                <Button>
+                <Button :disabled="unlocking">
                     {{ t('common.restore_cta') }}
                 </Button>
             </router-link>
@@ -131,9 +145,12 @@
             <div v-if="hasWallet" class="mt-4">
                 <Button
                     type="submit"
+                    :disabled="unlocking"
                     @click="unlockWallet"
                 >
-                    {{ t('common.unlock_cta') }}
+                    <Spinner v-if="unlocking" class="mr-2" />
+                    <template v-if="unlocking">{{ t('common.unlocking_wallet') }}</template>
+                    <template v-else>{{ t('common.unlock_cta') }}</template>
                 </Button>
             </div>
             <div
@@ -145,16 +162,16 @@
                 (e.g., GNOME Keyring, KDE Wallet, or libsecret).
             </div>
         </div>
-        <div v-if="hasWallet" class="mb-2">
+            <div v-if="hasWallet" class="mb-2">
             <Separator class="my-3" />
             <div class="flex justify-center gap-2 mb-3">
                 <router-link to="/create" replace>
-                    <Button class="step_btn">
+                    <Button class="step_btn" :disabled="unlocking">
                         {{ t('common.create_cta') }}
                     </Button>
                 </router-link>
                 <router-link to="/restore" replace>
-                    <Button class="step_btn">
+                    <Button class="step_btn" :disabled="unlocking">
                         {{ t('common.restore_cta') }}
                     </Button>
                 </router-link>

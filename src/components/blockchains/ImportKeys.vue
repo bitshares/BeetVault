@@ -4,6 +4,7 @@
     import { useI18n } from 'vue-i18n';
     import { Button } from '@/components/ui/ui/button';
     import { Input } from '@/components/ui/ui/input';
+    import { Spinner } from '@/components/ui/ui/spinner';
     import store from '../../store/index.js';
     const { t } = useI18n({ useScope: 'global' });
 
@@ -15,7 +16,7 @@
         },
     });
 
-    const emit = defineEmits(['back', 'continue', 'imported']);
+    const emit = defineEmits(['back', 'continue', 'imported', 'processing']);
 
     let accessType = ref();
     let requiredFields = ref();
@@ -51,6 +52,9 @@
     let detectedKeyType = ref(null);
     let accountError = ref(false);
     let keyError = ref(false);
+    let inProgress = ref(false);
+
+    watch(inProgress, (val) => emit('processing', val));
 
     watch(accountname, () => {
         if (accountError.value) accountError.value = false;
@@ -74,6 +78,23 @@
     });
 
     async function next() {
+        // Duplicate check: skip if account already exists in wallet
+        if (store.state.WalletStore.isUnlocked) {
+            let chain = props.chain;
+            let accountName = accountname.value;
+            let duplicate = store.state.AccountStore.accountlist.find(
+                x => x.chain === chain &&
+                (x.accountID === accountName || x.accountName === accountName)
+            );
+            if (duplicate) {
+                accountError.value = true;
+                window.electron.notify(t("common.account_already_added"));
+                return;
+            }
+        }
+
+        inProgress.value = true;
+
         let authorities = {};
         if (requiredFields.value && requiredFields.value.privateKey) {
             authorities.privateKey = privateKey.value;
@@ -93,6 +114,7 @@
             console.log(error);
             console.log("Account verification error, check your key and try again");
             detectedKeyType.value = null;
+            inProgress.value = false;
             window.electron.notify(t("common.unverified_account_error"));
             return;
         }
@@ -110,6 +132,7 @@
                 window.electron.notify(t("common.unverified_account_error"));
             }
             detectedKeyType.value = null;
+            inProgress.value = false;
             return;
         }
 
@@ -120,9 +143,12 @@
             // Clear plaintext key from memory
             authorities.privateKey = null;
 
+            inProgress.value = false;
+
             if (store.state.WalletStore.isUnlocked) {
                 window.electron.resetTimer();
             }
+
             emit('continue');
             emit('imported', [{
                 account: {
@@ -150,6 +176,7 @@
                 type="text"
                 :class="accountInputClass"
                 :placeholder="t(accessType == 'account' ? 'common.account_name' : 'common.address_name', { 'chain' : chain})"
+                :disabled="inProgress"
                 required
             />
         </div>
@@ -165,6 +192,7 @@
                     type="password"
                     :class="keyInputClass"
                     :placeholder="t('common.private_key_placeholder')"
+                    :disabled="inProgress"
                     required
                 />
             </div>
@@ -177,13 +205,17 @@
         </template>
 
         <div class="flex flex-wrap gap-2 pt-2">
-            <Button variant="outline" @click="emit('back')">
+            <Button variant="outline" @click="emit('back')" :disabled="inProgress">
                 {{ t('common.back_btn') }}
             </Button>
 
             <template v-if="requiredFields && requiredFields.privateKey">
-                <Button v-if="accountname !== '' && privateKey !== ''" @click="next">
+                <Button v-if="accountname !== '' && privateKey !== '' && !inProgress" @click="next">
                     {{ t('common.next_btn') }}
+                </Button>
+                <Button v-else-if="inProgress" disabled>
+                    <Spinner class="mr-2" />
+                    {{ t('common.processing') }}
                 </Button>
                 <Button v-else disabled>
                     {{ t('common.next_btn') }}

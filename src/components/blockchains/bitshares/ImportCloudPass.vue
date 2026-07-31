@@ -6,7 +6,8 @@
     import { Alert, AlertDescription } from '@/components/ui/ui/alert';
     import { Checkbox } from '@/components/ui/ui/checkbox';
     import { Label } from '@/components/ui/ui/label';
-    import { Progress } from '@/components/ui/ui/progress';
+    import { Spinner } from '@/components/ui/ui/spinner';
+    import store from '../../../store/index.js';
 
     const { t } = useI18n({ useScope: 'global' });
 
@@ -18,7 +19,7 @@
         }
     });
 
-    const emit = defineEmits(['back', 'continue', 'imported']);
+    const emit = defineEmits(['back', 'continue', 'imported', 'processing']);
 
     onMounted(() => {
         if (!["BTS", "BTS_TEST"].includes(props.chain)) {
@@ -34,6 +35,8 @@
     let errorOcurred = ref();
     let accountError = ref(false);
     let passError = ref(false);
+
+    watch(inProgress, (val) => emit('processing', val));
 
     watch(accountname, () => {
         if (accountError.value) accountError.value = false;
@@ -54,6 +57,21 @@
     });
 
     async function next() {
+        // Duplicate check: skip if account already exists in wallet
+        if (store.state.WalletStore.isUnlocked) {
+            let chain = props.chain;
+            let accountName = accountname.value;
+            let duplicate = store.state.AccountStore.accountlist.find(
+                x => x.chain === chain &&
+                (x.accountID === accountName || x.accountName === accountName)
+            );
+            if (duplicate) {
+                accountError.value = true;
+                window.electron.notify(t("common.account_already_added"));
+                return;
+            }
+        }
+
         inProgress.value = true;
         errorOcurred.value = false;
 
@@ -94,6 +112,7 @@
         }
 
         console.log("Account verified");
+
         cloud_pass.value = "";
         inProgress.value = false;
         emit('continue');
@@ -120,6 +139,7 @@
                 type="text"
                 :class="accountInputClass"
                 :placeholder="t('common.account_name',{ 'chain' : chain})"
+                :disabled="inProgress"
                 required
             />
         </div>
@@ -132,17 +152,18 @@
                 type="password"
                 :class="passInputClass"
                 :placeholder="t('common.btspass_placeholder')"
+                :disabled="inProgress"
                 required
             />
         </div>
 
         <div class="flex items-center gap-2">
-            <Checkbox id="legacy" :checked="legacy" @update:checked="legacy = $event" />
+            <Checkbox id="legacy" :checked="legacy" @update:checked="legacy = $event" :disabled="inProgress" />
             <Label for="legacy">{{ t('common.legacy_key_mode') }}</Label>
         </div>
 
         <div class="flex flex-wrap gap-2 pt-2">
-            <Button variant="outline" @click="emit('back')">
+            <Button variant="outline" @click="emit('back')" :disabled="inProgress">
                 {{ t('common.back_btn') }}
             </Button>
             <Button
@@ -161,10 +182,10 @@
                     </AlertDescription>
                 </Alert>
             </div>
-            <div v-if="accountname !== '' && cloud_pass !== '' && inProgress" class="flex flex-col items-center gap-2">
-                <Progress :model-value="0" class="w-full" />
-                <p class="text-sm text-muted-foreground">{{ t('common.connecting') }}</p>
-            </div>
+            <Button v-if="inProgress" disabled>
+                <Spinner class="mr-2" />
+                {{ t('common.processing') }}
+            </Button>
             <Button v-if="accountname === '' || cloud_pass === ''" disabled>
                 {{ t('common.next_btn') }}
             </Button>
