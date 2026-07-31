@@ -162,7 +162,7 @@
     "creating_wallet": "กำลังสร้างกระเป๋าเงิน...",
     "processing": "กำลังดำเนินการ...",
     "deleting": "กำลังลบ...",
-    "add_account_password_cta": "หากต้องการเพิ่มบัญชีนี้ โปรดระบุรหัสผ่านกระเป๋าเงิน BeetEOS ของคุณ",
+    "add_account_password_cta": "หากต้องการเพิ่มบัญชีนี้ โปรดระบุรหัสผ่านกระเป๋าเงิน BeetVault ของคุณ",
     "start_cta": "สร้างกระเป๋าเงินใหม่",
     "select_wallet": "เลือกกระเป๋าเงิน:",
     "password_placeholder": "รหัสผ่าน",

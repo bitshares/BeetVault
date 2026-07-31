@@ -131,11 +131,15 @@ const actions = {
                 return reject('uuid_failure');
             }
 
+            const tier = payload.backup.tier || "medium";
+            const accounts = payload.backup.accounts || [];
+
             let newwallet = {
                 id: walletid,
                 name: payload.backup.wallet,
+                tier: tier,
                 chain: '',
-                accounts: payload.backup.accounts.map(x=> x.accountID)
+                accounts: accounts.map(x => x.accountID)
             };
             BeetDB.wallets_public.put(newwallet).then(() => {
                 BeetDB.wallets_public.toArray().then(async (wallets) => {
@@ -153,8 +157,9 @@ const actions = {
                     let _encrypted;
                     try {
                         _encrypted = await window.electron.encryptAndStore({
-                            data: JSON.stringify(payload.backup.walletdata),
-                            password: hashPassword(payload.password)
+                            data: JSON.stringify(accounts),
+                            password: hashPassword(payload.password),
+                            tier: tier
                         });
                     } catch (error) {
                         console.log({error});
@@ -174,7 +179,7 @@ const actions = {
                     }
 
                     commit(GET_WALLET, newwallet);
-                    dispatch('AccountStore/loadAccounts', payload.backup.walletdata, {
+                    dispatch('AccountStore/loadAccounts', accounts, {
                         root: true
                     });
                     resolve();
@@ -224,6 +229,7 @@ const actions = {
             let newwallet = {
                 id: walletid,
                 name: payload.walletname,
+                tier: payload.tier || "medium",
                 accounts: [{
                     accountID: payload.walletdata.accountID ? payload.walletdata.accountID : payload.walletdata.accountName,
                     accountName: payload.walletdata.accountName,
@@ -322,6 +328,8 @@ const actions = {
             let newwalletdata = walletdata;
             newwalletdata.push(payload.account);
 
+            const tier = state.wallet.tier || "medium";
+
             await BeetDB.wallets_encrypted.get({
                 id: state.wallet.id
             }).then(async (wallet) => {
@@ -337,7 +345,8 @@ const actions = {
                 try {
                     encwalletdata = await window.electron.encryptAndStore({
                         data: JSON.stringify(newwalletdata),
-                        password: hashPassword(payload.password)
+                        password: hashPassword(payload.password),
+                        tier: tier
                     });
                 } catch (error) {
                     console.log(error)
@@ -378,6 +387,8 @@ const actions = {
     },
     deleteAccountFromWallet({ commit, state, rootState }, payload) {
         return new Promise(async (resolve, reject) => {
+            const tier = state.wallet.tier || "medium";
+
             await BeetDB.wallets_encrypted.get({
                 id: state.wallet.id
             }).then(async (wallet) => {
@@ -400,7 +411,8 @@ const actions = {
                 try {
                     encwalletdata = await window.electron.encryptAndStore({
                         data: JSON.stringify(newwalletdata),
-                        password: hashPassword(payload.wallet_pass)
+                        password: hashPassword(payload.wallet_pass),
+                        tier: tier
                     });
                 } catch (error) {
                     console.log(error)
@@ -502,6 +514,7 @@ const getters = {
         }
     },
     getWalletName: state => state.wallet.name,
+    getWalletTier: state => state.wallet.tier || "medium",
     getHasWallet: state => state.hasWallet,
     getWalletList: state => state.walletlist
 };

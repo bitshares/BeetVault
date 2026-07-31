@@ -91,14 +91,17 @@
             </p>
 
             <router-link
-                v-if="!hasWallet"
+                v-if="!hasWallet && !unlocking"
                 to="/create"
                 replace
             >
-                <Button :disabled="unlocking">
+                <Button>
                     {{ t('common.start_cta') }}
                 </Button>
             </router-link>
+            <Button v-else-if="!hasWallet" disabled>
+                {{ t('common.start_cta') }}
+            </Button>
 
             <p
                 v-if="!hasWallet"
@@ -108,18 +111,21 @@
             </p>
 
             <router-link
-                v-if="!hasWallet"
+                v-if="!hasWallet && !unlocking"
                 to="/restore"
                 replace
             >
-                <Button :disabled="unlocking">
+                <Button>
                     {{ t('common.restore_cta') }}
                 </Button>
             </router-link>
+            <Button v-else-if="!hasWallet" disabled>
+                {{ t('common.restore_cta') }}
+            </Button>
 
             <div v-if="hasWallet" class="w-full px-2 mt-2">
-                <Select v-model="selectedWallet" @update:model-value="passincorrect=''">
-                    <SelectTrigger class="w-full">
+                <Select v-model="selectedWallet" @update:model-value="passincorrect=''" :disabled="unlocking">
+                    <SelectTrigger class="w-full" :disabled="unlocking">
                         <SelectValue :placeholder="t('common.start.wallet_name')" />
                     </SelectTrigger>
                     <SelectContent>
@@ -136,6 +142,7 @@
                     class="w-full px-3 py-2 border rounded-md text-sm"
                     type="password"
                     :placeholder="t('common.password_placeholder')"
+                    :disabled="unlocking"
                     required
                     :class="passincorrect"
                     @keypress.enter="unlockWallet"
@@ -165,16 +172,22 @@
             <div v-if="hasWallet" class="mb-2">
             <Separator class="my-3" />
             <div class="flex justify-center gap-2 mb-3">
-                <router-link to="/create" replace>
-                    <Button class="step_btn" :disabled="unlocking">
+                <router-link v-if="!unlocking" to="/create" replace>
+                    <Button class="step_btn">
                         {{ t('common.create_cta') }}
                     </Button>
                 </router-link>
-                <router-link to="/restore" replace>
-                    <Button class="step_btn" :disabled="unlocking">
+                <Button v-else class="step_btn" disabled>
+                    {{ t('common.create_cta') }}
+                </Button>
+                <router-link v-if="!unlocking" to="/restore" replace>
+                    <Button class="step_btn">
                         {{ t('common.restore_cta') }}
                     </Button>
                 </router-link>
+                <Button v-else class="step_btn" disabled>
+                    {{ t('common.restore_cta') }}
+                </Button>
             </div>
         </div>
         <p class="mt-2 mb-2 small">

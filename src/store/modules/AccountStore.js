@@ -39,7 +39,8 @@ const actions = {
     addAccount({
         dispatch,
         commit,
-        state
+        state,
+        rootState
     }, payload) {
         return new Promise(async (resolve, reject) => {
             let existingAccount = state.accountlist.find(
@@ -52,6 +53,7 @@ const actions = {
 
             if (!existingAccount) {
                 let keys = payload.account.keys;
+                const tier = rootState.WalletStore.wallet.tier || "medium";
 
                 // If keys contain a vault token, encrypt via main process
                 if (keys._vaultToken) {
@@ -59,7 +61,8 @@ const actions = {
                     try {
                         encryptedKeys = await window.electron.encryptPendingKeys({
                             token: keys._vaultToken,
-                            password: hashPassword(payload.password)
+                            password: hashPassword(payload.password),
+                            tier: tier
                         });
                     } catch (error) {
                         console.log({error});
@@ -75,7 +78,8 @@ const actions = {
                         try {
                             _aesResult = await window.electron.encryptAndStore({
                                 data: keys[keytype],
-                                password: hashPassword(payload.password)
+                                password: hashPassword(payload.password),
+                                tier: tier
                             });
                         } catch (error) {
                             console.log({error});

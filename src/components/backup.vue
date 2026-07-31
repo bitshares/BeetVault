@@ -28,10 +28,12 @@
             })
             .then(async () => {
                 let walletName = store.getters['WalletStore/getWalletName'];
+                let walletTier = store.getters['WalletStore/getWalletTier'];
                 let accounts = JSON.stringify(store.getters['AccountStore/getAccountList'].slice());
 
                 window.electron.downloadBackup({
                     walletName: walletName,
+                    walletTier: walletTier,
                     accounts: accounts
                 });
                 

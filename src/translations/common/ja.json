@@ -169,7 +169,7 @@
     "creating_wallet": "ウォレットを作成中...",
     "processing": "処理中...",
     "deleting": "削除中...",
-    "add_account_password_cta": "このアカウントを追加するには、BeetEOSウォレットのパスワードを入力してください",
+    "add_account_password_cta": "このアカウントを追加するには、BeetVaultウォレットのパスワードを入力してください",
     "start_cta": "新しいウォレットを作成する",
     "select_wallet": "ウォレットを選択します:",
     "password_placeholder": "パスワード",

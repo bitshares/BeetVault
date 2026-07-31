@@ -169,7 +169,7 @@
     "creating_wallet": "Opretter tegnebog...",
     "processing": "Behandler...",
     "deleting": "Sletter...",
-    "add_account_password_cta": "For at tilføje denne konto skal du angive din BeetEOS-tegnebogskode",
+    "add_account_password_cta": "For at tilføje denne konto skal du angive din BeetVault-tegnebogskode",
     "start_cta": "Opret en ny tegnebog",
     "select_wallet": "Vælg tegnebog:",
     "password_placeholder": "Adgangskode",

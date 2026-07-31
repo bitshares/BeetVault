@@ -1,7 +1,7 @@
 <script setup>
     import { ref, computed } from 'vue';
     import { useI18n } from 'vue-i18n';
-    import { sha512 } from '@noble/hashes/sha2.js';
+    import { hashPassword } from '../lib/utils.js';
     const { t } = useI18n({ useScope: 'global' });
 
     import store from '../store/index.js';
@@ -16,16 +16,25 @@
     let backupPass = ref("");
     let fileError = ref(false);
     let passError = ref(false);
+    let selectedFile = ref(null);
 
     let walletlist = computed(() => {
         return store.getters['WalletStore/getWalletList'];
     })
 
+    function onFileSelect(e) {
+        const files = e.target?.files;
+        if (files && files.length) {
+            selectedFile.value = files[0];
+            fileError.value = false;
+        }
+    }
+
     async function restore() {
         fileError.value = false;
         passError.value = false;
 
-        if (!document.getElementById('restoreWallet').files[0]) {
+        if (!selectedFile.value) {
             fileError.value = true;
             return;
         }
@@ -37,7 +46,7 @@
 
         let _hash;
         try {
-            _hash = Buffer.from(sha512(backupPass.value)).toString('hex');
+            _hash = hashPassword(backupPass.value);
         } catch (error) {
             console.log(error);
             fileError.value = false;
@@ -49,14 +58,35 @@
             return;
         }
 
-        let file = document.getElementById('restoreWallet').files[0].path;
+        let fileContent;
+        try {
+            fileContent = await selectedFile.value.text();
+        } catch (error) {
+            console.log(error);
+            fileError.value = true;
+            store.dispatch(
+                "WalletStore/notifyUser",
+                {notify: "request", message: t('common.apiUtils.restore.decryptError')}
+            );
+            return;
+        }
+
         let parsedData;
         try {
-            parsedData = await window.electron.restore({file: file, seed: _hash});
+            parsedData = await window.electron.restore({fileData: fileContent, seed: _hash});
         } catch (error) {
             console.log(error);
             fileError.value = true;
             passError.value = true;
+            store.dispatch(
+                "WalletStore/notifyUser",
+                {notify: "request", message: t('common.apiUtils.restore.decryptError')}
+            );
+            return;
+        }
+
+        if (!parsedData || !parsedData.wallet || !Array.isArray(parsedData.accounts)) {
+            fileError.value = true;
             store.dispatch(
                 "WalletStore/notifyUser",
                 {notify: "request", message: t('common.apiUtils.restore.decryptError')}
@@ -115,11 +145,12 @@
                 </Tooltip>
 
                 <div class="flex items-center gap-2">
-                    <Input
+                    <input
                         id="restoreWallet"
                         type="file"
-                        class="w-full"
-                        required
+                        accept=".beet"
+                        @change="onFileSelect($event)"
+                        class="flex h-9 w-full rounded-md border border-input bg-transparent px-3 py-1 text-sm shadow-sm transition-colors file:border-0 file:bg-transparent file:text-sm file:font-medium placeholder:text-muted-foreground focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-ring disabled:cursor-not-allowed disabled:opacity-50"
                     />
                 </div>
 

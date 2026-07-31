@@ -169,7 +169,7 @@
     "creating_wallet": "지갑 생성 중...",
     "processing": "처리 중...",
     "deleting": "삭제 중...",
-    "add_account_password_cta": "이 계정을 추가하려면 BeetEOS 지갑 비밀번호를 입력하세요",
+    "add_account_password_cta": "이 계정을 추가하려면 BeetVault 지갑 비밀번호를 입력하세요",
     "start_cta": "새 지갑 만들기",
     "select_wallet": "지갑 선택:",
     "password_placeholder": "비밀번호",

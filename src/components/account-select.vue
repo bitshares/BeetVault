@@ -7,6 +7,13 @@
     import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/ui/select';
     const { t } = useI18n({ useScope: 'global' });
 
+    const props = defineProps({
+        disabled: {
+            type: Boolean,
+            default: false
+        }
+    });
+
     let chosenAccount = ref(store.getters["AccountStore/getCurrentIndex"]);
     let selectedAccount = ref();
 
@@ -73,7 +80,7 @@
             v-model="chosenAccount"
             required
         >
-            <SelectTrigger class="w-full">
+            <SelectTrigger class="w-full" :disabled="disabled">
                 <SelectValue :placeholder="t('common.account')" />
             </SelectTrigger>
             <SelectContent>

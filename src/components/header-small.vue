@@ -23,7 +23,7 @@
                 @click="!isProcessing && router.push('/dashboard')"
             >
                 <h4 class="h4 beet-typo-small font-extrabold">
-                    BeetEOS
+                    BeetVault
                 </h4>
             </div>
         </div>

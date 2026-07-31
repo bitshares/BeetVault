@@ -169,7 +169,7 @@
     "creating_wallet": "Wallet wird erstellt...",
     "processing": "Verarbeitung...",
     "deleting": "Löschen...",
-    "add_account_password_cta": "Um dieses Konto hinzuzufügen, geben Sie bitte Ihr BeetEOS-Wallet-Passwort ein",
+    "add_account_password_cta": "Um dieses Konto hinzuzufügen, geben Sie bitte Ihr BeetVault-Wallet-Passwort ein",
     "start_cta": "Erstellen Sie ein neues Wallet",
     "select_wallet": "Wallet auswählen:",
     "password_placeholder": "Passwort",

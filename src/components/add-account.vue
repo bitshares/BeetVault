@@ -406,16 +406,9 @@
                         </template>
 
                         <template v-if="createNewWallet">
-                            <Tooltip>
-                                <TooltipTrigger as-child>
-                                    <p class="mb-2 font-semibold text-sm">
-                                        {{ t('common.security_tier_cta') }} <Info class="inline h-3 w-3" />
-                                    </p>
-                                </TooltipTrigger>
-                                <TooltipContent>
-                                    <p>{{ t('common.tooltip_security_tier') }}</p>
-                                </TooltipContent>
-                            </Tooltip>
+                            <p class="mb-2 font-semibold text-sm">
+                                {{ t('common.security_tier_cta') }}
+                            </p>
                             <Select v-model="securityTier">
                                 <SelectTrigger class="w-full mb-3">
                                     <SelectValue :placeholder="t('common.select_tier')" />

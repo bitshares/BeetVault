@@ -21,7 +21,7 @@
                         height="150"
                     >
                     <div class="beet-typo">
-                        BeetEOS
+                        BeetVault
                     </div>
                     <h3 class="h3">
                         {{ t("common.welcome" ) }}

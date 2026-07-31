@@ -109,7 +109,7 @@
                     </CardTitle>
                 </CardHeader>
                 <CardContent class="space-y-3 p-4 pt-0">
-                    <AccountSelect />
+                    <AccountSelect :disabled="deleting" />
 
                     <div v-if="accountQuantity && accountQuantity > 1" class="space-y-4">
                         <p class="text-sm text-justify">{{ t('common.settings.prompt') }}</p>
@@ -121,6 +121,7 @@
                                 type="password"
                                 class="w-full"
                                 :placeholder="t('common.password_placeholder')"
+                                :disabled="deleting"
                                 required
                                 :class="passincorrect"
                                 @focus="passincorrect = ''"

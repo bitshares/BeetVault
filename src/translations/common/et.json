@@ -169,7 +169,7 @@
     "creating_wallet": "Rahakoti loomine...",
     "processing": "Töötlemine...",
     "deleting": "Kustutamine...",
-    "add_account_password_cta": "Selle konto lisamiseks sisestage oma BeetEOS rahakoti parool",
+    "add_account_password_cta": "Selle konto lisamiseks sisestage oma BeetVault rahakoti parool",
     "start_cta": "Looge uus rahakott",
     "select_wallet": "Valige Rahakott:",
     "password_placeholder": "Parool",

@@ -145,7 +145,7 @@ const createModal = async (arg, modalEvent) => {
 
     modalWindows[id] = new BrowserWindow({
         parent: mainWindow,
-        title: "BeetEOS prompt",
+        title: "BeetVault prompt",
         width: modalWidth,
         height: modalHeight,
         minWidth: modalWidth,
@@ -235,7 +235,7 @@ const createModal = async (arg, modalEvent) => {
 
         receiptWindows[id] = new BrowserWindow({
             parent: mainWindow,
-            title: "BeetEOS receipt",
+            title: "BeetVault receipt",
             width: modalWidth,
             height: modalHeight,
             minWidth: modalWidth,
@@ -311,7 +311,7 @@ const createError = async (arg, errorEvent) => {
 
     errorWindow = new BrowserWindow({
         parent: mainWindow,
-        title: "BeetEOS error",
+        title: "BeetVault error",
         width: modalWidth,
         height: modalHeight,
         minWidth: modalWidth,
@@ -627,7 +627,7 @@ const createWindow = async () => {
             },
         },
     ]);
-    tray.setToolTip("BeetEOS");
+    tray.setToolTip("BeetVault");
 
     tray.on("right-click", (event, bounds) => {
         tray.popUpContextMenu(contextMenu);
@@ -1156,24 +1156,16 @@ const createWindow = async () => {
 
     ipcMain.handle("restore", async (event, arg) => {
         if (!validateMainSender(event.senderFrame)) throw new Error('Unauthorized');
-        const { file, seed } = arg;
+        const { fileData, seed } = arg;
 
-        if (!file || !file.endsWith('.beet')) {
-            console.log("Invalid restore file path");
-            throw new Error('Invalid file path');
-        }
-
-        let data;
-        try {
-            data = await fsPromises.readFile(file, "utf-8");
-        } catch (error) {
-            console.log("Error reading file");
-            throw new Error('Failed to read file');
+        if (!fileData) {
+            console.log("Invalid restore file data");
+            throw new Error('Invalid file data');
         }
 
         let decryptedData;
         try {
-            decryptedData = await decrypt(data, seed);
+            decryptedData = await decrypt(fileData, seed);
         } catch (error) {
             console.log(error);
             throw new Error('Decryption failed');
@@ -1184,7 +1176,15 @@ const createWindow = async () => {
             throw new Error('Wallet restore failed');
         }
 
-        return decryptedData;
+        let parsed;
+        try {
+            parsed = JSON.parse(decryptedData);
+        } catch (error) {
+            console.log("Failed to parse restored data:", error);
+            throw new Error('Invalid backup format');
+        }
+
+        return parsed;
     });
 
     const safeDomains = [
@@ -1249,9 +1249,9 @@ const createWindow = async () => {
     ipcMain.on("notify", (event, arg) => {
         if (!validateSender(event.senderFrame)) return;
         logger.debug("notify");
-        const NOTIFICATION_TITLE = "Beet wallet notification";
+        const NOTIFICATION_TITLE = "BeetVault wallet notification";
         const NOTIFICATION_BODY =
-            arg == "request" ? "Beet has received a new request." : arg;
+            arg == "request" ? "BeetVault has received a new request." : arg;
 
         if (os.platform === "win32") {
             app.setAppUserModelId(app.name);
@@ -1735,7 +1735,7 @@ const createWindow = async () => {
 
     ipcMain.on("downloadBackup", async (event, arg) => {
         if (!validateMainSender(event.senderFrame)) return;
-        const { walletName, accounts } = arg;
+        const { walletName, walletTier, accounts } = arg;
         const seed = _decryptSeed();
         if (!seed) {
             console.error("Cannot backup: wallet not unlocked");
@@ -1779,6 +1779,7 @@ const createWindow = async () => {
                     encrypted = await encrypt(
                         JSON.stringify({
                             wallet: walletName,
+                            tier: walletTier || "medium",
                             accounts: JSON.parse(accounts),
                         }),
                         seed
@@ -1845,7 +1846,8 @@ if (currentOS === "win32" || currentOS === "linux") {
             try {
                 deeplink = argv.find(arg =>
                     typeof arg === 'string' &&
-                    (arg.startsWith('beeteos://') || arg.startsWith('rawbeeteos://'))
+                    (arg.startsWith('beeteos://') || arg.startsWith('rawbeeteos://') ||
+                     arg.startsWith('beetvault://') || arg.startsWith('rawbeetvault://'))
                 );
             } catch (error) {
                 console.log(error);
@@ -1857,14 +1859,18 @@ if (currentOS === "win32" || currentOS === "linux") {
                 return;
             }
 
-            const isRaw = deeplink.startsWith('rawbeeteos://');
-            const apiPrefix = isRaw ? 'rawbeeteos://api/' : 'beeteos://api/';
-            if (!deeplink.includes(apiPrefix)) {
+            const isRaw = deeplink.startsWith('rawbeeteos://') || deeplink.startsWith('rawbeetvault://');
+            const apiPrefix = isRaw ? 'raw' : '';
+            const schemePrefix = deeplink.startsWith('rawbeeteos://') ? 'rawbeeteos://api/'
+                : deeplink.startsWith('rawbeetvault://') ? 'rawbeetvault://api/'
+                : deeplink.startsWith('beetvault://') ? 'beetvault://api/'
+                : 'beeteos://api/';
+            if (!deeplink.includes(schemePrefix)) {
                 console.log("Invalid deep link format");
                 return;
             }
 
-            let deeplinkingUrl = deeplink.split(apiPrefix)[1];
+            let deeplinkingUrl = deeplink.split(schemePrefix)[1];
             if (!deeplinkingUrl || deeplinkingUrl.length > 4096) {
                 console.log("Deep link URL missing or too long");
                 return;
@@ -1901,6 +1907,14 @@ if (currentOS === "win32" || currentOS === "linux") {
             defaultPath,
         ]);
 
+        app.setAsDefaultProtocolClient("beetvault", process.execPath, [
+            defaultPath,
+        ]);
+
+        app.setAsDefaultProtocolClient("rawbeetvault", process.execPath, [
+            defaultPath,
+        ]);
+
         app.whenReady().then(() => {
             createWindow();
         });
@@ -1908,6 +1922,8 @@ if (currentOS === "win32" || currentOS === "linux") {
 } else {
     app.setAsDefaultProtocolClient("beeteos");
     app.setAsDefaultProtocolClient("rawbeeteos");
+    app.setAsDefaultProtocolClient("beetvault");
+    app.setAsDefaultProtocolClient("rawbeetvault");
 
     app.whenReady().then(() => {
         createWindow();
@@ -1923,10 +1939,11 @@ if (currentOS === "win32" || currentOS === "linux") {
 
         dialog.showErrorBox("Error", urlType);
 
-        let deeplinkingUrl = urlString.replace(
-            urlType === "deeplink" ? "beeteos://api/" : "rawbeeteos://api/",
-            ""
-        );
+        let deeplinkingUrl = urlString
+            .replace(/rawbeeteos:\/\/api\//, "")
+            .replace(/rawbeetvault:\/\/api\//, "")
+            .replace(/beetvault:\/\/api\//, "")
+            .replace(/beeteos:\/\/api\//, "");
 
         let qs;
         try {
