@@ -174,6 +174,7 @@
         "payload": "View payload JSON",
         "request": "View request JSON",
         "result": "View network result JSON",
+        "fullTransaction": "View full transaction",
         "details": "View details",
         "language": "Language",
         "chainOperations": "Chain operations",
@@ -196,7 +197,14 @@
             "keyRetrievalFailed": "Key retrieval failed",
             "keyRetrievalFailedDesc": "Unable to retrieve the required signing key for this operation.",
             "keyDecryptionFailed": "Key decryption failed",
-            "keyDecryptionFailedDesc": "Unable to decrypt the signing key. Please check your wallet password."
+            "keyDecryptionFailedDesc": "Unable to decrypt the signing key. Please check your wallet password.",
+            "contextProcess": "Attempting to process a {chain} transaction request",
+            "contextBroadcast": "Attempting to broadcast a {chain} transaction",
+            "contextKeyRetrieval": "Attempting to retrieve active key for a {chain} transaction",
+            "contextSignAndBroadcast": "Attempting to sign and broadcast a {chain} transaction",
+            "noResultTerminal": "No final result returned",
+            "insufficientKeyAuthority": "Insufficient Key Authority",
+            "insufficientKeyAuthorityDesc": "Your imported key type ({keyType}) cannot perform the requested operations: {error}. Please import an account with a higher-level key (active or owner) for this transaction."
         }
     },
     "abHome": "Home",

@@ -1,13 +1,13 @@
 import BlockchainAPI from "./BlockchainAPI.js";
-import { Apis } from "bitsharesjs-ws";
 import {
+    Apis,
     Aes,
     TransactionHelper,
     PrivateKey,
     PublicKey,
     TransactionBuilder,
     Signature,
-} from "bitsharesjs";
+} from "./bitshares/library";
 import * as Socket from "simple-websocket";
 
 import * as Actions from "../Actions.js";

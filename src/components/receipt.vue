@@ -177,7 +177,7 @@ async function copyToClipboard(_data) {
             </CollapsibleTrigger>
             <CollapsibleContent>
                 <div class="pr-2 pl-1 pb-4">
-                    <div>{{ notifyTXT }}</div>
+                    <div class="text-left">{{ notifyTXT }}</div>
 
                     <div
                         v-if="!!visualizedParams"
@@ -238,7 +238,7 @@ async function copyToClipboard(_data) {
                                 </p>
                             </CardContent>
                             <CardFooter>
-                                <div class="flex flex-wrap gap-2">
+                                <div class="flex flex-wrap gap-2 justify-start">
                                     <Button variant="outline" @click="openOPReq = true">
                                         {{ t("common.popup.request") }}
                                     </Button>
@@ -278,12 +278,12 @@ async function copyToClipboard(_data) {
         <Collapsible v-if="result">
             <CollapsibleTrigger class="flex items-center gap-2 w-full p-3 hover:bg-accent rounded-md text-left">
                 <ChevronRight class="h-4 w-4" />
-                <span>{{ t("common.popup.result") }}</span>
+                <span>{{ t("common.popup.fullTransaction") }}</span>
             </CollapsibleTrigger>
             <CollapsibleContent>
                 <div class="px-1 pb-2">
                     <Button variant="outline" @click="openResult = true">
-                        {{ t("common.popup.result") }}
+                        {{ t("common.popup.fullTransaction") }}
                     </Button>
                 </div>
             </CollapsibleContent>
@@ -317,7 +317,7 @@ async function copyToClipboard(_data) {
     </div>
 
     <Dialog v-model:open="openOPReq">
-        <DialogContent class="max-w-full h-full">
+        <DialogContent>
             <DialogTitle v-if="visualizedParams && visualizedParams.length > 1">
                 {{ t("common.popup.keywords.request") }} ({{ page }}/{{
                     visualizedParams.length
@@ -341,7 +341,7 @@ async function copyToClipboard(_data) {
     </Dialog>
 
     <Dialog v-model:open="openOPRes">
-        <DialogContent class="max-w-full h-full">
+        <DialogContent>
             <DialogTitle v-if="visualizedParams && visualizedParams.length > 1">
                 {{ t("common.popup.keywords.result") }} ({{ page }}/{{
                     visualizedParams.length
@@ -365,7 +365,7 @@ async function copyToClipboard(_data) {
     </Dialog>
 
     <Dialog v-model:open="openOpDetails">
-        <DialogContent class="max-w-full h-full">
+        <DialogContent>
             <DialogTitle>
                 {{ t("common.popup.details") }}
             </DialogTitle>
@@ -380,7 +380,7 @@ async function copyToClipboard(_data) {
     </Dialog>
 
     <Dialog v-model:open="openResult">
-        <DialogContent class="max-w-full h-full">
+        <DialogContent>
             <DialogTitle>
                 {{ t("common.popup.result") }}
             </DialogTitle>
@@ -399,7 +399,7 @@ async function copyToClipboard(_data) {
     </Dialog>
 
     <Dialog v-model:open="openMoreRequest">
-        <DialogContent class="max-w-full h-full">
+        <DialogContent>
             <DialogTitle>
                 {{ t("common.popup.request") }}
             </DialogTitle>

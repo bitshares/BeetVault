@@ -6,7 +6,7 @@ import fsPromises from "fs/promises";
 import os from "os";
 
 import queryString from "query-string";
-import { PrivateKey } from "bitsharesjs";
+import { PrivateKey } from "./lib/blockchains/bitshares/library";
 
 import { v4 as uuidv4 } from "uuid";
 import { encrypt, decrypt } from "./lib/crypto.js";
@@ -288,11 +288,18 @@ const createError = async (arg, errorEvent) => {
     }
 
     let title = arg.title || "Unknown error";
+    let titleKey = arg.titleKey || "";
+    let titleParams = arg.titleParams || {};
     let errorMessage = arg.errorMessage || "An unexpected error occurred.";
+    let errorMessageKey = arg.errorMessageKey || "";
+    let errorMessageParams = arg.errorMessageParams || {};
     let terminalError = arg.terminalError || "";
+    let terminalErrorKey = arg.terminalErrorKey || "";
     let consoleLogs = arg.consoleLogs || [];
     let timestamp = arg.timestamp || new Date().toISOString();
     let context = arg.context || "";
+    let contextKey = arg.contextKey || "";
+    let contextParams = arg.contextParams || {};
 
     let targetURL = `file://${__dirname}/error.html?id=${encodeURIComponent(id)}`;
 
@@ -301,11 +308,18 @@ const createError = async (arg, errorEvent) => {
         event.reply(`respond:error:${id}`, {
             id,
             title,
+            titleKey,
+            titleParams,
             errorMessage,
+            errorMessageKey,
+            errorMessageParams,
             terminalError,
+            terminalErrorKey,
             consoleLogs,
             timestamp,
             context,
+            contextKey,
+            contextParams,
         });
     });
 
@@ -486,7 +500,7 @@ async function _parseDeeplink(
         return;
     }
 
-    if (!settingsRows.includes(request.payload.method)) {
+    if (settingsRows && !settingsRows.includes(request.payload.method)) {
         console.log("Unauthorized beet operation");
         return;
     }

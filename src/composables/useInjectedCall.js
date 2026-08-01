@@ -114,12 +114,14 @@ export function useInjectedCall(lastIndex, { store, consoleErrorBuffer, t, start
                             console.log(`Key type validation failed: ${keyAuthError.error}`);
                             window.electron.createError({
                                 id: request.id,
-                                title: "Insufficient Key Authority",
-                                errorMessage: `Your imported key type (${keyAuthError.userKeyType}) cannot perform the requested operations: ${keyAuthError.error.split(": ")[1] || keyAuthError.error}. Please import an account with a higher-level key (active or owner) for this transaction.`,
+                                titleKey: 'common.popup.error.insufficientKeyAuthority',
+                                errorMessageKey: 'common.popup.error.insufficientKeyAuthorityDesc',
+                                errorMessageParams: { keyType: keyAuthError.userKeyType, error: keyAuthError.error.split(": ")[1] || keyAuthError.error },
                                 terminalError: `Key type validation failed: ${JSON.stringify(keyAuthError.deniedOps)}`,
                                 consoleLogs: [...consoleErrorBuffer.value],
                                 timestamp: new Date().toISOString(),
-                                context: `Attempting to sign ${chain} transaction with ${keyAuthError.userKeyType} key`
+                                contextKey: 'common.popup.error.contextSignAndBroadcast',
+                                contextParams: { chain }
                             });
                             window.electron.injectedCallError({
                                 id: request.id,
@@ -162,12 +164,13 @@ export function useInjectedCall(lastIndex, { store, consoleErrorBuffer, t, start
                     store.dispatch("PopupStore/popupClosed");
                     window.electron.createError({
                         id: request.id,
-                        title: t('common.popup.error.popupCreationFailed'),
-                        errorMessage: t('common.popup.error.popupCreationFailedDesc'),
+                        titleKey: 'common.popup.error.popupCreationFailed',
+                        errorMessageKey: 'common.popup.error.popupCreationFailedDesc',
                         terminalError: String(error),
                         consoleLogs: [...consoleErrorBuffer.value],
                         timestamp: new Date().toISOString(),
-                        context: `Attempting to process a ${chain} transaction request`
+                        contextKey: 'common.popup.error.contextProcess',
+                        contextParams: { chain }
                     });
                     window.electron.injectedCallError({
                         id: request.id,
@@ -217,12 +220,13 @@ export function useInjectedCall(lastIndex, { store, consoleErrorBuffer, t, start
                             console.log(error);
                             window.electron.createError({
                                 id: _request.id,
-                                title: t('common.popup.error.broadcastFailed'),
+                                titleKey: 'common.popup.error.broadcastFailed',
                                 errorMessage: getErrorMessage(error),
                                 terminalError: formatError(error),
                                 consoleLogs: [...consoleErrorBuffer.value],
                                 timestamp: new Date().toISOString(),
-                                context: `Attempting to broadcast a ${chain} transaction`
+                                contextKey: 'common.popup.error.contextBroadcast',
+                                contextParams: { chain }
                             });
                             window.electron.injectedCallError({
                                 id: _request.id,
@@ -238,12 +242,13 @@ export function useInjectedCall(lastIndex, { store, consoleErrorBuffer, t, start
                         if (!finalResult || !finalResult.broadcastTransaction) {
                             window.electron.createError({
                                 id: _request.id,
-                                title: t('common.popup.error.broadcastFailed'),
-                                errorMessage: t('common.popup.error.noResultDesc'),
-                                terminalError: "No final result returned from broadcast",
+                                titleKey: 'common.popup.error.broadcastFailed',
+                                errorMessageKey: 'common.popup.error.noResultDesc',
+                                terminalErrorKey: 'common.popup.error.noResultTerminal',
                                 consoleLogs: [...consoleErrorBuffer.value],
                                 timestamp: new Date().toISOString(),
-                                context: `Attempting to broadcast a ${chain} transaction`
+                                contextKey: 'common.popup.error.contextBroadcast',
+                                contextParams: { chain }
                             });
                             window.electron.injectedCallError({
                                 id: _request.id,
@@ -277,12 +282,13 @@ export function useInjectedCall(lastIndex, { store, consoleErrorBuffer, t, start
                         console.log(error);
                         window.electron.createError({
                             id: request.id,
-                            title: t('common.popup.error.keyRetrievalFailed'),
+                            titleKey: 'common.popup.error.keyRetrievalFailed',
                             errorMessage: getErrorMessage(error),
                             terminalError: formatError(error),
                             consoleLogs: [...consoleErrorBuffer.value],
                             timestamp: new Date().toISOString(),
-                            context: `Attempting to retrieve active key for a ${chain} transaction`
+                            contextKey: 'common.popup.error.contextKeyRetrieval',
+                            contextParams: { chain }
                         });
                         window.electron.injectedCallError({
                             id: request.id,
@@ -306,12 +312,13 @@ export function useInjectedCall(lastIndex, { store, consoleErrorBuffer, t, start
                             console.log(error);
                             window.electron.createError({
                                 id: request.id,
-                                title: t('common.popup.error.signAndBroadcastFailed'),
+                                titleKey: 'common.popup.error.signAndBroadcastFailed',
                                 errorMessage: getErrorMessage(error),
                                 terminalError: formatError(error),
                                 consoleLogs: [...consoleErrorBuffer.value],
                                 timestamp: new Date().toISOString(),
-                                context: `Attempting to sign and broadcast a ${chain} transaction`
+                                contextKey: 'common.popup.error.contextSignAndBroadcast',
+                                contextParams: { chain }
                             });
                             window.electron.injectedCallError({
                                 id: request.id,
@@ -326,15 +333,16 @@ export function useInjectedCall(lastIndex, { store, consoleErrorBuffer, t, start
                         notifyTXT = t("common.apiUtils.signAndBroadcast");
                     }
 
-                    if (!finalResult || !finalResult.signAndBroadcast) {
+                    if (!finalResult) {
                         window.electron.createError({
                             id: request.id,
-                            title: t('common.popup.error.signAndBroadcastFailed'),
-                            errorMessage: t('common.popup.error.noResultDesc'),
-                            terminalError: "No final result returned from sign and broadcast",
+                            titleKey: 'common.popup.error.signAndBroadcastFailed',
+                            errorMessageKey: 'common.popup.error.noResultDesc',
+                            terminalErrorKey: 'common.popup.error.noResultTerminal',
                             consoleLogs: [...consoleErrorBuffer.value],
                             timestamp: new Date().toISOString(),
-                            context: `Attempting to sign and broadcast a ${chain} transaction`
+                            contextKey: 'common.popup.error.contextSignAndBroadcast',
+                            contextParams: { chain }
                         });
                         window.electron.injectedCallError({
                             id: request.id,
@@ -356,7 +364,7 @@ export function useInjectedCall(lastIndex, { store, consoleErrorBuffer, t, start
                         try {
                             window.electron.createReceipt({
                                 request: request,
-                                result: finalResult.signAndBroadcast,
+                                result: finalResult,
                                 notifyTXT: notifyTXT,
                                 receipt: {
                                     visualizedAccount:

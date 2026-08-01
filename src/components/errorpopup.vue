@@ -1,5 +1,5 @@
 <script setup>
-    import { ref, watchEffect } from "vue";
+    import { ref, computed, watchEffect } from "vue";
     import queryString from "query-string";
     import { useI18n } from "vue-i18n";
     import { Button } from '@/components/ui/ui/button';
@@ -37,17 +37,44 @@
     }
 
     const title = ref("");
+    const titleKey = ref("");
+    const titleParams = ref({});
     const errorMessage = ref("");
+    const errorMessageKey = ref("");
+    const errorMessageParams = ref({});
     const terminalError = ref("");
+    const terminalErrorKey = ref("");
     const consoleLogs = ref([]);
     const timestamp = ref("");
     const context = ref("");
+    const contextKey = ref("");
+    const contextParams = ref({});
 
     let openTerminalError = ref(true);
     let openConsoleLogs = ref(true);
 
     let terminalErrorJSON = ref("");
     let consoleLogsJSON = ref("");
+
+    const computedTitle = computed(() => {
+        if (titleKey.value) return t(titleKey.value, titleParams.value);
+        return title.value || t('common.popup.error.title');
+    });
+
+    const computedErrorMessage = computed(() => {
+        if (errorMessageKey.value) return t(errorMessageKey.value, errorMessageParams.value);
+        return errorMessage.value || t('common.popup.error.defaultMessage');
+    });
+
+    const computedContext = computed(() => {
+        if (contextKey.value) return t(contextKey.value, contextParams.value);
+        return context.value;
+    });
+
+    const computedTerminalError = computed(() => {
+        if (terminalErrorKey.value) return t(terminalErrorKey.value);
+        return terminalError.value;
+    });
 
     watchEffect(() => {
         const id = handleProp("id");
@@ -57,14 +84,30 @@
             if (data.title) {
                 title.value = data.title;
             }
+            if (data.titleKey) {
+                titleKey.value = data.titleKey;
+            }
+            if (data.titleParams) {
+                titleParams.value = data.titleParams;
+            }
             if (data.errorMessage) {
                 errorMessage.value = data.errorMessage;
+            }
+            if (data.errorMessageKey) {
+                errorMessageKey.value = data.errorMessageKey;
+            }
+            if (data.errorMessageParams) {
+                errorMessageParams.value = data.errorMessageParams;
             }
             if (data.terminalError) {
                 terminalError.value = data.terminalError;
                 terminalErrorJSON.value = typeof data.terminalError === 'string'
                     ? data.terminalError
                     : JSON.stringify(data.terminalError, undefined, 4);
+            }
+            if (data.terminalErrorKey) {
+                terminalErrorKey.value = data.terminalErrorKey;
+                terminalErrorJSON.value = t(data.terminalErrorKey);
             }
             if (data.consoleLogs && data.consoleLogs.length) {
                 consoleLogs.value = data.consoleLogs;
@@ -75,6 +118,12 @@
             }
             if (data.context) {
                 context.value = data.context;
+            }
+            if (data.contextKey) {
+                contextKey.value = data.contextKey;
+            }
+            if (data.contextParams) {
+                contextParams.value = data.contextParams;
             }
         });
     });
@@ -96,18 +145,18 @@
     <div class="w-full overflow-y-auto p-4 space-y-4 text-left">
         <Alert variant="destructive">
             <AlertTriangle class="h-4 w-4" />
-            <AlertTitle>{{ title || t('common.popup.error.title') }}</AlertTitle>
+            <AlertTitle>{{ computedTitle }}</AlertTitle>
             <AlertDescription>
-                {{ (errorMessage || t('common.popup.error.defaultMessage')).split('{')[0].trim() }}
+                {{ computedErrorMessage.split('{')[0].trim() }}
             </AlertDescription>
         </Alert>
 
-        <Card v-if="context">
+        <Card v-if="computedContext">
             <CardHeader>
                 <CardTitle>{{ t('common.popup.error.context') }}</CardTitle>
             </CardHeader>
             <CardContent>
-                <p class="text-sm text-muted-foreground">{{ context }}</p>
+                <p class="text-sm text-muted-foreground">{{ computedContext }}</p>
                 <p
                     v-if="timestamp"
                     class="text-xs text-muted-foreground mt-1"

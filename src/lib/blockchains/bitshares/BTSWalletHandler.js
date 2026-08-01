@@ -2,7 +2,7 @@ import {
     PrivateKey,
     PublicKey,
     Aes
-} from "bitsharesjs";
+} from "./library";
 import {
     decompress
 } from "lzma";
