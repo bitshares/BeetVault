@@ -1,14 +1,14 @@
 import v from "../serializer/SerializerValidation.js";
 
-var DB_MAX_INSTANCE_ID = (1n << 48n) - 1n;
+const DB_MAX_INSTANCE_ID = (1n << 48n) - 1n;
 
 class ObjectId {
   constructor(space, type, instance) {
     this.space = space;
     this.type = type;
     this.instance = instance;
-    var instance_string = this.instance.toString();
-    var ObjectId = `${this.space}.${this.type}.${instance_string}`;
+    const instance_string = this.instance.toString();
+    const ObjectId = `${this.space}.${this.type}.${instance_string}`;
     if (!v.is_digits(instance_string)) {
       throw new `Invalid object id ${ObjectId}`();
     }
@@ -19,7 +19,7 @@ class ObjectId {
       return value;
     }
 
-    var params = v.require_match(
+    const params = v.require_match(
       /^([0-9]+)\.([0-9]+)\.([0-9]+)$/,
       v.required(value, "ObjectId"),
       "ObjectId"
@@ -28,9 +28,9 @@ class ObjectId {
   }
 
   static fromLong(long) {
-    var space = Number(long >> 56n);
-    var type = Number((long >> 48n) & 0x00ffn);
-    var instance = long & DB_MAX_INSTANCE_ID;
+    const space = Number(long >> 56n);
+    const type = Number((long >> 48n) & 0x00ffn);
+    const instance = long & DB_MAX_INSTANCE_ID;
     return new ObjectId(space, type, instance);
   }
 

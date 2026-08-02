@@ -30,10 +30,10 @@ import ChainConfig from "./ChainConfig.ts";
 //     `currentAPI.close()` therefore never kills a sibling's in-flight
 //     request. `reset()` / `destroy()` perform a hard teardown.
 
-var autoReconnect = false; // by default don't use reconnecting-websocket
+let autoReconnect = false; // by default don't use reconnecting-websocket
 
-var Apis: any = null;
-var statusCb: any = null;
+let Apis: any = null;
+let statusCb: any = null;
 
 export const setRpcConnectionStatusCallback = (callback: any) => {
   statusCb = callback;
@@ -176,7 +176,7 @@ const newApis = (
 
     state.url = connectUrl;
     let rpc_user = "",
-      rpc_password = "";
+        rpc_password = "";
     if (
       typeof (globalThis as any).window !== "undefined" &&
       (globalThis as any).window.location &&
@@ -229,11 +229,9 @@ const newApis = (
         if (opts.enableCrypto)
           state._crypt = new GrapheneApi(state.ws_rpc, "crypto");
 
-        var db_promise = state._db.init().then(() => {
-          return state._db.exec("get_chain_id", []).then((_chain_id: string) => {
-            state.chain_id = _chain_id;
-            return ChainConfig.setChainId(_chain_id);
-          });
+        const db_promise = state._db.init().then(async () => {
+          state.chain_id = await state._db.exec("get_chain_id", []);
+          return ChainConfig.setChainId(state.chain_id);
         });
 
         state.ws_rpc.on_reconnect = () => {

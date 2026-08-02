@@ -59,7 +59,7 @@ function timeStringToDate(time_string) {
 // Plain-object deep merge (Immutable.Map.mergeDeep replacement).
 function mergeDeep(target, source) {
   if (!isObject(target) || !isObject(source)) return source;
-  const out = Object.assign({}, target);
+    const out = { ...target };
   for (const key of Object.keys(source)) {
     if (isObject(source[key]) && isObject(target[key])) {
       out[key] = mergeDeep(target[key], source[key]);
@@ -131,7 +131,7 @@ class ChainStore {
 
   init(subscribe_to_new = true) {
     let reconnectCounter = 0;
-    var _init = (resolve, reject) => {
+    const _init = (resolve, reject) => {
       if (this.subscribed) return resolve();
       let db_api = Apis.instance().db_api();
       if (!db_api) {
@@ -152,10 +152,10 @@ class ChainStore {
               ).getTime();
               this.head_block_time_string = optional_object.time;
               this.chain_time_offset.push(
-                new Date().getTime() -
+                Date.now() -
                   timeStringToDate(optional_object.time).getTime()
               );
-              let now = new Date().getTime();
+              let now = Date.now();
               let delta = (now - head_time) / 1000;
 
               if (delta < 60) {
@@ -242,7 +242,7 @@ class ChainStore {
                 if (account && account.orders && account.orders.has(obj)) {
                   let orders = new Set(account.orders);
                   orders.delete(obj);
-                  account = Object.assign({}, account, { orders });
+                  account = { ...account, orders };
                   this.objects_by_id.set(account.id, account);
                 }
               }
@@ -259,9 +259,7 @@ class ChainStore {
                 ) {
                   let call_orders = new Set(account.call_orders);
                   call_orders.delete(obj);
-                  account = Object.assign({}, account, {
-                    call_orders,
-                  });
+                  account = { ...account, call_orders };
                   this.objects_by_id.set(account.id, account);
                 }
               }
@@ -274,9 +272,7 @@ class ChainStore {
                   let proposals = new Set(current.proposals || []);
                   if (proposals.has(obj)) {
                     proposals.delete(obj);
-                    current = Object.assign({}, current, {
-                      proposals,
-                    });
+                    current = { ...current, proposals };
                     this.objects_by_id.set(current.id, current);
                   }
                 }
@@ -851,7 +847,7 @@ class ChainStore {
     if (account === null) return "unknown";
     if (account.lifetime_referrer == account.id) return "lifetime";
     let exp = new Date(account.membership_expiration_date).getTime();
-    let now = new Date().getTime();
+    let now = Date.now();
     if (exp < now) return "basic";
     return "annual";
   }
@@ -946,7 +942,7 @@ class ChainStore {
     if (!current) current = undefined;
 
     if (current === undefined || current === true) {
-      current = Object.assign({}, object);
+      current = { ...object };
       this.objects_by_id.set(object.id, current);
     } else {
       switch (objectType) {
@@ -956,18 +952,18 @@ class ChainStore {
           break;
         case "asset":
         case "asset_bitasset_data":
-          current = Object.assign({}, current, object);
+          current = { ...current, ...object };
           this.objects_by_id.set(object.id, current);
           break;
         case "witness":
         case "committee_member":
         case "worker":
-          current = Object.assign({}, current, object);
+          current = { ...current, ...object };
           this.objects_by_id.set(object.id, current);
           break;
         default:
           // Reference replaces (no deep merge) for all other types.
-          current = Object.assign({}, object);
+          current = { ...object };
           this.objects_by_id.set(object.id, current);
       }
     }
@@ -980,12 +976,11 @@ class ChainStore {
         if (owner === undefined || owner === null || owner === true) {
           break;
         }
-        if (!owner.balances) owner = Object.assign({}, owner, { balances: {} });
-        owner = Object.assign({}, owner, {
-          balances: Object.assign({}, owner.balances, {
-            [object.asset_type]: object.id,
-          }),
-        });
+        if (!owner.balances) owner = { ...owner, balances: {} };
+        owner = {
+          ...owner,
+          balances: { ...owner.balances, [object.asset_type]: object.id },
+        };
         this.objects_by_id.set(object.owner, owner);
         break;
       }
@@ -1025,7 +1020,8 @@ class ChainStore {
         break;
 
       case "account": {
-        current = Object.assign({}, current, {
+        current = {
+          ...current,
           active: object.active,
           owner: object.owner,
           options: object.options,
@@ -1033,7 +1029,7 @@ class ChainStore {
           blacklisting_accounts: object.blacklisting_accounts,
           whitelisted_accounts: object.whitelisted_accounts,
           blacklisted_accounts: object.blacklisted_accounts,
-        });
+        };
         this.objects_by_id.set(object.id, current);
         this.accounts_by_name.set(object.name, object.id);
         break;
@@ -1046,9 +1042,9 @@ class ChainStore {
         if (!bitasset && "bitasset_data_id" in object) {
           let bad = this.getObject(object.bitasset_data_id, true);
           if (!bad) bad = {};
-          if (!bad.asset_id) bad = Object.assign({}, bad, { asset_id: object.id });
+          if (!bad.asset_id) bad = { ...bad, asset_id: object.id };
           this.objects_by_id.set(object.bitasset_data_id, bad);
-          current = Object.assign({}, current, { bitasset: bad });
+          current = { ...current, bitasset: bad };
           this.objects_by_id.set(object.id, current);
         }
         break;
@@ -1059,7 +1055,7 @@ class ChainStore {
         if (asset_id) {
           let asset = this.getObject(asset_id);
           if (asset) {
-            asset = Object.assign({}, asset, { bitasset: current });
+            asset = { ...asset, bitasset: current };
             emitterInstance.emit("bitasset-update", asset);
             this.objects_by_id.set(asset_id, asset);
           }
@@ -1075,15 +1071,11 @@ class ChainStore {
           let call_account = this.objects_by_id.get(object.borrower);
           if (call_account && call_account !== true) {
             if (!call_account.call_orders)
-              call_account = Object.assign({}, call_account, {
-                call_orders: new Set(),
-              });
+              call_account = { ...call_account, call_orders: new Set() };
             let call_orders = new Set(call_account.call_orders);
             if (!call_orders.has(object.id)) {
               call_orders.add(object.id);
-              call_account = Object.assign({}, call_account, {
-                call_orders,
-              });
+              call_account = { ...call_account, call_orders };
               this.objects_by_id.set(call_account.id, call_account);
               Apis.instance()
                 .db_api()
@@ -1097,15 +1089,11 @@ class ChainStore {
         let limit_account = this.objects_by_id.get(object.seller);
         if (limit_account && limit_account !== true) {
           if (!limit_account.orders)
-            limit_account = Object.assign({}, limit_account, {
-              orders: new Set(),
-            });
+            limit_account = { ...limit_account, orders: new Set() };
           let limit_orders = new Set(limit_account.orders);
           if (!limit_orders.has(object.id)) {
             limit_orders.add(object.id);
-            limit_account = Object.assign({}, limit_account, {
-              orders: limit_orders,
-            });
+            limit_account = { ...limit_account, orders: limit_orders };
             this.objects_by_id.set(limit_account.id, limit_account);
             Apis.instance()
               .db_api()
@@ -1156,15 +1144,11 @@ class ChainStore {
       if (impactedAccount && impactedAccount !== true) {
         didImpact = true;
         if (!impactedAccount.proposals)
-          impactedAccount = Object.assign({}, impactedAccount, {
-            proposals: new Set(),
-          });
+          impactedAccount = { ...impactedAccount, proposals: new Set() };
         let proposals = new Set(impactedAccount.proposals);
         if (!proposals.has(objectId)) {
           proposals.add(objectId);
-          impactedAccount = Object.assign({}, impactedAccount, {
-            proposals,
-          });
+          impactedAccount = { ...impactedAccount, proposals };
           this.objects_by_id.set(impactedAccount.id, impactedAccount);
         }
       }

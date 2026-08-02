@@ -1,4 +1,4 @@
-var config = {
+const config = {
   core_asset: "ABC",
   address_prefix: "CBA",
   expire_in_secs: 15,

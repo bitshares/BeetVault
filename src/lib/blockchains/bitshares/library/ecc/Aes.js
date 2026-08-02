@@ -33,7 +33,7 @@ class Aes {
     if (seed === undefined) {
       throw new Error("seed is required");
     }
-    var _hash = sha512(seed);
+    let _hash = sha512(seed);
     _hash = _hash.toString("hex");
     return Aes.fromSha512(_hash);
   }
@@ -47,8 +47,8 @@ class Aes {
         hash.length
       }`
     );
-    var iv = Buffer.from(hash.substring(64, 96), "hex");
-    var key = Buffer.from(hash.substring(0, 64), "hex");
+    const iv = Buffer.from(hash.substring(64, 96), "hex");
+    const key = Buffer.from(hash.substring(0, 64), "hex");
     return new Aes(iv, key);
   }
 
@@ -88,9 +88,9 @@ class Aes {
       message = Buffer.from(message, "hex");
     }
 
-    var S = private_key.get_shared_secret(public_key, legacy);
+    const S = private_key.get_shared_secret(public_key, legacy);
 
-    var aes = Aes.fromSeed(
+    const aes = Aes.fromSeed(
       Buffer.concat([
         // A null or empty string nonce will not effect the hash
         Buffer.from("" + nonce),
@@ -98,15 +98,15 @@ class Aes {
       ])
     );
 
-    var planebuffer = aes.decrypt(message);
+    const planebuffer = aes.decrypt(message);
     if (!(planebuffer.length >= 4)) {
       throw new Error("Invalid key, could not decrypt message(1)");
     }
 
-    var checksum = planebuffer.slice(0, 4);
-    var plaintext = planebuffer.slice(4);
+    const checksum = planebuffer.slice(0, 4);
+    const plaintext = planebuffer.slice(4);
 
-    var new_checksum = sha256(plaintext);
+    let new_checksum = sha256(plaintext);
     new_checksum = new_checksum.slice(0, 4);
     new_checksum = new_checksum.toString("hex");
 
@@ -131,30 +131,30 @@ class Aes {
       message = Buffer.from(message, "binary");
     }
 
-    var S = private_key.get_shared_secret(public_key);
+    const S = private_key.get_shared_secret(public_key);
 
-    var aes = Aes.fromSeed(
+    const aes = Aes.fromSeed(
       Buffer.concat([
         // A null or empty string nonce will not effect the hash
         Buffer.from("" + nonce),
         Buffer.from(S.toString("hex")),
       ])
     );
-    var checksum = sha256(message).slice(0, 4);
-    var payload = Buffer.concat([checksum, message]);
+    const checksum = sha256(message).slice(0, 4);
+    const payload = Buffer.concat([checksum, message]);
     return aes.encrypt(payload);
   }
 
   /** @private */
   _decrypt_word_array(cipher) {
-    var decipher = createDecipheriv("aes-256-cbc", this.key, this.iv);
+    const decipher = createDecipheriv("aes-256-cbc", this.key, this.iv);
     decipher.setAutoPadding(true);
     return Buffer.concat([decipher.update(cipher), decipher.final()]);
   }
 
   /** @private */
   _encrypt_word_array(plaintext) {
-    var cipher = createCipheriv("aes-256-cbc", this.key, this.iv);
+    const cipher = createCipheriv("aes-256-cbc", this.key, this.iv);
     cipher.setAutoPadding(true);
     return Buffer.concat([cipher.update(plaintext), cipher.final()]);
   }

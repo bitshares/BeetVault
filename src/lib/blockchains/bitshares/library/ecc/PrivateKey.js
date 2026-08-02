@@ -52,20 +52,20 @@ class PrivateKey {
 
   /** @return {string} Wallet Import Format (still a secret, Not encrypted) */
   static fromWif(_private_wif) {
-    var private_wif = Buffer.from(decode(_private_wif));
-    var version = private_wif.readUInt8(0);
+    const private_wif = Buffer.from(decode(_private_wif));
+    const version = private_wif.readUInt8(0);
     assert.equal(
       0x80,
       version,
       `Expected version ${0x80}, instead got ${version}`
     );
     // checksum includes the version
-    var private_key = private_wif.slice(0, -4);
-    var checksum = private_wif.slice(-4);
-    var new_checksum = sha256(private_key);
+    let private_key = private_wif.slice(0, -4);
+    const checksum = private_wif.slice(-4);
+    let new_checksum = sha256(private_key);
     new_checksum = sha256(new_checksum);
     new_checksum = new_checksum.slice(0, 4);
-    var isEqual = deepEqual(checksum, new_checksum); //, 'Invalid checksum'
+    const isEqual = deepEqual(checksum, new_checksum); //, 'Invalid checksum'
     if (!isEqual) {
       throw new Error("Checksum did not match");
     }
@@ -74,13 +74,13 @@ class PrivateKey {
   }
 
   toWif() {
-    var private_key = this.toBuffer();
+    let private_key = this.toBuffer();
     // checksum includes the version
     private_key = Buffer.concat([Buffer.from([0x80]), private_key]);
-    var checksum = sha256(private_key);
+    let checksum = sha256(private_key);
     checksum = sha256(checksum);
     checksum = checksum.slice(0, 4);
-    var private_wif = Buffer.concat([private_key, checksum]);
+    const private_wif = Buffer.concat([private_key, checksum]);
     return encode(private_wif);
   }
 
@@ -147,7 +147,7 @@ class PrivateKey {
   /* <helper_functions> */
 
   toByteBuffer() {
-    var b = new ByteBuffer(ByteBuffer.DEFAULT_CAPACITY, ByteBuffer.LITTLE_ENDIAN);
+    const b = new ByteBuffer(ByteBuffer.DEFAULT_CAPACITY, ByteBuffer.LITTLE_ENDIAN);
     this.appendByteBuffer(b);
     return b.copy(0, b.offset);
   }

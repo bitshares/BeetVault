@@ -12,24 +12,24 @@ import { Buffer } from "buffer";
 // entropy. Secure randomness uses Node's crypto.randomBytes (Electron main process).
 const HASH_POWER_MILLS = 250;
 
-var key = {
+const key = {
   /** Uses ~.25 second of hashing power to create a key/password checksum. */
   aes_checksum(password) {
     if (!(typeof password === "string")) {
       throw new Error("password string required");
     }
-    var salt = randomBytes(4).toString("hex");
-    var iterations = 0;
-    var secret = salt + password;
+    const salt = randomBytes(4).toString("hex");
+    let iterations = 0;
+    let secret = salt + password;
     // hash for ~.1 second
-    var start_t = Date.now();
+    const start_t = Date.now();
     while (Date.now() - start_t < HASH_POWER_MILLS) {
       secret = sha256(secret);
       iterations += 1;
     }
 
-    var checksum = sha256(secret);
-    var checksum_string = [
+    const checksum = sha256(secret);
+    const checksum_string = [
       iterations,
       salt.toString("hex"),
       checksum.slice(0, 4).toString("hex"),
@@ -43,16 +43,16 @@ var key = {
 
   /** Re-derive the secret from a password + checksum (throws "wrong password"). */
   aes_private(password, key_checksum) {
-    var [iterations, salt, checksum] = key_checksum.split(",");
-    var secret = salt + password;
+    const [iterations, salt, checksum] = key_checksum.split(",");
+    let secret = salt + password;
     for (
-      var i = 0;
+      let i = 0;
       0 < iterations ? i < iterations : i > iterations;
       0 < iterations ? i++ : i++
     ) {
       secret = sha256(secret);
     }
-    var new_checksum = sha256(secret);
+    const new_checksum = sha256(secret);
     if (!(new_checksum.slice(0, 4).toString("hex") === checksum)) {
       throw new Error("wrong password");
     }
@@ -73,12 +73,12 @@ var key = {
       throw new Error("expecting at least 32 bytes of entropy");
     }
 
-    var start_t = Date.now();
+    const start_t = Date.now();
 
     while (Date.now() - start_t < HASH_POWER_MILLS)
       entropy = sha256(entropy);
 
-    var hash_array = [];
+    const hash_array = [];
     hash_array.push(entropy);
 
     // Hashing for ~1 second may help if the computer is not low on entropy
@@ -150,7 +150,7 @@ var key = {
       const num = (randomBuffer[i] << 8) + randomBuffer[i + 1];
 
       // convert into a number between 0 and 1 (inclusive)
-      const rndMultiplier = num / Math.pow(2, 16);
+      const rndMultiplier = num / 2 ** 16;
       const wordIndex = Math.round(dictionary_lines.length * rndMultiplier);
 
       brainkey.push(dictionary_lines[wordIndex]);

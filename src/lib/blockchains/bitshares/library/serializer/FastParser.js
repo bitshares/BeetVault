@@ -24,7 +24,7 @@ class FastParser {
       return;
     }
     if (public_key) {
-      var buffer = public_key.toBuffer();
+      const buffer = public_key.toBuffer();
       b.append(buffer.toString("binary"), "binary");
       return;
     } else {

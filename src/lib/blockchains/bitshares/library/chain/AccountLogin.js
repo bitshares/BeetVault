@@ -11,8 +11,8 @@ import { key } from "../ecc/key.js";
 
 import { get, set } from "./state";
 
-var _keyCachePriv = {};
-var _keyCachePub = {};
+const _keyCachePriv = {};
+const _keyCachePub = {};
 
 class AccountLogin {
   constructor() {
@@ -32,7 +32,7 @@ class AccountLogin {
   }
 
   generateKeys(accountName, password, roles, prefix) {
-    var start = new Date().getTime();
+    const start = Date.now();
     if (!accountName || !password) {
       throw new Error("Account name or password required");
     }

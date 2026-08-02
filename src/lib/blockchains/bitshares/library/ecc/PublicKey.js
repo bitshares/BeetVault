@@ -44,15 +44,15 @@ class PublicKey {
   }
 
   toUncompressed() {
-    var buf = this.Q.toBytes(false);
-    var point = secp256k1.Point.fromHex(Buffer.from(buf).toString("hex"));
+    const buf = this.Q.toBytes(false);
+    const point = secp256k1.Point.fromHex(Buffer.from(buf).toString("hex"));
     return PublicKey.fromPoint(point);
   }
 
   /** bts::blockchain::address (unique but not a full public key) */
   toBlockchainAddress() {
-    var pub_buf = this.toBuffer();
-    var pub_sha = sha512(pub_buf);
+    const pub_buf = this.toBuffer();
+    const pub_sha = sha512(pub_buf);
     return ripemd160(pub_sha);
   }
 
@@ -66,9 +66,9 @@ class PublicKey {
    * {return} string
    */
   toPublicKeyString(address_prefix = ChainConfig.address_prefix) {
-    var pub_buf = this.toBuffer();
-    var checksum = ripemd160(pub_buf);
-    var addy = Buffer.concat([pub_buf, checksum.slice(0, 4)]);
+    const pub_buf = this.toBuffer();
+    const checksum = ripemd160(pub_buf);
+    const addy = Buffer.concat([pub_buf, checksum.slice(0, 4)]);
     return address_prefix + encode(addy);
   }
 
@@ -94,7 +94,7 @@ class PublicKey {
   static fromStringOrThrow(public_key, address_prefix = ChainConfig.address_prefix) {
     if (public_key.Q === null)
       public_key = address_prefix + "1111111111111111111111111111111114T1Anm"; // null key
-    var prefix = public_key.slice(0, address_prefix.length);
+    const prefix = public_key.slice(0, address_prefix.length);
     assert.equal(
       address_prefix,
       prefix,
@@ -103,11 +103,11 @@ class PublicKey {
     public_key = public_key.slice(address_prefix.length);
 
     public_key = Buffer.from(decode(public_key), "binary");
-    var checksum = public_key.slice(-4);
+    const checksum = public_key.slice(-4);
     public_key = public_key.slice(0, -4);
-    var new_checksum = ripemd160(public_key);
+    let new_checksum = ripemd160(public_key);
     new_checksum = new_checksum.slice(0, 4);
-    var isEqual = deepEqual(checksum, new_checksum); //, 'Invalid checksum'
+    const isEqual = deepEqual(checksum, new_checksum); //, 'Invalid checksum'
     if (!isEqual) {
       throw new Error("Checksum did not match");
     }
@@ -115,21 +115,21 @@ class PublicKey {
   }
 
   toAddressString(address_prefix = ChainConfig.address_prefix) {
-    var pub_buf = this.toBuffer();
-    var pub_sha = sha512(pub_buf);
-    var addy = ripemd160(pub_sha);
-    var checksum = ripemd160(addy);
+    const pub_buf = this.toBuffer();
+    const pub_sha = sha512(pub_buf);
+    let addy = ripemd160(pub_sha);
+    const checksum = ripemd160(addy);
     addy = Buffer.concat([addy, checksum.slice(0, 4)]);
     return address_prefix + encode(addy);
   }
 
   toPtsAddy() {
-    var pub_buf = this.toBuffer();
-    var pub_sha = sha256(pub_buf);
-    var addy = ripemd160(pub_sha);
+    const pub_buf = this.toBuffer();
+    const pub_sha = sha256(pub_buf);
+    let addy = ripemd160(pub_sha);
     addy = Buffer.concat([Buffer.from([0x38]), addy]); //version 56(decimal)
 
-    var checksum = sha256(addy);
+    let checksum = sha256(addy);
     checksum = sha256(checksum);
 
     addy = Buffer.concat([addy, checksum.slice(0, 4)]);
@@ -158,7 +158,7 @@ class PublicKey {
   /* <HEX> */
 
   toByteBuffer() {
-    var b = new ByteBuffer(ByteBuffer.DEFAULT_CAPACITY, ByteBuffer.LITTLE_ENDIAN);
+    const b = new ByteBuffer(ByteBuffer.DEFAULT_CAPACITY, ByteBuffer.LITTLE_ENDIAN);
     this.appendByteBuffer(b);
     return b.copy(0, b.offset);
   }

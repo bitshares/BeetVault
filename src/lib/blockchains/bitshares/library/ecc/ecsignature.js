@@ -13,17 +13,17 @@ function ECSignature(r, s) {
 // Import operations
 ECSignature.parseCompact = function (buffer) {
   assert.equal(buffer.length, 65, "Invalid signature length");
-  var i = buffer.readUInt8(0) - 27;
+  let i = buffer.readUInt8(0) - 27;
 
   // At most 3 bits
   assert.equal(i, i & 7, "Invalid signature parameter");
-  var compressed = !!(i & 4);
+  const compressed = !!(i & 4);
 
   // Recovery param only
   i = i & 3;
 
-  var r = readUInt256BE(buffer, 1);
-  var s = readUInt256BE(buffer, 33);
+  const r = readUInt256BE(buffer, 1);
+  const s = readUInt256BE(buffer, 33);
 
   return {
     compressed: compressed,
@@ -37,17 +37,17 @@ ECSignature.fromDER = function (buffer) {
   assert.equal(buffer.readUInt8(1), buffer.length - 2, "Invalid sequence length");
   assert.equal(buffer.readUInt8(2), 0x02, "Expected a DER integer");
 
-  var rLen = buffer.readUInt8(3);
+  const rLen = buffer.readUInt8(3);
   assert(rLen > 0, "R length is zero");
 
-  var offset = 4 + rLen;
+  let offset = 4 + rLen;
   assert.equal(buffer.readUInt8(offset), 0x02, "Expected a DER integer (2)");
 
-  var sLen = buffer.readUInt8(offset + 1);
+  const sLen = buffer.readUInt8(offset + 1);
   assert(sLen > 0, "S length is zero");
 
-  var rB = buffer.slice(4, offset);
-  var sB = buffer.slice(offset + 2);
+  const rB = buffer.slice(4, offset);
+  const sB = buffer.slice(offset + 2);
   offset += 2 + sLen;
 
   if (rLen > 1 && rB.readUInt8(0) === 0x00) {
@@ -59,8 +59,8 @@ ECSignature.fromDER = function (buffer) {
   }
 
   assert.equal(offset, buffer.length, "Invalid DER encoding");
-  var r = readUInt256BE(rB, rB.length - 32);
-  var s = readUInt256BE(sB, sB.length - 32);
+  const r = readUInt256BE(rB, rB.length - 32);
+  const s = readUInt256BE(sB, sB.length - 32);
 
   assert(r >= 0n, "R value is negative");
   assert(s >= 0n, "S value is negative");
@@ -70,8 +70,8 @@ ECSignature.fromDER = function (buffer) {
 
 // FIXME: 0x00, 0x04, 0x80 are SIGHASH_* boundary constants, importing Transaction causes a circular dependency
 ECSignature.parseScriptSignature = function (buffer) {
-  var hashType = buffer.readUInt8(buffer.length - 1);
-  var hashTypeMod = hashType & ~0x80;
+  const hashType = buffer.readUInt8(buffer.length - 1);
+  const hashTypeMod = hashType & ~0x80;
 
   assert(hashTypeMod > 0x00 && hashTypeMod < 0x04, "Invalid hashType");
 
@@ -86,7 +86,7 @@ ECSignature.prototype.toCompact = function (i, compressed) {
   if (compressed) i += 4;
   i += 27;
 
-  var buffer = Buffer.alloc(65);
+  const buffer = Buffer.alloc(65);
   buffer.writeUInt8(i, 0);
 
   writeUInt256BE(buffer, this.r, 1);
@@ -96,10 +96,10 @@ ECSignature.prototype.toCompact = function (i, compressed) {
 };
 
 ECSignature.prototype.toDER = function () {
-  var rBa = toDERInteger(this.r);
-  var sBa = toDERInteger(this.s);
+  const rBa = toDERInteger(this.r);
+  const sBa = toDERInteger(this.s);
 
-  var sequence = [];
+  let sequence = [];
 
   // INTEGER
   sequence.push(0x02, rBa.length);
@@ -116,7 +116,7 @@ ECSignature.prototype.toDER = function () {
 };
 
 ECSignature.prototype.toScriptSignature = function (hashType) {
-  var hashTypeBuffer = Buffer.alloc(1);
+  const hashTypeBuffer = Buffer.alloc(1);
   hashTypeBuffer.writeUInt8(hashType, 0);
 
   return Buffer.concat([this.toDER(), hashTypeBuffer]);
@@ -125,9 +125,9 @@ ECSignature.prototype.toScriptSignature = function (hashType) {
 // --- helpers (256-bit big-endian buffer <-> bigint) ---
 function readUInt256BE(buffer, start) {
   // read 32 bytes big-endian starting at `start`
-  var end = start + 32;
+  let end = start + 32;
   if (end > buffer.length) end = buffer.length;
-  var slice = buffer.slice(start, end);
+  let slice = buffer.slice(start, end);
   if (slice.length < 32) {
     // left-pad with zeros
     slice = Buffer.concat([Buffer.alloc(32 - slice.length), slice]);
@@ -141,13 +141,13 @@ function writeUInt256BE(buffer, value, offset) {
 }
 
 function toDERInteger(value) {
-  var hex = value.toString(16).replace(/^/, "");
+  let hex = value.toString(16).replace(/^/, "");
   if (hex.length % 2) hex = "0" + hex;
-  var bytes = Buffer.from(hex, "hex");
+  let bytes = Buffer.from(hex, "hex");
   // ensure minimum length 1
   if (bytes.length === 0) bytes = Buffer.from([0x00]);
   // strip leading zero bytes unless needed for sign
-  var i = 0;
+  let i = 0;
   while (i < bytes.length - 1 && bytes[i] === 0x00) i++;
   if (bytes[i] & 0x80) {
     // prepend zero for positive sign

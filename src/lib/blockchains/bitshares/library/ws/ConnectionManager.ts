@@ -171,13 +171,13 @@ class Manager {
     let connectionPromises = fullList.map(async (url) => {
       /* Use default timeout and no reconnecting-websocket */
       let conn = new ChainWebSocket(url, () => {}, undefined, false);
-      connectionStartTimes[url] = new Date().getTime();
+      connectionStartTimes[url] = Date.now();
 
       try {
         await conn.login(rpc_user, rpc_password);
 
         let result = {
-          [url]: new Date().getTime() - connectionStartTimes[url],
+          [url]: Date.now() - connectionStartTimes[url],
         };
         await conn.close();
 

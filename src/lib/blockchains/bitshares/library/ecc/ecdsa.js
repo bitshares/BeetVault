@@ -31,9 +31,9 @@ function deterministicGenerateK(curve, hash, d, checkSig, nonce) {
   // sanity check
   assert.equal(hash.length, 32, "Hash must be 256 bit");
 
-  var x = Buffer.from(d.toString(16).padStart(64, "0"), "hex");
-  var k = Buffer.alloc(32);
-  var v = Buffer.alloc(32);
+  const x = Buffer.from(d.toString(16).padStart(64, "0"), "hex");
+  let k = Buffer.alloc(32);
+  let v = Buffer.alloc(32);
 
   // Step B
   v.fill(1);
@@ -56,7 +56,7 @@ function deterministicGenerateK(curve, hash, d, checkSig, nonce) {
   // Step H2b
   v = HmacSHA256(v, k);
 
-  var T = BigInt("0x" + v.toString("hex"));
+  let T = BigInt("0x" + v.toString("hex"));
 
   // Step H3, repeat until T is within the interval [1, n - 1]
   while (T <= 0n || T >= curve.n || !checkSig(T)) {
@@ -146,7 +146,7 @@ function recoverPubKey(curve, e, signature, i) {
  * Calculate pubkey extraction parameter.
  */
 function calcPubKeyRecoveryParam(curve, e, signature, Q) {
-  for (var i = 0; i < 4; i++) {
+  for (let i = 0; i < 4; i++) {
     try {
       const Qprime = recoverPubKey(curve, e, signature, i);
 

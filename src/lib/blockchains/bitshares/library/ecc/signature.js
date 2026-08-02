@@ -21,7 +21,7 @@ class Signature {
   }
 
   static fromBuffer(buf) {
-    var i, r, s;
+    let i, r, s;
     assert.equal(buf.length, 65, "Invalid signature length");
     i = buf.readUInt8(0);
     assert.equal(i - 27, (i - 27) & 7, "Invalid signature parameter");
@@ -31,7 +31,7 @@ class Signature {
   }
 
   toBuffer() {
-    var buf;
+    let buf;
     buf = Buffer.alloc(65);
     buf.writeUInt8(this.i, 0);
     writeUInt256BE(buf, this.r, 1);
@@ -62,7 +62,7 @@ class Signature {
    * @return {Signature}
    */
   static signBuffer(buf, private_key) {
-    var _hash = sha256(buf);
+    const _hash = sha256(buf);
     return Signature.signBufferSha256(_hash, private_key);
   }
 
@@ -74,7 +74,7 @@ class Signature {
   static signBufferSha256(buf_sha256, private_key) {
     if (buf_sha256.length !== 32 || !Buffer.isBuffer(buf_sha256))
       throw new Error("buf_sha256: 32 byte buffer requred");
-    var der, e, ecsignature, i, nonce;
+    let der, e, ecsignature, i, nonce;
     i = null;
     nonce = 0;
     e = BigInt("0x" + buf_sha256.toString("hex"));
@@ -95,7 +95,7 @@ class Signature {
   }
 
   verifyBuffer(buf, public_key) {
-    var _hash = sha256(buf);
+    const _hash = sha256(buf);
     return this.verifyHash(_hash, public_key);
   }
 
@@ -115,7 +115,7 @@ class Signature {
   /* <HEX> */
 
   toByteBuffer() {
-    var b;
+    let b;
     b = new ByteBuffer(ByteBuffer.DEFAULT_CAPACITY, ByteBuffer.LITTLE_ENDIAN);
     this.appendByteBuffer(b);
     return b.copy(0, b.offset);
@@ -130,13 +130,13 @@ class Signature {
   }
 
   static signHex(hex, private_key) {
-    var buf;
+    let buf;
     buf = Buffer.from(hex, "hex");
     return Signature.signBuffer(buf, private_key);
   }
 
   verifyHex(hex, public_key) {
-    var buf;
+    let buf;
     buf = Buffer.from(hex, "hex");
     return this.verifyBuffer(buf, public_key);
   }
@@ -144,9 +144,9 @@ class Signature {
 
 // --- 256-bit big-endian buffer <-> bigint helpers (shared shape with ecsignature) ---
 function readUInt256BE(buffer, start) {
-  var end = start + 32;
+  let end = start + 32;
   if (end > buffer.length) end = buffer.length;
-  var slice = buffer.slice(start, end);
+  let slice = buffer.slice(start, end);
   if (slice.length < 32) {
     slice = Buffer.concat([Buffer.alloc(32 - slice.length), slice]);
   }

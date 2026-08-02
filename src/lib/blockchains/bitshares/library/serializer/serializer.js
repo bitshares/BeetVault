@@ -21,24 +21,24 @@ class Serializer {
   }
 
   fromByteBuffer(b) {
-    var object = {};
-    var field = null;
+    const object = {};
+    let field = null;
     try {
-      var iterable = this.keys;
-      for (var i = 0, field; i < iterable.length; i++) {
+      const iterable = this.keys;
+      for (let i = 0; i < iterable.length; i++) {
         field = iterable[i];
-        var type = this.types[field];
+        const type = this.types[field];
         try {
           /*
           if (HEX_DUMP) {
             if (type.operation_name) {
               console.error(type.operation_name);
             } else {
-              var o1 = b.offset;
+              const o1 = b.offset;
               type.fromByteBuffer(b);
-              var o2 = b.offset;
+              const o2 = b.offset;
               b.offset = o1;
-              var _b = b.copy(o1, o2);
+              const _b = b.copy(o1, o2);
               console.error(`${this.operation_name}.${field}\t`, _b.toHex());
             }
           }
@@ -60,12 +60,12 @@ class Serializer {
   }
 
   appendByteBuffer(b, object) {
-    var field = null;
+    let field = null;
     try {
-      var iterable = this.keys;
-      for (var i = 0, field; i < iterable.length; i++) {
+      const iterable = this.keys;
+      for (let i = 0; i < iterable.length; i++) {
         field = iterable[i];
-        var type = this.types[field];
+        const type = this.types[field];
         type.appendByteBuffer(b, object[field]);
       }
     } catch (error) {
@@ -80,15 +80,15 @@ class Serializer {
   }
 
   fromObject(serialized_object) {
-    var result = {};
-    var field = null;
+    const result = {};
+    let field = null;
     try {
-      var iterable = this.keys;
-      for (var i = 0, field; i < iterable.length; i++) {
+      const iterable = this.keys;
+      for (let i = 0; i < iterable.length; i++) {
         field = iterable[i];
-        var type = this.types[field];
-        var value = serialized_object[field];
-        var object = type.fromObject(value);
+        const type = this.types[field];
+        const value = serialized_object[field];
+        const object = type.fromObject(value);
         result[field] = object;
       }
     } catch (error) {
@@ -103,16 +103,16 @@ class Serializer {
         @arg {boolean} [debug.annotate = false] - add user-friendly information
     */
   toObject(serialized_object = {}, debug = { use_default: false, annotate: false }) {
-    var result = {};
-    var field = null;
+    const result = {};
+    let field = null;
     try {
       if (!this.types) return result;
 
-      var iterable = this.keys;
-      for (var i = 0, field; i < iterable.length; i++) {
+      const iterable = this.keys;
+      for (let i = 0; i < iterable.length; i++) {
         field = iterable[i];
-        var type = this.types[field];
-        var object = type.toObject(
+        const type = this.types[field];
+        const object = type.toObject(
           typeof serialized_object !== "undefined" && serialized_object !== null
             ? serialized_object[field]
             : undefined,
@@ -120,7 +120,7 @@ class Serializer {
         );
         result[field] = object;
         if (HEX_DUMP) {
-          var b = new ByteBuffer(ByteBuffer.DEFAULT_CAPACITY, ByteBuffer.LITTLE_ENDIAN);
+          let b = new ByteBuffer(ByteBuffer.DEFAULT_CAPACITY, ByteBuffer.LITTLE_ENDIAN);
           type.appendByteBuffer(
             b,
             typeof serialized_object !== "undefined" && serialized_object !== null
@@ -164,22 +164,22 @@ class Serializer {
   // <helper_functions>
 
   fromHex(hex) {
-    var b = ByteBuffer.fromHex(hex, ByteBuffer.LITTLE_ENDIAN);
+    const b = ByteBuffer.fromHex(hex, ByteBuffer.LITTLE_ENDIAN);
     return this.fromByteBuffer(b);
   }
 
   fromBuffer(buffer) {
-    var b = ByteBuffer.fromBinary(buffer.toString("binary"), ByteBuffer.LITTLE_ENDIAN);
+    const b = ByteBuffer.fromBinary(buffer.toString("binary"), ByteBuffer.LITTLE_ENDIAN);
     return this.fromByteBuffer(b);
   }
 
   toHex(object) {
-    var b = this.toByteBuffer(object);
+    const b = this.toByteBuffer(object);
     return b.toHex();
   }
 
   toByteBuffer(object) {
-    var b = new ByteBuffer(ByteBuffer.DEFAULT_CAPACITY, ByteBuffer.LITTLE_ENDIAN);
+    const b = new ByteBuffer(ByteBuffer.DEFAULT_CAPACITY, ByteBuffer.LITTLE_ENDIAN);
     this.appendByteBuffer(b, object);
     return b.copy(0, b.offset);
   }

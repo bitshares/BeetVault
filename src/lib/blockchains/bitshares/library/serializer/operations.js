@@ -1,7 +1,7 @@
 import types from "./types.js";
 import SerializerImpl from "./serializer.js";
 
-var {
+let {
   //id_type,
   varint32,
   varuint64,
@@ -43,11 +43,11 @@ public_key = new Serializer(
 // Place-holder, their are dependencies on "operation" .. The final list of
 // operations is not avialble until the very end of the generated code.
 // See: operation.st_operations = ...
-var operation = static_variant();
+const operation = static_variant();
 
 export { operation };
 // For module.exports
-var Serializer = function (operation_name, serilization_types_object) {
+const Serializer = function (operation_name, serilization_types_object) {
   return new SerializerImpl(operation_name, serilization_types_object);
 };
 
@@ -545,7 +545,7 @@ export const limit_order_update_operation_fee_parameters = new Serializer(
   { fee: uint64 }
 );
 
-var fee_parameters = static_variant([
+const fee_parameters = static_variant([
   transfer_operation_fee_parameters,
   limit_order_create_operation_fee_parameters,
   limit_order_cancel_operation_fee_parameters,
@@ -638,7 +638,7 @@ export const asset = new Serializer("asset", {
   asset_id: protocol_id_type("asset"),
 });
 
-var operation_result = static_variant([void_result, object_id_type, asset]);
+const operation_result = static_variant([void_result, object_id_type, asset]);
 
 export const processed_transaction = new Serializer("processed_transaction", {
   ref_block_num: uint16,
@@ -702,7 +702,7 @@ export const create_take_profit_order_action = new Serializer("create_take_profi
   extensions: set(future_extensions),
 });
 
-var limit_order_auto_action = static_variant([create_take_profit_order_action]);
+const limit_order_auto_action = static_variant([create_take_profit_order_action]);
 
 export const limit_order_create = new Serializer("limit_order_create", {
   fee: asset,
@@ -1115,7 +1115,7 @@ export const cdd_vesting_policy_initializer = new Serializer("cdd_vesting_policy
   vesting_seconds: uint32,
 });
 
-var vesting_policy_initializer = static_variant([
+const vesting_policy_initializer = static_variant([
   linear_vesting_policy_initializer,
   cdd_vesting_policy_initializer,
 ]);
@@ -1144,7 +1144,7 @@ export const vesting_balance_worker_initializer = new Serializer(
 
 export const burn_worker_initializer = new Serializer("burn_worker_initializer");
 
-var worker_initializer = static_variant([
+const worker_initializer = static_variant([
   refund_worker_initializer,
   vesting_balance_worker_initializer,
   burn_worker_initializer,
@@ -1183,7 +1183,7 @@ export const block_id_predicate = new Serializer("block_id_predicate", {
   id: bytes(20),
 });
 
-var predicate = static_variant([
+const predicate = static_variant([
   account_name_eq_lit_predicate,
   asset_symbol_eq_lit_predicate,
   block_id_predicate,

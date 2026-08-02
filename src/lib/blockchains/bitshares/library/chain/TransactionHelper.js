@@ -15,11 +15,11 @@ import { Signature } from "../ecc";
 import { ops } from "../serializer";
 import { Apis } from "../ws";
 
-var helper = {};
+const helper = {};
 
 helper.unique_nonce_entropy = null;
 helper.unique_nonce_uint64 = function () {
-  var entropy = (helper.unique_nonce_entropy = (() => {
+  const entropy = (helper.unique_nonce_entropy = (() => {
     if (helper.unique_nonce_entropy === null) {
       return randomBytes(1)[0];
     } else {
@@ -27,7 +27,7 @@ helper.unique_nonce_uint64 = function () {
     }
   })());
   // Date.now() fits comfortably in 56 bits; shift left 8 and OR the entropy.
-  var long = BigInt(Date.now());
+  let long = BigInt(Date.now());
   long = (long << 8n) | BigInt(entropy);
   return long.toString();
 };
@@ -35,9 +35,9 @@ helper.unique_nonce_uint64 = function () {
 /* Todo, set fees */
 helper.to_json = function (tr, broadcast = false) {
   return (function (tr, broadcast) {
-    var tr_object = ops.signed_transaction.toObject(tr);
+    const tr_object = ops.signed_transaction.toObject(tr);
     if (broadcast) {
-      var net = Apis.instance().network_api();
+      const net = Apis.instance().network_api();
       console.log("... tr_object", JSON.stringify(tr_object));
       return net.exec("broadcast_transaction", [tr_object]);
     } else {
@@ -47,18 +47,18 @@ helper.to_json = function (tr, broadcast = false) {
 };
 
 helper.signed_tr_json = function (tr, private_keys) {
-  var tr_buffer = ops.transaction.toBuffer(tr);
+  const tr_buffer = ops.transaction.toBuffer(tr);
   tr = ops.transaction.toObject(tr);
   tr.signatures = (() => {
-    var result = [];
+    const result = [];
     for (
-      var i = 0;
+      let i = 0;
       0 < private_keys.length
         ? i < private_keys.length
         : i > private_keys.length;
       0 < private_keys.length ? i++ : i++
     ) {
-      var private_key = private_keys[i];
+      const private_key = private_keys[i];
       result.push(Signature.signBuffer(tr_buffer, private_key).toHex());
     }
     return result;
@@ -82,7 +82,7 @@ helper.template = function (
   serializer_operation_type_name,
   debug = { use_default: true, annotate: true }
 ) {
-  var so = ops[serializer_operation_type_name];
+  const so = ops[serializer_operation_type_name];
   if (!so) {
     throw new Error(
       `unknown serializer_operation_type ${serializer_operation_type_name}`
@@ -92,13 +92,13 @@ helper.template = function (
 };
 
 helper.new_operation = function (serializer_operation_type_name) {
-  var so = ops[serializer_operation_type_name];
+  const so = ops[serializer_operation_type_name];
   if (!so) {
     throw new Error(
       `unknown serializer_operation_type ${serializer_operation_type_name}`
     );
   }
-  var object = so.toObject(undefined, { use_default: true, annotate: true });
+  const object = so.toObject(undefined, { use_default: true, annotate: true });
   return so.fromObject(object);
 };
 

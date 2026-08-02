@@ -13,7 +13,7 @@ import ChainTypes from "./ChainTypes.js";
 
 
 
-var head_block_time_string, committee_min_review;
+let head_block_time_string, committee_min_review;
 
 class TransactionBuilder {
   constructor(tx = null) {
@@ -25,7 +25,7 @@ class TransactionBuilder {
       this.ref_block_prefix = tx.ref_block_prefix;
       this.signatures = tx.signatures;
       this.operations = [];
-      for (var i = 0; i < tx.operations.length; ++i) {
+      for (let i = 0; i < tx.operations.length; ++i) {
         this.add_operation(tx.operations[i]);
       }
     } else {
@@ -58,97 +58,88 @@ class TransactionBuilder {
 
         @arg {boolean} [broadcast = false]
     */
-  process_transaction(cwallet, apiInstance, signer_pubkeys = null, broadcast = false) {
-    let wallet_object = cwallet.wallet.wallet_object;
+  async process_transaction(cwallet, apiInstance, signer_pubkeys = null, broadcast = false) {
+    const wallet_object = cwallet.wallet.wallet_object;
     if (apiInstance.chain_id !== wallet_object.get("chain_id"))
-      return Promise.reject(
+      throw new Error(
         "Mismatched chain_id; expecting " +
           wallet_object.get("chain_id") +
           ", but got " +
           apiInstance.chain_id
       );
 
-    return this.set_required_fees().then(() => {
-      var signer_pubkeys_added = {};
-      if (signer_pubkeys) {
-        // Balance claims are by address, only the private
-        // key holder can know about these additional
-        // potential keys.
-        var pubkeys = cwallet.getPubkeys_having_PrivateKey(signer_pubkeys);
-        if (!pubkeys.length) throw new Error("Missing signing key");
+    await this.set_required_fees();
+    const signer_pubkeys_added = {};
+    if (signer_pubkeys) {
+      // Balance claims are by address, only the private
+      // key holder can know about these additional
+      // potential keys.
+      const pubkeys = cwallet.getPubkeys_having_PrivateKey(signer_pubkeys);
+      if (!pubkeys.length) throw new Error("Missing signing key");
 
-        for (let pubkey_string of pubkeys) {
-          var private_key = cwallet.getPrivateKey(pubkey_string);
-          this.add_signer(private_key, pubkey_string);
-          signer_pubkeys_added[pubkey_string] = true;
-        }
+      for (let pubkey_string of pubkeys) {
+        const private_key = cwallet.getPrivateKey(pubkey_string);
+        this.add_signer(private_key, pubkey_string);
+        signer_pubkeys_added[pubkey_string] = true;
       }
+    }
 
-      return this.get_potential_signatures()
-        .then(({ pubkeys, addys }) => {
-          var my_pubkeys = cwallet.getPubkeys_having_PrivateKey(pubkeys, addys);
+    const { pubkeys, addys } = await this.get_potential_signatures();
+    const my_pubkeys = cwallet.getPubkeys_having_PrivateKey(pubkeys, addys);
 
-          return this.get_required_signatures(my_pubkeys).then((required_pubkeys) => {
-            for (let pubkey_string of required_pubkeys) {
-              if (signer_pubkeys_added[pubkey_string]) continue;
-              var private_key = cwallet.getPrivateKey(pubkey_string);
-              if (!private_key)
-                // This should not happen, get_required_signatures will only
-                // returned keys from my_pubkeys
-                throw new Error("Missing signing key for " + pubkey_string);
-              this.add_signer(private_key, pubkey_string);
-            }
-          });
-        })
-        .then(() => (broadcast ? this.broadcast() : this.serialize()));
-    });
+    const required_pubkeys = await this.get_required_signatures(my_pubkeys);
+    for (let pubkey_string of required_pubkeys) {
+      if (signer_pubkeys_added[pubkey_string]) continue;
+      const private_key = cwallet.getPrivateKey(pubkey_string);
+      if (!private_key)
+        // This should not happen, get_required_signatures will only
+        // returned keys from my_pubkeys
+        throw new Error("Missing signing key for " + pubkey_string);
+      this.add_signer(private_key, pubkey_string);
+    }
+
+    if (broadcast) return this.broadcast();
+    return this.serialize();
   }
 
   /** Typically this is called automatically just prior to signing.  Once finalized this transaction can not be changed. */
-  finalize(apiInstance) {
+  async finalize(apiInstance) {
     if (!apiInstance) apiInstance = Apis.instance();
-    return new Promise((resolve, reject) => {
-      if (this.tr_buffer) {
-        throw new Error("already finalized");
+    if (this.tr_buffer) {
+      throw new Error("already finalized");
+    }
+
+    const _finalize = () => {
+      const iterable = this.operations;
+      for (let i = 0; i < iterable.length; i++) {
+        const op = iterable[i];
+        if (op[1]["finalize"]) {
+          op[1].finalize();
+        }
+      }
+      this.tr_buffer = ops.transaction.toBuffer(this);
+    };
+
+    // check if api call is necessary at all
+    if (this.expiration !== 0 && this.ref_block_num !== 0 && this.ref_block_prefix !== 0) {
+      _finalize();
+    } else {
+      const response = await apiInstance
+        .db_api()
+        .exec("get_objects", [["2.1.0"]]);
+      head_block_time_string = response[0].time;
+      if (this.expiration === 0) {
+        this.expiration = base_expiration_sec() + ChainConfig.expire_in_secs;
       }
 
-      let _finalize = () => {
-        var iterable = this.operations;
-        for (var i = 0, op; i < iterable.length; i++) {
-          op = iterable[i];
-          if (op[1]["finalize"]) {
-            op[1].finalize();
-          }
-        }
-        this.tr_buffer = ops.transaction.toBuffer(this);
-      };
-
-      // check if api call is necessary at all
-      if (this.expiration !== 0 && this.ref_block_num !== 0 && this.ref_block_prefix !== 0) {
-        _finalize();
-        resolve();
-      } else {
-        resolve(
-          apiInstance
-            .db_api()
-            .exec("get_objects", [["2.1.0"]])
-            .then((response) => {
-              head_block_time_string = response[0].time;
-              if (this.expiration === 0) {
-                this.expiration = base_expiration_sec() + ChainConfig.expire_in_secs;
-              }
-
-              if (this.ref_block_num === 0 && this.ref_block_prefix === 0) {
-                this.ref_block_num = response[0].head_block_number & 0xffff;
-                this.ref_block_prefix = Buffer.from(response[0].head_block_id, "hex").readUInt32LE(
-                  4
-                );
-              }
-              _finalize();
-            })
+      if (this.ref_block_num === 0 && this.ref_block_prefix === 0) {
+        this.ref_block_num = response[0].head_block_number & 0xffff;
+        this.ref_block_prefix = Buffer.from(response[0].head_block_id, "hex").readUInt32LE(
+          4
         );
       }
-    });
+      _finalize();
+    }
   }
 
   /** @return {string} hex transaction ID */
@@ -181,9 +172,9 @@ class TransactionBuilder {
     }
     assert(name, "name");
     assert(operation, "operation");
-    var _type = ops[name];
+    const _type = ops[name];
     assert(_type, `Unknown operation ${name}`);
-    var operation_id = ChainTypes.operations[_type.operation_name];
+    const operation_id = ChainTypes.operations[_type.operation_name];
     if (operation_id === undefined) {
       throw new Error(`unknown operation: ${_type.operation_name}`);
     }
@@ -196,7 +187,7 @@ class TransactionBuilder {
        * period to be set, look for them here
        */
       let requiresReview = false,
-        extraReview = 0;
+          extraReview = 0;
       operation.proposed_ops.forEach((op) => {
         const COMMITTE_ACCOUNT = 0;
         let key;
@@ -257,22 +248,20 @@ class TransactionBuilder {
         operation.expiration_time += 60 * 60 + extraReview;
       }
     }
-    var operation_instance = _type.fromObject(operation);
+    const operation_instance = _type.fromObject(operation);
     return [operation_id, operation_instance];
   }
 
   /* optional: fetch the current head block */
 
-  update_head_block(apiInstance) {
+  async update_head_block(apiInstance) {
     if (!apiInstance) apiInstance = Apis.instance();
-    return Promise.all([
+    const [g, r] = await Promise.all([
       apiInstance.db_api().exec("get_objects", [["2.0.0"]]),
       apiInstance.db_api().exec("get_objects", [["2.1.0"]]),
-    ]).then(function (res) {
-      let [g, r] = res;
-      head_block_time_string = r[0].time;
-      committee_min_review = g[0].parameters.committee_proposal_review_period;
-    });
+    ]);
+    head_block_time_string = r[0].time;
+    committee_min_review = g[0].parameters.committee_proposal_review_period;
   }
 
   /** optional: there is a deafult expiration */
@@ -298,7 +287,7 @@ class TransactionBuilder {
       "proposal_create_options.fee_paying_account"
     );
 
-    let proposed_ops = this.operations.map((op) => {
+    const proposed_ops = this.operations.map((op) => {
       return { op: op };
     });
 
@@ -312,7 +301,7 @@ class TransactionBuilder {
 
   has_proposed_operation() {
     let hasProposed = false;
-    for (var i = 0; i < this.operations.length; i++) {
+    for (let i = 0; i < this.operations.length; i++) {
       if ("proposed_ops" in this.operations[i][1]) {
         hasProposed = true;
         break;
@@ -323,7 +312,7 @@ class TransactionBuilder {
   }
 
   /** optional: the fees can be obtained from the witness node */
-  set_required_fees(asset_id, removeDuplicates, apiInstance) {
+  async set_required_fees(asset_id, removeDuplicates, apiInstance) {
     if (!apiInstance) apiInstance = Apis.instance();
     if (this.tr_buffer) {
       throw new Error("already finalized");
@@ -336,14 +325,14 @@ class TransactionBuilder {
       return op[0] === 22;
     }
 
-    let operations = [];
-    let proposed_ops = [];
-    let feeAssets = [];
-    let proposalFeeAssets = [];
-    let potentialDuplicates = {};
+    const operations = [];
+    const proposed_ops = [];
+    const feeAssets = [];
+    const proposalFeeAssets = [];
+    const potentialDuplicates = {};
     function getDuplicateOriginalIndex(op, index) {
-      let key = getOperationKey(op);
-      let duplicate = potentialDuplicates[key];
+      const key = getOperationKey(op);
+      const duplicate = potentialDuplicates[key];
       if (!!duplicate) {
         if (duplicate.original === index) return index;
         else if (duplicate.duplicates.indexOf(index) !== -1) {
@@ -355,19 +344,19 @@ class TransactionBuilder {
       let key = null;
       switch (op[0]) {
         case 0: // transfer
-          let memoDummy = new Array(op[1].memo.message.length + 1).join("a");
+          const memoDummy = new Array(op[1].memo.message.length + 1).join("a");
           key = `${op[0]}_${op[1].amount.asset_id}_${memoDummy}`;
           break;
         default:
       }
       return key;
     }
-    for (let i = 0, op; i < this.operations.length; i++) {
-      op = this.operations[i];
-      let opObject = ops.operation.toObject(op);
+    for (let i = 0; i < this.operations.length; i++) {
+      const op = this.operations[i];
+      const opObject = ops.operation.toObject(op);
       let isDuplicate = false;
       if (removeDuplicates) {
-        let key = getOperationKey(opObject);
+        const key = getOperationKey(opObject);
         if (key) {
           if (!potentialDuplicates[key])
             potentialDuplicates[key] = {
@@ -401,7 +390,7 @@ class TransactionBuilder {
     }
 
     if (!asset_id) {
-      let op1_fee = operations[0][1].fee;
+      const op1_fee = operations[0][1].fee;
       if (op1_fee && op1_fee.asset_id !== null) {
         asset_id = op1_fee.asset_id;
       } else {
@@ -418,7 +407,8 @@ class TransactionBuilder {
         if (feeAssets.indexOf(id) === -1) feeAssets.push(id);
       });
     }
-    let promises = [];
+
+    const promises = [];
     promises.push(
       Promise.all(
         feeAssets.map((id) => {
@@ -436,201 +426,197 @@ class TransactionBuilder {
        * The dynamic asset object id is equal to the asset id but with
        * 2.3.x instead of 1.3.x
        */
-      let dynamicObjectIds = feeAssets.map((a) => a.replace(/^1\./, "2."));
+      const dynamicObjectIds = feeAssets.map((a) => a.replace(/^1\./, "2."));
       promises.push(apiInstance.db_api().exec("get_required_fees", [operations, "1.3.0"]));
       promises.push(apiInstance.db_api().exec("get_objects", [dynamicObjectIds]));
     }
 
-    return Promise.all(promises).then((results) => {
-      /*
-       * allFees and coreFees are arrays containg fee amounts grouped by
-       * asset and for each operation in operations
-       */
-      let [allFees, coreFees, dynamicObjects] = results;
-      /*
-       * If one of the desired fee assets has an invalid core exchange rate
-       * get_required_signatures will fail and the result for all assets
-       * will be undefined, if so we just default to coreFees
-       */
-      if (allFees === undefined) {
-        allFees = coreFees;
-      }
-      /*
-       * If the only desired fee asset is CORE, coreFees are not fetched
-       * but are equal to allFees
-       */
-      if (!coreFees) {
-        coreFees = allFees[0];
-      }
+    const results = await Promise.all(promises);
+    /*
+     * allFees and coreFees are arrays containg fee amounts grouped by
+     * asset and for each operation in operations
+     */
+    let [allFees, coreFees, dynamicObjects] = results;
+    /*
+     * If one of the desired fee assets has an invalid core exchange rate
+     * get_required_signatures will fail and the result for all assets
+     * will be undefined, if so we just default to coreFees
+     */
+    if (allFees === undefined) {
+      allFees = coreFees;
+    }
+    /*
+     * If the only desired fee asset is CORE, coreFees are not fetched
+     * but are equal to allFees
+     */
+    if (!coreFees) {
+      coreFees = allFees[0];
+    }
 
-      /* Create a map of fees and proposal fees by asset id */
-      let feesByAsset = {};
-      let proposalFeesByAsset = {};
-      allFees.forEach((feeSet) => {
-        let filteredFeeSet = feeSet.map((f) => {
-          if (Array.isArray(f)) {
-            // This operation includes a proposal
-            proposalFeesByAsset[f[1][0].asset_id] = f[1];
-            return f[0];
-          }
-          return f;
+    /* Create a map of fees and proposal fees by asset id */
+    const feesByAsset = {};
+    const proposalFeesByAsset = {};
+    allFees.forEach((feeSet) => {
+      const filteredFeeSet = feeSet.map((f) => {
+        if (Array.isArray(f)) {
+          // This operation includes a proposal
+          proposalFeesByAsset[f[1][0].asset_id] = f[1];
+          return f[0];
+        }
+        return f;
+      });
+      const currentAssetId = filteredFeeSet[0].asset_id;
+
+      feesByAsset[currentAssetId] = filteredFeeSet;
+    });
+
+    /* Create a map of fee pools by asset id*/
+    const feePoolMap = !!dynamicObjects
+      ? dynamicObjects.reduce((map, object) => {
+          map[object.id.replace(/^2\./, "1.")] = object;
+          return map;
+        }, {})
+      : {};
+
+    let feeMap = {};
+    let proposalFeeMap = {};
+    function updateFeeMap(map, asset_id, opIndex, core_fees) {
+      if (!map[asset_id]) map[asset_id] = { total: 0, ops: [] };
+      if (map[asset_id].propIdx) map[asset_id].propIdx.push(opIndex);
+      else map[asset_id].ops.push(opIndex);
+
+      if (asset_id !== "1.3.0") {
+        map[asset_id].total += core_fees.length ? core_fees[opIndex].amount : core_fees.amount;
+      }
+      return map;
+    }
+
+    for (let i = 0; i < operations.length; i++) {
+      const op = operations[i];
+      const feeAssetId = op[1].fee.asset_id;
+
+      if (isProposal(op)) {
+        feeMap = updateFeeMap(feeMap, feeAssetId, i, coreFees[i][0]);
+
+        op[1].proposed_ops.forEach((prop, y) => {
+          const propFeeAsset = prop.op[1].fee.asset_id;
+          if (!proposalFeeMap[i]) proposalFeeMap[i] = {};
+          if (!proposalFeeMap[i][propFeeAsset])
+            proposalFeeMap[i][propFeeAsset] = {
+              total: 0,
+              ops: [i],
+              propIdx: [],
+            };
+
+          proposalFeeMap[i] = updateFeeMap(proposalFeeMap[i], propFeeAsset, y, coreFees[i][1]);
         });
-        let currentAssetId = filteredFeeSet[0].asset_id;
-
-        feesByAsset[currentAssetId] = filteredFeeSet;
-      }, {});
-
-      /* Create a map of fee pools by asset id*/
-      let feePoolMap = !!dynamicObjects
-        ? dynamicObjects.reduce((map, object) => {
-            map[object.id.replace(/^2\./, "1.")] = object;
-            return map;
-          }, {})
-        : {};
-
-      let feeMap = {};
-      let proposalFeeMap = {};
-      function updateFeeMap(map, asset_id, opIndex, core_fees) {
-        if (!map[asset_id]) map[asset_id] = { total: 0, ops: [] };
-        if (map[asset_id].propIdx) map[asset_id].propIdx.push(opIndex);
-        else map[asset_id].ops.push(opIndex);
-
-        if (asset_id !== "1.3.0") {
-          map[asset_id].total += core_fees.length ? core_fees[opIndex].amount : core_fees.amount;
-        }
-        return map;
+      } else {
+        feeMap = updateFeeMap(feeMap, feeAssetId, i, coreFees[i]);
       }
+    }
 
-      for (let i = 0; i < operations.length; i++) {
-        let op = operations[i];
-        let feeAssetId = op[1].fee.asset_id;
-
-        if (isProposal(op)) {
-          feeMap = updateFeeMap(feeMap, feeAssetId, i, coreFees[i][0]);
-
-          op[1].proposed_ops.forEach((prop, y) => {
-            let propFeeAsset = prop.op[1].fee.asset_id;
-            if (!proposalFeeMap[i]) proposalFeeMap[i] = {};
-            if (!proposalFeeMap[i][propFeeAsset])
-              proposalFeeMap[i][propFeeAsset] = {
-                total: 0,
-                ops: [i],
-                propIdx: [],
-              };
-
-            proposalFeeMap[i] = updateFeeMap(proposalFeeMap[i], propFeeAsset, y, coreFees[i][1]);
-          });
-        } else {
-          feeMap = updateFeeMap(feeMap, feeAssetId, i, coreFees[i]);
-        }
-      }
-
-      /* Check fee pool balances for regular ops */
-      function checkPoolBalance(feeMap) {
-        if (!Object.keys(feeMap).length) return [];
-        let final_fees = [];
-        for (let asset in feeMap) {
-          let feePoolBalance = feePoolMap[asset] ? parseInt(feePoolMap[asset].fee_pool, 10) : 0;
-          /* Fee pool balance insufficient, default to core*/
-          if (feeMap[asset].total > feePoolBalance) {
-            feeMap[asset].ops.forEach((opIndex) => {
-              if (coreFees[opIndex].length === 2 && "propIdx" in feeMap[asset]) {
-                /* Proposal op */
-                feeMap[asset].propIdx.forEach((prop_idx) => {
-                  final_fees[prop_idx] = coreFees[opIndex][1][prop_idx];
-                });
-              } else if (coreFees[opIndex].length === 2) {
-                final_fees[opIndex] = coreFees[opIndex][0];
-              } else {
-                final_fees[opIndex] = coreFees[opIndex];
-              }
-            });
-            /* Use the desired fee asset */
-          } else {
-            feeMap[asset].ops.forEach((opIndex) => {
-              if (coreFees[opIndex].length === 2 && "propIdx" in feeMap[asset]) {
-                feeMap[asset].propIdx.forEach((prop_idx) => {
-                  final_fees[prop_idx] = proposalFeesByAsset[asset][prop_idx];
-                });
-              } else {
-                final_fees[opIndex] = feesByAsset[asset][opIndex];
-              }
-            });
-          }
-        }
-        return final_fees;
-      }
-
-      let finalFees = checkPoolBalance(feeMap);
-
-      let finalProposalFees = {};
-      for (let key in proposalFeeMap) {
-        finalProposalFees[key] = checkPoolBalance(proposalFeeMap[key]);
-      }
-
-      let set_fee = (operation, opIndex) => {
-        if (
-          !operation.fee ||
-          operation.fee.amount === 0 ||
-          (operation.fee.amount.toString && operation.fee.amount.toString() === "0") // Long
-        ) {
-          if (removeDuplicates) {
-            let op = ops.operation.toObject(this.operations[opIndex]);
-            let originalIndex = getDuplicateOriginalIndex(op, opIndex);
-            if (originalIndex >= 0) {
-              // it's a duplicate
-              operation.fee = finalFees[originalIndex];
+    /* Check fee pool balances for regular ops */
+    function checkPoolBalance(feeMap) {
+      if (!Object.keys(feeMap).length) return [];
+      const final_fees = [];
+      for (let asset in feeMap) {
+        const feePoolBalance = feePoolMap[asset] ? parseInt(feePoolMap[asset].fee_pool, 10) : 0;
+        /* Fee pool balance insufficient, default to core*/
+        if (feeMap[asset].total > feePoolBalance) {
+          feeMap[asset].ops.forEach((opIndex) => {
+            if (coreFees[opIndex].length === 2 && "propIdx" in feeMap[asset]) {
+              /* Proposal op */
+              feeMap[asset].propIdx.forEach((prop_idx) => {
+                final_fees[prop_idx] = coreFees[opIndex][1][prop_idx];
+              });
+            } else if (coreFees[opIndex].length === 2) {
+              final_fees[opIndex] = coreFees[opIndex][0];
             } else {
-              operation.fee = finalFees[opIndex];
+              final_fees[opIndex] = coreFees[opIndex];
             }
+          });
+          /* Use the desired fee asset */
+        } else {
+          feeMap[asset].ops.forEach((opIndex) => {
+            if (coreFees[opIndex].length === 2 && "propIdx" in feeMap[asset]) {
+              feeMap[asset].propIdx.forEach((prop_idx) => {
+                final_fees[prop_idx] = proposalFeesByAsset[asset][prop_idx];
+              });
+            } else {
+              final_fees[opIndex] = feesByAsset[asset][opIndex];
+            }
+          });
+        }
+      }
+      return final_fees;
+    }
+
+    const finalFees = checkPoolBalance(feeMap);
+
+    const finalProposalFees = {};
+    for (const key in proposalFeeMap) {
+      finalProposalFees[key] = checkPoolBalance(proposalFeeMap[key]);
+    }
+
+    const set_fee = (operation, opIndex) => {
+      if (
+        !operation.fee ||
+        operation.fee.amount === 0 ||
+        (operation.fee.amount.toString && operation.fee.amount.toString() === "0") // Long
+      ) {
+        if (removeDuplicates) {
+          const op = ops.operation.toObject(this.operations[opIndex]);
+          const originalIndex = getDuplicateOriginalIndex(op, opIndex);
+          if (originalIndex >= 0) {
+            // it's a duplicate
+            operation.fee = finalFees[originalIndex];
           } else {
             operation.fee = finalFees[opIndex];
           }
+        } else {
+          operation.fee = finalFees[opIndex];
         }
-        if (operation.proposed_ops) {
-          let result = [];
-          /*
-           * Loop over proposed_ops and assign fee asset ids as
-           * determined by the fee pool balance check. If the balance
-           * is sufficient the asset_id is kept, if not it defaults to
-           * "1.3.0"
-           */
-          for (let y = 0; y < operation.proposed_ops.length; y++) {
-            operation.proposed_ops[y].op[1].fee.asset_id = finalProposalFees[opIndex][y].asset_id;
-            operation.proposed_ops[y].op[1].fee.amount = finalProposalFees[opIndex][y].amount;
-          }
-
-          return result;
-        }
-      };
-      /* We apply the final fees the the operations */
-      for (let i = 0; i < this.operations.length; i++) {
-        set_fee(this.operations[i][1], i);
       }
-    });
+      if (operation.proposed_ops) {
+        const result = [];
+        /*
+         * Loop over proposed_ops and assign fee asset ids as
+         * determined by the fee pool balance check. If the balance
+         * is sufficient the asset_id is kept, if not it defaults to
+         * "1.3.0"
+         */
+        for (let y = 0; y < operation.proposed_ops.length; y++) {
+          operation.proposed_ops[y].op[1].fee.asset_id = finalProposalFees[opIndex][y].asset_id;
+          operation.proposed_ops[y].op[1].fee.amount = finalProposalFees[opIndex][y].amount;
+        }
+
+        return result;
+      }
+    };
+    /* We apply the final fees the the operations */
+    for (let i = 0; i < this.operations.length; i++) {
+      set_fee(this.operations[i][1], i);
+    }
   }
 
-  get_potential_signatures(apiInstance) {
-    var tr_object = ops.signed_transaction.toObject(this);
-    return Promise.all([
+  async get_potential_signatures(apiInstance) {
+    const tr_object = ops.signed_transaction.toObject(this);
+    const [pubkeys, addys] = await Promise.all([
       apiInstance.db_api().exec("get_potential_signatures", [tr_object]),
       apiInstance.db_api().exec("get_potential_address_signatures", [tr_object]),
-    ]).then(function (results) {
-      return { pubkeys: results[0], addys: results[1] };
-    });
+    ]);
+    return { pubkeys, addys };
   }
 
-  get_required_signatures(available_keys, apiInstance) {
+  async get_required_signatures(available_keys, apiInstance) {
     if (!available_keys.length) {
-      return Promise.resolve([]);
+      return [];
     }
-    var tr_object = ops.signed_transaction.toObject(this);
-    return apiInstance
+    const tr_object = ops.signed_transaction.toObject(this);
+    const required_public_keys = await apiInstance
       .db_api()
-      .exec("get_required_signatures", [tr_object, available_keys])
-      .then(function (required_public_keys) {
-        return required_public_keys;
-      });
+      .exec("get_required_signatures", [tr_object, available_keys]);
+    return required_public_keys;
   }
 
   add_signer(private_key, public_key = private_key.toPublicKey()) {
@@ -643,7 +629,7 @@ class TransactionBuilder {
       public_key = PublicKey.fromPublicKeyString(public_key);
     }
     // prevent duplicates
-    let spHex = private_key.toHex();
+    const spHex = private_key.toHex();
     for (let sp of this.signer_private_keys) {
       if (sp[0].toHex() === spHex) return;
     }
@@ -662,10 +648,10 @@ class TransactionBuilder {
       throw new Error("Transaction was not signed. Do you have a private key? [no_signers]");
     }
 
-    var end = this.signer_private_keys.length;
-    for (var i = 0; 0 < end ? i < end : i > end; 0 < end ? i++ : i++) {
-      var [private_key, public_key] = this.signer_private_keys[i];
-      var sig = Signature.signBuffer(
+    const end = this.signer_private_keys.length;
+    for (let i = 0; 0 < end ? i < end : i > end; 0 < end ? i++ : i++) {
+      const [private_key, public_key] = this.signer_private_keys[i];
+      const sig = Signature.signBuffer(
         Buffer.concat([Buffer.from(chain_id || apiInstance.chain_id, "hex"), this.tr_buffer]),
         private_key,
         public_key
@@ -685,21 +671,20 @@ class TransactionBuilder {
     return ops.signed_transaction.toObject(this);
   }
 
-  broadcast(was_broadcast_callback) {
+  async broadcast(was_broadcast_callback) {
     const api = Apis.instance();
     if (this.tr_buffer) {
       return this._broadcast(api, was_broadcast_callback);
     } else {
-      return this.finalize(api).then(() => {
-        return this._broadcast(api, was_broadcast_callback);
-      });
+      await this.finalize(api);
+      return this._broadcast(api, was_broadcast_callback);
     }
   }
 }
 
-var base_expiration_sec = () => {
-  var head_block_sec = Math.ceil(getHeadBlockDate().getTime() / 1000);
-  var now_sec = Math.ceil(Date.now() / 1000);
+const base_expiration_sec = () => {
+  const head_block_sec = Math.ceil(getHeadBlockDate().getTime() / 1000);
+  const now_sec = Math.ceil(Date.now() / 1000);
   // The head block time should be updated every 3 seconds.  If it isn't
   // then help the transaction to expire (use head_block_sec)
   if (now_sec - head_block_sec > 30) {
@@ -709,50 +694,45 @@ var base_expiration_sec = () => {
   return Math.max(now_sec, head_block_sec);
 };
 
-function _broadcast(apiInstance, was_broadcast_callback) {
-  return new Promise((resolve, reject) => {
-    if (!this.signed) {
-      this.sign();
-    }
-    if (!this.tr_buffer) {
-      throw new Error("not finalized");
-    }
-    if (!this.signatures.length) {
-      throw new Error("not signed");
-    }
-    if (!this.operations.length) {
-      throw new Error("no operations");
-    }
+async function _broadcast(apiInstance, was_broadcast_callback) {
+  if (!this.signed) {
+    this.sign();
+  }
+  if (!this.tr_buffer) {
+    throw new Error("not finalized");
+  }
+  if (!this.signatures.length) {
+    throw new Error("not signed");
+  }
+  if (!this.operations.length) {
+    throw new Error("no operations");
+  }
 
-    var tr_object = ops.signed_transaction.toObject(this);
-    apiInstance
-      .network_api()
-      .exec("broadcast_transaction_with_callback", [
-        function (res) {
-          return resolve(res);
-        },
-        tr_object,
-      ])
-      .then(function () {
-        if (was_broadcast_callback) {
-          was_broadcast_callback();
-        }
-        return;
-      })
-      .catch((error) => {
-        // console.log may be redundant for network errors, other errors could occur
-        var message = error.message;
-        if (!message) {
-          message = "Unknown error";
-        }
-        error.digest = hash.sha256(this.tr_buffer).toString("hex");
-        error.transaction = this.tr_buffer.toString("hex");
-        console.log(error);
-        reject(new Error(message + "\n" + JSON.stringify(error)));
-        return;
-      });
-    return;
-  });
+  const tr_object = ops.signed_transaction.toObject(this);
+  try {
+    await new Promise((resolve, reject) => {
+      apiInstance
+        .network_api()
+        .exec("broadcast_transaction_with_callback", [
+          resolve,
+          tr_object,
+        ])
+        .catch(reject);
+    });
+    if (was_broadcast_callback) {
+      was_broadcast_callback();
+    }
+  } catch (error) {
+    // console.log may be redundant for network errors, other errors could occur
+    let message = error.message;
+    if (!message) {
+      message = "Unknown error";
+    }
+    error.digest = hash.sha256(this.tr_buffer).toString("hex");
+    error.transaction = this.tr_buffer.toString("hex");
+    console.log(error);
+    throw new Error(message + "\n" + JSON.stringify(error));
+  }
 }
 
 function getHeadBlockDate() {

@@ -1,14 +1,14 @@
 import ChainTypes from "../chain/ChainTypes.js";
 
-var MAX_SAFE_INT = 9007199254740991;
-var MIN_SAFE_INT = -9007199254740991;
+const MAX_SAFE_INT = 9007199254740991;
+const MIN_SAFE_INT = -9007199254740991;
 
 /**
     Most validations are skipped and the value returned unchanged when an empty string, null, or undefined is encountered (except "required").
 
     Validations support a string format for dealing with large numbers.
 */
-var _my = {
+const _my = {
   is_empty: function (value) {
     return value === null || value === undefined;
   },
@@ -89,7 +89,7 @@ var _my = {
       return value;
     }
     this.no_overflow53(value, field_name);
-    var int_value = (() => {
+    const int_value = (() => {
       if (typeof value === "number") {
         return value;
       } else {
@@ -112,7 +112,7 @@ var _my = {
       value = "" + value;
     }
     value = ("" + value).trim();
-    var long_value = unsigned
+    const long_value = unsigned
       ? (BigInt(value) & 0xffffffffffffffffn)
       : BigInt(value);
     if (long_value.toString() !== value) {
@@ -152,7 +152,7 @@ var _my = {
     if (this.is_empty(value)) {
       return value;
     }
-    var match = value.match(regex);
+    const match = value.match(regex);
     if (match === null) {
       throw new Error(`unmatched ${regex} ${field_name} ${value}`);
     }
@@ -168,7 +168,7 @@ var _my = {
     if (this.is_empty(value)) {
       return value;
     }
-    var number = this.to_number(value);
+    const number = this.to_number(value);
     if (value < min || value > max) {
       throw new Error(`out of range ${value} ${field_name} ${value}`);
     }
@@ -179,11 +179,11 @@ var _my = {
     if (this.is_empty(value)) {
       return value;
     }
-    var object_type = ChainTypes.object_type[type];
+    const object_type = ChainTypes.object_type[type];
     if (!object_type) {
       throw new Error(`Unknown object type ${type} ${field_name} ${value}`);
     }
-    var re = new RegExp(`${reserved_spaces}\.${object_type}\.[0-9]+$`);
+    const re = new RegExp(`${reserved_spaces}\.${object_type}\.[0-9]+$`);
     if (!re.test(value)) {
       throw new Error(
         `Expecting ${type} in format ` +
@@ -233,7 +233,7 @@ var _my = {
       return value;
     }
     this.require_object_id(value, field_name);
-    var values = value.split(".");
+    const values = value.split(".");
     return this.to_number(values[1]);
   },
 
@@ -241,7 +241,7 @@ var _my = {
     if (this.is_empty(value)) {
       return value;
     }
-    var type_id = this.get_protocol_type(value, field_name);
+    const type_id = this.get_protocol_type(value, field_name);
     return Object.keys(ChainTypes.object_type)[type_id];
   },
 
@@ -267,7 +267,7 @@ var _my = {
       return;
     }
     if (typeof value === "string") {
-      var int = parseInt(value);
+      const int = parseInt(value);
       if (value > MAX_SAFE_INT || value < MIN_SAFE_INT) {
         throw new Error(`overflow ${field_name} ${value}`);
       }
@@ -301,7 +301,7 @@ var _my = {
       if (value === "") {
         value = "0";
       }
-      var long_value = BigInt(value);
+      const long_value = BigInt(value);
       if (unsigned) {
         if (long_value < 0n || long_value > 0xffffffffffffffffn) {
           throw new Error(`overflow ${field_name} ${value}`);
