@@ -43,10 +43,6 @@ window.addEventListener("unhandledrejection", (e) => {
 
 app.use(i18n);
 
-window.t = (key, params) => {
-    return i18n.global.t(key, params)
-}
-
 app.use(router);
 app.use(pinia);
 useSettingsStore().loadSettings();

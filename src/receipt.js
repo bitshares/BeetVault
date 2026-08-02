@@ -44,10 +44,6 @@ window.addEventListener("unhandledrejection", (e) => {
 app.component('Receipt', Receipt);
 app.use(i18n);
 
-window.t = (key, params) => {
-    return i18n.global.t(key, params)
-}
-
 app.mount('#receipt');
 
 emitter.on('i18n', (data) => {

@@ -1,5 +1,5 @@
 <script setup>
-    import { computed, watchEffect, ref, onMounted } from "vue";
+    import { computed, watch, ref, onMounted } from "vue";
 
     import Balances from "./balances";
     import AccountDetails from "./account-details";
@@ -29,57 +29,73 @@
     let _balances = ref([]);
     let _chain = ref("");
 
-    watchEffect(async () => {
-        async function lookupBlockchain() {
-            isConnecting.value = true;
-            isConnected.value = false;
-            _balances.value = [];
-            let selectedDifferentChain = !lastBlockchain.value || (lastBlockchain.value && lastBlockchain.value !== selectedAccount.value.chain);
-            if (selectedDifferentChain) {
-                lastBlockchain.value = selectedAccount.value.chain;
-            }
+    let abortController = ref(null);
 
-            _chain.value = selectedAccount.value.chain;
+    watch([selectedAccount, fetchQty], async (newValues) => {
+        if (abortController.value) {
+            abortController.value.abort();
+        }
+        abortController.value = new AbortController();
 
-            let blockchainResponse;
-            try { 
-                blockchainResponse = await blockchainRequest({
-                    methods: selectedDifferentChain
-                        ? ['getExplorer', 'getAccessType', 'getBalances']
-                        : ['getExplorer', 'getBalances'],
-                    account: selectedAccount.value,
-                    chain: selectedAccount.value.chain,
-                })
-            } catch (error) {
-                console.log({error});
-            }
+        if (!newValues[0] || !newValues[1]) {
+            return;
+        }
 
-            if (!blockchainResponse) {
-                console.log("No blockchain request");
-                isConnecting.value = false;
-                isConnected.value = false;
-                return;
-            }
+        console.log(`Fetching blockchain data #${newValues[1]}`);
+        await lookupBlockchain(newValues[0].chain);
+    }, { immediate: true });
 
-            if (blockchainResponse.getExplorer) {
-                _explorer.value = blockchainResponse.getExplorer;
-            }
-            if (blockchainResponse.getAccessType) {
-                _accessType.value = blockchainResponse.getAccessType;
-            }
-            if (blockchainResponse.getBalances) {
-                _balances.value = JSON.parse(blockchainResponse.getBalances);
-            }
+    async function lookupBlockchain(chain) {
+        const signal = abortController.value?.signal;
+        if (!signal || signal.aborted) return;
 
+        isConnecting.value = true;
+        isConnected.value = false;
+        _balances.value = [];
+        let selectedDifferentChain = !lastBlockchain.value || (lastBlockchain.value && lastBlockchain.value !== selectedAccount.value.chain);
+        if (selectedDifferentChain) {
+            lastBlockchain.value = selectedAccount.value.chain;
+        }
+
+        _chain.value = selectedAccount.value.chain;
+
+        let blockchainResponse;
+        try {
+            blockchainResponse = await blockchainRequest({
+                methods: selectedDifferentChain
+                    ? ['getExplorer', 'getAccessType', 'getBalances']
+                    : ['getExplorer', 'getBalances'],
+                account: selectedAccount.value,
+                chain: selectedAccount.value.chain,
+            })
+        } catch (error) {
+            if (signal.aborted) return;
+            console.log({error});
+        }
+
+        if (signal.aborted) return;
+        if (!blockchainResponse) {
+            console.log("No blockchain request");
             isConnecting.value = false;
-            isConnected.value = true;
+            isConnected.value = false;
+            return;
         }
 
-        if (selectedAccount.value && fetchQty.value) {
-            console.log(`Fetching blockchain data #${fetchQty.value}`);
-            lookupBlockchain();
+        if (signal.aborted) return;
+        if (blockchainResponse.getExplorer) {
+            _explorer.value = blockchainResponse.getExplorer;
         }
-    });
+        if (blockchainResponse.getAccessType) {
+            _accessType.value = blockchainResponse.getAccessType;
+        }
+        if (blockchainResponse.getBalances) {
+            _balances.value = JSON.parse(blockchainResponse.getBalances);
+        }
+
+        if (signal.aborted) return;
+        isConnecting.value = false;
+        isConnected.value = true;
+    }
 
     onMounted(() => {
         if (!walletStore.isUnlocked) {

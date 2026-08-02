@@ -135,15 +135,18 @@ export async function inject(blockchain, request, webContents) {
             foundIDs: _foundIDs,
         });
 
-        const onResult = ipcOnceWithTimeout("injectedCallResponse", 300_000);
-        const onError = ipcOnceWithTimeout("injectedCallError", 300_000);
+        const abortController = new AbortController();
+        const onResult = ipcOnceWithTimeout("injectedCallResponse", 300_000, abortController.signal);
+        const onError = ipcOnceWithTimeout("injectedCallError", 300_000, abortController.signal);
+
+        onResult.catch(() => null);
+        onError.catch(() => null);
 
         return Promise.race([
             onResult.then(r => ({ type: "response", ...r })),
             onError.then(r => ({ type: "error", ...r })),
         ]).finally(() => {
-            onResult.cancel();
-            onError.cancel();
+            abortController.abort();
         });
     };
 

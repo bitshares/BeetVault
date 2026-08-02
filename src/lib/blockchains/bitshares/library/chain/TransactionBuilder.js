@@ -710,7 +710,7 @@ async function _broadcast(apiInstance, was_broadcast_callback) {
 
   const tr_object = ops.signed_transaction.toObject(this);
   try {
-    await new Promise((resolve, reject) => {
+    const result = await new Promise((resolve, reject) => {
       apiInstance
         .network_api()
         .exec("broadcast_transaction_with_callback", [
@@ -722,6 +722,7 @@ async function _broadcast(apiInstance, was_broadcast_callback) {
     if (was_broadcast_callback) {
       was_broadcast_callback();
     }
+    return result;
   } catch (error) {
     // console.log may be redundant for network errors, other errors could occur
     let message = error.message;

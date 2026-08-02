@@ -45,10 +45,6 @@ app.component('ErrorPopup', ErrorPopup);
 app.component('error-popup', ErrorPopup);
 app.use(i18n);
 
-window.t = (key, params) => {
-    return i18n.global.t(key, params)
-}
-
 app.mount('#error');
 
 emitter.on('i18n', (data) => {
