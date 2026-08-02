@@ -95,7 +95,7 @@
         v-if="type && type !== '' && request"
         class="w-full overflow-y-auto text-left"
     >
-        <Card v-show="true" class="mb-4">
+        <Card v-if="true" class="mb-4">
             <CardHeader>
                 <CardTitle>{{ t("common.popup.preview") }}</CardTitle>
             </CardHeader>

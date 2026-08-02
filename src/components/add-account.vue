@@ -193,8 +193,7 @@
             return;
         }
 
-        for (let i in accounts_to_import.value) {
-            let account = accounts_to_import.value[i];
+        for (let account of accounts_to_import.value) {
             if (!userHasWallet.value || createNewWallet.value) {
                 try {
                     await store.dispatch("WalletStore/saveWallet", {

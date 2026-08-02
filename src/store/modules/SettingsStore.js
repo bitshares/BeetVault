@@ -27,7 +27,7 @@ const actions = {
             const settings = await BeetDB.settings.get({ id: 'settings' });
             if (settings) {
                 const parsed = JSON.parse(settings.value);
-                const merged = Object.assign({}, initialState.settings, parsed);
+                const merged = { ...initialState.settings, ...parsed };
                 commit(LOAD_SETTINGS, merged);
             } else {
                 await BeetDB.settings.put({ id: 'settings', value: JSON.stringify(initialState.settings) });
@@ -41,8 +41,8 @@ const actions = {
         try {
             const record = await BeetDB.settings.get({ id: 'settings' });
             const settings = record
-                ? Object.assign({}, initialState.settings, JSON.parse(record.value))
-                : Object.assign({}, initialState.settings);
+                ? { ...initialState.settings, ...JSON.parse(record.value) }
+                : { ...initialState.settings };
 
             settings.logoutTimeout = payload.timeout;
 
@@ -59,8 +59,8 @@ const actions = {
         try {
             const record = await BeetDB.settings.get({ id: 'settings' });
             const settings = record
-                ? Object.assign({}, initialState.settings, JSON.parse(record.value))
-                : Object.assign({}, initialState.settings);
+                ? { ...initialState.settings, ...JSON.parse(record.value) }
+                : { ...initialState.settings };
 
             // backwards compatibility
             if (typeof settings.selected_node === "string") {
@@ -96,8 +96,8 @@ const actions = {
         try {
             const record = await BeetDB.settings.get({ id: 'settings' });
             const settings = record
-                ? Object.assign({}, initialState.settings, JSON.parse(record.value))
-                : Object.assign({}, initialState.settings);
+                ? { ...initialState.settings, ...JSON.parse(record.value) }
+                : { ...initialState.settings };
 
             settings.locale = payload.locale;
 
@@ -118,8 +118,8 @@ const actions = {
         try {
             const record = await BeetDB.settings.get({ id: 'settings' });
             const settings = record
-                ? Object.assign({}, initialState.settings, JSON.parse(record.value))
-                : Object.assign({}, initialState.settings);
+                ? { ...initialState.settings, ...JSON.parse(record.value) }
+                : { ...initialState.settings };
 
             if (!Object.prototype.hasOwnProperty.call(settings, 'chainPermissions')) {
                 settings['chainPermissions'] = {
@@ -188,6 +188,7 @@ const initialState = {
             EOS: [],
             BEOS: [],
             TLOS: [],
+            TLOSTEST: [],
             WAX: [],
             WAXTEST: [],
             EOSTEST: [],

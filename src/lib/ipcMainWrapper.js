@@ -12,33 +12,37 @@ import { ipcMain } from "electron";
  * @returns {Promise<{ event: any, args: any[] }> & { cancel: () => void }}
  */
 export function ipcOnceWithTimeout(channel, timeoutMs) {
-    let timer;
     let listener;
     let settled = false;
+    let timeoutSignal;
 
-    const promise = new Promise((resolve, reject) => {
+    const onTimeout = () => {
+        if (settled) return;
+        settled = true;
+        ipcMain.removeListener(channel, listener);
+        reject(new Error(`IPC timeout on "${channel}" after ${timeoutMs}ms`));
+    };
+
+    let reject;
+    const promise = new Promise((res, rej) => {
+        reject = rej;
         listener = (event, ...args) => {
             if (settled) return;
             settled = true;
-            clearTimeout(timer);
-            resolve({ event, args });
+            timeoutSignal.removeEventListener("timeout", onTimeout);
+            res({ event, args });
         };
 
+        timeoutSignal = AbortSignal.timeout(timeoutMs);
+        timeoutSignal.addEventListener("timeout", onTimeout, { once: true });
         ipcMain.once(channel, listener);
-
-        timer = setTimeout(() => {
-            if (settled) return;
-            settled = true;
-            ipcMain.removeListener(channel, listener);
-            reject(new Error(`IPC timeout on "${channel}" after ${timeoutMs}ms`));
-        }, timeoutMs);
     });
 
     return Object.assign(promise, {
         cancel() {
             if (settled) return;
             settled = true;
-            clearTimeout(timer);
+            timeoutSignal.removeEventListener("timeout", onTimeout);
             ipcMain.removeListener(channel, listener);
         },
     });

@@ -19,77 +19,68 @@ export default class BlockchainAPI {
      * @returns {Promise} connection
      */
     async ensureConnection(nodeToConnect = null) {
-        return new Promise(async (resolve, reject) => {
-            if (nodeToConnect && this._isConnectedToNode !== nodeToConnect) {
-                // enforce connection to that node
-                this._isConnected = false;
-                this._isConnectedToNode = null;
-            }
+        if (nodeToConnect && this._isConnectedToNode !== nodeToConnect) {
+            // enforce connection to that node
+            this._isConnected = false;
+            this._isConnectedToNode = null;
+        }
 
-            let badConnection = await this._needsNewConnection();
-            if (!nodeToConnect && !badConnection) {
-                console.log(`Using existing connection: ${this._isConnectedToNode}`);
-                return this._connectionEstablished(resolve, this._isConnectedToNode);
-            }
+        let badConnection = await this._needsNewConnection();
+        if (!nodeToConnect && !badConnection) {
+            console.log(`Using existing connection: ${this._isConnectedToNode}`);
+            return this._connectionEstablished(this._isConnectedToNode);
+        }
 
-            if (this._isConnectingInProgress) {
-                // there should be a promise queue for pending connects, this is the lazy way
-                console.log("Queued connection - existing connection handshake in progress.");
+        if (this._isConnectingInProgress) {
+            // there should be a promise queue for pending connects, this is the lazy way
+            console.log("Queued connection - existing connection handshake in progress.");
+            return new Promise((resolve, reject) => {
                 setTimeout(() => {
                     if (this._isConnected) {
-                        this._connectionEstablished(resolve, this._node);
+                        resolve(this._connectionEstablished(this._node));
                     } else {
-                        this._connectionFailed(
-                          reject,
-                          this._node,
-                          "Timeout"
-                        );
+                        reject(this._connectionFailed(this._node, "Timeout"));
                     }
                 }, 4000);
-                return;
-            } else {
-                this._isConnectingInProgress = true;
-            }
-
-            this._connect(nodeToConnect).then((res) => {
-                this._isConnectingInProgress = false;
-                this._isConnected = true;
-                return resolve(res);
-            }).catch((error) => {
-                console.log(error);
-                return reject(error);
             });
-        });
+        }
+
+        this._isConnectingInProgress = true;
+
+        try {
+            const res = await this._connect(nodeToConnect);
+            this._isConnectingInProgress = false;
+            this._isConnected = true;
+            return res;
+        } catch (error) {
+            console.log(error);
+            throw error;
+        }
     }
 
     /*
      * Triggers upon successful blockchain node connection. Stores successful changes.
-     * @param {callback} resolveCallback
      * @param {String} node
      * @returns {String} node
      */
-    _connectionEstablished(resolveCallback, node) {
+    _connectionEstablished(node) {
         this._isConnectedToNode = node;
         this._isConnected = true;
         this._isConnectingInProgress = false;
-        if (resolveCallback) {
-            resolveCallback(node);
-        }
+        return node;
     }
 
     /*
      * Triggers upon blockchain node connection failure. Logs and changes connection states.
-     * @param {callback} resolveCallback
      * @param {String} node
+     * @param {String} error
      * @returns {String} node
      */
-    _connectionFailed(resolveCallback, node, error) {
+    _connectionFailed(node, error) {
         console.log(this._config.name + " Failed to connect to " + node, error);
         this._isConnected = false;
         this._isConnectingInProgress = false;
-        if (resolveCallback != null) {
-            resolveCallback(node);
-        }
+        return node;
     }
 
     /*

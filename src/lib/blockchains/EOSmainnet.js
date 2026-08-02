@@ -62,16 +62,14 @@ export default class EOS extends BlockchainAPI {
     /*
      * Establish a connection
      * @param {String} nodeToConnect
-     * @param {Promise} resolve
-     * @param {Promise} reject
      * @returns {String}
      */
-    async _establishConnection(nodeToConnect, resolve, reject) {
+    async _establishConnection(nodeToConnect) {
         if (
             (!nodeToConnect || !nodeToConnect.length) &&
             !this.getNodes()[0].url
         ) {
-            this._connectionFailed(reject, "", "No node url");
+            throw this._connectionFailed("", "No node url");
         }
 
         const chosenURL =
@@ -86,22 +84,11 @@ export default class EOS extends BlockchainAPI {
             });
         } catch (error) {
             console.log({ error });
-            this._connectionFailed(reject, chosenURL, error.message);
+            throw this._connectionFailed(chosenURL, error.message);
         }
 
         this.client = client;
-        this._connectionEstablished(resolve, chosenURL);
-
-        /*
-        try {
-            this.client.v1.chain.get_block(1).then(() => {
-                this._connectionEstablished(resolve, chosenURL);
-            })
-        } catch (error) {
-            console.log({error})
-            this._connectionFailed(reject, chosenURL, error.message);
-        }
-        */
+        return this._connectionEstablished(chosenURL);
     }
 
     /**
@@ -124,46 +111,27 @@ export default class EOS extends BlockchainAPI {
      * @param {String||null} nodeToConnect
      * @returns {String}
      */
-    _connect(nodeToConnect = null) {
-        return new Promise((resolve, reject) => {
-            if (nodeToConnect) {
-                //console.log(`nodetoconnect: ${nodeToConnect}`)
-                return this._establishConnection(
-                    nodeToConnect,
-                    resolve,
-                    reject
-                );
-            }
+    async _connect(nodeToConnect = null) {
+        if (nodeToConnect) {
+            return this._establishConnection(nodeToConnect);
+        }
 
-            if (
-                this._isConnected &&
-                this._isConnectedToNode &&
-                !nodeToConnect
-            ) {
-                //console.log(`isConnected: ${this._isConnectedToNode}`)
-                return this._connectionEstablished(
-                    resolve,
-                    this._isConnectedToNode
-                );
-            }
+        if (
+            this._isConnected &&
+            this._isConnectedToNode &&
+            !nodeToConnect
+        ) {
+            return this._connectionEstablished(this._isConnectedToNode);
+        }
 
-            const userConfiguredNodes = store.getters['SettingsStore/getNodes'](this._config.coreSymbol);
-            
-            if (!userConfiguredNodes || !userConfiguredNodes.length) {
-                return this._connectionFailed(
-                    reject,
-                    "",
-                    "No working nodes"
-                );
-            }
+        const userConfiguredNodes = store.getters['SettingsStore/getNodes'](this._config.coreSymbol);
+        
+        if (!userConfiguredNodes || !userConfiguredNodes.length) {
+            throw this._connectionFailed("", "No working nodes");
+        }
 
-            this._node = userConfiguredNodes[0].url;
-            return this._establishConnection(
-                this._node,
-                resolve,
-                reject
-            );
-        });
+        this._node = userConfiguredNodes[0].url;
+        return this._establishConnection(this._node);
     }
 
     /**
@@ -178,18 +146,16 @@ export default class EOS extends BlockchainAPI {
             }, 2000);
         });
 
-        let connectionPromise = new Promise(async (resolve, reject) => {
+        let connectionPromise = new Promise((resolve, reject) => {
             //console.log(`Testing: ${url}`);
-            let before = new Date();
-            let beforeTS = before.getTime();
+            let beforeTS = Date.now();
 
             let socket = new Socket(url);
             socket.on("connect", () => {
-                let now = new Date();
-                let nowTS = now.getTime();
+                let lag = Date.now() - beforeTS;
                 socket.destroy();
-                //console.log(`Success: ${url} (${nowTS - beforeTS}ms)`);
-                return resolve({ url: url, lag: nowTS - beforeTS });
+                //console.log(`Success: ${url} (${lag}ms)`);
+                return resolve({ url: url, lag: lag });
             });
 
             socket.on("error", (error) => {
@@ -199,14 +165,7 @@ export default class EOS extends BlockchainAPI {
             });
         });
 
-        const fastestPromise = Promise.race([
-            connectionPromise,
-            timeoutPromise,
-        ]).catch((error) => {
-            return null;
-        });
-
-        return fastestPromise;
+        return Promise.race([connectionPromise, timeoutPromise]).catch(() => null);
     }
 
     /**
@@ -214,41 +173,34 @@ export default class EOS extends BlockchainAPI {
      * @returns {Promise}
      */
     async _testNodes() {
-        return new Promise(async (resolve, reject) => {
-            let urls = this.getNodes().map((node) => node.url);
+        let urls = this.getNodes().map((node) => node.url);
 
-            let filteredURLS = urls.filter((url) => {
-                if (!this._tempBanned || !this._tempBanned.includes(url)) {
-                    return true;
-                }
-            });
-
-            return Promise.all(
-                filteredURLS.map((url) => this._testConnection(url))
-            )
-                .then((validNodes) => {
-                    let filteredNodes = validNodes.filter((x) => x);
-                    if (filteredNodes.length) {
-                        let sortedNodes = filteredNodes.sort(
-                            (a, b) => a.lag - b.lag
-                        );
-                        let now = new Date();
-                        return resolve({
-                            node: sortedNodes[0].url,
-                            latencies: sortedNodes,
-                            timestamp: now.getTime(),
-                        });
-                    } else {
-                        console.error(
-                            "No valid BTS WSS connections established; Please check your internet connection."
-                        );
-                        return reject();
-                    }
-                })
-                .catch((error) => {
-                    console.log(error);
-                });
+        let filteredURLS = urls.filter((url) => {
+            if (!this._tempBanned || !this._tempBanned.includes(url)) {
+                return true;
+            }
         });
+
+        let validNodes = await Promise.all(
+            filteredURLS.map((url) => this._testConnection(url))
+        );
+
+        let filteredNodes = validNodes.filter((x) => x);
+        if (filteredNodes.length) {
+            let sortedNodes = filteredNodes.sort(
+                (a, b) => a.lag - b.lag
+            );
+            return {
+                node: sortedNodes[0].url,
+                latencies: sortedNodes,
+                timestamp: Date.now(),
+            };
+        } else {
+            console.error(
+                "No valid BTS WSS connections established; Please check your internet connection."
+            );
+            throw new Error("No valid BTS WSS connections");
+        }
     }
 
     /*
@@ -256,22 +208,16 @@ export default class EOS extends BlockchainAPI {
      * @returns {Boolean}
      */
     async _needsNewConnection() {
-        return new Promise(async (resolve, reject) => {
-            if (
-                !this._isConnected ||
-                !this._isConnectedToNode ||
-                !this._nodeLatencies
-            ) {
-                return resolve(true);
-            }
+        if (
+            !this._isConnected ||
+            !this._isConnectedToNode ||
+            !this._nodeLatencies
+        ) {
+            return true;
+        }
 
-            let testConnection = await this._testConnection(
-                this._isConnectedToNode
-            );
-            let connectionResult =
-                testConnection && testConnection.url ? false : true;
-            return resolve(connectionResult);
-        });
+        let testConnection = await this._testConnection(this._isConnectedToNode);
+        return testConnection && testConnection.url ? false : true;
     }
 
     /**

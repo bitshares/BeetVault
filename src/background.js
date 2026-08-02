@@ -1,6 +1,5 @@
 import path from "path";
-import url from "url";
-import fs from "fs";
+import { pathToFileURL } from "url";
 import fsPromises from "fs/promises";
 
 import os from "os";
@@ -30,7 +29,6 @@ import {
     safeStorage,
 } from "electron";
 
-import Logger from "./lib/Logger.js";
 import { initApplicationMenu } from "./lib/applicationMenu.js";
 import { getSignature } from "./lib/SecureRemote.js";
 import * as Actions from "./lib/Actions.js";
@@ -52,37 +50,27 @@ let modalRequests = {};
 let receiptWindows = {};
 let errorWindow = null;
 
-var isDevMode = process.execPath.match(/[\\/]electron/);
-const logger = new Logger(isDevMode ? 3 : 0);
+const isDevMode = process.execPath.match(/[\\/]electron/);
 let tray = null;
 let regexBTS = /1\.2\.\d+/g;
 
 async function _readFile(filePath) {
-    return new Promise((resolve, reject) => {
-        if (!filePath || typeof filePath !== 'string') {
-            return reject("Invalid file path");
-        }
+    if (!filePath || typeof filePath !== 'string') {
+        throw "Invalid file path";
+    }
 
-        const resolved = path.resolve(filePath);
-        const ext = path.extname(resolved);
+    const resolved = path.resolve(filePath);
+    const ext = path.extname(resolved);
 
-        if (ext !== '.bin') {
-            return reject("Invalid file type");
-        }
+    if (ext !== '.bin') {
+        throw "Invalid file type";
+    }
 
-        if (resolved.includes('..') || resolved.includes('\0')) {
-            return reject("Invalid file path");
-        }
+    if (resolved.includes('..') || resolved.includes('\0')) {
+        throw "Invalid file path";
+    }
 
-        fs.readFile(resolved, async (err, data) => {
-            if (err) {
-                console.log({ err });
-                return reject(err);
-            } else {
-                return resolve(data);
-            }
-        });
-    });
+    return await fsPromises.readFile(resolved);
 }
 
 /*
@@ -92,14 +80,12 @@ const createModal = async (arg, modalEvent) => {
     let modalHeight = 600;
     let modalWidth = 800;
     if (!mainWindow) {
-        logger.debug(`No window`);
         throw "No main window";
     }
 
     let request = arg.request;
     let id = request.id;
     if (!request || !request.id) {
-        logger.debug(`No request`);
         throw "No request";
     }
 
@@ -160,7 +146,6 @@ const createModal = async (arg, modalEvent) => {
         webPreferences: {
             nodeIntegration: false, // Keep false for security
             contextIsolation: true, // Keep true for security
-            enableRemoteModule: false, // Keep false for security
             sandbox: true, // Keep true for security
             preload: path.join(__dirname, "preloadModal.js"),
         },
@@ -212,7 +197,6 @@ const createModal = async (arg, modalEvent) => {
         let receipt = arg.receipt;
         let notifyTXT = arg.notifyTXT;
         if (!request || !request.id || !result || !notifyTXT || !receipt) {
-            logger.debug(`No request`);
             throw "No request";
         }
 
@@ -248,7 +232,6 @@ const createModal = async (arg, modalEvent) => {
             webPreferences: {
                 nodeIntegration: false, // Keep false for security
                 contextIsolation: true, // Keep true for security
-                enableRemoteModule: false, // Keep false for security
                 sandbox: true, // Keep true for security
                 preload: path.join(__dirname, "preloadModal.js"),
             },
@@ -277,7 +260,6 @@ const createError = async (arg, errorEvent) => {
     let modalHeight = 600;
     let modalWidth = 800;
     if (!mainWindow) {
-        logger.debug(`No window`);
         throw "No main window";
     }
 
@@ -340,7 +322,6 @@ const createError = async (arg, errorEvent) => {
         webPreferences: {
             nodeIntegration: false,
             contextIsolation: true,
-            enableRemoteModule: false,
             sandbox: true,
             preload: path.join(__dirname, "preloadModal.js"),
         },
@@ -636,7 +617,6 @@ const createWindow = async () => {
         webPreferences: {
             nodeIntegration: false, // Keep false for security
             contextIsolation: true, // Keep true for security
-            enableRemoteModule: false, // Keep false for security
             sandbox: true, // Keep true for security
             preload: path.join(__dirname, "preload.js"),
         },
@@ -645,11 +625,7 @@ const createWindow = async () => {
 
     initApplicationMenu(mainWindow);
     mainWindow.loadURL(
-        url.format({
-            pathname: path.join(__dirname, "index.html"),
-            protocol: "file:",
-            slashes: true,
-        })
+        `${pathToFileURL(path.join(__dirname, "index.html")).href}`
     );
 
     tray = new Tray(__dirname + "/img/beet-tray.png");
@@ -1262,7 +1238,7 @@ const createWindow = async () => {
     ipcMain.on("openURL", (event, arg) => {
         if (!validateSender(event.senderFrame)) return;
         try {
-            const parsedUrl = new url.URL(arg);
+            const parsedUrl = new URL(arg);
             const domain = parsedUrl.hostname;
             if (safeDomains.includes(domain)) {
                 shell.openExternal(arg);
@@ -1314,7 +1290,6 @@ const createWindow = async () => {
 
     ipcMain.on("notify", (event, arg) => {
         if (!validateSender(event.senderFrame)) return;
-        logger.debug("notify");
         const NOTIFICATION_TITLE = "BeetVault wallet notification";
         const NOTIFICATION_BODY =
             arg == "request" ? "BeetVault has received a new request." : arg;
@@ -1919,7 +1894,7 @@ const createWindow = async () => {
                 }
 
                 if (encrypted) {
-                    fs.writeFileSync(result.filePath, encrypted);
+                    await fsPromises.writeFile(result.filePath, encrypted);
                 }
             })
             .catch((error) => {
