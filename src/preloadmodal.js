@@ -25,4 +25,5 @@ contextBridge.exposeInMainWorld('electron', {
     onError: (id, func) => {
         safeOn(`respond:error:${id}`, func);
     },
+    sendError: async (errorData) => safeSend('sendError', errorData),
 });

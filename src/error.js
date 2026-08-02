@@ -1,4 +1,4 @@
-import { createApp } from 'vue';
+import { createApp, h } from 'vue';
 import { createPinia } from 'pinia';
 import mitt from 'mitt';
 
@@ -20,13 +20,26 @@ window.onerror = function (msg, url, lineNo, columnNo, error) {
 
 const pinia = createPinia();
 const emitter = mitt();
-const app = createApp({});
+const app = createApp({
+  render() {
+    return h('div', { class: 'main' }, [
+      h(ErrorPopup),
+    ]);
+  },
+});
 app.use(pinia);
 app.provide('emitter', emitter);
 
 app.config.errorHandler = function (err, vm, info) {
   console.log("error:" + err);
 };
+
+// Forward uncaught renderer promise rejections to the main process so they
+// are captured in crash reporting regardless of where they originate.
+window.addEventListener("unhandledrejection", (e) => {
+  window.electron?.sendError?.(e.reason?.stack || e.reason);
+  e.preventDefault();
+});
 
 app.component('ErrorPopup', ErrorPopup);
 app.component('error-popup', ErrorPopup);

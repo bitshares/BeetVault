@@ -5,7 +5,7 @@ import fsPromises from "fs/promises";
 import os from "os";
 
 import queryString from "query-string";
-import { PrivateKey } from "./lib/blockchains/bitshares/library";
+import { PrivateKey, Apis } from "./lib/blockchains/bitshares/library";
 
 import { v4 as uuidv4 } from "uuid";
 import { encrypt, decrypt } from "./lib/crypto.js";
@@ -53,6 +53,58 @@ let errorWindow = null;
 const isDevMode = process.execPath.match(/[\\/]electron/);
 let tray = null;
 let regexBTS = /1\.2\.\d+/g;
+
+/*
+ * Harden a BrowserWindow against navigation / window-open attacks.
+ * All pages are local (file:) and load fixed HTML; there is no legitimate
+ * reason to navigate away or open new windows from the renderer. Any such
+ * attempt is almost certainly an XSS vector, so deny it defensively.
+ */
+const applyWindowSecurityGuards = (win) => {
+    win.webContents.on('will-navigate', (event, url) => {
+        event.preventDefault();
+        console.debug(`[SECURITY] Prevented navigation to: ${url}`);
+    });
+
+    win.webContents.setWindowOpenHandler(({ url }) => {
+        console.debug(`[SECURITY] Prevented window.open: ${url}`);
+        return { action: 'deny' };
+    });
+};
+
+/*
+ * Main-process crash / unhandled-rejection handling.
+ *
+ * Registered at module scope (rather than only in the production branch) so
+ * that crashes are captured during startup in every environment. The
+ * unhandledRejection handler surfaces a user-facing error window via the
+ * existing createError() flow; the uncaughtException handler is log-only
+ * because the process state may be corrupted and we must not attempt UI from
+ * within it.
+ */
+process.on('unhandledRejection', (error, handle) => {
+    const msg = error?.stack || error?.message || String(error);
+    console.error(`[Main] Unhandled rejection: ${msg}`);
+
+    if (mainWindow && !mainWindow.isDestroyed()) {
+        const id = uuidv4();
+        setImmediate(() => {
+            createError({
+                id,
+                title: 'Unhandled Error',
+                errorMessage: msg.substring(0, 500),
+                terminalError: msg,
+                consoleLogs: [{ msg, timestamp: new Date().toISOString() }],
+                context: 'process.unhandledRejection',
+            }, null).catch(err => console.error(`[Main] Error popup creation failed: ${err}`));
+        });
+    }
+});
+
+process.on('uncaughtException', (error) => {
+    console.error(`[Main] Uncaught exception: ${error?.stack || error?.message}`);
+    // Log only — the process state may be corrupted, so do not attempt UI here.
+});
 
 async function _readFile(filePath) {
     if (!filePath || typeof filePath !== 'string') {
@@ -152,6 +204,7 @@ const createModal = async (arg, modalEvent) => {
         icon: __dirname + "/img/beet-taskbar.png",
     });
 
+    applyWindowSecurityGuards(modalWindows[id]);
     modalWindows[id].loadURL(targetURL);
 
     modalWindows[id].once("ready-to-show", () => {
@@ -238,6 +291,7 @@ const createModal = async (arg, modalEvent) => {
             icon: __dirname + "/img/beet-taskbar.png",
         });
 
+        applyWindowSecurityGuards(receiptWindows[id]);
         receiptWindows[id].loadURL(targetURL);
 
         receiptWindows[id].once("ready-to-show", () => {
@@ -328,6 +382,7 @@ const createError = async (arg, errorEvent) => {
         icon: __dirname + "/img/beet-taskbar.png",
     });
 
+    applyWindowSecurityGuards(errorWindow);
     errorWindow.loadURL(targetURL);
 
     errorWindow.once("ready-to-show", () => {
@@ -623,6 +678,7 @@ const createWindow = async () => {
         icon: __dirname + "/img/beet-taskbar.png",
     });
 
+    applyWindowSecurityGuards(mainWindow);
     initApplicationMenu(mainWindow);
     mainWindow.loadURL(
         `${pathToFileURL(path.join(__dirname, "index.html")).href}`
@@ -1291,6 +1347,16 @@ const createWindow = async () => {
         } catch (error) {
             console.log(error);
         }
+    });
+
+    /*
+     * Log a renderer-forwarded uncaught error / unhandled rejection.
+     * Renderers forward via window.electron.sendError (see src/app.js etc.);
+     * this captures them in the main process log for crash reporting.
+     */
+    ipcMain.on("sendError", async (event, arg) => {
+        if (!validateSender(event.senderFrame)) return;
+        console.error(`[RENDERER] ${event.senderFrame?.url || ""}: ${arg}`);
     });
 
     ipcMain.on("notify", (event, arg) => {
@@ -2096,6 +2162,18 @@ if (currentOS === "win32" || currentOS === "linux") {
         if (process.platform !== "darwin") {
             app.quit();
         }
+    });
+
+    app.on("before-quit", () => {
+        console.log("[APP] before-quit: closing blockchain connections");
+        try {
+            // BitShares: refcounted close of state.ws_rpc (ChainWebSocket).
+            Apis.close();
+        } catch (e) {
+            // Ignore — app is shutting down regardless.
+        }
+        // TODO(EOS/Hive family): expose a disconnect() on BlockchainAPI/EOSmainnet
+        // and call it here to destroy the simple-websocket Socket instance.
     });
 
     app.on("activate", () => {

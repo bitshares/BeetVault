@@ -19,6 +19,7 @@ export const SEND_CHANNELS = Object.freeze([
     'createPopup',
     'createReceipt',
     'createError',
+    'sendError',
     'injectedCallResponse',
     'injectedCallError',
     'getSafeAccountResponse',

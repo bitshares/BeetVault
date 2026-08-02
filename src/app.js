@@ -1,4 +1,5 @@
-import { createApp } from 'vue';
+import { createApp, h } from 'vue';
+import { RouterView } from 'vue-router';
 import mitt from 'mitt';
 
 import './styles/globals.css';
@@ -19,12 +20,26 @@ window.onerror = function (msg, url, lineNo, columnNo, error) {
 };
 
 const emitter = mitt();
-const app = createApp({});
+const app = createApp({
+  render() {
+    return h('div', { class: 'main' }, [
+      h(RouterView, { name: 'header' }),
+      h(RouterView),
+    ]);
+  },
+});
 app.provide('emitter', emitter);
 
 app.config.errorHandler = function (err, vm, info) {
   console.log(err);
 };
+
+// Forward uncaught renderer promise rejections to the main process so they
+// are captured in crash reporting regardless of where they originate.
+window.addEventListener("unhandledrejection", (e) => {
+  window.electron?.sendError?.(e.reason?.stack || e.reason);
+  e.preventDefault();
+});
 
 app.use(i18n);
 

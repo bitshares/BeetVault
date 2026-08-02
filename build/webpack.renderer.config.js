@@ -25,9 +25,8 @@ module.exports = function(env) {
             extensions: ['.*', '.js', '.mjs', '.ts', '.vue', '.json', '.css', '.scss'],
             mainFields: ["browser", "module", "main"],
             alias: {
-                vue: "vue/dist/vue.esm-browser.js",
+                vue: "vue/dist/vue.runtime.esm-browser.js",
                 "vue-router": "vue-router/dist/vue-router.esm-browser.js",
-                vue$: 'vue/dist/vue.min.js',
                 env: path.resolve(__dirname, `../config/env_${env}.json`),
                 '~': path.resolve(__dirname, '../src/'),
                 '@/registry/new-york/ui': path.resolve(__dirname, '../src/components/ui/ui'),

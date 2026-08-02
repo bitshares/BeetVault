@@ -50,6 +50,7 @@ contextBridge.exposeInMainWorld('electron', {
     },
     createReceipt: async (receiptData) => safeSend('createReceipt', receiptData),
     createError: async (errorData) => safeSend('createError', errorData),
+    sendError: async (errorData) => safeSend('sendError', errorData),
     // Handling injected calls (used by deeplink/QR/TOTP flows via inject.js)
     onInjectedCall: async (func) => {
         safeOn('injectedCall', func);
