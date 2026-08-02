@@ -321,5 +321,10 @@
         "failed": "Mislykkedes",
         "verifyBtn": "Verificer besked",
         "clearBtn": "Ryd"
+    },
+    "securityWarning": {
+        "title": "Intet OS-nøglebund fundet",
+        "text": "Dit system har ingen OS-nøglebund (backend: {backend}). Din pung er stadig krypteret med din adgangskode, men låsematerialet opbevares kun i app-hukommelsen. Lås pungen, når du går væk.",
+        "learnMore": "Læs mere"
     }
 }

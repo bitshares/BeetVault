@@ -50,6 +50,7 @@
             })
             .catch(() => {
                 passincorrect.value = "border-red-500 ring-red-500";
+                walletpass.value = "";
                 window.electron.notify(t('common.start.invalid_password'));
             })
             .finally(() => {

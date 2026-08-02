@@ -321,5 +321,10 @@
         "failed": "Fallido",
         "verifyBtn": "Verificar mensaje",
         "clearBtn": "Limpiar"
+    },
+    "securityWarning": {
+        "title": "No se detectó llavero del sistema operativo",
+        "text": "Su sistema no tiene un llavero a nivel de SO (backend: {backend}). Su billetera sigue encriptada con su contraseña, pero el material de desbloqueo se almacena solo en la memoria de la aplicación. Bloquee la billetera cuando se aleje.",
+        "learnMore": "Más información"
     }
 }

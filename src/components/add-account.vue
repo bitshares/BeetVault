@@ -207,6 +207,8 @@
                     console.log(error);
                     _handleError(error);
                     saving.value = false;
+                    password.value = "";
+                    confirmPassword.value = "";
                     stopProcessing();
                     return;
                 }
@@ -220,6 +222,8 @@
                     console.log(error);
                     _handleError(error);
                     saving.value = false;
+                    password.value = "";
+                    confirmPassword.value = "";
                     stopProcessing();
                     return;
                 }
@@ -227,6 +231,8 @@
         }
 
         stopProcessing();
+        password.value = "";
+        confirmPassword.value = "";
 
         if (store.state.WalletStore.isUnlocked) {
             store.dispatch("WalletStore/logout");

@@ -101,6 +101,7 @@ import { Spinner } from '@/components/ui/ui/spinner';
             } catch (error) {
                 console.log({error});
                 inProgress.value = false;
+                bin_file_password.value = "";
                 window.electron.notify(t("common.error_text"));
                 return;
             }
@@ -111,6 +112,7 @@ import { Spinner } from '@/components/ui/ui/spinner';
                 substep2.value = true;
             }
 
+            bin_file_password.value = "";
             inProgress.value = false;
         } else {
             _getPickedAccounts();

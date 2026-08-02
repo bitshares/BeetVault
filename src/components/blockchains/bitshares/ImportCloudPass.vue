@@ -89,6 +89,7 @@
             console.log("Account verification error, check your cloud account password and try again");
             errorOcurred.value = true;
             inProgress.value = false;
+            cloud_pass.value = "";
             return;
         }
 
@@ -101,6 +102,7 @@
             }
             errorOcurred.value = true;
             inProgress.value = false;
+            cloud_pass.value = "";
             return;
         }
 
@@ -108,6 +110,7 @@
             console.log("Account verification error, check your cloud account password and try again");
             errorOcurred.value = true;
             inProgress.value = false;
+            cloud_pass.value = "";
             return;
         }
 

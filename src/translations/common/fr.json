@@ -321,5 +321,10 @@
         "failed": "Échoué",
         "verifyBtn": "Vérifier le message",
         "clearBtn": "Effacer"
+    },
+    "securityWarning": {
+        "title": "Aucun trousseau clé OS détecté",
+        "text": "Votre système n'a pas de trousseau clé au niveau du système d'exploitation (backend: {backend}). Votre portefeuille est toujours chiffré avec votre mot de passe, mais le matériel de déverrouillage est stocké uniquement en mémoire de l'application. Vérrouillez le portefeuille quand vous vous éloignez.",
+        "learnMore": "En savoir plus"
     }
 }

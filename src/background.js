@@ -595,7 +595,32 @@ async function _parseDeeplink(
 /*
  * Creating the primary window, only runs once.
  */
+let ENCRYPTION_AVAILABLE = false;
+let FALLBACK_WARNED = false;
+
 const createWindow = async () => {
+    // Layer 1: Cache safeStorage availability once, after app.whenReady().
+    // createWindow() is only invoked from app.whenReady().then(), so this runs
+    // at the correct time — after Electron has initialized its OS backends.
+    ENCRYPTION_AVAILABLE = safeStorage.isEncryptionAvailable();
+    if (!ENCRYPTION_AVAILABLE && !FALLBACK_WARNED) {
+        FALLBACK_WARNED = true;
+        let reason;
+        if (process.platform === "linux") {
+            try {
+                reason = safeStorage.getSelectedStorageBackend();
+            } catch (error) {
+                reason = `getSelectedStorageBackend failed: ${error.message}`;
+            }
+        } else {
+            reason = process.platform;
+        }
+        console.warn(
+            "[SECURITY] safeStorage unavailable. Reason: " + reason +
+            ". Seed will be held in memory without OS-level protection."
+        );
+    }
+
     let width = 525;
     let height = 695;
     mainWindow = new BrowserWindow({
@@ -1205,11 +1230,35 @@ const createWindow = async () => {
     });
 
     const safeDomains = [
-        "bloks.io",
-        "explore.beos.world",
+        // BitShares
         "blocksights.info",
+        // BEOS
+        "explore.beos.world",
+        "beos.world",
+        // Telos
         "telos.eosx.io",
+        // EOS / WAX (shared explorer)
+        "eosauthority.com",
+        // EOS testnet
+        "jungle4.cryptolions.io",
+        // FIO
+        "bloks.io",
+        "fio.bloks.io",
+        "fio-test.bloks.io",
+        // Libre
+        "libreblocks.io",
+        "www.libreblocks.io",
+        "tools.libre.org",
+        "libre-explorer.edenia.cloud",
+        // XPR Network
+        "explorer.xprnetwork.org",
+        "testnet.explorer.xprnetwork.org",
+        // Hive
+        "hiveblocks.com",
+        // Project
+        "github.com",
     ];
+
     ipcMain.on("openURL", (event, arg) => {
         if (!validateSender(event.senderFrame)) return;
         try {
@@ -1297,18 +1346,28 @@ const createWindow = async () => {
     ipcMain.on("seed", (event, arg) => {
         if (!validateMainSender(event.senderFrame)) return;
         console.log("SEEDED");
-        if (!safeStorage.isEncryptionAvailable()) {
-            console.warn("[SECURITY] safeStorage encryption not available. Seed stored in memory without OS-level protection. Consider configuring a system keychain (GNOME Keyring, KWallet, or Windows Credential Locker).");
-            _encryptedSeed = { fallback: true, seed: arg };
+        if (!ENCRYPTION_AVAILABLE) {
+            _encryptedSeed = { fallback: true, seed: Buffer.from(arg, "utf8") };
         } else {
-            const buffer = safeStorage.encryptString(arg);
-            _encryptedSeed = { fallback: false, buffer: buffer };
+            try {
+                const buffer = safeStorage.encryptString(arg);
+                _encryptedSeed = { fallback: false, buffer: buffer };
+            } catch (error) {
+                console.warn("[SECURITY] safeStorage.encryptString failed, falling back:", error.message);
+                ENCRYPTION_AVAILABLE = false;
+                _encryptedSeed = { fallback: true, seed: Buffer.from(arg, "utf8") };
+            }
         }
     });
 
     ipcMain.on("clearSeed", (event) => {
         if (!validateMainSender(event.senderFrame)) return;
         console.log("SEED CLEARED");
+        // Layer 3: Zeroize the seed Buffer before dropping the reference so
+        // plaintext does not linger in freed heap memory.
+        if (_encryptedSeed && _encryptedSeed.seed) {
+            _encryptedSeed.seed.fill(0);
+        }
         _encryptedSeed = null;
         _pendingKeys.clear();
         _keyCounter = 0;
@@ -1331,9 +1390,15 @@ const createWindow = async () => {
             return null;
         }
         if (_encryptedSeed.fallback) {
-            return _encryptedSeed.seed;
+            return _encryptedSeed.seed.toString("utf8");
         }
-        return safeStorage.decryptString(_encryptedSeed.buffer);
+        try {
+            return safeStorage.decryptString(_encryptedSeed.buffer);
+        } catch (error) {
+            console.warn("[SECURITY] safeStorage.decryptString failed:", error.message);
+            ENCRYPTION_AVAILABLE = false;
+            return null;
+        }
     }
 
     // Key vault: stores plaintext keys temporarily during import flow
@@ -1617,12 +1682,17 @@ const createWindow = async () => {
         const { encryptedData, password } = arg;
 
         // Store the pre-hashed password as seed via safeStorage
-        if (!safeStorage.isEncryptionAvailable()) {
-            console.warn("[SECURITY] safeStorage encryption not available. Seed stored in memory without OS-level protection. Consider configuring a system keychain (GNOME Keyring, KWallet, or Windows Credential Locker).");
-            _encryptedSeed = { fallback: true, seed: password };
+        if (!ENCRYPTION_AVAILABLE) {
+            _encryptedSeed = { fallback: true, seed: Buffer.from(password, "utf8") };
         } else {
-            const buffer = safeStorage.encryptString(password);
-            _encryptedSeed = { fallback: false, buffer: buffer };
+            try {
+                const buffer = safeStorage.encryptString(password);
+                _encryptedSeed = { fallback: false, buffer: buffer };
+            } catch (error) {
+                console.warn("[SECURITY] safeStorage.encryptString failed, falling back:", error.message);
+                ENCRYPTION_AVAILABLE = false;
+                _encryptedSeed = { fallback: true, seed: Buffer.from(password, "utf8") };
+            }
         }
 
         let decryptedWallet;
@@ -1718,12 +1788,17 @@ const createWindow = async () => {
         if (!validateMainSender(event.senderFrame)) throw new Error('Unauthorized');
         const { password } = arg;
 
-        if (!safeStorage.isEncryptionAvailable()) {
-            console.warn("[SECURITY] safeStorage encryption not available. Seed stored in memory without OS-level protection. Consider configuring a system keychain (GNOME Keyring, KWallet, or Windows Credential Locker).");
-            _encryptedSeed = { fallback: true, seed: password };
+        if (!ENCRYPTION_AVAILABLE) {
+            _encryptedSeed = { fallback: true, seed: Buffer.from(password, "utf8") };
         } else {
-            const buffer = safeStorage.encryptString(password);
-            _encryptedSeed = { fallback: false, buffer: buffer };
+            try {
+                const buffer = safeStorage.encryptString(password);
+                _encryptedSeed = { fallback: false, buffer: buffer };
+            } catch (error) {
+                console.warn("[SECURITY] safeStorage.encryptString failed, falling back:", error.message);
+                ENCRYPTION_AVAILABLE = false;
+                _encryptedSeed = { fallback: true, seed: Buffer.from(password, "utf8") };
+            }
         }
 
         return true;
@@ -1741,9 +1816,19 @@ const createWindow = async () => {
      */
     ipcMain.handle("getSafeStorageBackend", async (event) => {
         if (!validateSender(event.senderFrame)) throw new Error('Unauthorized');
+        let backend;
+        if (process.platform === 'linux') {
+            try {
+                backend = safeStorage.getSelectedStorageBackend();
+            } catch (error) {
+                backend = `error: ${error.message}`;
+            }
+        } else {
+            backend = process.platform;
+        }
         return {
-            available: safeStorage.isEncryptionAvailable(),
-            backend: process.platform === 'linux' ? safeStorage.getSelectedStorageBackend() : process.platform
+            available: ENCRYPTION_AVAILABLE,
+            backend: backend
         };
     });
 
@@ -1855,6 +1940,26 @@ const createWindow = async () => {
         mainWindow.focus();
         mainWindow.setAlwaysOnTop(false);
     });
+
+    // Layer 4: One-time-per-session security warning when safeStorage is
+    // unavailable. Shows a non-blocking system notification so the user is
+    // aware their seed is held in memory without OS-level protection.
+    if (!ENCRYPTION_AVAILABLE) {
+        let reason = process.platform;
+        if (process.platform === "linux") {
+            try {
+                reason = safeStorage.getSelectedStorageBackend();
+            } catch (error) {
+                reason = "secret store unavailable";
+            }
+        }
+        new Notification({
+            title: "BeetVault — No OS Keyring",
+            body: "Your system has no OS-level keychain (" + reason +
+                  "). Your wallet is still encrypted with your password, but the unlock material is held in app memory only. Lock the wallet when you step away.",
+            icon: __dirname + "/img/beet-tray.png",
+        }).show();
+    }
 };
 
 app.disableHardwareAcceleration();

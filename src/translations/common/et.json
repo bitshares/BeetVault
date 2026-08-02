@@ -321,5 +321,10 @@
         "failed": "Ebaõnnestus",
         "verifyBtn": "Kinnita sõnum",
         "clearBtn": "Puhasta"
+    },
+    "securityWarning": {
+        "title": "Operatsioonisüsteemi võtmerakku tuvastati",
+        "text": "Teie süsteemil ei ole tasemelist võtmerakku (backend: {backend}). Teie rahakott on endiselt krüpteeritud teie parooliga, kuid avamismaterjal hoitakse ainult rakenduse mälus. Lukustage rahakott, kui eemale lähete.",
+        "learnMore": "Loe edasi"
     }
 }

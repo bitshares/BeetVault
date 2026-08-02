@@ -75,6 +75,7 @@
                 passincorrect.value = "is-invalid";
                 unlocking.value = false;
                 stopProcessing();
+                walletpass.value = "";
                 window.electron.notify(t('common.start.invalid_password'));
             });
     }
@@ -161,12 +162,11 @@
                 </Button>
             </div>
             <div
-                v-if="storageBackend && storageBackend.backend === 'basic_text'"
+                v-if="storageBackend && !storageBackend.available"
                 class="mt-4 p-3 bg-yellow-100 border border-yellow-400 rounded text-yellow-800 text-xs"
             >
-                <strong>Warning:</strong> Your system does not have a secure keyring (backend: basic_text). 
-                Encryption keys are stored in memory only. For better security, install a keyring 
-                (e.g., GNOME Keyring, KDE Wallet, or libsecret).
+                <strong>{{ t('common.securityWarning.title') }}:</strong>
+                {{ t('common.securityWarning.text', { backend: storageBackend.backend }) }}
             </div>
         </div>
             <div v-if="hasWallet" class="mb-2">

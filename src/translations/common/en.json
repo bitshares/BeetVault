@@ -345,5 +345,10 @@
         "failed": "Failed",
         "verifyBtn": "Verify Message",
         "clearBtn": "Clear"
+    },
+    "securityWarning": {
+        "title": "No OS Keyring Detected",
+        "text": "Your system has no OS-level keychain (backend: {backend}). Your wallet is still encrypted with your password, but the unlock material is held in app memory only. Lock the wallet when you step away.",
+        "learnMore": "Learn more"
     }
 }

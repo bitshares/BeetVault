@@ -118,6 +118,7 @@
             router.replace("/");
         } catch (error) {
             console.log(error);
+            backupPass.value = "";
             return;
         }
     }

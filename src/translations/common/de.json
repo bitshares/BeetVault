@@ -321,5 +321,10 @@
         "failed": "Fehlgeschlagen",
         "verifyBtn": "Nachricht verifizieren",
         "clearBtn": "Löschen"
+    },
+    "securityWarning": {
+        "title": "Kein OS-Schlüsselbund erkannt",
+        "text": "Ihr System hat keinen OS-Schlüsselbund (Backend: {backend}). Ihre Geldbörse ist weiterhin mit Ihrem Passwort verschlüsselt, aber das Entsperrmaterial wird nur im App-Speicher gehalten. Sperren Sie die Geldbörse, wenn Sie sich entfernen.",
+        "learnMore": "Mehr erfahren"
     }
 }

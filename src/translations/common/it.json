@@ -321,5 +321,10 @@
         "failed": "Non riuscito",
         "verifyBtn": "Verifica messaggio",
         "clearBtn": "Pulisci"
+    },
+    "securityWarning": {
+        "title": "Nessun portachiavi OS rilevato",
+        "text": "Il tuo sistema non ha un portachiavi a livello di SO (backend: {backend}). Il tuo portafoglio è ancora crittografato con la tua password, ma il materiale di sblocco è memorizzato solo nella memoria dell'app. Blocca il portafoglio quando ti allontani.",
+        "learnMore": "Scopri di più"
     }
 }

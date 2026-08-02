@@ -321,5 +321,10 @@
         "failed": "Falhou",
         "verifyBtn": "Verificar mensagem",
         "clearBtn": "Limpar"
+    },
+    "securityWarning": {
+        "title": "Nenhum chaveiro do sistema operacional detectado",
+        "text": "Seu sistema não possui um chaveiro no nível do SO (backend: {backend}). Sua carteira continua criptografada com sua senha, mas o material de desbloqueio é armazenado apenas na memória do aplicativo. Trave a carteira quando se afastar.",
+        "learnMore": "Saiba mais"
     }
 }
