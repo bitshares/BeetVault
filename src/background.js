@@ -39,7 +39,10 @@ import BTSWalletHandler from "./lib/blockchains/bitshares/BTSWalletHandler.js";
 import { BTS_FAMILY, EOS_FAMILY, HIVE_FAMILY } from "./lib/blockchains/chainFamilies.js";
 
 import { inject } from "./lib/inject.js";
-import { validateSender, validateMainSender } from "./lib/senderValidation.js";
+import { validateSender, validateMainSender, setAppDir } from "./lib/senderValidation.js";
+
+// Register the app's HTML directory for sender validation
+setAppDir(__dirname);
 
 // Keep a global reference of the window object, if you don't, the window will
 // be closed automatically when the JavaScript object is garbage collected.
@@ -1267,7 +1270,7 @@ const createWindow = async () => {
         const NOTIFICATION_BODY =
             arg == "request" ? "BeetVault has received a new request." : arg;
 
-        if (os.platform === "win32") {
+        if (os.platform() === "win32") {
             app.setAppUserModelId(app.name);
         }
 
@@ -1310,6 +1313,11 @@ const createWindow = async () => {
         _pendingKeys.clear();
         _keyCounter = 0;
 
+        // Safety net: remove any orphaned inject listeners
+        ipcMain.removeAllListeners("getSafeAccountResponse");
+        ipcMain.removeAllListeners("injectedCallResponse");
+        ipcMain.removeAllListeners("injectedCallError");
+
         // Close only request (modal) popups on logout
         Object.keys(modalWindows).forEach((id) => {
             if (modalWindows[id] && !modalWindows[id].isDestroyed()) {
@@ -1330,10 +1338,20 @@ const createWindow = async () => {
 
     // Key vault: stores plaintext keys temporarily during import flow
     const _pendingKeys = new Map();
-    let _keyCounter = 0;
+    const PENDING_KEY_TTL_MS = 5 * 60 * 1000; // 5 minutes
+
+    function cleanupPendingKeys() {
+        const now = Date.now();
+        for (const [token, entry] of _pendingKeys) {
+            if (now - entry.created > PENDING_KEY_TTL_MS) {
+                _pendingKeys.delete(token);
+            }
+        }
+    }
 
     function storePendingKey(accountname, chain, keys) {
-        const token = `pending_${++_keyCounter}`;
+        cleanupPendingKeys();
+        const token = uuidv4();
         _pendingKeys.set(token, {
             accountname,
             chain,
@@ -1915,7 +1933,9 @@ if (currentOS === "win32" || currentOS === "linux") {
 
         let defaultPath;
         try {
-            defaultPath = path.resolve(process.argv[1]);
+            if (process.argv[1]) {
+                defaultPath = path.resolve(process.argv[1]);
+            }
         } catch (error) {
             console.log(error);
         }
@@ -1981,6 +2001,11 @@ if (currentOS === "win32" || currentOS === "linux") {
     });
 
     app.on("window-all-closed", () => {
+        // Safety net: remove any orphaned inject listeners
+        ipcMain.removeAllListeners("getSafeAccountResponse");
+        ipcMain.removeAllListeners("injectedCallResponse");
+        ipcMain.removeAllListeners("injectedCallError");
+
         if (process.platform !== "darwin") {
             app.quit();
         }

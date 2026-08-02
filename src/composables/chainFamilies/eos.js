@@ -19,7 +19,14 @@ export default {
     },
 
     buildSignParams(request) {
-        return JSON.parse(request.payload.params[1]);
+        try {
+            return JSON.parse(request.payload.params[1]);
+        } catch (error) {
+            throw new Error(
+                `EOS transaction payload is not valid JSON: ${error.message}. ` +
+                `Received: ${typeof request.payload.params[1] === 'string' ? request.payload.params[1].substring(0, 200) : JSON.stringify(request.payload.params[1])}`
+            );
+        }
     },
 
     async preProcess(_store, request, _chain) {

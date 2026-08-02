@@ -26,3 +26,32 @@ export function cn(...inputs) {
 export function hashPassword(password) {
   return bytesToHex(sha512(new TextEncoder().encode(password)))
 }
+
+/**
+ * Serializes an error object for safe transmission over IPC.
+ *
+ * Error objects do not serialize correctly via Electron's structured clone
+ * algorithm — `message`, `stack`, and custom properties are dropped. This
+ * helper extracts the relevant fields into a plain object.
+ *
+ * @param {Error|string|*} error - The error to serialize.
+ * @returns {{ message: string, name?: string, stack?: string, code?: * }} A plain object.
+ */
+export function serializeError(error) {
+  if (error instanceof Error) {
+    return {
+      message: error.message,
+      name: error.name,
+      stack: error.stack,
+      code: error.code,
+    };
+  }
+  if (typeof error === 'string') {
+    return { message: error };
+  }
+  try {
+    return { message: JSON.stringify(error) };
+  } catch {
+    return { message: String(error) };
+  }
+}

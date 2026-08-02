@@ -36,144 +36,112 @@ const mutations = {
 };
 
 const actions = {
-    addAccount({
+    async addAccount({
         dispatch,
         commit,
         state,
         rootState
     }, payload) {
-        return new Promise(async (resolve, reject) => {
-            let existingAccount = state.accountlist.find(
-                x => x.chain == payload.account.chain &&
+        const existingAccount = state.accountlist.find(
+            x => x.chain === payload.account.chain &&
+            (
+                x.accountID && x.accountID === payload.account.accountName ||
+                x.accountName && x.accountName === payload.account.accountName
+            )
+        );
+
+        if (existingAccount) {
+            throw 'Account already exists';
+        }
+
+        const keys = payload.account.keys;
+        const tier = rootState.WalletStore.wallet.tier || "medium";
+
+        // If keys contain a vault token, encrypt via main process
+        if (keys._vaultToken) {
+            let encryptedKeys;
+            try {
+                encryptedKeys = await window.electron.encryptPendingKeys({
+                    token: keys._vaultToken,
+                    password: hashPassword(payload.password),
+                    tier: tier
+                });
+            } catch (error) {
+                console.log({error});
+                throw 'Encryption failure';
+            }
+            payload.account.keys = encryptedKeys;
+        } else {
+            // Non-vaulted keys: encrypt individually
+            const keyTypes = Object.keys(keys);
+            for (let i = 0; i < keyTypes.length; i++) {
+                const keytype = keyTypes[i];
+                let _aesResult;
+                try {
+                    _aesResult = await window.electron.encryptAndStore({
+                        data: keys[keytype],
+                        password: hashPassword(payload.password),
+                        tier: tier
+                    });
+                } catch (error) {
+                    console.log({error});
+                    throw 'Encryption failure';
+                }
+
+                if (_aesResult) {
+                    payload.account.keys[keytype] = _aesResult;
+                }
+            }
+        }
+
+        await dispatch('WalletStore/saveAccountToWallet', payload, {root: true});
+        commit(ADD_ACCOUNT, payload.account);
+        return 'Account added';
+    },
+    async deleteAccount({ commit, dispatch, state }, payload) {
+        const existingAccount = state.accountlist.find(
+            x => x.chain === payload.account.chain &&
+            (x.accountID === payload.account.accountName || x.accountName === payload.account.accountName)
+        );
+
+        if (!existingAccount) {
+            throw 'Account not found';
+        }
+
+        await dispatch('deleteAccountFromWallet', payload);
+        commit(DELETE_ACCOUNT, payload.accountName);
+        return 'Account deleted';
+    },
+    async loadAccounts({ commit }, payload) {
+        if (!payload || payload.length === 0) {
+            throw 'Empty Account list';
+        }
+        commit(LOAD_ACCOUNTS, payload);
+        return 'Accounts Loaded';
+    },
+    async logout({ commit }) {
+        commit(CLEAR_ACCOUNTS);
+    },
+    async selectAccount({ commit, state }, payload) {
+        let index = -1;
+        for (let i = 0; i < state.accountlist.length; i++) {
+            if (
+                (payload.chain === state.accountlist[i].chain) &&
                 (
-                    x.accountID && x.accountID === payload.account.accountName ||
-                    x.accountName && x.accountName === payload.account.accountName
+                    payload.accountID === state.accountlist[i].accountID ||
+                    payload.accountID === state.accountlist[i].accountName ||
+                    payload.accountName === state.accountlist[i].accountName
                 )
-            );
-
-            if (!existingAccount) {
-                let keys = payload.account.keys;
-                const tier = rootState.WalletStore.wallet.tier || "medium";
-
-                // If keys contain a vault token, encrypt via main process
-                if (keys._vaultToken) {
-                    let encryptedKeys;
-                    try {
-                        encryptedKeys = await window.electron.encryptPendingKeys({
-                            token: keys._vaultToken,
-                            password: hashPassword(payload.password),
-                            tier: tier
-                        });
-                    } catch (error) {
-                        console.log({error});
-                        throw 'Encryption failure';
-                    }
-                    payload.account.keys = encryptedKeys;
-                } else {
-                    // Non-vaulted keys: encrypt individually
-                    let keyTypes = Object.keys(keys);
-                    for (let i = 0; i < keyTypes.length; i++) {
-                        let keytype = keyTypes[i];
-                        let _aesResult;
-                        try {
-                            _aesResult = await window.electron.encryptAndStore({
-                                data: keys[keytype],
-                                password: hashPassword(payload.password),
-                                tier: tier
-                            });
-                        } catch (error) {
-                            console.log({error});
-                            throw 'Encryption failure';
-                        }
-
-                        if (_aesResult) {
-                            payload.account.keys[keytype] = _aesResult;
-                        }
-                    }
-                }
-
-                // Store keyType if provided (for Hive accounts)
-                if (payload.account.keyType) {
-                    payload.account.keyType = payload.account.keyType;
-                }
-
-                dispatch('WalletStore/saveAccountToWallet', payload, {root: true})
-                .then(() => {
-                    commit(ADD_ACCOUNT, payload.account);
-                    return resolve('Account added');
-                }).catch((error) => {
-                    console.log(error)
-                    return reject(error);
-                });
-            } else {
-                return reject('Account already exists');
+            ) {
+                index = i;
+                break;
             }
-        });
-    },
-    deleteAccount({ commit, dispatch, state }, payload) {
-        return new Promise((resolve, reject) => {
-            let existingAccount = state.accountlist.find(
-                x => x.chain == payload.account.chain &&
-                (x.accountID == payload.account.accountName || x.accountName === payload.account.accountName)
-            );
-            
-            if (existingAccount) {
-                dispatch('deleteAccountFromWallet', payload).then(() => {
-                    commit(DELETE_ACCOUNT, payload.accountName);
-                    resolve('Account deleted');
-                }).catch((error) => {
-                    reject(error);
-                });
-            } else {
-                reject('Account not found');
-            }
-        })
-    },
-    loadAccounts({
-        commit
-    }, payload) {
-        return new Promise((resolve, reject) => {
-            if (payload && payload.length > 0) {
-                commit(LOAD_ACCOUNTS, payload);
-                resolve('Accounts Loaded');
-            } else {
-                reject('Empty Account list');
-            }
-        });
-    },
-    logout({
-        commit
-    }) {
-        return new Promise((resolve, reject) => {
-            commit(CLEAR_ACCOUNTS);
-            resolve();
-        });
-    },
-    selectAccount({
-        commit,
-        state
-    }, payload) {
-        return new Promise((resolve, reject) => {
-            let index = -1;
-            for (let i = 0; i < state.accountlist.length; i++) {
-                if (
-                    (payload.chain == state.accountlist[i].chain) &&
-                    (
-                        payload.accountID == state.accountlist[i].accountID ||
-                        payload.accountID == state.accountlist[i].accountName ||
-                        payload.accountName == state.accountlist[i].accountName
-                    )
-                ) {
-                    index = i;
-                    break;
-                }
-            }
+        }
 
-            if (index != -1) {
-                commit(CHOOSE_ACCOUNT, index);
-                resolve('Account found');
-            }
-        });
+        if (index !== -1) {
+            commit(CHOOSE_ACCOUNT, index);
+            return 'Account found';
+        }
     }
 }
 

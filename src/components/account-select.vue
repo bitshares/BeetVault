@@ -3,7 +3,7 @@
     import { useI18n } from 'vue-i18n';
 
     import store from '../store/index.js';
-    import {formatChain, formatAccount} from "../lib/formatter.js";
+    import {formatChain, formatAccountName} from "../lib/formatter.js";
     import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/ui/select';
     const { t } = useI18n({ useScope: 'global' });
 
@@ -44,7 +44,7 @@
             return {
                 label: !account.accountID && account.trackId == 0
                     ? 'cta' // TODO: Replace
-                    : `${formatChain(account.chain)}: ${formatAccount(account)}`,
+                    : `${formatChain(account.chain)}: ${formatAccountName(account.accountName)}`,
                 value: i
             };
         });

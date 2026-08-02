@@ -40,7 +40,15 @@ export default {
             return _request;
         }
 
-        const readableParameters = JSON.parse(request.payload.params[1]);
+        let readableParameters;
+        try {
+            readableParameters = JSON.parse(request.payload.params[1]);
+        } catch (error) {
+            throw new Error(
+                `BTS transaction payload is not valid JSON: ${error.message}. ` +
+                `Received: ${typeof request.payload.params[1] === 'string' ? request.payload.params[1].substring(0, 200) : JSON.stringify(request.payload.params[1])}`
+            );
+        }
         let operations = readableParameters.operations;
         const fromID = operations && operations.length ? operations[0][1].from : null;
         if (!fromID) {

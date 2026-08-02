@@ -2,6 +2,7 @@ import { watch } from "vue";
 import { getChainHandler } from "./chainFamilies/index.js";
 import { useKeyManager } from "./useKeyManager.js";
 import { useTransactionSigner } from "./useTransactionSigner.js";
+import { serializeError } from "../lib/utils.js";
 
 export function useInjectedCall(lastIndex, { store, consoleErrorBuffer, t, startLogoutTimer }) {
     const { getSigningKey } = useKeyManager();
@@ -177,7 +178,7 @@ export function useInjectedCall(lastIndex, { store, consoleErrorBuffer, t, start
                         result: {
                             isError: true,
                             method: "injectedCall.createPopup",
-                            error: error,
+                            error: serializeError(error),
                         },
                     });
                     return;
@@ -200,11 +201,34 @@ export function useInjectedCall(lastIndex, { store, consoleErrorBuffer, t, start
 
                     // 6a. Pre-process (BTS memo handling)
                     if (handler && handler.preProcess) {
-                        _request = await handler.preProcess(
-                            store,
-                            _request,
-                            chain
-                        );
+                        try {
+                            _request = await handler.preProcess(
+                                store,
+                                _request,
+                                chain
+                            );
+                        } catch (error) {
+                            console.log(error);
+                            window.electron.createError({
+                                id: request.id,
+                                titleKey: 'common.popup.error.processFailed',
+                                errorMessage: getErrorMessage(error),
+                                terminalError: formatError(error),
+                                consoleLogs: [...consoleErrorBuffer.value],
+                                timestamp: new Date().toISOString(),
+                                contextKey: 'common.popup.error.contextProcess',
+                                contextParams: { chain }
+                            });
+                            window.electron.injectedCallError({
+                                id: request.id,
+                                result: {
+                                    isError: true,
+                                    method: "injectedCall.preProcess",
+                                    error: serializeError(error),
+                                },
+                            });
+                            return;
+                        }
                     }
 
                     let finalResult;
@@ -233,7 +257,7 @@ export function useInjectedCall(lastIndex, { store, consoleErrorBuffer, t, start
                                 result: {
                                     isError: true,
                                     method: "injectedCall.blockchain.broadcast",
-                                    error: error,
+                                    error: serializeError(error),
                                 },
                             });
                             return;
@@ -295,7 +319,7 @@ export function useInjectedCall(lastIndex, { store, consoleErrorBuffer, t, start
                             result: {
                                 isError: true,
                                 method: "injectedCall.getActiveKey",
-                                error: error,
+                                error: serializeError(error),
                             },
                         });
                         return;
@@ -325,7 +349,7 @@ export function useInjectedCall(lastIndex, { store, consoleErrorBuffer, t, start
                                 result: {
                                     isError: true,
                                     method: "injectedCall.blockchain.broadcast",
-                                    error: error,
+                                    error: serializeError(error),
                                 },
                             });
                             return;

@@ -22,162 +22,132 @@ const mutations = {
 };
 
 const actions = {
-    loadSettings({
-        commit
-    }) {
-        return new Promise(async (resolve, reject) => {
-            try {
-                BeetDB.settings.get({id: 'settings'}).then((settings) => {
-                    if (settings) {
-                        let parsed = JSON.parse(settings.value);
-                        // merge with initialState to pick up any new keys
-                        let merged = Object.assign({}, initialState.settings, parsed);
-                        commit(LOAD_SETTINGS, merged);
-                    } else {
-                        BeetDB.settings.put({id: 'settings', value: JSON.stringify(initialState.settings)}).then(() => {
-                            commit(LOAD_SETTINGS, JSON.parse(JSON.stringify(initialState.settings)));
-                        })
-                    }
-                });
-                resolve();
-            } catch (error) {
-                console.log(error)
-                reject();
+    async loadSettings({ commit }) {
+        try {
+            const settings = await BeetDB.settings.get({ id: 'settings' });
+            if (settings) {
+                const parsed = JSON.parse(settings.value);
+                const merged = Object.assign({}, initialState.settings, parsed);
+                commit(LOAD_SETTINGS, merged);
+            } else {
+                await BeetDB.settings.put({ id: 'settings', value: JSON.stringify(initialState.settings) });
+                commit(LOAD_SETTINGS, JSON.parse(JSON.stringify(initialState.settings)));
             }
-        });
+        } catch (error) {
+            console.log(error);
+        }
     },
-    setLogoutTimeout({
-        commit
-    }, payload) {
-        return new Promise(async (resolve, reject) => {
-            BeetDB.settings.get({id: 'settings'}).then((record) => {
-                let settings = record
-                    ? Object.assign({}, initialState.settings, JSON.parse(record.value))
-                    : Object.assign({}, initialState.settings);
+    async setLogoutTimeout({ commit }, payload) {
+        try {
+            const record = await BeetDB.settings.get({ id: 'settings' });
+            const settings = record
+                ? Object.assign({}, initialState.settings, JSON.parse(record.value))
+                : Object.assign({}, initialState.settings);
 
-                settings.logoutTimeout = payload.timeout;
+            settings.logoutTimeout = payload.timeout;
 
-                BeetDB.settings.put({id: 'settings', value: JSON.stringify(settings)}).then(() => {
-                    commit(LOAD_SETTINGS, settings);
-                    resolve();
-                })
-            }).catch((error) => {
-                console.log(`setLogoutTimeout: ${error}`)
-                reject(error);
-            });
-        });
+            await BeetDB.settings.put({ id: 'settings', value: JSON.stringify(settings) });
+            commit(LOAD_SETTINGS, settings);
+        } catch (error) {
+            console.log(`setLogoutTimeout: ${error}`);
+            throw error;
+        }
     },
-    setNode({
-        commit
-    }, payload) {
-        return new Promise(async (resolve, reject) => {
-            const coreSymbol = getCoreSymbol(payload.chain);
+    async setNode({ commit }, payload) {
+        const coreSymbol = getCoreSymbol(payload.chain);
 
-            BeetDB.settings.get({id: 'settings'}).then((record) => {
-                let settings = record
-                    ? Object.assign({}, initialState.settings, JSON.parse(record.value))
-                    : Object.assign({}, initialState.settings);
-  
-                // backwards compatibility
-                if (typeof settings.selected_node === "string") {
-                    settings.selected_node = {}
-                }
-  
-                try {
-                  settings.selected_node[coreSymbol] = payload.node;
-                } catch (error) {
-                  console.log(`setNode: ${error}`)
-                }
+        try {
+            const record = await BeetDB.settings.get({ id: 'settings' });
+            const settings = record
+                ? Object.assign({}, initialState.settings, JSON.parse(record.value))
+                : Object.assign({}, initialState.settings);
 
-                let chainNodeList = settings.chainNodes[coreSymbol];
-                if (chainNodeList && chainNodeList.length > payload.node) {
-                    let node = chainNodeList.splice(payload.node, 1)[0];
-                    chainNodeList.unshift(node);
-                }
-                
-                try {
-                    settings.chainNodes[coreSymbol] = chainNodeList;
-                } catch (error) {
-                    console.log(`setNodeList: ${error}`)
-                }
+            // backwards compatibility
+            if (typeof settings.selected_node === "string") {
+                settings.selected_node = {};
+            }
 
-                BeetDB.settings.put({id: 'settings', value: JSON.stringify(settings)}).then(() => {
-                    commit(LOAD_SETTINGS, settings);
-                    resolve();
-                })
-            }).catch((error) => {
-                console.log(`setNode: ${error}`)
-                reject(error);
-            });
-        });
+            try {
+                settings.selected_node[coreSymbol] = payload.node;
+            } catch (error) {
+                console.log(`setNode: ${error}`);
+            }
+
+            const chainNodeList = settings.chainNodes[coreSymbol];
+            if (chainNodeList && chainNodeList.length > payload.node) {
+                const node = chainNodeList.splice(payload.node, 1)[0];
+                chainNodeList.unshift(node);
+            }
+
+            try {
+                settings.chainNodes[coreSymbol] = chainNodeList;
+            } catch (error) {
+                console.log(`setNodeList: ${error}`);
+            }
+
+            await BeetDB.settings.put({ id: 'settings', value: JSON.stringify(settings) });
+            commit(LOAD_SETTINGS, settings);
+        } catch (error) {
+            console.log(`setNode: ${error}`);
+            throw error;
+        }
     },
-    setLocale({
-        commit
-    }, payload) {
-        return new Promise(async (resolve, reject) => {
+    async setLocale({ commit }, payload) {
+        try {
+            const record = await BeetDB.settings.get({ id: 'settings' });
+            const settings = record
+                ? Object.assign({}, initialState.settings, JSON.parse(record.value))
+                : Object.assign({}, initialState.settings);
 
-            BeetDB.settings.get({id: 'settings'}).then((record) => {
-                let settings = record
-                    ? Object.assign({}, initialState.settings, JSON.parse(record.value))
-                    : Object.assign({}, initialState.settings);
+            settings.locale = payload.locale;
 
-                settings.locale = payload.locale;
-
-                BeetDB.settings.put({id: 'settings', value: JSON.stringify(settings)}).then(() => {
-                    commit(LOAD_SETTINGS, settings);
-                    resolve();
-                })
-            }).catch((error) => {
-                console.log(`setLocale: ${error}`)
-                reject(error);
-            });
-        });
+            await BeetDB.settings.put({ id: 'settings', value: JSON.stringify(settings) });
+            commit(LOAD_SETTINGS, settings);
+        } catch (error) {
+            console.log(`setLocale: ${error}`);
+            throw error;
+        }
     },
     /**
-     * 
+     *
      * @param {Object} payload
      */
-    setChainPermissions({
-        commit
-    }, payload) {
-        return new Promise(async (resolve, reject) => {
-            const coreSymbol = getCoreSymbol(payload.chain);
+    async setChainPermissions({ commit }, payload) {
+        const coreSymbol = getCoreSymbol(payload.chain);
 
-            BeetDB.settings.get({id: 'settings'}).then((record) => {
-                let settings = record
-                    ? Object.assign({}, initialState.settings, JSON.parse(record.value))
-                    : Object.assign({}, initialState.settings);
-    
-                if (!Object.prototype.hasOwnProperty.call(settings, 'chainPermissions')) {
-                    settings['chainPermissions'] = {
-                        BTS: [],
-                        TEST: [],
-                        EOS: [],
-                        BEOS: [],
-            TLOS: [],
-            TLOSTEST: [],
-            WAX: [],
-            WAXTEST: [],
-                        EOSTEST: [],
-                        FIO: [],
-                        FIOTEST: [],
-                        LIBRE: [],
-                        LIBRETEST: [],
-                        XPR: [],
-                        XPRTEST: [],
-                        HIVE: []
-                    }
-                }
-                settings.chainPermissions[coreSymbol] = payload.rows;
-                BeetDB.settings.put({id: 'settings', value: JSON.stringify(settings)}).then(() => {
-                    commit(LOAD_SETTINGS, settings);
-                    resolve();
-                })
-            }).catch((error) => {
-                console.log(`setChainPermissions: ${error}`)
-                reject(error);
-            });
-        });
+        try {
+            const record = await BeetDB.settings.get({ id: 'settings' });
+            const settings = record
+                ? Object.assign({}, initialState.settings, JSON.parse(record.value))
+                : Object.assign({}, initialState.settings);
+
+            if (!Object.prototype.hasOwnProperty.call(settings, 'chainPermissions')) {
+                settings['chainPermissions'] = {
+                    BTS: [],
+                    TEST: [],
+                    EOS: [],
+                    BEOS: [],
+                    TLOS: [],
+                    TLOSTEST: [],
+                    WAX: [],
+                    WAXTEST: [],
+                    EOSTEST: [],
+                    FIO: [],
+                    FIOTEST: [],
+                    LIBRE: [],
+                    LIBRETEST: [],
+                    XPR: [],
+                    XPRTEST: [],
+                    HIVE: []
+                };
+            }
+            settings.chainPermissions[coreSymbol] = payload.rows;
+            await BeetDB.settings.put({ id: 'settings', value: JSON.stringify(settings) });
+            commit(LOAD_SETTINGS, settings);
+        } catch (error) {
+            console.log(`setChainPermissions: ${error}`);
+            throw error;
+        }
     },
     visualizeMemo({
         commit

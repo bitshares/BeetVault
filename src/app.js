@@ -18,7 +18,6 @@ window.onerror = function (msg, url, lineNo, columnNo, error) {
 };
 
 store.dispatch("SettingsStore/loadSettings");
-store.dispatch("WhitelistStore/loadWhitelist");
 
 const emitter = mitt();
 const app = createApp({});

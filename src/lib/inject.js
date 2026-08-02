@@ -1,6 +1,10 @@
-import { ipcMain } from "electron";
 import { BTS_FAMILY, EOS_FAMILY, HIVE_FAMILY } from "./blockchains/chainFamilies.js";
 import { validateSender } from "./senderValidation.js";
+import { ipcOnceWithTimeout } from "./ipcMainWrapper.js";
+
+function isBadActor(actor, blockedAccounts) {
+    return blockedAccounts.some((x) => x === actor);
+}
 
 export async function inject(blockchain, request, webContents) {
     let isBlocked = false;
@@ -25,9 +29,7 @@ export async function inject(blockchain, request, webContents) {
             }
 
             if (blockedAccounts) {
-                const isBadActor = (actor) =>
-                    blockedAccounts.find((x) => x === actor) ? true : false;
-                isBlocked = foundIDs.some(isBadActor);
+                isBlocked = foundIDs.some((id) => isBadActor(id, blockedAccounts));
             }
         }
     }
@@ -61,9 +63,7 @@ export async function inject(blockchain, request, webContents) {
         }
 
         if (blockedAccounts) {
-            const isBadActor = (actor) =>
-                blockedAccounts.find((x) => x === actor) ? true : false;
-            isBlocked = foundIDs.some(isBadActor);
+            isBlocked = foundIDs.some((id) => isBadActor(id, blockedAccounts));
         }
     }
 
@@ -75,16 +75,12 @@ export async function inject(blockchain, request, webContents) {
         let fromField = types.find((type) => type.method === request.type).from;
         if (!fromField || !fromField.length) {
             const _account = async () => {
-                return new Promise((resolve, reject) => {
-                    webContents.send("getSafeAccount");
-                    ipcMain.once("getSafeAccountResponse", (event, arg) => {
-                        if (!validateSender(event.senderFrame)) {
-                            reject(new Error('Unauthorized sender'));
-                            return;
-                        }
-                        resolve(arg);
-                    });
-                });
+                webContents.send("getSafeAccount");
+                const { event, args } = await ipcOnceWithTimeout("getSafeAccountResponse", 10_000);
+                if (!validateSender(event.senderFrame)) {
+                    throw new Error('Unauthorized sender');
+                }
+                return args[0];
             };
 
             account = await _account();
@@ -128,37 +124,32 @@ export async function inject(blockchain, request, webContents) {
         _blockedAccounts,
         _foundIDs
     ) => {
-        return new Promise((resolve, reject) => {
-            webContents.send("injectedCall", {
-                request: _apiobj,
-                chain: _chain,
-                account: _account,
-                visualizedAccount: _visualizedAccount,
-                visualizedParams: _visualizedParams,
-                isBlocked: _isBlocked,
-                blockedAccounts: _blockedAccounts,
-                foundIDs: _foundIDs,
-            });
-            ipcMain.once("injectedCallResponse", (event, arg) => {
-                if (!validateSender(event.senderFrame)) {
-                    reject(new Error('Unauthorized sender'));
-                    return;
-                }
-                return resolve(arg);
-            });
-            ipcMain.once("injectedCallError", (event, error) => {
-                if (!validateSender(event.senderFrame)) {
-                    reject(new Error('Unauthorized sender'));
-                    return;
-                }
-                return reject(error);
-            });
+        webContents.send("injectedCall", {
+            request: _apiobj,
+            chain: _chain,
+            account: _account,
+            visualizedAccount: _visualizedAccount,
+            visualizedParams: _visualizedParams,
+            isBlocked: _isBlocked,
+            blockedAccounts: _blockedAccounts,
+            foundIDs: _foundIDs,
+        });
+
+        const onResult = ipcOnceWithTimeout("injectedCallResponse", 300_000);
+        const onError = ipcOnceWithTimeout("injectedCallError", 300_000);
+
+        return Promise.race([
+            onResult.then(r => ({ type: "response", ...r })),
+            onError.then(r => ({ type: "error", ...r })),
+        ]).finally(() => {
+            onResult.cancel();
+            onError.cancel();
         });
     };
 
     let injectedCallResult;
     try {
-        injectedCallResult = await _injectedCall(
+        const result = await _injectedCall(
             request,
             blockchain._config.identifier,
             account,
@@ -168,6 +159,13 @@ export async function inject(blockchain, request, webContents) {
             blockedAccounts,
             foundIDs
         );
+        if (result.type === "error") {
+            throw result.args[0];
+        }
+        if (!validateSender(result.event.senderFrame)) {
+            throw new Error('Unauthorized sender');
+        }
+        injectedCallResult = result.args[0];
     } catch (error) {
         console.log({ error, location: "_injectedCall" });
     }
