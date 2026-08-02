@@ -27,6 +27,8 @@ import {
     Notification,
     shell,
     safeStorage,
+    powerMonitor,
+    systemPreferences,
 } from "electron";
 
 import { initApplicationMenu } from "./lib/applicationMenu.js";
@@ -1409,9 +1411,20 @@ const createWindow = async () => {
         }
     });
 
-    ipcMain.on("clearSeed", (event) => {
-        if (!validateMainSender(event.senderFrame)) return;
-        console.log("SEED CLEARED");
+    // Idempotent session-wipe routine. Shared by the explicit `clearSeed` IPC
+    // handler (user logout) and the `powerMonitor` event handlers (system
+    // suspend / shutdown / lock-screen). On a system event we additionally
+    // push a `forceLogout` message to the renderer so it can reset its
+    // pinia session state and return to the lock screen.
+    function forceLogout() {
+        // Idempotency guard: if the seed is already cleared, this is a
+        // re-entrant call (e.g. renderer responded to our forceLogout IPC
+        // with a clearSeed → forceLogout chain). Return immediately to
+        // break the loop.
+        if (!_encryptedSeed) {
+            return;
+        }
+        console.log("[SECURITY] forceLogout: clearing session");
         // Layer 3: Zeroize the seed Buffer before dropping the reference so
         // plaintext does not linger in freed heap memory.
         if (_encryptedSeed && _encryptedSeed.seed) {
@@ -1425,13 +1438,30 @@ const createWindow = async () => {
         ipcMain.removeAllListeners("injectedCallResponse");
         ipcMain.removeAllListeners("injectedCallError");
 
-        // Close only request (modal) popups on logout
+        // Close any open modal/request popups on logout
         Object.keys(modalWindows).forEach((id) => {
             if (modalWindows[id] && !modalWindows[id].isDestroyed()) {
                 modalWindows[id].close();
             }
         });
+        modalWindows = {};
+
+        // Notify the renderer (if alive) to reset its in-memory session state
+        if (mainWindow && !mainWindow.isDestroyed()) {
+            mainWindow.webContents.send("forceLogout");
+        }
+    }
+
+    ipcMain.on("clearSeed", (event) => {
+        if (!validateMainSender(event.senderFrame)) return;
+        console.log("SEED CLEARED");
+        forceLogout();
     });
+
+    // Register power-monitor listeners (suspend / shutdown / lock-screen)
+    // now that the session-wipe helper is in scope. createWindow only runs
+    // inside app.whenReady().then(), so powerMonitor is safe to use here.
+    initPowerMonitor(forceLogout);
 
     function _decryptSeed() {
         if (!_encryptedSeed) {
@@ -2013,6 +2043,46 @@ const createWindow = async () => {
 app.disableHardwareAcceleration();
 
 let currentOS = os.platform();
+
+// Tears down all power-monitor listeners (used on before-quit / shutdown).
+let _powerMonitorCleanup = () => {};
+
+// Wires up Electron powerMonitor to force a logout on system
+// suspend (sleep), shutdown, and lock-screen. Must be called after
+// app.whenReady() resolves (it is invoked from createWindow, which
+// only runs inside app.whenReady().then()). powerMonitor never
+// throws if the platform backend is unavailable (best-effort on
+// Linux). `forceLogoutFn` is injected to avoid pulling the seed
+// closure into module scope.
+function initPowerMonitor(forceLogoutFn) {
+    const cleanupFns = [];
+
+    const onSystemEvent = () => forceLogoutFn();
+
+    // suspend / shutdown / lock-screen -> forceLogout
+    const events = ["suspend", "shutdown", "lock-screen"];
+    events.forEach((evt) => {
+        powerMonitor.on(evt, onSystemEvent);
+        cleanupFns.push(() => powerMonitor.removeListener(evt, onSystemEvent));
+    });
+
+    // macOS does not emit "lock-screen" via powerMonitor. Fall back to the
+    // workspace session-resigned-active notification so lock-screen is
+    // detected here too. systemPreferences may be undefined on some
+    // builds, hence the guard.
+    if (process.platform === "darwin" && systemPreferences) {
+        const subscription = systemPreferences.subscribeNotification(
+            "NSWorkspaceSessionDidResignActiveNotification",
+            onSystemEvent
+        );
+        if (subscription) {
+            cleanupFns.push(() => subscription.unsubscribe());
+        }
+    }
+
+    _powerMonitorCleanup = () => cleanupFns.forEach((fn) => fn());
+}
+
 if (currentOS === "win32" || currentOS === "linux") {
     // windows + linux setup phase
     const gotTheLock = app.requestSingleInstanceLock();
@@ -2166,6 +2236,10 @@ if (currentOS === "win32" || currentOS === "linux") {
 
     app.on("before-quit", () => {
         console.log("[APP] before-quit: closing blockchain connections");
+        // Tear down power-monitor listeners before they can re-fire during
+        // shutdown (avoids a double forceLogout race with the "shutdown"
+        // power event).
+        _powerMonitorCleanup();
         try {
             // BitShares: refcounted close of state.ws_rpc (ChainWebSocket).
             Apis.close();

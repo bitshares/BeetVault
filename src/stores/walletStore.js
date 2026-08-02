@@ -382,7 +382,7 @@ export const useWalletStore = defineStore('wallet', {
                 throw new Error('Invalid notify type');
             }
         },
-        logout() {
+        logout({ skipClearSeed = false } = {}) {
             this.wallet = {};
             this.hasWallet = false;
             this.walletlist = [];
@@ -391,7 +391,9 @@ export const useWalletStore = defineStore('wallet', {
             this.selectedWalletIndex = null;
             useAccountStore().logout();
             usePopupStore().reset();
-            window.electron.clearSeed();
+            if (!skipClearSeed) {
+                window.electron.clearSeed();
+            }
         },
     },
 });

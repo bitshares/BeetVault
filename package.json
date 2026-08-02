@@ -57,9 +57,7 @@
     "release": "npm run compile && electron-builder --publish never",
     "dist:macos-latest": "npm run-script compile && electron-builder -m --publish never",
     "dist:windows-latest": "npm run-script compile && electron-builder -w --publish never",
-    "dist:ubuntu-latest": "npm run-script compile && electron-builder -l --publish never",
-    "lint": "npm run-script eslint --ext .js,.vue src",
-    "lintFix": "npm run-script eslint --ext .js,.vue src --fix"
+    "dist:ubuntu-latest": "npm run-script compile && electron-builder -l --publish never"
   },
   "dependencies": {
     "@babel/runtime": "^8.0.0",
@@ -114,7 +112,7 @@
     "css-loader": "^7.1.4",
     "electron": "^43.2.0",
     "electron-builder": "^26.15.3",
-    "postcss": "^8.5.23",
+    "postcss": "^8.5.25",
     "postcss-loader": "^8.2.1",
     "sass": "^1.102.0",
     "sass-loader": "^17.0.0",

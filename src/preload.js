@@ -58,6 +58,10 @@ contextBridge.exposeInMainWorld('electron', {
     injectedCallResponse: async (args) => safeSend('injectedCallResponse', args),
     injectedCallError: async (args) => safeSend('injectedCallError', args),
     //
+    onForceLogout: (func) => {
+        safeOn('forceLogout', func);
+    },
+    //
     onGetSafeAccount: async (func) => {
         safeOn('getSafeAccount', func);
     },

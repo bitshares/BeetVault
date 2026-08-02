@@ -55,6 +55,7 @@ export const LISTEN_CHANNELS = Object.freeze([
     'deeplink',
     'injectedCall',
     'getSafeAccount',
+    'forceLogout',
 ]);
 
 // Dynamic channels (contain user-generated UUIDs)

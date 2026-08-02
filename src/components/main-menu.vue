@@ -1,5 +1,5 @@
 <script setup>
-    import { ref, computed, watch, onBeforeUnmount } from "vue";
+    import { ref, computed, watch, onMounted, onBeforeUnmount } from "vue";
     import { useI18n } from "vue-i18n";
 
     import router from "../router/index.js";
@@ -148,6 +148,19 @@
             logoutTimer = null;
         }
     }
+
+    onMounted(() => {
+        // React to a system-level forced logout (sleep / shutdown /
+        // lock-screen) pushed from the main process. The seed is already
+        // wiped on the main side — just reset the renderer state and return
+        // to the lock screen.
+        window.electron?.onForceLogout?.(() => {
+            console.log("[POWER] Renderer received forced logout");
+            clearLogoutTimer();
+            walletStore.logout({ skipClearSeed: true });
+            router.replace("/");
+        });
+    });
 
     onBeforeUnmount(() => {
         clearLogoutTimer();
