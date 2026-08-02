@@ -2,10 +2,11 @@
     import { ref, computed } from 'vue';
     import { useI18n } from 'vue-i18n';
     import { hashPassword } from '../lib/utils.js';
-    const { t } = useI18n({ useScope: 'global' });
-
-    import store from '../store/index.js';
+    import { useWalletStore } from '@/stores/walletStore.js';
     import router from '../router/index.js';
+
+    const { t } = useI18n({ useScope: 'global' });
+    const walletStore = useWalletStore();
     import { Button } from '@/components/ui/ui/button';
     import { Input } from '@/components/ui/ui/input';
     import { Alert, AlertDescription } from '@/components/ui/ui/alert';
@@ -19,7 +20,7 @@
     let selectedFile = ref(null);
 
     let walletlist = computed(() => {
-        return store.getters['WalletStore/getWalletList'];
+        return walletStore.getWalletList;
     })
 
     function onFileSelect(e) {
@@ -51,8 +52,7 @@
             console.log(error);
             fileError.value = false;
             passError.value = true;
-            store.dispatch(
-                "WalletStore/notifyUser",
+            walletStore.notifyUser(
                 {notify: "request", message: t('common.apiUtils.restore.decryptError')}
             );
             return;
@@ -64,8 +64,7 @@
         } catch (error) {
             console.log(error);
             fileError.value = true;
-            store.dispatch(
-                "WalletStore/notifyUser",
+            walletStore.notifyUser(
                 {notify: "request", message: t('common.apiUtils.restore.decryptError')}
             );
             return;
@@ -78,8 +77,7 @@
             console.log(error);
             fileError.value = true;
             passError.value = true;
-            store.dispatch(
-                "WalletStore/notifyUser",
+            walletStore.notifyUser(
                 {notify: "request", message: t('common.apiUtils.restore.decryptError')}
             );
             return;
@@ -87,8 +85,7 @@
 
         if (!parsedData || !parsedData.wallet || !Array.isArray(parsedData.accounts)) {
             fileError.value = true;
-            store.dispatch(
-                "WalletStore/notifyUser",
+            walletStore.notifyUser(
                 {notify: "request", message: t('common.apiUtils.restore.decryptError')}
             );
             return;
@@ -99,16 +96,14 @@
             fileError.value = true;
             passError.value = true;
             console.log("A wallet with the same name already exists, aborting wallet restoration");
-            store.dispatch(
-                "WalletStore/notifyUser",
+            walletStore.notifyUser(
                 {notify: "request", message: t('common.apiUtils.restore.duplicate')}
             );
             return;
         }
 
         try {
-            await store.dispatch(
-                'WalletStore/restoreWallet',
+            await walletStore.restoreWallet(
                 {
                     backup: parsedData,
                     password: backupPass.value

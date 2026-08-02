@@ -662,13 +662,18 @@ const createWindow = async () => {
      */
     ipcMain.handle("blockchainRequest", async (event, arg) => {
         if (!validateSender(event.senderFrame)) throw new Error('Unauthorized');
-        const { methods, account, accountname, chain } = arg;
+        const { methods, account, accountname, chain, node } = arg;
 
         console.log({ methods, accountname, chain });
 
+        // Store the renderer's current node for this chain
+        if (node) {
+            _chainNodes[chain] = node;
+        }
+
         let blockchain;
         try {
-            blockchain = await getBlockchainAPI(chain);
+            blockchain = await getBlockchainAPI(chain, _chainNodes[chain] || null);
         } catch (error) {
             console.log(error);
         }
@@ -1318,6 +1323,9 @@ const createWindow = async () => {
 
     let _encryptedSeed = null;
 
+    // Stores the current node URL per chain, set by the renderer via blockchainRequest
+    const _chainNodes = {};
+
     ipcMain.on("seed", (event, arg) => {
         if (!validateMainSender(event.senderFrame)) return;
         console.log("SEEDED");
@@ -1345,7 +1353,6 @@ const createWindow = async () => {
         }
         _encryptedSeed = null;
         _pendingKeys.clear();
-        _keyCounter = 0;
 
         // Safety net: remove any orphaned inject listeners
         ipcMain.removeAllListeners("getSafeAccountResponse");
@@ -1480,7 +1487,7 @@ const createWindow = async () => {
 
         let blockchain;
         try {
-            blockchain = await getBlockchainAPI(chain);
+            blockchain = await getBlockchainAPI(chain, _chainNodes[chain] || null);
         } catch (error) {
             console.log({error, location: "decryptAndSign.getBlockchain"});
             throw new Error('Failed to get blockchain API');
@@ -1564,7 +1571,7 @@ const createWindow = async () => {
 
         let blockchain;
         try {
-            blockchain = await getBlockchainAPI(chain);
+            blockchain = await getBlockchainAPI(chain, _chainNodes[chain] || null);
         } catch (error) {
             console.log({error, location: "decryptAndCreateMemo.getBlockchain"});
             throw new Error('Failed to get blockchain API');
@@ -1618,7 +1625,7 @@ const createWindow = async () => {
 
         let blockchain;
         try {
-            blockchain = await getBlockchainAPI(chain);
+            blockchain = await getBlockchainAPI(chain, _chainNodes[chain] || null);
         } catch (error) {
             console.log({error, location: "decryptAndSignMessage.getBlockchain"});
             throw new Error('Failed to get blockchain API');

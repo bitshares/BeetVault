@@ -124,14 +124,11 @@ export default class EOS extends BlockchainAPI {
             return this._connectionEstablished(this._isConnectedToNode);
         }
 
-        const userConfiguredNodes = store.getters['SettingsStore/getNodes'](this._config.coreSymbol);
-        
-        if (!userConfiguredNodes || !userConfiguredNodes.length) {
-            throw this._connectionFailed("", "No working nodes");
+        if (this._node) {
+            return this._establishConnection(this._node);
         }
 
-        this._node = userConfiguredNodes[0].url;
-        return this._establishConnection(this._node);
+        throw this._connectionFailed("", "No node available");
     }
 
     /**

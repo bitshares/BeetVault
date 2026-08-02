@@ -1,4 +1,5 @@
 import { getChainHandler } from "./chainFamilies/index.js";
+import { blockchainRequest } from '@/lib/blockchainRequestHelper.js';
 
 export function useTransactionSigner() {
 
@@ -18,7 +19,7 @@ export function useTransactionSigner() {
     }
 
     async function broadcastOnly(chain, request) {
-        return await window.electron.blockchainRequest({
+        return await blockchainRequest({
             methods: ["broadcastTransaction"],
             account: null,
             chain: chain,

@@ -2,13 +2,14 @@
     import { ref, computed, inject } from 'vue';
     import { useI18n } from 'vue-i18n';
     import { defaultLocale, selectLocales } from "../config/i18n.js";
-    import store from '../store/index.js';
+    import { useSettingsStore } from '@/stores/settingsStore.js';
     import { Button } from '@/components/ui/ui/button';
     import { DropdownMenu, DropdownMenuContent, DropdownMenuItem, DropdownMenuTrigger } from '@/components/ui/ui/dropdown-menu';
     import { Languages } from 'lucide-vue-next';
 
     const { t } = useI18n({ useScope: 'global' });
     const emitter = inject('emitter');
+    const settingsStore = useSettingsStore();
 
     const props = defineProps({
         location: {
@@ -25,7 +26,7 @@
     });
 
     let selected = ref(
-        store.state.SettingsStore.settings.locale?.iso ?? defaultLocale.iso
+        settingsStore.settings.locale?.iso ?? defaultLocale.iso
     );
 
     let open = ref(false);
@@ -37,7 +38,7 @@
     function onSelected(locale) {
         const detectedLocale = selectLocales[locale.index].value
         emitter.emit('i18n', detectedLocale);
-        store.dispatch("SettingsStore/setLocale", {locale: detectedLocale});
+        settingsStore.setLocale({locale: detectedLocale});
         selected.value = detectedLocale;
         open.value = false;
     }

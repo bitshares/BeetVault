@@ -7,9 +7,13 @@
     import { Checkbox } from '@/components/ui/ui/checkbox';
     import { Label } from '@/components/ui/ui/label';
     import { Spinner } from '@/components/ui/ui/spinner';
-    import store from '../../../store/index.js';
+    import { useWalletStore } from '@/stores/walletStore.js';
+    import { useAccountStore } from '@/stores/accountStore.js';
+    import { blockchainRequest } from '@/lib/blockchainRequestHelper.js';
 
     const { t } = useI18n({ useScope: 'global' });
+    const walletStore = useWalletStore();
+    const accountStore = useAccountStore();
 
     const props = defineProps({
         chain: {
@@ -58,10 +62,10 @@
 
     async function next() {
         // Duplicate check: skip if account already exists in wallet
-        if (store.state.WalletStore.isUnlocked) {
+        if (walletStore.isUnlocked) {
             let chain = props.chain;
             let accountName = accountname.value;
-            let duplicate = store.state.AccountStore.accountlist.find(
+            let duplicate = accountStore.accountlist.find(
                 x => x.chain === chain &&
                 (x.accountID === accountName || x.accountName === accountName)
             );
@@ -77,7 +81,7 @@
 
         let blockchainResponse;
         try {
-            blockchainResponse = await window.electron.blockchainRequest({
+            blockchainResponse = await blockchainRequest({
                 methods: ["verifyCloudAccount"],
                 accountname: accountname.value,
                 pass: cloud_pass.value,

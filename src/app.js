@@ -9,15 +9,14 @@ import 'typeface-rajdhani';
 import './scss/beet.scss';
 
 import router from './router/index.js';
-import store from './store/index.js';
+import { pinia } from './stores/index.js';
+import { useSettingsStore } from './stores/settingsStore.js';
 import {i18n} from './lib/i18n.js';
 
 window.onerror = function (msg, url, lineNo, columnNo, error) {
   console.log(error);
   return false;
 };
-
-store.dispatch("SettingsStore/loadSettings");
 
 const emitter = mitt();
 const app = createApp({});
@@ -34,7 +33,8 @@ window.t = (key, params) => {
 }
 
 app.use(router);
-app.use(store);
+app.use(pinia);
+useSettingsStore().loadSettings();
 app.mount('#app');
 
 emitter.on('i18n', (data) => {

@@ -1,4 +1,5 @@
 import { HIVE_FAMILY } from "@/lib/blockchains/chainFamilies.js";
+import { useAccountStore } from "@/stores/accountStore.js";
 
 const POSTING_OPS = [
     "vote", "vote2", "comment", "custom_json", "delete_comment",
@@ -21,13 +22,13 @@ function getRequiredKeyType(opName) {
     return "active";
 }
 
-function validateKeyAuthority(store, request, visualizedParams) {
+function validateKeyAuthority(request, visualizedParams) {
     const parsedParams = typeof visualizedParams === "string"
         ? JSON.parse(visualizedParams)
         : visualizedParams;
     const actions = parsedParams.actions || [];
 
-    const hiveKeyInfo = store.getters["AccountStore/getHiveKey"](request);
+    const hiveKeyInfo = useAccountStore().getHiveKey(request);
     if (!hiveKeyInfo || !hiveKeyInfo.keyType) {
         return {
             denied: true,
@@ -88,8 +89,8 @@ export default {
 
     validateKeyAuthority,
 
-    getSigningKey(store, request) {
-        return store.getters["AccountStore/getHiveKey"](request);
+    getSigningKey(request) {
+        return useAccountStore().getHiveKey(request);
     },
 
     buildSignParams(request) {
@@ -103,7 +104,7 @@ export default {
         }
     },
 
-    async preProcess(_store, request, _chain) {
+    async preProcess(request, _chain) {
         return request;
     },
 

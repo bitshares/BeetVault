@@ -7,9 +7,13 @@ import { Spinner } from '@/components/ui/ui/spinner';
     import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from '@/components/ui/ui/table';
     import { ScrollArea } from '@/components/ui/ui/scroll-area';
     import { X } from 'lucide-vue-next';
-    import store from '../../../store/index.js';
+    import { useWalletStore } from '@/stores/walletStore.js';
+    import { useAccountStore } from '@/stores/accountStore.js';
+    import { blockchainRequest } from '@/lib/blockchainRequestHelper.js';
 
     const { t } = useI18n({ useScope: 'global' });
+    const walletStore = useWalletStore();
+    const accountStore = useAccountStore();
 
     const props = defineProps({
         chain: {
@@ -52,10 +56,10 @@ import { Spinner } from '@/components/ui/ui/spinner';
             let account = accounts.value[i];
 
             // Duplicate check: skip if account already exists in wallet
-            if (store.state.WalletStore.isUnlocked) {
+            if (walletStore.isUnlocked) {
                 let chain = props.chain;
                 let accountName = account.name;
-                let duplicate = store.state.AccountStore.accountlist.find(
+                let duplicate = accountStore.accountlist.find(
                     x => x.chain === chain &&
                     (x.accountID === accountName || x.accountName === accountName)
                 );
@@ -91,7 +95,7 @@ import { Spinner } from '@/components/ui/ui/spinner';
             let blockchainResponse;
             try {
                 inProgress.value = true;
-                blockchainResponse = await window.electron.blockchainRequest({
+                blockchainResponse = await blockchainRequest({
                     methods: ["decryptBackup"],
                     location: 'importBinFile',
                     chain: props.chain,

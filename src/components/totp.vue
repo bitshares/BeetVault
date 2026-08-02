@@ -13,28 +13,36 @@
     import AccountSelect from "./account-select";
     import Operations from "./blockchains/operations";
 
-    import store from '../store/index.js';
+    import { useWalletStore } from "@/stores/walletStore.js";
+    import { useAccountStore } from "@/stores/accountStore.js";
+    import { useSettingsStore } from "@/stores/settingsStore.js";
+    import { usePopupStore } from "@/stores/popupStore.js";
+    import { blockchainRequest } from '@/lib/blockchainRequestHelper.js';
     import router from '../router/index.js';
 
     const { copy } = useClipboard();
 
-    let hasActivePopup = computed(() => store.getters["PopupStore/hasActivePopup"]);
+    let hasActivePopup = computed(() => popupStore.hasActivePopup);
 
     function copyToClipboard() {
         copy(currentCode.value);
     }
 
-    const { t } = useI18n({ useScope: 'global' });
+    const { t } = useI18n({ useScope: "global" });
+    const walletStore = useWalletStore();
+    const accountStore = useAccountStore();
+    const settingsStore = useSettingsStore();
+    const popupStore = usePopupStore();
 
     let chain = computed(() => {
-        return store.getters['AccountStore/getChain'];
+        return accountStore.getChain;
     });
 
     let selectedAccount = computed(() => {
-        if (!store.state.WalletStore.isUnlocked) {
+        if (!walletStore.isUnlocked) {
             return;
         }
-        return store.getters["AccountStore/getCurrentSafeAccount"]()
+        return accountStore.getCurrentSafeAccount()
     })
 
     watch(selectedAccount, async (newVal, oldVal) => {
@@ -49,7 +57,7 @@
         async function initialize() {
             let blockchainResponse;
             try {
-                blockchainResponse = await window.electron.blockchainRequest({
+                blockchainResponse = await blockchainRequest({
                     methods: ["supportsTOTP", "getOperationTypes"],
                     chain: chain.value
                 });
@@ -85,8 +93,7 @@
         if (newValue === 'AllowAll') {
             const _ids = operationTypes.value.map(type => type.id);
             selectedRows.value = _ids;
-            store.dispatch(
-                "SettingsStore/setChainPermissions",
+            settingsStore.setChainPermissions(
                 {
                     chain: chain.value,
                     rows: _ids
@@ -147,7 +154,7 @@
             window.electron.resetTimer();
             let blockchainResponse;
             try {
-                blockchainResponse = await window.electron.blockchainRequest({
+                blockchainResponse = await blockchainRequest({
                     methods: ["totpCode"],
                     chain: chain.value,
                     timestamp: timestamp.value
@@ -175,13 +182,13 @@
 
     let deepLinkInProgress = ref(false);
     window.electron.onDeepLink(async (args) => {
-        if (!store.state.WalletStore.isUnlocked || router.currentRoute.value.path != "/totp") {
+        if (!walletStore.isUnlocked || router.currentRoute.value.path != "/totp") {
             console.log("Wallet must be unlocked for deeplinks to work.");
             window.electron.notify(t("common.totp.promptFailure"));
             return;
         }
 
-        let account = store.getters['AccountStore/getCurrentSafeAccount']();
+        let account = accountStore.getCurrentSafeAccount();
         if (!account || !currentCode.value) {
             console.log('Insufficient state to proceed')
             window.electron.notify(t("common.totp.promptFailure"));
@@ -192,7 +199,7 @@
         deepLinkInProgress.value = true;
         let blockchainResponse;
         try {
-            blockchainResponse = await window.electron.blockchainRequest({
+            blockchainResponse = await blockchainRequest({
                 methods: ["totpDeeplink"],
                 chain: chain.value,
                 currentCode: currentCode.value,
@@ -219,9 +226,9 @@
     });
 
     onMounted(() => {
-        if (!store.state.WalletStore.isUnlocked) {
+        if (!walletStore.isUnlocked) {
             console.log("logging user out...");
-            store.dispatch("WalletStore/logout");
+            walletStore.logout();
             router.replace("/");
             return;
         }

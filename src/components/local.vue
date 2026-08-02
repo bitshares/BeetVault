@@ -8,12 +8,20 @@ import { Loader2 } from 'lucide-vue-next';
 import AccountSelect from "./account-select";
 import Operations from "./blockchains/operations";
 
-import store from "../store/index.js";
+    import { useWalletStore } from "@/stores/walletStore.js";
+    import { useAccountStore } from "@/stores/accountStore.js";
+    import { useSettingsStore } from "@/stores/settingsStore.js";
+    import { usePopupStore } from "@/stores/popupStore.js";
+    import { blockchainRequest } from '@/lib/blockchainRequestHelper.js';
 import router from "../router/index.js";
 
-const { t } = useI18n({ useScope: "global" });
+    const { t } = useI18n({ useScope: "global" });
+    const walletStore = useWalletStore();
+    const accountStore = useAccountStore();
+    const settingsStore = useSettingsStore();
+    const popupStore = usePopupStore();
 
-let hasActivePopup = computed(() => store.getters["PopupStore/hasActivePopup"]);
+    let hasActivePopup = computed(() => popupStore.hasActivePopup);
 
 let chosenScope = ref();
 let selectedRows = ref();
@@ -26,14 +34,14 @@ function goBack() {
 }
 
 let chain = computed(() => {
-    return store.getters["AccountStore/getChain"];
+        return accountStore.getChain;
 });
 
 let selectedAccount = computed(() => {
-    if (!store.state.WalletStore.isUnlocked) {
-        return;
-    }
-    return store.getters["AccountStore/getCurrentSafeAccount"]();
+        if (!walletStore.isUnlocked) {
+            return;
+        }
+        return accountStore.getCurrentSafeAccount();
 });
 
 watch(
@@ -52,7 +60,7 @@ onMounted(async () => {
     async function initialize() {
         let blockchainResponse;
         try {
-            blockchainResponse = await window.electron.blockchainRequest({
+            blockchainResponse = await blockchainRequest({
                 methods: ["supportsLocal", "getOperationTypes"],
                 chain: chain.value,
                 location: "local",
@@ -83,7 +91,7 @@ function setScope(newValue) {
     if (newValue === "AllowAll") {
         const _ids = operationTypes.value.map((type) => type.id);
         selectedRows.value = _ids;
-        store.dispatch("SettingsStore/setChainPermissions", {
+        settingsStore.setChainPermissions({
             chain: chain.value,
             rows: _ids,
         });
@@ -100,7 +108,7 @@ async function onFileUpload(a) {
         return;
     }
 
-    let account = store.getters["AccountStore/getCurrentSafeAccount"]();
+    let account = accountStore.getCurrentSafeAccount();
     if (!account) {
         console.log("No account selected");
         inProgress.value = false;
@@ -119,7 +127,7 @@ async function onFileUpload(a) {
 
     let blockchainResponse;
     try {
-        blockchainResponse = await window.electron.blockchainRequest({
+        blockchainResponse = await blockchainRequest({
             methods: ["localFileUpload"],
             chain: chain.value,
             fileData: fileContent,
@@ -147,9 +155,9 @@ async function onFileUpload(a) {
 }
 
 onMounted(() => {
-    if (!store.state.WalletStore.isUnlocked) {
-        console.log("logging user out...");
-        store.dispatch("WalletStore/logout");
+        if (!walletStore.isUnlocked) {
+            console.log("logging user out...");
+            walletStore.logout();
         router.replace("/");
         return;
     }

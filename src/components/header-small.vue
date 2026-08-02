@@ -4,11 +4,13 @@
     import MainMenu from "./main-menu.vue";
     import langSelect from "./lang-select.vue";
     import { useProcessing } from '../composables/useProcessing.js';
-    import store from '../store/index.js';
+    import { usePopupStore } from '@/stores/popupStore.js';
 
     const router = useRouter();
     const { isProcessing } = useProcessing();
-    let hasActivePopup = computed(() => store.getters["PopupStore/hasActivePopup"]);
+    const popupStore = usePopupStore();
+
+    let hasActivePopup = computed(() => popupStore.hasActivePopup);
 </script>
 
 <template>

@@ -5,9 +5,10 @@
     import { Checkbox } from '@/components/ui/ui/checkbox';
     import { ScrollArea } from '@/components/ui/ui/scroll-area';
     import { useI18n } from 'vue-i18n';
-    import store from '../../store/index.js';
+    import { useSettingsStore } from '@/stores/settingsStore.js';
 
     const { t } = useI18n({ useScope: 'global' });
+    const settingsStore = useSettingsStore();
     const props = defineProps({
         ops: {
             type: Array,
@@ -28,7 +29,7 @@
 
     let selected = ref([]);
     onMounted(() => {
-        let rememberedRows = store.getters['SettingsStore/getChainPermissions'](props.chain);
+        let rememberedRows = settingsStore.getChainPermissions(props.chain);
         if (!rememberedRows || !rememberedRows.length) {
             selected.value = [];
             return;
@@ -39,8 +40,7 @@
 
     function saveRows() {
         window.electron.resetTimer();
-        store.dispatch(
-            "SettingsStore/setChainPermissions",
+        settingsStore.setChainPermissions(
             {
                 chain: props.chain,
                 rows: selected.value

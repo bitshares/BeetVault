@@ -11,12 +11,20 @@
     import QRScan from "./qr/Scan";
     import QRUpload from "./qr/Upload";
 
-    import store from '../store/index.js';
+    import { useWalletStore } from '@/stores/walletStore.js';
+    import { useAccountStore } from '@/stores/accountStore.js';
+    import { useSettingsStore } from '@/stores/settingsStore.js';
+    import { usePopupStore } from '@/stores/popupStore.js';
+    import { blockchainRequest } from '@/lib/blockchainRequestHelper.js';
     import router from '../router/index.js';
 
     const { t } = useI18n({ useScope: 'global' });
+    const walletStore = useWalletStore();
+    const accountStore = useAccountStore();
+    const settingsStore = useSettingsStore();
+    const popupStore = usePopupStore();
 
-    let hasActivePopup = computed(() => store.getters["PopupStore/hasActivePopup"]);
+    let hasActivePopup = computed(() => popupStore.hasActivePopup);
 
     let chosenScope = ref();
     let qrInProgress = ref(false);
@@ -40,14 +48,14 @@
     }
 
     const chain = computed(() => {
-        return store.getters['AccountStore/getChain'];
+        return accountStore.getChain;
     });
 
     let selectedAccount = computed(() => {
-        if (!store.state.WalletStore.isUnlocked) {
+        if (!walletStore.isUnlocked) {
             return;
         }
-        return store.getters["AccountStore/getCurrentSafeAccount"]()
+        return accountStore.getCurrentSafeAccount()
     })
 
     watch(selectedAccount, async (newVal, oldVal) => {
@@ -65,7 +73,7 @@
 
         let blockchainResponse;
         try {
-            blockchainResponse = await window.electron.blockchainRequest({
+            blockchainResponse = await blockchainRequest({
                 methods: ["processQR"],
                 chain: chain.value,
                 qrChoice: qrChoice.value,
@@ -97,7 +105,7 @@
         async function initialize() {
             let blockchainResponse;
             try {
-                blockchainResponse = await window.electron.blockchainRequest({
+                blockchainResponse = await blockchainRequest({
                     methods: ["supportsQR", "getOperationTypes"],
                     chain: chain.value
                 });
@@ -130,20 +138,19 @@
         if (newValue === 'AllowAll') {
             const _rows = operationTypes.value.map(type => type.id)
             selectedRows.value = _rows
-            store.dispatch(
-                "SettingsStore/setChainPermissions",
-                {
-                    chain: chain.value,
-                    rows: _rows
-                }
-            )
+        settingsStore.setChainPermissions(
+            {
+                chain: chain.value,
+                rows: _rows
+            }
+        )
         }
     }
 
     onMounted(() => {
-        if (!store.state.WalletStore.isUnlocked) {
+        if (!walletStore.isUnlocked) {
             console.log("logging user out...");
-            store.dispatch("WalletStore/logout");
+            walletStore.logout();
             router.replace("/");
             return;
         }

@@ -7,39 +7,44 @@
     import { Card, CardContent } from '@/components/ui/ui/card';
     import { ScrollArea } from '@/components/ui/ui/scroll-area';
     import { Check } from 'lucide-vue-next';
-    import store from '../store/index.js';
+    import { useWalletStore } from '@/stores/walletStore.js';
+    import { useAccountStore } from '@/stores/accountStore.js';
+    import { useSettingsStore } from '@/stores/settingsStore.js';
     import router from '../router/index.js';
 
     const { t } = useI18n({ useScope: 'global' });
+    const walletStore = useWalletStore();
+    const accountStore = useAccountStore();
+    const settingsStore = useSettingsStore();
 
     let selectedAccount = computed(() => {
-        if (!store.state.WalletStore.isUnlocked) {
+        if (!walletStore.isUnlocked) {
             return;
         }
-        return store.getters["AccountStore/getCurrentSafeAccount"]()
+        return accountStore.getCurrentSafeAccount()
     })
 
     let storedNodes = ref([]);
 
     watch(selectedAccount, (newVal) => {
         if (newVal && newVal.chain) {
-            storedNodes.value = store.getters["SettingsStore/getNodes"](newVal.chain);
+            storedNodes.value = settingsStore.getNodes(newVal.chain);
         }
     }, { immediate: true });
 
     function handleClick(node) {
-        store.dispatch("SettingsStore/setNode", {
+        settingsStore.setNode({
             chain: selectedAccount.value.chain,
             node: node
         }).then(() => {
-            storedNodes.value = [...store.getters["SettingsStore/getNodes"](selectedAccount.value.chain)];
+            storedNodes.value = [...settingsStore.getNodes(selectedAccount.value.chain)];
         });
     }
 
     onMounted(() => {
-        if (!store.state.WalletStore.isUnlocked) {
+        if (!walletStore.isUnlocked) {
             console.log("logging user out...");
-            store.dispatch("WalletStore/logout");
+            walletStore.logout();
             router.replace("/");
             return;
         }

@@ -14,20 +14,23 @@
     import { Loader2, Copy, Check } from "lucide-vue-next";
 
     import AccountSelect from "./account-select";
-    import store from "../store/index.js";
+    import { useWalletStore } from "@/stores/walletStore.js";
+    import { useAccountStore } from "@/stores/accountStore.js";
 
     const { t } = useI18n({ useScope: "global" });
     const { copy } = useClipboard();
+    const walletStore = useWalletStore();
+    const accountStore = useAccountStore();
 
     let chain = computed(() => {
-        return store.getters["AccountStore/getChain"];
+        return accountStore.getChain;
     });
 
     let selectedAccount = computed(() => {
-        if (!store.state.WalletStore.isUnlocked) {
+        if (!walletStore.isUnlocked) {
             return;
         }
-        return store.getters["AccountStore/getCurrentSafeAccount"]();
+        return accountStore.getCurrentSafeAccount();
     });
 
     let messageText = ref("");
@@ -48,8 +51,8 @@
         try {
             let memoKey;
             try {
-                memoKey = store.getters["AccountStore/getPrivateMemoKey"](selectedAccount.value.accountID, chain.value)
-                    || store.getters["AccountStore/getCurrentActiveKey"]();
+                memoKey = accountStore.getPrivateMemoKey(selectedAccount.value.accountID, chain.value)
+                    || accountStore.getCurrentActiveKey();
             } catch (error) {
                 console.log(error);
                 signError.value = "Unable to retrieve signing key.";

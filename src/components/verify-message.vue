@@ -12,6 +12,7 @@
     import { Alert, AlertDescription } from "@/components/ui/ui/alert";
     import { Badge } from "@/components/ui/ui/badge";
     import { Loader2, ShieldCheck, ShieldX } from "lucide-vue-next";
+    import { blockchainRequest } from '@/lib/blockchainRequestHelper.js';
 
     const { t } = useI18n({ useScope: "global" });
 
@@ -63,7 +64,7 @@
                 },
             };
 
-            let response = await window.electron.blockchainRequest({
+            let response = await blockchainRequest({
                 methods: ["verifyMessage"],
                 chain: parsed.chain,
                 request: request,

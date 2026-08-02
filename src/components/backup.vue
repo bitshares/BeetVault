@@ -2,7 +2,8 @@
     import { ref, computed, onMounted } from 'vue';
     import { useI18n } from 'vue-i18n';
     
-    import store from '../store/index.js';
+    import { useWalletStore } from '@/stores/walletStore.js';
+    import { useAccountStore } from '@/stores/accountStore.js';
     import router from '../router/index.js';
     import { Button } from '@/components/ui/ui/button';
     import { Spinner } from '@/components/ui/ui/spinner';
@@ -12,6 +13,8 @@
 
     const { t } = useI18n({ useScope: 'global' });
     const { isProcessing, startProcessing, stopProcessing } = useProcessing();
+    const walletStore = useWalletStore();
+    const accountStore = useAccountStore();
 
     let walletpass = ref("");
     let passincorrect = ref("");
@@ -20,24 +23,23 @@
     const canSubmit = computed(() => walletpass.value.length > 0 && !isDownloading.value);
 
     async function downloadBackup() {
-        if (!canSubmit.value || !store.state.WalletStore.isUnlocked || router.currentRoute.value.path != "/backup") {
+        if (!canSubmit.value || !walletStore.isUnlocked || router.currentRoute.value.path != "/backup") {
             return;
         }
         window.electron.resetTimer();
         startProcessing();
         isDownloading.value = true;
 
-        const _id = store.getters['WalletStore/getCurrentID'];
+        const _id = walletStore.getCurrentID;
 
-        store
-            .dispatch("WalletStore/getWallet", {
+        walletStore.loadWallet({
                 wallet_id: _id,
                 wallet_pass: walletpass.value
             })
             .then(async () => {
-                let walletName = store.getters['WalletStore/getWalletName'];
-                let walletTier = store.getters['WalletStore/getWalletTier'];
-                let accounts = JSON.stringify(store.getters['AccountStore/getAccountList'].slice());
+                 let walletName = walletStore.getWalletName;
+                 let walletTier = walletStore.getWalletTier;
+                 let accounts = JSON.stringify(accountStore.getAccountList.slice());
 
                 window.electron.downloadBackup({
                     walletName: walletName,
@@ -60,9 +62,9 @@
     }
 
     onMounted(() => {
-        if (!store.state.WalletStore.isUnlocked) {
+        if (!walletStore.isUnlocked) {
             console.log("logging user out...");
-            store.dispatch("WalletStore/logout");
+            walletStore.logout();
             router.replace("/");
             return;
         }

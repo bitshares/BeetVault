@@ -1,4 +1,5 @@
 import { createApp } from 'vue';
+import { createPinia } from 'pinia';
 import mitt from 'mitt';
 
 import './styles/globals.css';
@@ -17,8 +18,10 @@ window.onerror = function (msg, url, lineNo, columnNo, error) {
   return false;
 };
 
+const pinia = createPinia();
 const emitter = mitt();
 const app = createApp({});
+app.use(pinia);
 app.provide('emitter', emitter);
 
 app.config.errorHandler = function (err, vm, info) {

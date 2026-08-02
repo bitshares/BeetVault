@@ -8,22 +8,23 @@
     import { useI18n } from 'vue-i18n';
     const { t } = useI18n({ useScope: 'global' });
 
-    import store from '../store/index.js';
+    import { useWalletStore } from '@/stores/walletStore.js';
     import router from '../router/index.js';
     import { useProcessing } from '../composables/useProcessing.js';
 
     const { startProcessing, stopProcessing } = useProcessing();
+    const walletStore = useWalletStore();
 
     let hasWallet = computed(() => {
-        return store.getters['WalletStore/getHasWallet'];
+        return walletStore.getHasWallet;
     })
 
     let walletlist = computed(() => {
-        return store.getters['WalletStore/getWalletList'];
+        return walletStore.getWalletList;
     })
 
     let walletOptions = computed(() => {
-        let wallets = store.getters['WalletStore/getWalletList'];
+        let wallets = walletStore.getWalletList;
 
         return wallets.map((wallet, i) => {
             return {label: wallet.name, value: i}
@@ -37,7 +38,7 @@
     let unlocking = ref(false);
 
     onMounted(async () => {
-        store.dispatch("WalletStore/loadWallets", {}).catch((error) => {
+        walletStore.loadWallets().catch((error) => {
             console.log({error});
         });
         try {
@@ -52,14 +53,13 @@
         unlocking.value = true;
         startProcessing();
 
-        store
-            .dispatch("WalletStore/getWallet", {
+        walletStore.loadWallet({
                 wallet_id: walletlist.value[selectedWallet.value].id,
                 wallet_pass: walletpass.value
             })
             .then(async () => {
                 try {
-                    await store.dispatch("WalletStore/confirmUnlock");
+                await walletStore.confirmUnlock();
                 } catch (error) {
                     console.log(error);
                     unlocking.value = false;
@@ -67,7 +67,7 @@
                     return;
                 }
                 stopProcessing();
-                store.dispatch("WalletStore/setSelectedWalletIndex", selectedWallet.value);
+                walletStore.setSelectedWalletIndex(selectedWallet.value);
                 walletpass.value = "";
                 router.replace("/dashboard");
             })

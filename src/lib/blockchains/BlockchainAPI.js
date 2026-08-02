@@ -6,7 +6,7 @@ export default class BlockchainAPI {
 
     constructor(config, initNode) {
         this._config = config;
-        this._node = initNode;
+        this._node = initNode && initNode.url ? initNode.url : initNode;
         this._isConnected = false;
         this._isConnectingInProgress = false;
         this._isConnectedToNode = null;

@@ -12,8 +12,6 @@ import * as Socket from "simple-websocket";
 
 import * as Actions from "../Actions.js";
 
-import store from "../../store/index.js";
-
 import beautify from "./bitshares/beautify.js";
 import { humanReadableFloat } from "../assetUtils.js";
 
@@ -647,13 +645,11 @@ export default class BitShares extends BlockchainAPI {
             );
         }
 
-        const userConfiguredNodes = store.getters['SettingsStore/getNodes'](this._config.coreSymbol);
-        if (!userConfiguredNodes || !userConfiguredNodes.length) {
-            throw this._connectionFailed("", "No user-configured nodes");
+        if (this._node) {
+            return this._establishConnection(this._node);
         }
 
-        this._node = userConfiguredNodes[0].url;
-        return this._establishConnection(this._node);
+        throw this._connectionFailed("", "No node available");
     }
 
     /*
@@ -725,9 +721,6 @@ export default class BitShares extends BlockchainAPI {
             console.log(`get_full_accounts: ${error}`);
             return null;
         });
-    }
-
-        return fastestPromise;
     }
 
     /**

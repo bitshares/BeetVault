@@ -16,7 +16,9 @@
     import ImportMemo from "./blockchains/bitshares/ImportMemo";
     import ImportKeys from "./blockchains/ImportKeys";
 
-    import store from '../store/index.js';
+    import { useWalletStore } from '@/stores/walletStore.js';
+    import { useAccountStore } from '@/stores/accountStore.js';
+    import { blockchainRequest } from '@/lib/blockchainRequestHelper.js';
     import router from '../router/index.js';
     import { blockchains } from "../config/config.js";
     import { useProcessing } from '../composables/useProcessing.js';
@@ -24,6 +26,8 @@
     const { startProcessing, stopProcessing } = useProcessing();
 
     const { t } = useI18n({ useScope: 'global' });
+    const walletStore = useWalletStore();
+    const accountStore = useAccountStore();
 
     let importMethod = ref(null);
     let walletname = ref("");
@@ -34,7 +38,7 @@
 
     watch(step, async (newVal, oldVal) => {
         if (newVal !== oldVal) {
-            if (store.state.WalletStore.isUnlocked) {
+            if (walletStore.isUnlocked) {
                 window.electron.resetTimer();
             }
             stepMessage.value = t('common.step_counter', {step_no: newVal});
@@ -52,7 +56,7 @@
     let userHasWallet = computed(() => {
         let hasWallet;
         try {
-            hasWallet = store.getters['WalletStore/getHasWallet'];
+        hasWallet = walletStore.getHasWallet;
         } catch (error) {
             console.log(error);
             return [];
@@ -70,7 +74,7 @@
     });
 
     let createNewWallet = computed(() => {
-        return !store.state.WalletStore.isUnlocked;
+        return !walletStore.isUnlocked;
     });
 
     let selectedImportOptions = ref([]);
@@ -78,7 +82,7 @@
         async function lookup() {
             let blockchainResponse;
             try {
-                blockchainResponse = await window.electron.blockchainRequest({
+                blockchainResponse = await blockchainRequest({
                     methods: ["getImportOptions"],
                     chain: selectedChain.value
                 });
@@ -99,7 +103,7 @@
 
     watch(selectedChain, async (newVal, oldVal) => {
         if (newVal !== oldVal) {
-            if (store.state.WalletStore.isUnlocked) {
+            if (walletStore.isUnlocked) {
                 window.electron.resetTimer();
             }
             selectedImport.value = 0;
@@ -129,7 +133,7 @@
             step.value = 2;
             let fetchedName;
             try {
-                fetchedName = store.getters['WalletStore/getWalletName'];
+                fetchedName = walletStore.getWalletName;
             } catch (error) {
                 console.log(error);
                 return;
@@ -144,7 +148,7 @@
             return;
         }
 
-        let walletList = store.getters['WalletStore/getWalletList'];
+        let walletList = walletStore.getWalletList;
         if (walletList.map(wallet => wallet.name).includes(walletname.value.trim())) {
             window.electron.notify(t("common.duplicate_wallet_error"));
             s1c.value = "border-red-500 ring-red-500";
@@ -196,7 +200,7 @@
         for (let account of accounts_to_import.value) {
             if (!userHasWallet.value || createNewWallet.value) {
                 try {
-                    await store.dispatch("WalletStore/saveWallet", {
+                    await walletStore.saveWallet({
                         walletname: walletname.value,
                         password: password.value,
                         walletdata: account.account,
@@ -216,7 +220,7 @@
                 account.walletname = walletname.value;
 
                 try {
-                    await store.dispatch("AccountStore/addAccount", account);
+                    await accountStore.addAccount(account);
                 } catch (error) {
                     console.log(error);
                     _handleError(error);
@@ -233,8 +237,8 @@
         password.value = "";
         confirmPassword.value = "";
 
-        if (store.state.WalletStore.isUnlocked) {
-            store.dispatch("WalletStore/logout");
+        if (walletStore.isUnlocked) {
+            walletStore.logout();
         }
         router.replace("/");
     }

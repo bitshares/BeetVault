@@ -9,13 +9,20 @@
     import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/ui/select';
     import { Spinner } from '@/components/ui/ui/spinner';
 
-    import store from '../store/index.js';
+    import { useWalletStore } from '@/stores/walletStore.js';
+    import { useAccountStore } from '@/stores/accountStore.js';
+    import { useSettingsStore } from '@/stores/settingsStore.js';
+    import { usePopupStore } from '@/stores/popupStore.js';
     import router from '../router/index.js';
     import { useProcessing } from '../composables/useProcessing.js';
 
     const { t } = useI18n({ useScope: 'global' });
+    const walletStore = useWalletStore();
+    const accountStore = useAccountStore();
+    const settingsStore = useSettingsStore();
+    const popupStore = usePopupStore();
 
-    let hasActivePopup = computed(() => store.getters["PopupStore/hasActivePopup"]);
+    let hasActivePopup = computed(() => popupStore.hasActivePopup);
 
     let walletpass = ref("");
     let passincorrect = ref("");
@@ -24,29 +31,29 @@
     const { isProcessing, startProcessing, stopProcessing } = useProcessing();
 
     let selectedAccount = computed(() => {
-        if (!store.state.WalletStore.isUnlocked) {
+        if (!walletStore.isUnlocked) {
             return;
         }
-        return store.getters["AccountStore/getCurrentSafeAccount"]()
+        return accountStore.getCurrentSafeAccount()
     })
 
     let accountQuantity = computed(() => {
-        if (!store.state.WalletStore.isUnlocked) {
+        if (!walletStore.isUnlocked) {
             return 0;
         }
-        return store.getters["AccountStore/getAccountQuantity"];
+        return accountStore.getAccountQuantity;
     })
 
     let selectedTimeout = ref("5");
 
     onMounted(() => {
-        let stored = store.getters["SettingsStore/getLogoutTimeout"];
+        let stored = settingsStore.getLogoutTimeout;
         selectedTimeout.value = String(stored);
     });
 
     function updateLogoutTimeout(value) {
         selectedTimeout.value = value;
-        store.dispatch("SettingsStore/setLogoutTimeout", {
+        settingsStore.setLogoutTimeout({
             timeout: Number(value)
         });
     }
@@ -61,7 +68,7 @@
     ];
 
     async function deleteAccount() {
-        if (!store.state.WalletStore.isUnlocked || router.currentRoute.value.path != "/settings") {
+        if (!walletStore.isUnlocked || router.currentRoute.value.path != "/settings") {
             return;
         }
         if (deleting.value) return;
@@ -69,8 +76,7 @@
         startProcessing();
         window.electron.resetTimer();
 
-        store
-            .dispatch("WalletStore/deleteAccountFromWallet", {
+        walletStore.deleteAccountFromWallet({
                 accountName: selectedAccount.value.accountName,
                 chain: selectedAccount.value.chain,
                 wallet_pass: walletpass.value
@@ -93,9 +99,9 @@
     }
 
     onMounted(() => {
-        if (!store.state.WalletStore.isUnlocked) {
+        if (!walletStore.isUnlocked) {
             console.log("logging user out...");
-            store.dispatch("WalletStore/logout");
+            walletStore.logout();
             router.replace("/");
             return;
         }

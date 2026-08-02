@@ -5,14 +5,18 @@
     import AccountDetails from "./account-details";
     import AccountSelect from "./account-select";
 
-    import store from '../store/index.js';
+    import { useWalletStore } from '@/stores/walletStore.js';
+    import { useAccountStore } from '@/stores/accountStore.js';
     import router from '../router/index.js';
+    import { blockchainRequest } from '@/lib/blockchainRequestHelper.js';
+    const walletStore = useWalletStore();
+    const accountStore = useAccountStore();
 
     let selectedAccount = computed(() => {
-        if (!store.state.WalletStore.isUnlocked) {
+        if (!walletStore.isUnlocked) {
             return;
         }
-        return store.getters["AccountStore/getCurrentSafeAccount"]()
+        return accountStore.getCurrentSafeAccount()
     })
     
     let isConnected = ref();
@@ -37,9 +41,9 @@
 
             _chain.value = selectedAccount.value.chain;
 
-            let blockchainRequest;
+            let blockchainResponse;
             try { 
-                blockchainRequest = await window.electron.blockchainRequest({
+                blockchainResponse = await blockchainRequest({
                     methods: selectedDifferentChain
                         ? ['getExplorer', 'getAccessType', 'getBalances']
                         : ['getExplorer', 'getBalances'],
@@ -50,21 +54,21 @@
                 console.log({error});
             }
 
-            if (!blockchainRequest) {
+            if (!blockchainResponse) {
                 console.log("No blockchain request");
                 isConnecting.value = false;
                 isConnected.value = false;
                 return;
             }
 
-            if (blockchainRequest.getExplorer) {
-                _explorer.value = blockchainRequest.getExplorer;
+            if (blockchainResponse.getExplorer) {
+                _explorer.value = blockchainResponse.getExplorer;
             }
-            if (blockchainRequest.getAccessType) {
-                _accessType.value = blockchainRequest.getAccessType;
+            if (blockchainResponse.getAccessType) {
+                _accessType.value = blockchainResponse.getAccessType;
             }
-            if (blockchainRequest.getBalances) {
-                _balances.value = JSON.parse(blockchainRequest.getBalances);
+            if (blockchainResponse.getBalances) {
+                _balances.value = JSON.parse(blockchainResponse.getBalances);
             }
 
             isConnecting.value = false;
@@ -78,9 +82,9 @@
     });
 
     onMounted(() => {
-        if (!store.state.WalletStore.isUnlocked) {
+        if (!walletStore.isUnlocked) {
             console.log("logging user out...");
-            store.dispatch("WalletStore/logout");
+            walletStore.logout();
             router.replace("/");
             return;
         }

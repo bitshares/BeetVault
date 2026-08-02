@@ -9,12 +9,20 @@
     import AccountSelect from "./account-select";
     import Operations from "./blockchains/operations";
     
-    import store from '../store/index.js';
+    import { useWalletStore } from '@/stores/walletStore.js';
+    import { useAccountStore } from '@/stores/accountStore.js';
+    import { useSettingsStore } from '@/stores/settingsStore.js';
+    import { usePopupStore } from '@/stores/popupStore.js';
+    import { blockchainRequest } from '@/lib/blockchainRequestHelper.js';
     import router from '../router/index.js';
 
     const { t } = useI18n({ useScope: 'global' });
+    const walletStore = useWalletStore();
+    const accountStore = useAccountStore();
+    const settingsStore = useSettingsStore();
+    const popupStore = usePopupStore();
 
-    let hasActivePopup = computed(() => store.getters["PopupStore/hasActivePopup"]);
+    let hasActivePopup = computed(() => popupStore.hasActivePopup);
 
     let selectedRows = ref();
     let chosenScope = ref();
@@ -31,8 +39,7 @@
         if (newValue === 'AllowAll') {
             const _ids = operationTypes.value.map(type => type.id);
             selectedRows.value = _ids;
-            store.dispatch(
-                "SettingsStore/setChainPermissions",
+            settingsStore.setChainPermissions(
                 {
                     chain: chain.value,
                     rows: _ids
@@ -42,10 +49,10 @@
     }
 
     let selectedAccount = computed(() => {
-        if (!store.state.WalletStore.isUnlocked) {
+        if (!walletStore.isUnlocked) {
             return;
         }
-        return store.getters["AccountStore/getCurrentSafeAccount"]()
+        return accountStore.getCurrentSafeAccount()
     })
 
     watch(selectedAccount, async (newVal, oldVal) => {
@@ -55,16 +62,16 @@
     }, {immediate: true});
 
     let chain = computed(() => {
-        return store.getters['AccountStore/getChain'];
+        return accountStore.getChain;
     });
 
     let compatibleChain = ref();
     let operationTypes = ref([]);
     watchEffect(() => {
         async function initialize() {
-            let blockchainRequest;
+            let blockchainResponse;
             try {
-                blockchainRequest = await window.electron.blockchainRequest(
+                blockchainResponse = await blockchainRequest(
                     { 
                         methods: ['supportsTOTP', 'getOperationTypes'],
                         chain: chain.value
@@ -74,8 +81,8 @@
                 console.error(error);
             }
 
-            if (blockchainRequest) {
-                const { supportsTOTP, getOperationTypes } = blockchainRequest;
+            if (blockchainResponse) {
+                const { supportsTOTP, getOperationTypes } = blockchainResponse;
                 if (supportsTOTP) {
                     compatibleChain.value = supportsTOTP;
                 }
@@ -91,13 +98,13 @@
 
     let deepLinkInProgress = ref(false);
     window.electron.onRawDeepLink(async (args) => {
-        if (!store.state.WalletStore.isUnlocked || router.currentRoute.value.path != "/raw-link") {
+        if (!walletStore.isUnlocked || router.currentRoute.value.path != "/raw-link") {
             console.log("Wallet must be unlocked for raw deeplinks to work.");
             window.electron.notify(t("common.raw.promptFailure"));
             return;
         }
 
-        let account = store.getters['AccountStore/getCurrentSafeAccount']();
+        let account = accountStore.getCurrentSafeAccount();
         if (!account) {
             console.log('No account')
             deepLinkInProgress.value = false;
@@ -108,9 +115,9 @@
 
         deepLinkInProgress.value = true;
 
-        let blockchainRequest;
+        let blockchainResponse;
         try {
-            blockchainRequest = await window.electron.blockchainRequest(
+            blockchainResponse = await blockchainRequest(
                 { 
                     methods: ['getRawLink'],
                     chain: account.chain,
@@ -125,22 +132,22 @@
             return;
         }
 
-        if (!blockchainRequest || !blockchainRequest.getRawLink) {
+        if (!blockchainResponse || !blockchainResponse.getRawLink) {
             console.log("Raw link processing error");
             window.electron.notify(t("common.raw.promptFailure"));
             deepLinkInProgress.value = false;
             return;
         }
         
-        console.log({result: blockchainRequest.getRawLink});
+        console.log({result: blockchainResponse.getRawLink});
         window.electron.notify(t("common.local.promptSuccess"));
         deepLinkInProgress.value = false;
     });
 
     onMounted(() => {
-        if (!store.state.WalletStore.isUnlocked) {
+        if (!walletStore.isUnlocked) {
             console.log("logging user out...");
-            store.dispatch("WalletStore/logout");
+            walletStore.logout();
             router.replace("/");
             return;
         }

@@ -3,7 +3,10 @@
     import { useI18n } from "vue-i18n";
 
     import router from "../router/index.js";
-    import store from "../store/index.js";
+    import { useWalletStore } from "@/stores/walletStore.js";
+    import { useAccountStore } from "@/stores/accountStore.js";
+    import { useSettingsStore } from "@/stores/settingsStore.js";
+    import { usePopupStore } from "@/stores/popupStore.js";
     import { Button } from '@/components/ui/ui/button';
     import { Spinner } from '@/components/ui/ui/spinner';
     import { DropdownMenu, DropdownMenuContent, DropdownMenuItem, DropdownMenuTrigger } from '@/components/ui/ui/dropdown-menu';
@@ -12,8 +15,12 @@
     import { useProcessing } from "@/composables/useProcessing.js";
 
     const { isProcessing } = useProcessing();
+    const popupStore = usePopupStore();
+    const walletStore = useWalletStore();
+    const accountStore = useAccountStore();
+    const settingsStore = useSettingsStore();
 
-    let hasActivePopup = computed(() => store.getters["PopupStore/hasActivePopup"]);
+    let hasActivePopup = computed(() => popupStore.hasActivePopup);
 
     const iconMap = {
         home: Home,
@@ -127,7 +134,7 @@
 
         if (data.index === 11) {
             console.log("User logged out.");
-            store.dispatch("WalletStore/logout");
+            walletStore.logout();
             router.replace("/");
         }
 
@@ -147,26 +154,26 @@
     });
 
     function startLogoutTimer() {
-        if (!store.state.WalletStore.isUnlocked) {
+        if (!walletStore.isUnlocked) {
             return;
         }
 
         clearLogoutTimer();
 
-        let timeoutMinutes = store.getters["SettingsStore/getLogoutTimeout"];
+        let timeoutMinutes = settingsStore.getLogoutTimeout;
         if (!timeoutMinutes || timeoutMinutes <= 0) {
             return;
         }
 
         logoutTimer = setTimeout(() => {
             console.log("wallet timed logout");
-            store.dispatch("WalletStore/logout");
+            walletStore.logout();
             router.replace("/");
         }, timeoutMinutes * 60 * 1000);
     }
 
     // Blockchain request handling delegated to composable
-    useInjectedCall(lastIndex, { store, consoleErrorBuffer, t, startLogoutTimer });
+    useInjectedCall(lastIndex, { consoleErrorBuffer, t, startLogoutTimer });
 
     watch(
         () => router.currentRoute.value,
@@ -185,20 +192,20 @@
     );
 
     watch(
-        () => store.state.WalletStore.isUnlocked,
+        () => walletStore.isUnlocked,
         (isUnlocked) => {
             if (isUnlocked) {
                 startLogoutTimer();
                 window.electron.setNode((data) => {
-                    const _currentChain = store.getters["AccountStore/getChain"];
-                    store.dispatch("SettingsStore/setNode", {
+                    const _currentChain = accountStore.getChain;
+                    settingsStore.setNode({
                         chain: _currentChain,
                         node: data,
                     });
                 });
                 window.electron.onGetSafeAccount((arg) => {
                     let account =
-                        store.getters["AccountStore/getCurrentSafeAccount"]();
+                        accountStore.getCurrentSafeAccount();
                     window.electron.getSafeAccountResponse(account);
                 });
             } else {
@@ -212,7 +219,7 @@
 <template>
     <div class="relative">
         <Button
-            v-if="store.state.WalletStore.isUnlocked"
+            v-if="walletStore.isUnlocked"
             size="icon-sm"
             class="rounded-full"
             :disabled="isProcessing || hasActivePopup"

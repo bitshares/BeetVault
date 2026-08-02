@@ -3,8 +3,12 @@
     import { Button } from '@/components/ui/ui/button';
     import { Spinner } from '@/components/ui/ui/spinner';
     import { useI18n } from 'vue-i18n';
-    import store from '../../../store/index.js';
+    import { useWalletStore } from '@/stores/walletStore.js';
+    import { useAccountStore } from '@/stores/accountStore.js';
+    import { blockchainRequest } from '@/lib/blockchainRequestHelper.js';
     const { t } = useI18n({ useScope: 'global' });
+    const walletStore = useWalletStore();
+    const accountStore = useAccountStore();
 
     const props = defineProps({
         chain: {
@@ -44,9 +48,9 @@
     let requiredFields = ref();
     watchEffect(() => {
         async function initialize() {
-            let blockchainRequest;
+            let blockchainResponse;
             try {
-                blockchainRequest = await window.electron.blockchainRequest({
+                blockchainResponse = await blockchainRequest({
                     methods: ["getAccessType", "getSignUpInput"],
                     chain: props.chain
                 });
@@ -55,12 +59,12 @@
                 return;
             }
 
-            if (blockchainRequest && blockchainRequest.getAccessType) {
-                accessType.value = blockchainRequest.getAccessType;
+            if (blockchainResponse && blockchainResponse.getAccessType) {
+                accessType.value = blockchainResponse.getAccessType;
             }
 
-            if (blockchainRequest && blockchainRequest.getSignUpInput) {
-                requiredFields.value = blockchainRequest.getSignUpInput;
+            if (blockchainResponse && blockchainResponse.getSignUpInput) {
+                requiredFields.value = blockchainResponse.getSignUpInput;
             }
         }
 
@@ -71,10 +75,10 @@
 
     async function next() {
         // Duplicate check: skip if account already exists in wallet
-        if (store.state.WalletStore.isUnlocked) {
+        if (walletStore.isUnlocked) {
             let chain = props.chain;
             let accountName = accountname.value;
-            let duplicate = store.state.AccountStore.accountlist.find(
+            let duplicate = accountStore.accountlist.find(
                 x => x.chain === chain &&
                 (x.accountID === accountName || x.accountName === accountName)
             );
@@ -92,9 +96,9 @@
             authorities.memo = memopk.value;
         }
 
-        let blockchainRequest;
+        let blockchainResponse;
         try {
-            blockchainRequest = await window.electron.blockchainRequest({
+            blockchainResponse = await blockchainRequest({
                 methods: ["verifyAccount"],
                 accountname: accountname.value,
                 chain: props.chain,
@@ -108,8 +112,8 @@
             return;
         }
 
-        if (blockchainRequest && blockchainRequest.verifyAccountError) {
-            const errorKey = blockchainRequest.verifyAccountError.key;
+        if (blockchainResponse && blockchainResponse.verifyAccountError) {
+            const errorKey = blockchainResponse.verifyAccountError.key;
             if (errorKey === "account_not_found") {
                 accountError.value = true;
                 window.electron.notify(t("common.account_not_found"));
@@ -124,7 +128,7 @@
             return;
         }
 
-        if (!blockchainRequest || !blockchainRequest.verifyAccount) {
+        if (!blockchainResponse || !blockchainResponse.verifyAccount) {
             console.log("Account verification error, check your memo key and try again");
             inProgress.value = false;
             window.electron.notify(t("common.unverified_account_error"));
@@ -136,9 +140,9 @@
         emit('imported', [{
             account: {
                 accountName: accountname.value,
-                accountID: blockchainRequest.verifyAccount.account.id,
+                accountID: blockchainResponse.verifyAccount.account.id,
                 chain: props.chain,
-                keys: { _vaultToken: blockchainRequest.verifyAccount.token }
+                keys: { _vaultToken: blockchainResponse.verifyAccount.token }
             }
         }]);
     }

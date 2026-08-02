@@ -1,4 +1,5 @@
 import { EOS_FAMILY } from "@/lib/blockchains/chainFamilies.js";
+import { useAccountStore } from "@/stores/accountStore.js";
 
 export default {
     name: "eos",
@@ -14,8 +15,8 @@ export default {
         return null;
     },
 
-    getSigningKey(store) {
-        return store.getters["AccountStore/getEOSKey"]();
+    getSigningKey() {
+        return useAccountStore().getEOSKey();
     },
 
     buildSignParams(request) {
@@ -29,7 +30,7 @@ export default {
         }
     },
 
-    async preProcess(_store, request, _chain) {
+    async preProcess(request, _chain) {
         return request;
     },
 

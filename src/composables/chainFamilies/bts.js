@@ -1,4 +1,6 @@
 import { BTS_FAMILY } from "@/lib/blockchains/chainFamilies.js";
+import { useAccountStore } from "@/stores/accountStore.js";
+import { blockchainRequest } from '@/lib/blockchainRequestHelper.js';
 
 const hexToString = (hex) => {
     const bytes = new Uint8Array(hex.match(/.{1,2}/g).map(byte => parseInt(byte, 16)));
@@ -23,17 +25,17 @@ export default {
         return null;
     },
 
-    getSigningKey(store, request) {
+    getSigningKey(request) {
         return request.payload.account_id
-            ? store.getters["AccountStore/getActiveKey"](request)
-            : store.getters["AccountStore/getCurrentActiveKey"]();
+            ? useAccountStore().getActiveKey(request)
+            : useAccountStore().getCurrentActiveKey();
     },
 
     buildSignParams(request) {
         return request.payload.params;
     },
 
-    async preProcess(store, request, chain) {
+    async preProcess(request, chain) {
         let _request = request;
 
         if (!request.payload.memo) {
@@ -55,7 +57,7 @@ export default {
             return _request;
         }
 
-        let _requiredMemoKey = store.getters["AccountStore/getPrivateMemoKey"](fromID, chain);
+        let _requiredMemoKey = useAccountStore().getPrivateMemoKey(fromID, chain);
 
         let processedOperations = [];
         for (let operation of operations) {
@@ -106,7 +108,7 @@ export default {
             let _updatedOperations = [];
             for (let operation of processedOperations) {
                 try {
-                    let feeRequest = await window.electron.blockchainRequest({
+                    let feeRequest = await blockchainRequest({
                         methods: ["calculateFee"],
                         account: null,
                         chain,

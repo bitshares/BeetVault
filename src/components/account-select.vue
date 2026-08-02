@@ -2,10 +2,11 @@
     import { watch, ref, computed } from "vue";
     import { useI18n } from 'vue-i18n';
 
-    import store from '../store/index.js';
+    import { useAccountStore } from '@/stores/accountStore.js';
     import {formatChain, formatAccountName} from "../lib/formatter.js";
     import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/ui/select';
     const { t } = useI18n({ useScope: 'global' });
+    const accountStore = useAccountStore();
 
     const props = defineProps({
         disabled: {
@@ -14,7 +15,7 @@
         }
     });
 
-    let chosenAccount = ref(store.getters["AccountStore/getCurrentIndex"]);
+    let chosenAccount = ref(accountStore.getCurrentIndex);
     let selectedAccount = ref();
 
     /*
@@ -23,7 +24,7 @@
     let accounts = computed(() => {
         let accountList;
         try {
-            accountList = store.getters['AccountStore/getSafeAccountList']();
+            accountList = accountStore.getSafeAccountList();
         } catch (error) {
             console.log(error);
             return [];
@@ -59,15 +60,12 @@
         if (newVal !== -1) {
             window.electron.resetTimer();
             selectedAccount.value = accounts.value[newVal];
-            store.dispatch(
-                "AccountStore/selectAccount",
-                {
-                    chain: accounts.value[newVal].chain,
-                    accountID: accounts.value[newVal].accountID
-                        ? accounts.value[newVal].accountID
-                        : accounts.value[newVal].accountName
-                }
-            );
+            accountStore.selectAccount({
+                chain: accounts.value[newVal].chain,
+                accountID: accounts.value[newVal].accountID
+                    ? accounts.value[newVal].accountID
+                    : accounts.value[newVal].accountName
+            });
         }
     }, {immediate: true});
 </script>

@@ -3,8 +3,10 @@ import { getChainHandler } from "./chainFamilies/index.js";
 import { useKeyManager } from "./useKeyManager.js";
 import { useTransactionSigner } from "./useTransactionSigner.js";
 import { serializeError } from "../lib/utils.js";
+import { useWalletStore } from "@/stores/walletStore.js";
+import { usePopupStore } from "@/stores/popupStore.js";
 
-export function useInjectedCall(lastIndex, { store, consoleErrorBuffer, t, startLogoutTimer }) {
+export function useInjectedCall(lastIndex, { consoleErrorBuffer, t, startLogoutTimer }) {
     const { getSigningKey } = useKeyManager();
     const { signAndBroadcast, broadcastOnly } = useTransactionSigner();
 
@@ -60,7 +62,7 @@ export function useInjectedCall(lastIndex, { store, consoleErrorBuffer, t, start
         () => {
             window.electron.removeAllListeners("injectedCall");
 
-            if (!store.state.WalletStore.isUnlocked) {
+            if (!useWalletStore().isUnlocked) {
                 return;
             }
 
@@ -107,7 +109,6 @@ export function useInjectedCall(lastIndex, { store, consoleErrorBuffer, t, start
                 if (handler && handler.validateKeyAuthority) {
                     try {
                         const keyAuthError = handler.validateKeyAuthority(
-                            store,
                             request,
                             visualizedParams
                         );
@@ -158,11 +159,11 @@ export function useInjectedCall(lastIndex, { store, consoleErrorBuffer, t, start
                     };
 
                 // 4. Create popup
-                store.dispatch("PopupStore/popupOpened");
+                usePopupStore().popupOpened();
                 try {
                     window.electron.createPopup(popupContents);
                 } catch (error) {
-                    store.dispatch("PopupStore/popupClosed");
+                    usePopupStore().popupClosed();
                     window.electron.createError({
                         id: request.id,
                         titleKey: 'common.popup.error.popupCreationFailed',
@@ -185,7 +186,7 @@ export function useInjectedCall(lastIndex, { store, consoleErrorBuffer, t, start
                 }
 
                 // 5. Notify user
-                store.dispatch("WalletStore/notifyUser", {
+                useWalletStore().notifyUser({
                     notify: "request",
                     message: t("common.apiUtils.inject"),
                 });
@@ -195,7 +196,7 @@ export function useInjectedCall(lastIndex, { store, consoleErrorBuffer, t, start
                 window.electron.popupApproved(request.id, async (approvalArgs) => {
                     if (popupApproved) return;
                     popupApproved = true;
-                    store.dispatch("PopupStore/popupClosed");
+                    usePopupStore().popupClosed();
 
                     let _request = request;
 
@@ -203,7 +204,6 @@ export function useInjectedCall(lastIndex, { store, consoleErrorBuffer, t, start
                     if (handler && handler.preProcess) {
                         try {
                             _request = await handler.preProcess(
-                                store,
                                 _request,
                                 chain
                             );
@@ -285,7 +285,7 @@ export function useInjectedCall(lastIndex, { store, consoleErrorBuffer, t, start
                             return;
                         }
 
-                        store.dispatch("WalletStore/notifyUser", {
+                        useWalletStore().notifyUser({
                             notify: "request",
                             message: t("common.apiUtils.broadcast"),
                         });
@@ -301,7 +301,7 @@ export function useInjectedCall(lastIndex, { store, consoleErrorBuffer, t, start
                     // 6c. Sign and broadcast path
                     let activeKey;
                     try {
-                        activeKey = getSigningKey(store, chain, request);
+                        activeKey = getSigningKey(chain, request);
                     } catch (error) {
                         console.log(error);
                         window.electron.createError({
@@ -379,7 +379,7 @@ export function useInjectedCall(lastIndex, { store, consoleErrorBuffer, t, start
                         return;
                     }
 
-                    store.dispatch("WalletStore/notifyUser", {
+                    useWalletStore().notifyUser({
                         notify: "request",
                         message: notifyTXT,
                     });
@@ -409,7 +409,7 @@ export function useInjectedCall(lastIndex, { store, consoleErrorBuffer, t, start
                 });
 
                 window.electron.popupRejected(request.id, (result) => {
-                    store.dispatch("PopupStore/popupClosed");
+                    usePopupStore().popupClosed();
                     window.electron.injectedCallError({
                         id: request.id,
                         result: {
