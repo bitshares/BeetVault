@@ -281,7 +281,7 @@ async function copyToClipboard(_data) {
                 <span>{{ t("common.popup.fullTransaction") }}</span>
             </CollapsibleTrigger>
             <CollapsibleContent>
-                <div class="px-1 pb-2">
+                <div class="px-1 pb-2 text-left">
                     <Button variant="outline" @click="openResult = true">
                         {{ t("common.popup.fullTransaction") }}
                     </Button>
@@ -295,7 +295,7 @@ async function copyToClipboard(_data) {
                 <span>{{ t("common.popup.request") }}</span>
             </CollapsibleTrigger>
             <CollapsibleContent>
-                <div class="px-1 pb-2">
+                <div class="px-1 pb-2 text-left">
                     <Button variant="outline" @click="openMoreRequest = true">
                         {{ t("common.popup.request") }}
                     </Button>
@@ -309,7 +309,7 @@ async function copyToClipboard(_data) {
                 <span>{{ t("common.abSettings") }}</span>
             </CollapsibleTrigger>
             <CollapsibleContent>
-                <div class="px-1 pb-2">
+                <div class="px-1 pb-2 text-left">
                     <langSelect location="prompt" />
                 </div>
             </CollapsibleContent>

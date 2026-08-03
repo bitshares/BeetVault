@@ -1,5 +1,4 @@
 import {app, Menu} from 'electron';
-//import {sendToTray} from '../background';
 
 /**
  * For configuring the electron window menu
@@ -11,13 +10,6 @@ export function initApplicationMenu(mainWindow) {
       {
         label: 'View',
         submenu: [
-          {
-            label: 'Send to tray',
-            click() {
-              mainWindow.minimize();
-            }
-          },
-          { label: 'Reload', role: 'reload' },
           { label: 'Dev tools', role: 'toggleDevTools' }
         ]
       }

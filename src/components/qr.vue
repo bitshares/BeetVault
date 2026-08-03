@@ -240,18 +240,20 @@
                 </div>
             </div>
 
-            <div class="flex flex-wrap gap-2 pt-2">
-                <Button v-if="chosenScope && selectedRows && !qrChoice" variant="outline" @click="goBack" :disabled="hasActivePopup">
-                    {{ t('common.qr.back') }}
-                </Button>
-                <Button variant="outline" @click="router.replace('/dashboard')" :disabled="hasActivePopup">
-                    {{ t('common.qr.exit') }}
-                </Button>
-            </div>
         </div>
 
         <div v-else class="px-4 py-3">
             {{ t('common.qr.unsupported') }}
+        </div>
+
+        <div class="flex justify-between items-center px-4 pt-2 pb-4">
+            <Button v-if="chosenScope && selectedRows && !qrChoice" variant="outline" @click="goBack" :disabled="hasActivePopup">
+                {{ t('common.qr.back') }}
+            </Button>
+            <div v-else></div>
+            <Button variant="outline" @click="router.replace('/dashboard')" :disabled="hasActivePopup">
+                {{ t('common.qr.exit') }}
+            </Button>
         </div>
     </div>
 </template>

@@ -214,20 +214,20 @@
                 </Card>
             </div>
 
-            <div class="flex flex-wrap gap-2 pt-2">
-                <Button v-if="chosenScope && selectedRows" variant="outline" @click="goBack" :disabled="hasActivePopup">
-                    {{ t('common.qr.back') }}
-                </Button>
-                <router-link :to="'/dashboard'" replace>
-                    <Button variant="outline" :disabled="hasActivePopup">
-                        {{ t('common.raw.exit') }}
-                    </Button>
-                </router-link>
-            </div>
         </div>
 
         <div v-else class="px-4 py-3">
             {{ t('common.chain.unsupported') }}
+        </div>
+
+        <div class="flex justify-between items-center px-4 pt-2 pb-4">
+            <Button v-if="chosenScope && selectedRows" variant="outline" @click="goBack" :disabled="hasActivePopup">
+                {{ t('common.qr.back') }}
+            </Button>
+            <div v-else></div>
+            <Button variant="outline" @click="router.replace('/dashboard')" :disabled="hasActivePopup">
+                {{ t('common.raw.exit') }}
+            </Button>
         </div>
     </div>
 </template>

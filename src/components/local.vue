@@ -222,20 +222,22 @@ onMounted(() => {
                     <Loader2 class="h-6 w-6 animate-spin" />
                     <p class="text-lg font-bold">{{ t("common.local.progress") }}</p>
                 </div>
-            </div>
+             </div>
 
-            <div class="flex flex-wrap gap-2 pt-2">
-                <Button v-if="chosenScope && selectedRows" variant="outline" @click="goBack" :disabled="hasActivePopup">
-                    {{ t("common.local.back") }}
-                </Button>
-                <Button variant="outline" @click="router.replace('/dashboard')" :disabled="hasActivePopup">
-                    {{ t("common.local.exit") }}
-                </Button>
-            </div>
         </div>
 
         <div v-else class="px-4 py-3">
             {{ t("common.local.unsupported") }}
+        </div>
+
+        <div class="flex justify-between items-center px-4 pt-2 pb-4">
+            <Button v-if="chosenScope && selectedRows" variant="outline" @click="goBack" :disabled="hasActivePopup">
+                {{ t("common.local.back") }}
+            </Button>
+            <div v-else></div>
+            <Button variant="outline" @click="router.replace('/dashboard')" :disabled="hasActivePopup">
+                {{ t("common.local.exit") }}
+            </Button>
         </div>
     </div>
 </template>

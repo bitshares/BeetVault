@@ -156,7 +156,7 @@
         // to the lock screen.
         window.electron?.onForceLogout?.(() => {
             console.log("[POWER] Renderer received forced logout");
-            clearLogoutTimer();
+            //clearLogoutTimer();
             walletStore.logout({ skipClearSeed: true });
             router.replace("/");
         });

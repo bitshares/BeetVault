@@ -1411,25 +1411,17 @@ const createWindow = async () => {
         }
     });
 
-    // Idempotent session-wipe routine. Shared by the explicit `clearSeed` IPC
-    // handler (user logout) and the `powerMonitor` event handlers (system
-    // suspend / shutdown / lock-screen). On a system event we additionally
-    // push a `forceLogout` message to the renderer so it can reset its
-    // pinia session state and return to the lock screen.
-    function forceLogout() {
-        // Idempotency guard: if the seed is already cleared, this is a
-        // re-entrant call (e.g. renderer responded to our forceLogout IPC
-        // with a clearSeed → forceLogout chain). Return immediately to
-        // break the loop.
-        if (!_encryptedSeed) {
+    function _logout() {
+        console.log("[SECURITY] logout: clearing session");
+                if (!_encryptedSeed) {
             return;
         }
         console.log("[SECURITY] forceLogout: clearing session");
-        // Layer 3: Zeroize the seed Buffer before dropping the reference so
-        // plaintext does not linger in freed heap memory.
+
         if (_encryptedSeed && _encryptedSeed.seed) {
             _encryptedSeed.seed.fill(0);
         }
+
         _encryptedSeed = null;
         _pendingKeys.clear();
 
@@ -1445,6 +1437,10 @@ const createWindow = async () => {
             }
         });
         modalWindows = {};
+    }
+
+    function forceLogout() {
+        _logout();
 
         // Notify the renderer (if alive) to reset its in-memory session state
         if (mainWindow && !mainWindow.isDestroyed()) {
@@ -1455,7 +1451,7 @@ const createWindow = async () => {
     ipcMain.on("clearSeed", (event) => {
         if (!validateMainSender(event.senderFrame)) return;
         console.log("SEED CLEARED");
-        forceLogout();
+        _logout();
     });
 
     // Register power-monitor listeners (suspend / shutdown / lock-screen)
