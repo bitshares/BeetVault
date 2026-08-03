@@ -92,6 +92,14 @@ export default class EOS extends BlockchainAPI {
     }
 
     /**
+     * Release the APIClient reference so GC can reclaim it.
+     * EOS-family uses stateless HTTP fetch — no persistent connection to tear down.
+     */
+    async disconnect() {
+        this.client = null;
+    }
+
+    /**
      * Returning the list of injectable operations
      * @returns {Array}
      */

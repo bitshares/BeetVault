@@ -12,7 +12,8 @@ export async function blockchainRequest(args) {
     const settingsStore = useSettingsStore();
     const coreSymbol = getCoreSymbol(args.chain);
     const nodes = settingsStore.getNodes(coreSymbol);
-    const rawNode = (nodes && nodes.length) ? toRaw(nodes[0]) : null;
+    const selectedNodeIndex = settingsStore.getNode[coreSymbol] || 0;
+    const rawNode = (nodes && nodes.length) ? toRaw(nodes[selectedNodeIndex]) : null;
     const node = rawNode ? rawNode.url || rawNode : null;
     return window.electron.blockchainRequest({ ...args, node });
 }

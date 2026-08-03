@@ -67,6 +67,16 @@ export default class BitShares extends BlockchainAPI {
     }
 
     /**
+     * Tear down the BitShares WebSocket singleton.
+     * Called by the factory on chain switch and at app shutdown.
+     */
+    async disconnect() {
+        this._isConnected = false;
+        this._isConnectedToNode = null;
+        await Apis.destroy();
+    }
+
+    /**
      * Recalculate fees after updating the memo
      * @param {Object} operation 
      * @returns transaction object

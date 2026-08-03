@@ -19,11 +19,12 @@ import Hive from "./Hive.js";
 let storedChain;
 let lastChain;
 
-export default function getBlockchainAPI(chain = null, node = null) {
+export default async function getBlockchainAPI(chain = null, node = null) {
     if (!lastChain) {
         lastChain = chain;
     } else if (lastChain && lastChain !== chain) {
         console.log("Switching blockchain!");
+        if (storedChain) await storedChain.disconnect();
         storedChain = undefined;
         lastChain = chain;
     }
@@ -73,7 +74,20 @@ export default function getBlockchainAPI(chain = null, node = null) {
             console.log(error);
             return;
         }
+    } else if (node && storedChain._node !== node) {
+        console.log(`Node changed: ${storedChain._node} -> ${node}`);
+        await storedChain.disconnect();
+        storedChain._node = node;
+        await storedChain.ensureConnection(node);
     }
 
     return storedChain;
+}
+
+export async function disconnect() {
+    if (storedChain) {
+        await storedChain.disconnect();
+        storedChain = undefined;
+        lastChain = undefined;
+    }
 }

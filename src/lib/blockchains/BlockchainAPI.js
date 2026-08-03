@@ -517,4 +517,11 @@ export default class BlockchainAPI {
         return false;
     }
 
+    /*
+     * Cleanup persistent connections before the instance is discarded.
+     * Subclasses with persistent connections (e.g. BitShares WebSocket)
+     * must override this to tear them down.
+     */
+    async disconnect() {}
+
 }

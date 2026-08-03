@@ -135,18 +135,6 @@ export const useSettingsStore = defineStore('settings', {
                     console.log(`setNode: ${error}`);
                 }
 
-                const chainNodeList = settings.chainNodes[coreSymbol];
-                if (chainNodeList && chainNodeList.length > payload.node) {
-                    const node = chainNodeList.splice(payload.node, 1)[0];
-                    chainNodeList.unshift(node);
-                }
-
-                try {
-                    settings.chainNodes[coreSymbol] = chainNodeList;
-                } catch (error) {
-                    console.log(`setNodeList: ${error}`);
-                }
-
                 await BeetDB.settings.put({ id: 'settings', value: JSON.stringify(settings) });
                 this.settings = settings;
             } catch (error) {

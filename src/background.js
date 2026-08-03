@@ -34,7 +34,7 @@ import {
 import { initApplicationMenu } from "./lib/applicationMenu.js";
 import { getSignature } from "./lib/SecureRemote.js";
 import * as Actions from "./lib/Actions.js";
-import getBlockchainAPI from "./lib/blockchains/blockchainFactory.js";
+import getBlockchainAPI, { disconnect } from "./lib/blockchains/blockchainFactory.js";
 import BTSWalletHandler from "./lib/blockchains/bitshares/BTSWalletHandler.js";
 import { BTS_FAMILY, EOS_FAMILY, HIVE_FAMILY } from "./lib/blockchains/chainFamilies.js";
 
@@ -1425,6 +1425,9 @@ const createWindow = async () => {
         _encryptedSeed = null;
         _pendingKeys.clear();
 
+        // Tear down blockchain connection
+        disconnect();
+
         // Safety net: remove any orphaned inject listeners
         ipcMain.removeAllListeners("getSafeAccountResponse");
         ipcMain.removeAllListeners("injectedCallResponse");
@@ -2237,13 +2240,16 @@ if (currentOS === "win32" || currentOS === "linux") {
         // power event).
         _powerMonitorCleanup();
         try {
-            // BitShares: refcounted close of state.ws_rpc (ChainWebSocket).
+            disconnect();
+        } catch (e) {
+            // Ignore — app is shutting down regardless.
+        }
+        try {
+            // BitShares safety net: refcounted close of state.ws_rpc (ChainWebSocket).
             Apis.close();
         } catch (e) {
             // Ignore — app is shutting down regardless.
         }
-        // TODO(EOS/Hive family): expose a disconnect() on BlockchainAPI/EOSmainnet
-        // and call it here to tear down the WebSocket connection.
     });
 
     app.on("activate", () => {
