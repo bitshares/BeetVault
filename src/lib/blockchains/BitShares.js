@@ -8,7 +8,7 @@ import {
     TransactionBuilder,
     Signature,
 } from "./bitshares/library";
-import * as Socket from "simple-websocket";
+import net from "net";
 
 import * as Actions from "../Actions.js";
 
@@ -480,11 +480,27 @@ export default class BitShares extends BlockchainAPI {
     _testConnection(url) {
         const { promise, resolve } = Promise.withResolvers();
         let timeoutId = setTimeout(() => {
+            socket.destroy();
             resolve(null);
         }, 2000);
 
+        let parsed;
+        try {
+            parsed = new URL(url);
+        } catch {
+            clearTimeout(timeoutId);
+            resolve(null);
+            return promise;
+        }
+
+        let port = parseInt(parsed.port, 10);
+        if (!port || isNaN(port)) {
+            port = parsed.protocol === "wss:" ? 443 : 80;
+        }
+
         let before = Date.now();
-        let socket = new Socket(url);
+        let socket = net.createConnection({ host: parsed.hostname, port });
+
         socket.on("connect", () => {
             let lag = Date.now() - before;
             clearTimeout(timeoutId);
@@ -492,48 +508,13 @@ export default class BitShares extends BlockchainAPI {
             resolve({ url: url, lag: lag });
         });
 
-        socket.on("error", (error) => {
+        socket.on("error", () => {
             clearTimeout(timeoutId);
             socket.destroy();
             resolve(null);
         });
 
         return promise;
-    }
-
-    /**
-     * Test the wss nodes, return latencies and fastest url.
-     * @returns {Promise}
-     */
-    async _testNodes() {
-        let urls = this.getNodes().map((node) => node.url);
-
-        let filteredURLS = urls.filter((url) => {
-            if (!this._tempBanned || !this._tempBanned.includes(url)) {
-                return true;
-            }
-        });
-
-        let validNodes = await Promise.all(
-            filteredURLS.map((url) => this._testConnection(url))
-        );
-
-        let filteredNodes = validNodes.filter((x) => x);
-        if (filteredNodes.length) {
-            let sortedNodes = filteredNodes.sort(
-                (a, b) => a.lag - b.lag
-            );
-            return {
-                node: sortedNodes[0].url,
-                latencies: sortedNodes,
-                timestamp: Date.now(),
-            };
-        } else {
-            console.error(
-                "No valid BTS WSS connections established; Please check your internet connection."
-            );
-            throw new Error("No valid BTS WSS connections");
-        }
     }
 
     /*

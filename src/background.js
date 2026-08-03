@@ -2243,7 +2243,7 @@ if (currentOS === "win32" || currentOS === "linux") {
             // Ignore — app is shutting down regardless.
         }
         // TODO(EOS/Hive family): expose a disconnect() on BlockchainAPI/EOSmainnet
-        // and call it here to destroy the simple-websocket Socket instance.
+        // and call it here to tear down the WebSocket connection.
     });
 
     app.on("activate", () => {
