@@ -230,6 +230,7 @@
     "import_bin_progress": "Décryptage de votre fichier .bin, veuillez patienter...",
     "btspass_cta": "Veuillez saisir le mot de passe de votre compte cloud.",
     "btspass_placeholder": "Mot de passe du compte cloud",
+    "legacy_key_mode": "Utiliser le mode de clé hérité",
     "tooltip_chain_cta": "Vous pouvez également ajouter des comptes supplémentaires à partir d'autres blockchains plus tard, sélectionnez la blockchain du compte que vous souhaitez importer maintenant",
     "walletname_placeholder": "Nom du portefeuille",
     "chain_placeholder": "Nom de la chaîne",

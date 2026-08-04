@@ -230,6 +230,7 @@
     "import_bin_progress": ".bin 파일을 해독하는 중입니다. 잠시만 기다려 주십시오...",
     "btspass_cta": "클라우드 계정 비밀번호를 입력하세요.",
     "btspass_placeholder": "클라우드 계정 비밀번호",
+    "legacy_key_mode": "레거시 키 모드 사용",
     "tooltip_chain_cta": "나중에 다른 블록체인에서 추가 계정을 추가할 수도 있습니다. 지금 가져오려는 계정의 블록체인을 선택하세요.",
     "walletname_placeholder": "지갑 이름",
     "chain_placeholder": "체인 이름",

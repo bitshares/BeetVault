@@ -230,6 +230,7 @@
     "import_bin_progress": "Descifrando su archivo .bin, por favor espere...",
     "btspass_cta": "Ingrese la contraseña de su cuenta en la nube.",
     "btspass_placeholder": "Contraseña de la cuenta en la nube",
+    "legacy_key_mode": "Usar modo de clave heredado",
     "tooltip_chain_cta": "También puede agregar cuentas adicionales de otras cadenas de bloques más adelante, seleccione la cadena de bloques de la cuenta que desea importar ahora",
     "walletname_placeholder": "Nombre de la billetera",
     "chain_placeholder": "Nombre de la cadena",

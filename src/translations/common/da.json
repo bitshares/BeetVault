@@ -230,6 +230,7 @@
     "import_bin_progress": "Dekrypterer din .bin-fil, vent venligst...",
     "btspass_cta": "Indtast venligst adgangskoden til din cloud-konto.",
     "btspass_placeholder": "Cloud-konto adgangskode",
+    "legacy_key_mode": "Brug legacy-nøgle-tilstand",
     "tooltip_chain_cta": "Du kan tilføje yderligere konti fra andre blockchains senere også, vælg blockchain for den konto, du vil importere nu",
     "walletname_placeholder": "Tegnebogsnavn",
     "chain_placeholder": "Kædenavn",

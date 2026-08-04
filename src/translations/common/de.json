@@ -230,6 +230,7 @@
     "import_bin_progress": "Ihre .bin-Datei wird entschlüsselt, bitte warten...",
     "btspass_cta": "Bitte geben Sie Ihr Cloud-Konto-Passwort ein.",
     "btspass_placeholder": "Passwort für das Cloud-Konto",
+    "legacy_key_mode": "Legacy-Key-Modus verwenden",
     "tooltip_chain_cta": "Sie können später auch weitere Konten aus anderen Blockchains hinzufügen. Wählen Sie dazu die Blockchain des Kontos aus, das Sie jetzt importieren möchten",
     "walletname_placeholder": "Wallet-Name",
     "chain_placeholder": "Kettenname",

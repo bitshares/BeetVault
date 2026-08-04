@@ -230,6 +230,7 @@
     "import_bin_progress": ".bin ファイルを復号化しています。お待ちください...",
     "btspass_cta": "クラウドアカウントのパスワードを入力してください。",
     "btspass_placeholder": "クラウドアカウントのパスワード",
+    "legacy_key_mode": "レガシーキーモードを使用",
     "tooltip_chain_cta": "後で他のブロックチェーンからアカウントを追加することもできます。今インポートしたいアカウントのブロックチェーンを選択してください",
     "walletname_placeholder": "ウォレット名",
     "chain_placeholder": "チェーン名",

@@ -230,6 +230,7 @@
     "import_bin_progress": "Descriptografando seu arquivo .bin, aguarde...",
     "btspass_cta": "Digite a senha da sua conta na nuvem.",
     "btspass_placeholder": "Senha da conta na nuvem",
+    "legacy_key_mode": "Usar modo de chave legado",
     "tooltip_chain_cta": "Você também pode adicionar contas adicionais de outros blockchains mais tarde, selecione o blockchain da conta que deseja importar agora",
     "walletname_placeholder": "Nome da Carteira",
     "chain_placeholder": "Nome da Cadeia",

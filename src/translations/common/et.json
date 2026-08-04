@@ -230,6 +230,7 @@
     "import_bin_progress": "Teie .bin-faili dekrüpteerimine, palun oodake...",
     "btspass_cta": "Sisestage oma pilvekonto parool.",
     "btspass_placeholder": "Pilvekonto parool",
+    "legacy_key_mode": "Kasuta pärand võtme režiimi",
     "tooltip_chain_cta": "Täiendavaid kontosid saate lisada ka hiljem teistest plokiahelatest, valige selle konto plokiahel, mida soovite kohe importida",
     "walletname_placeholder": "Rahakoti nimi",
     "chain_placeholder": "Keti nimi",
