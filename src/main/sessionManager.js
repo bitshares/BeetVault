@@ -1,7 +1,7 @@
 import { safeStorage, ipcMain } from 'electron';
 import { encrypt, decrypt } from '../lib/crypto.js';
 import { v4 as uuidv4 } from 'uuid';
-import { validateMainSender } from './securityGuards.js';
+import { validateMainSender, requireValidMainSender } from './securityGuards.js';
 import { setAppDir } from '../lib/senderValidation.js';
 import getBlockchainAPI, { disconnect } from '../lib/blockchains/blockchainFactory.js';
 import { closeAllModals } from './windows.js';

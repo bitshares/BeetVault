@@ -62,6 +62,17 @@ let resultTrxNum = ref(1);
 let resultExpiration = ref("");
 let resultSignatures = ref("");
 
+let opDetailsText = ref("");
+watchEffect(() => {
+    const lines = [];
+    if (resultID.value) lines.push(t("operations.receipt.id", { resultID: resultID.value }));
+    if (resultBlockNum.value) lines.push(t("operations.receipt.block", { resultBlockNum: resultBlockNum.value }));
+    if (resultTrxNum.value) lines.push(t("operations.receipt.trxNum", { resultTrxNum: resultTrxNum.value }));
+    if (resultExpiration.value) lines.push(t("operations.receipt.expiration", { resultExpiration: resultExpiration.value }));
+    if (resultSignatures.value) lines.push(t("operations.receipt.signatures", { resultSignatures: resultSignatures.value }));
+    opDetailsText.value = lines.join("\n");
+});
+
 watchEffect(() => {
     const id = handleProp("id");
 
@@ -369,12 +380,16 @@ async function copyToClipboard(_data) {
             <DialogTitle>
                 {{ t("common.popup.details") }}
             </DialogTitle>
-            <div class="space-y-2">
-                <p>{{ t("operations.receipt.id", { resultID }) }}</p>
-                <p>{{ t("operations.receipt.block", { resultBlockNum }) }}</p>
-                <p v-if="resultTrxNum">{{ t("operations.receipt.trxNum", { resultTrxNum }) }}</p>
-                <p v-if="resultExpiration">{{ t("operations.receipt.expiration", { resultExpiration }) }}</p>
-                <p v-if="resultSignatures">{{ t("operations.receipt.signatures", { resultSignatures }) }}</p>
+            <div class="space-y-3">
+                <Textarea
+                    :model-value="opDetailsText"
+                    disabled
+                    class="w-full"
+                    rows="8"
+                />
+                <Button @click="copyToClipboard(opDetailsText)">
+                    {{ t("common.popup.copy") }}
+                </Button>
             </div>
         </DialogContent>
     </Dialog>
