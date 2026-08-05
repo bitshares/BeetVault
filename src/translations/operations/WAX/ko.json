@@ -1,0 +1,332 @@
+{
+  "getAccount": {
+    "method": "계정 가져오기",
+    "title": "계정 세부정보 요청",
+    "result": "계정 세부정보 결과",
+    "headers": {
+      "request": "계정 세부정보를 공유하시겠습니까?",
+      "result": "귀하의 계정 세부정보가 공유되었습니다."
+    },
+    "tooltip": "지갑에 블록체인 계정 세부정보를 요청합니다."
+  },
+  "requestSignature": {
+    "method": "요청서명",
+    "title": "서명 요청",
+    "result": "서명 결과",
+    "headers": {
+      "request": "서명을 공유하시겠습니까?",
+      "result": "귀하의 서명이 공유되었습니다:"
+    },
+    "tooltip": "지갑에 블록체인 서명을 요청합니다."
+  },
+  "injectedCall": {
+    "method": "주입전화",
+    "title": "삽입된 통화 요청",
+    "result": "삽입된 통화 결과",
+    "headers": {
+      "request": "다음 삽입된 통화를 승인하시겠습니까?",
+      "result": "다음 삽입된 호출이 승인되었습니다."
+    },
+    "tooltip": "주입된 블록체인 작업을 처리하도록 지갑에 요청"
+  },
+  "regproposer": {
+    "method": "WPS 제안자 등록",
+    "title": "WPS 제안자 등록 요청",
+    "result": "WPS 제안자 등록 결과",
+    "headers": {
+      "request": "다음 계정을 WPS 제안자로 등록하시겠습니까?",
+      "result": "다음 계정이 WPS 제안자로 등록되었습니다:"
+    },
+    "rows": {
+      "proposer": "제안자: {proposer}",
+      "proposer_key": "제안자 키: {proposer_key}"
+    },
+    "tooltip": "WPS 제안자 계정을 등록합니다"
+  },
+  "regproposal": {
+    "method": "WPS 제안 등록",
+    "title": "WPS 제안 등록 요청",
+    "result": "WPS 제안 등록 결과",
+    "headers": {
+      "request": "다음 WPS 제안을 등록하시겠습니까?",
+      "result": "다음 WPS 제안이 등록되었습니다:"
+    },
+    "rows": {
+      "proposer": "제안자: {proposer}",
+      "proposal_name": "제안 이름: {proposal_name}",
+      "title": "제목: {title}",
+      "pay_amount": "지불 금액: {pay_amount}"
+    },
+    "tooltip": "새 WPS 제안을 등록합니다"
+  },
+  "voteproposal": {
+    "method": "WPS 제안 투표",
+    "title": "WPS 제안 투표 요청",
+    "result": "WPS 제안 투표 결과",
+    "headers": {
+      "request": "다음 WPS 제안에 투표하시겠습니까?",
+      "result": "다음 WPS 제안에 대한 투표가 승인되었습니다:"
+    },
+    "rows": {
+      "voter": "유권자: {voter}",
+      "proposal_name": "제안 이름: {proposal_name}",
+      "vote": "투표: {vote}"
+    },
+    "tooltip": "WPS 제안에 투표합니다"
+  },
+  "claimfunds": {
+    "method": "WPS 자금 청구",
+    "title": "WPS 자금 청구 요청",
+    "result": "WPS 자금 청구 결과",
+    "headers": {
+      "request": "다음 제안에 대한 WPS 자금을 청구하시겠습니까?",
+      "result": "다음 제안에 대한 WPS 자금이 청구되었습니다:"
+    },
+    "rows": {
+      "account": "계정: {account}",
+      "proposal_name": "제안 이름: {proposal_name}"
+    },
+    "tooltip": "승인된 WPS 제안에서 자금을 청구합니다"
+  },
+  "voterclaim": {
+    "method": "WPS 유권자 보상 청구",
+    "title": "WPS 유권자 보상 청구 요청",
+    "result": "WPS 유권자 보상 청구 결과",
+    "headers": {
+      "request": "WPS 유권자 보상을 청구하시겠습니까?",
+      "result": "WPS 유권자 보상이 청구되었습니다:"
+    },
+    "rows": {
+      "owner": "소유자: {owner}"
+    },
+    "tooltip": "WPS 유권자 보상을 청구합니다"
+  },
+  "voterclaimst": {
+    "method": "WPS 유권자 스테이크 보상 청구",
+    "title": "WPS 유권자 스테이크 보상 청구 요청",
+    "result": "WPS 유권자 스테이크 보상 청구 결과",
+    "headers": {
+      "request": "WPS 유권자 스테이크 보상을 청구하시겠습니까?",
+      "result": "WPS 유권자 스테이크 보상이 청구되었습니다:"
+    },
+    "rows": {
+      "owner": "소유자: {owner}",
+      "amount": "금액: {amount}"
+    },
+    "tooltip": "WPS 유권자 스테이크 보상을 청구합니다"
+  },
+  "awardgenesis": {
+    "method": "제네시스 수여",
+    "title": "제네시스 수여 요청",
+    "result": "제네시스 수여 결과",
+    "headers": {
+      "request": "다음 계정에 제네시스 토큰을 수여하시겠습니까?",
+      "result": "다음 계정에 제네시스 토큰이 수여되었습니다:"
+    },
+    "rows": {
+      "receiver": "수신자: {receiver}",
+      "amount": "금액: {amount}"
+    },
+    "tooltip": "계정에 제네시스 토큰을 수여합니다"
+  },
+  "claimgenesis": {
+    "method": "제네시스 청구",
+    "title": "제네시스 청구 요청",
+    "result": "제네시스 청구 결과",
+    "headers": {
+      "request": "다음 계정의 제네시스 토큰을 청구하시겠습니까?",
+      "result": "다음 계정의 제네시스 토큰이 청구되었습니다:"
+    },
+    "rows": {
+      "receiver": "수신자: {receiver}"
+    },
+    "tooltip": "제네시스 토큰을 청구합니다"
+  },
+  "createcol": {
+    "method": "NFT 컬렉션 생성",
+    "title": "NFT 컬렉션 생성 요청",
+    "result": "NFT 컬렉션 생성 결과",
+    "headers": {
+      "request": "다음 NFT 컬렉션을 만드시겠습니까?",
+      "result": "다음 NFT 컬렉션이 생성되었습니다:"
+    },
+    "rows": {
+      "author": "작성자: {author}",
+      "collection_name": "컬렉션 이름: {collection_name}",
+      "allow_notify": "알림 허용: {allow_notify}",
+      "market_fee": "마켓 수수료: {market_fee}"
+    },
+    "tooltip": "새 NFT 컬렉션을 만듭니다"
+  },
+  "mintasset": {
+    "method": "NFT 자산 발행",
+    "title": "NFT 자산 발행 요청",
+    "result": "NFT 자산 발행 결과",
+    "headers": {
+      "request": "다음 NFT 자산을 발행하시겠습니까?",
+      "result": "다음 NFT 자산이 발행되었습니다:"
+    },
+    "rows": {
+      "authorized_minter": "승인된 발행자: {authorized_minter}",
+      "collection_name": "컬렉션 이름: {collection_name}",
+      "schema_name": "스키마 이름: {schema_name}",
+      "template_id": "템플릿 ID: {template_id}",
+      "new_asset_owner": "새 자산 소유자: {new_asset_owner}"
+    },
+    "tooltip": "새 NFT 자산을 발행합니다"
+  },
+  "burnasset": {
+    "method": "NFT 자산 소각",
+    "title": "NFT 자산 소각 요청",
+    "result": "NFT 자산 소각 결과",
+    "headers": {
+      "request": "다음 NFT 자산을 소각하시겠습니까?",
+      "result": "다음 NFT 자산이 소각되었습니다:"
+    },
+    "rows": {
+      "asset_owner": "자산 소유자: {asset_owner}",
+      "asset_id": "자산 ID: {asset_id}"
+    },
+    "tooltip": "NFT 자산을 소각합니다"
+  },
+  "createoffer": {
+    "method": "NFT 오퍼 생성",
+    "title": "NFT 오퍼 생성 요청",
+    "result": "NFT 오퍼 생성 결과",
+    "headers": {
+      "request": "다음 NFT 오퍼를 만드시겠습니까?",
+      "result": "다음 NFT 오퍼가 생성되었습니다:"
+    },
+    "rows": {
+      "sender": "보낸 사람: {sender}",
+      "recipient": "수신자: {recipient}",
+      "sender_asset_ids": "보낸 사람 자산 ID: {sender_asset_ids}",
+      "recipient_asset_ids": "수신자 자산 ID: {recipient_asset_ids}",
+      "memo": "메모: {memo}"
+    },
+    "tooltip": "새 NFT 오퍼를 만듭니다"
+  },
+  "acceptoffer": {
+    "method": "NFT 오퍼 수락",
+    "title": "NFT 오퍼 수락 요청",
+    "result": "NFT 오퍼 수락 결과",
+    "headers": {
+      "request": "다음 NFT 오퍼를 수락하시겠습니까?",
+      "result": "다음 NFT 오퍼가 수락되었습니다:"
+    },
+    "rows": {
+      "offer_id": "오퍼 ID: {offer_id}"
+    },
+    "tooltip": "NFT 오퍼를 수락합니다"
+  },
+  "announcesale": {
+    "method": "NFT 판매 공지",
+    "title": "NFT 판매 공지 요청",
+    "result": "NFT 판매 공지 결과",
+    "headers": {
+      "request": "다음 NFT 판매를 공지하시겠습니까?",
+      "result": "다음 NFT 판매가 공지되었습니다:"
+    },
+    "rows": {
+      "seller": "판매자: {seller}",
+      "asset_ids": "자산 ID: {asset_ids}",
+      "listing_price": "등록 가격: {listing_price}",
+      "settlement_symbol": "정산 심볼: {settlement_symbol}"
+    },
+    "tooltip": "NFT 판매를 공지합니다"
+  },
+  "purchasesale": {
+    "method": "NFT 판매 구매",
+    "title": "NFT 판매 구매 요청",
+    "result": "NFT 판매 구매 결과",
+    "headers": {
+      "request": "다음 NFT 판매를 구매하시겠습니까?",
+      "result": "다음 NFT 판매가 구매되었습니다:"
+    },
+    "rows": {
+      "buyer": "구매자: {buyer}",
+      "sale_id": "판매 ID: {sale_id}",
+      "taker_marketplace": "테이커 마켓플레이스: {taker_marketplace}"
+    },
+    "tooltip": "판매에서 NFT를 구매합니다"
+  },
+  "announceauct": {
+    "method": "NFT 경매 공지",
+    "title": "NFT 경매 공지 요청",
+    "result": "NFT 경매 공지 결과",
+    "headers": {
+      "request": "다음 NFT 경매를 공지하시겠습니까?",
+      "result": "다음 NFT 경매가 공지되었습니다:"
+    },
+    "rows": {
+      "seller": "판매자: {seller}",
+      "asset_ids": "자산 ID: {asset_ids}",
+      "starting_bid": "시작 입찰: {starting_bid}",
+      "duration": "기간: {duration}"
+    },
+    "tooltip": "NFT 경매를 공지합니다"
+  },
+  "auctionbid": {
+    "method": "NFT 경매 입찰",
+    "title": "NFT 경매 입찰 요청",
+    "result": "NFT 경매 입찰 결과",
+    "headers": {
+      "request": "다음 NFT 경매에 입찰하시겠습니까?",
+      "result": "다음 NFT 경매 입찰이 완료되었습니다:"
+    },
+    "rows": {
+      "bidder": "입찰자: {bidder}",
+      "auction_id": "경매 ID: {auction_id}",
+      "bid": "입찰: {bid}"
+    },
+    "tooltip": "NFT 경매에 입찰합니다"
+  },
+  "createbuyo": {
+    "method": "NFT 구매 주문 생성",
+    "title": "NFT 구매 주문 생성 요청",
+    "result": "NFT 구매 주문 생성 결과",
+    "headers": {
+      "request": "다음 NFT 구매 주문을 만드시겠습니까?",
+      "result": "다음 NFT 구매 주문이 생성되었습니다:"
+    },
+    "rows": {
+      "buyer": "구매자: {buyer}",
+      "recipient": "수신자: {recipient}",
+      "asset_ids": "자산 ID: {asset_ids}",
+      "price": "가격: {price}",
+      "memo": "메모: {memo}"
+    },
+    "tooltip": "새 NFT 구매 주문을 만듭니다"
+  },
+  "transfer": {
+    "method": "NFT 전송",
+    "title": "NFT 전송 요청",
+    "result": "NFT 전송 결과",
+    "headers": {
+      "request": "다음 NFT를 전송하시겠습니까?",
+      "result": "다음 NFT가 전송되었습니다:"
+    },
+    "rows": {
+      "from": "보낸 사람: {from}",
+      "to": "받는 사람: {to}",
+      "asset_ids": "자산 ID: {asset_ids}",
+      "memo": "메모: {memo}"
+    },
+    "tooltip": "계정 간 NFT 자산 전송"
+  },
+  "withdraw": {
+    "method": "NFT 출금",
+    "title": "NFT 출금 요청",
+    "result": "NFT 출금 결과",
+    "headers": {
+      "request": "다음 NFT를 출금하시겠습니까?",
+      "result": "다음 NFT가 출금되었습니다:"
+    },
+    "rows": {
+      "owner": "소유자: {owner}",
+      "token_to_receive": "수령 토큰: {token_to_receive}",
+      "quantity": "수량: {quantity}"
+    },
+    "tooltip": "토큰 잔액으로 NFT 자산을 출금합니다"
+  }
+}

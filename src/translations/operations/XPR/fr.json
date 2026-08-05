@@ -1,0 +1,257 @@
+{
+  "getAccount": {
+    "method": "getAccount",
+    "title": "Demande de détails du compte",
+    "result": "Résultat des détails du compte",
+    "headers": {
+      "request": "Voulez-vous partager les détails de votre compte?",
+      "result": "Les détails de votre compte ont été partagés."
+    },
+    "tooltip": "Demande à votre portefeuille les détails du compte blockchain"
+  },
+  "requestSignature": {
+    "method": "demandeSignature",
+    "title": "Demande de signature",
+    "result": "Résultat de la signature",
+    "headers": {
+      "request": "Voulez-vous partager votre signature?",
+      "result": "Votre signature a été partagée :"
+    },
+    "tooltip": "Demande à votre portefeuille les signatures blockchain"
+  },
+  "injectedCall": {
+    "method": "Appel injecté",
+    "title": "Demande d'appel injecté",
+    "result": "Résultat de l'appel injecté",
+    "headers": {
+      "request": "Approuver l'appel injecté suivant ?",
+      "result": "L'appel injecté suivant a été approuvé :"
+    },
+    "tooltip": "Demande à votre portefeuille de gérer une opération de blockchain injectée"
+  },
+  "stakexpr": {
+    "method": "Mettre en enjeu XPR",
+    "title": "Demande de mise en enjeu de XPR",
+    "result": "Résultat de la mise en enjeu de XPR",
+    "headers": {
+      "request": "Mettre en enjeu le montant XPR suivant ?",
+      "result": "Le montant XPR suivant a été mis en enjeu :"
+    },
+    "rows": {
+      "account": "Compte : {account}",
+      "quantity": "Quantité : {quantity}"
+    },
+    "tooltip": "Mettre en enjeu des tokens XPR"
+  },
+  "unstakexpr": {
+    "method": "Retirer de l'enjeu XPR",
+    "title": "Demande de retrait de l'enjeu XPR",
+    "result": "Résultat du retrait de l'enjeu XPR",
+    "headers": {
+      "request": "Retirer le montant XPR suivant de l'enjeu ?",
+      "result": "Le montant XPR suivant a été retiré de l'enjeu :"
+    },
+    "rows": {
+      "account": "Compte : {account}",
+      "quantity": "Quantité : {quantity}"
+    },
+    "tooltip": "Retirer des tokens XPR de l'enjeu"
+  },
+  "updstakexpr": {
+    "method": "Mettre à jour l'enjeu XPR",
+    "title": "Demande de mise à jour de l'enjeu XPR",
+    "result": "Résultat de la mise à jour de l'enjeu XPR",
+    "headers": {
+      "request": "Mettre à jour l'enjeu XPR suivant ?",
+      "result": "L'enjeu XPR suivant a été mis à jour :"
+    },
+    "rows": {
+      "account": "Compte : {account}",
+      "quantity": "Quantité : {quantity}"
+    },
+    "tooltip": "Mettre à jour le montant de mise en enjeu XPR"
+  },
+  "refundxpr": {
+    "method": "Rembourser l'enjeu XPR",
+    "title": "Demande de remboursement de l'enjeu XPR",
+    "result": "Résultat du remboursement de l'enjeu XPR",
+    "headers": {
+      "request": "Rembourser l'enjeu XPR suivant ?",
+      "result": "L'enjeu XPR suivant a été remboursé :"
+    },
+    "rows": {
+      "account": "Compte : {account}"
+    },
+    "tooltip": "Rembourser les tokens XPR mis en enjeu"
+  },
+  "voterclaim": {
+    "method": "Réclamer les récompenses électeur XPR",
+    "title": "Demande de réclamation des récompenses électeur XPR",
+    "result": "Résultat de la réclamation des récompenses électeur XPR",
+    "headers": {
+      "request": "Réclamer les récompenses électeur XPR ?",
+      "result": "Les récompenses électeur XPR ont été réclamées :"
+    },
+    "rows": {
+      "owner": "Propriétaire : {owner}"
+    },
+    "tooltip": "Réclamer les récompenses électeur XPR"
+  },
+  "voterclaimst": {
+    "method": "Réclamer les récompenses électeur XPR mis en enjeu",
+    "title": "Demande de réclamation des récompenses électeur XPR mis en enjeu",
+    "result": "Résultat de la réclamation des récompenses électeur XPR mis en enjeu",
+    "headers": {
+      "request": "Réclamer les récompenses électeur XPR mis en enjeu ?",
+      "result": "Les récompenses électeur XPR mis en enjeu ont été réclamées :"
+    },
+    "rows": {
+      "owner": "Propriétaire : {owner}",
+      "amount": "Montant : {amount}"
+    },
+    "tooltip": "Réclamer les récompenses électeur XPR mis en enjeu"
+  },
+  "setperm": {
+    "method": "Définir les autorisations du compte",
+    "title": "Demande de définition des autorisations du compte",
+    "result": "Résultat de la définition des autorisations du compte",
+    "headers": {
+      "request": "Définir les autorisations du compte suivant ?",
+      "result": "Les autorisations du compte suivant ont été définies :"
+    },
+    "rows": {
+      "account": "Compte : {account}",
+      "permission": "Autorisation : {permission}",
+      "allowed_actions": "Actions autorisées : {allowed_actions}"
+    },
+    "tooltip": "Définir les autorisations du compte sur Proton/XPR"
+  },
+  "setusername": {
+    "method": "Définir le nom d'utilisateur Proton",
+    "title": "Demande de définition du nom d'utilisateur Proton",
+    "result": "Résultat de la définition du nom d'utilisateur Proton",
+    "headers": {
+      "request": "Définir le nom d'utilisateur Proton suivant ?",
+      "result": "Le nom d'utilisateur Proton suivant a été défini :"
+    },
+    "rows": {
+      "account": "Compte : {account}",
+      "username": "Nom d'utilisateur : {username}"
+    },
+    "tooltip": "Définir un nom d'utilisateur Proton/XPR"
+  },
+  "userverify": {
+    "method": "Vérifier l'utilisateur Proton",
+    "title": "Demande de vérification de l'utilisateur Proton",
+    "result": "Résultat de la vérification de l'utilisateur Proton",
+    "headers": {
+      "request": "Vérifier l'utilisateur Proton suivant ?",
+      "result": "L'utilisateur Proton suivant a été vérifié :"
+    },
+    "rows": {
+      "account": "Compte : {account}",
+      "is_verified": "Est vérifié : {is_verified}"
+    },
+    "tooltip": "Vérifier un utilisateur Proton/XPR"
+  },
+  "addkyc": {
+    "method": "Ajouter KYC",
+    "title": "Demande d'ajout de KYC",
+    "result": "Résultat de l'ajout de KYC",
+    "headers": {
+      "request": "Ajouter les informations KYC suivantes ?",
+      "result": "Les informations KYC suivantes ont été ajoutées :"
+    },
+    "rows": {
+      "account": "Compte : {account}",
+      "kyc_provider": "Fournisseur KYC : {kyc_provider}",
+      "kyc_app_id": "ID application KYC : {kyc_app_id}",
+      "kyc_status": "Statut KYC : {kyc_status}"
+    },
+    "tooltip": "Ajouter des informations KYC à un compte"
+  },
+  "updatekyc": {
+    "method": "Mettre à jour KYC",
+    "title": "Demande de mise à jour de KYC",
+    "result": "Résultat de la mise à jour de KYC",
+    "headers": {
+      "request": "Mettre à jour les informations KYC suivantes ?",
+      "result": "Les informations KYC suivantes ont été mises à jour :"
+    },
+    "rows": {
+      "account": "Compte : {account}",
+      "kyc_provider": "Fournisseur KYC : {kyc_provider}",
+      "kyc_app_id": "ID application KYC : {kyc_app_id}",
+      "kyc_status": "Statut KYC : {kyc_status}"
+    },
+    "tooltip": "Mettre à jour les informations KYC d'un compte"
+  },
+  "removekyc": {
+    "method": "Supprimer KYC",
+    "title": "Demande de suppression de KYC",
+    "result": "Résultat de la suppression de KYC",
+    "headers": {
+      "request": "Supprimer les informations KYC suivantes ?",
+      "result": "Les informations KYC suivantes ont été supprimées :"
+    },
+    "rows": {
+      "account": "Compte : {account}"
+    },
+    "tooltip": "Supprimer les informations KYC d'un compte"
+  },
+  "reg": {
+    "method": "Enregistrer au fonds Proton",
+    "title": "Demande d'enregistrement au fonds Proton",
+    "result": "Résultat de l'enregistrement au fonds Proton",
+    "headers": {
+      "request": "S'enregistrer au fonds communautaire Proton suivant ?",
+      "result": "L'enregistrement au fonds communautaire Proton suivant a été effectué :"
+    },
+    "rows": {
+      "account": "Compte : {account}"
+    },
+    "tooltip": "S'enregistrer à un fonds communautaire Proton"
+  },
+  "claimreward": {
+    "method": "Réclamer la récompense du fonds Proton",
+    "title": "Demande de réclamation de la récompense du fonds Proton",
+    "result": "Résultat de la réclamation de la récompense du fonds Proton",
+    "headers": {
+      "request": "Réclamer la récompense du fonds communautaire Proton ?",
+      "result": "La récompense du fonds communautaire Proton a été réclamée :"
+    },
+    "rows": {
+      "account": "Compte : {account}"
+    },
+    "tooltip": "Réclamer la récompense d'un fonds communautaire Proton"
+  },
+  "process": {
+    "method": "Traiter le fonds Proton",
+    "title": "Demande de traitement du fonds Proton",
+    "result": "Résultat du traitement du fonds Proton",
+    "headers": {
+      "request": "Traiter le fonds communautaire Proton suivant ?",
+      "result": "Le fonds communautaire Proton suivant a été traité :"
+    },
+    "rows": {
+      "account": "Compte : {account}"
+    },
+    "tooltip": "Traiter un fonds communautaire Proton"
+  },
+  "transfer": {
+    "method": "Transférer des tokens XPR",
+    "title": "Demande de transfert de tokens XPR",
+    "result": "Résultat du transfert de tokens XPR",
+    "headers": {
+      "request": "Transférer les tokens XPR suivants ?",
+      "result": "Les tokens XPR suivants ont été transférés :"
+    },
+    "rows": {
+      "from": "De : {from}",
+      "to": "À : {to}",
+      "quantity": "Quantité : {quantity}",
+      "memo": "Mémo : {memo}"
+    },
+    "tooltip": "Transférer des tokens XPR entre comptes"
+  }
+}

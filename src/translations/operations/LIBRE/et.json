@@ -1,0 +1,151 @@
+{
+  "getAccount": {
+    "method": "getAccount",
+    "title": "Konto üksikasjade taotlus",
+    "result": "Konto üksikasjade tulemus",
+    "headers": {
+      "request": "Kas soovite oma konto andmeid jagada?",
+      "result": "Teie konto üksikasju jagati."
+    },
+    "tooltip": "Küsib teie rahakotilt plokiahela konto üksikasju"
+  },
+  "requestSignature": {
+    "method": "requestSignature",
+    "title": "Allkirjataotlus",
+    "result": "Allkirja tulemus",
+    "headers": {
+      "request": "Kas soovite oma allkirja jagada?",
+      "result": "Teie allkirja jagati:"
+    },
+    "tooltip": "Küsib teie rahakotilt plokiahela allkirju"
+  },
+  "injectedCall": {
+    "method": "süstitud Helista",
+    "title": "Süstitud kõne taotlus",
+    "result": "Süstitud kõne tulemus",
+    "headers": {
+      "request": "Kas kinnitada järgmine süstitud kõne?",
+      "result": "Järgmine süstitud kõne kiideti heaks:"
+    },
+    "tooltip": "Palub teie rahakotil süstitud plokiahela operatsiooniga hakkama saada"
+  },
+  "voteproducer": {
+    "method": "Hääleta Libre tootja poolt",
+    "title": "Hääleta Libre tootja taotlus",
+    "result": "Hääleta Libre tootja tulemus",
+    "headers": {
+      "request": "Hääleta järgmise Libre tootja poolt?",
+      "result": "Hääled anti järgmise Libre tootja poolt:"
+    },
+    "rows": {
+      "voter": "Hääletaja: {voter}",
+      "producers": "Tootjad: {producers}"
+    },
+    "tooltip": "Hääleta Libre plokitootjate poolt"
+  },
+  "regproducer": {
+    "method": "Registreeri Libre tootja",
+    "title": "Registreeri Libre tootja taotlus",
+    "result": "Registreeri Libre tootja tulemus",
+    "headers": {
+      "request": "Registreeri järgmine Libre plokitootjana?",
+      "result": "Järgmine registreeriti Libre plokitootjana:"
+    },
+    "rows": {
+      "producer": "Tootja: {producer}",
+      "producer_key": "Tootja võti: {producer_key}",
+      "url": "URL: {url}",
+      "location": "Asukoht: {location}"
+    },
+    "tooltip": "Registreeri Libre plokitootjana"
+  },
+  "claimrewards": {
+    "method": "Nõua Libre preemiaid",
+    "title": "Nõua Libre preemiaid taotlus",
+    "result": "Nõua Libre preemiaid tulemus",
+    "headers": {
+      "request": "Nõua plokitootmise preemiaid?",
+      "result": "Plokitootmise preemiad nõuti:"
+    },
+    "rows": {
+      "owner": "Omanik: {owner}"
+    },
+    "tooltip": "Nõu Libre plokitootmise preemiaid"
+  },
+  "setalimits": {
+    "method": "Määra konto piirangud",
+    "title": "Määra konto piirangute taotlus",
+    "result": "Määra konto piirangute tulemus",
+    "headers": {
+      "request": "Määra järgmised konto ressursi piirangud?",
+      "result": "Järgmised konto ressursi piirangud määramati:"
+    },
+    "rows": {
+      "account": "Konto: {account}",
+      "ram_bytes": "RAM piirang: {ram_bytes}",
+      "net_weight": "Neto kaal: {net_weight}",
+      "cpu_weight": "CPU kaal: {cpu_weight}"
+    },
+    "tooltip": "Määra konto ressursi piirangud Libre-s"
+  },
+  "stake": {
+    "method": "Panusta Libre märgid",
+    "title": "Panusta Libre märkide taotlus",
+    "result": "Panusta Libre märkide tulemus",
+    "headers": {
+      "request": "Panusta järgmised Libre märgid?",
+      "result": "Järgmised Libre märgid pandi:"
+    },
+    "rows": {
+      "from": "Saatja: {from}",
+      "to": "Saaja: {to}",
+      "quantity": "Kogus: {quantity}",
+      "memo": "Memo: {memo}"
+    },
+    "tooltip": "Panusta Libre märgid läbi panustamise lepingu"
+  },
+  "unstake": {
+    "method": "Võta Libre märgid välja",
+    "title": "Võta Libre märkide välja taotlus",
+    "result": "Võta Libre märkide välja tulemus",
+    "headers": {
+      "request": "Võta järgmised Libre märgid välja?",
+      "result": "Järgmised Libre märgid võeti välja:"
+    },
+    "rows": {
+      "account": "Konto: {account}",
+      "index": "Indeks: {index}"
+    },
+    "tooltip": "Võta Libre märgid välja"
+  },
+  "claim": {
+    "method": "Nõua Libre panustamise preemiaid",
+    "title": "Nõua Libre panustamise preemiaid taotlus",
+    "result": "Nõua Libre panustamise preemiaid tulemus",
+    "headers": {
+      "request": "Nõua Libre panustamise preemiaid?",
+      "result": "Libre panustamise preemiad nõuti:"
+    },
+    "rows": {
+      "account": "Konto: {account}",
+      "index": "Indeks: {index}"
+    },
+    "tooltip": "Nõu Libre panustamise preemiaid"
+  },
+  "transfer": {
+    "method": "Teisalda Libre märgid",
+    "title": "Teisalda Libre märkide taotlus",
+    "result": "Teisalda Libre märkide tulemus",
+    "headers": {
+      "request": "Teisalda järgmised Libre märgid?",
+      "result": "Järgmised Libre märgid teisaldati:"
+    },
+    "rows": {
+      "from": "Saatja: {from}",
+      "to": "Saaja: {to}",
+      "quantity": "Kogus: {quantity}",
+      "memo": "Memo: {memo}"
+    },
+    "tooltip": "Teisalda Libre märgid kontode vahel"
+  }
+}

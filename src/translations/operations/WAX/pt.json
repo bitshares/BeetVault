@@ -1,0 +1,332 @@
+{
+  "getAccount": {
+    "method": "obter conta",
+    "title": "Solicitação de detalhes da conta",
+    "result": "Resultado dos detalhes da conta",
+    "headers": {
+      "request": "Quer compartilhar os detalhes da sua conta?",
+      "result": "Os detalhes da sua conta foram compartilhados."
+    },
+    "tooltip": "Solicita à sua carteira detalhes da conta blockchain"
+  },
+  "requestSignature": {
+    "method": "solicitaçãoAssinatura",
+    "title": "Solicitação de assinatura",
+    "result": "Resultado da assinatura",
+    "headers": {
+      "request": "Quer compartilhar sua assinatura?",
+      "result": "Sua assinatura foi compartilhada:"
+    },
+    "tooltip": "Solicita assinaturas de blockchain à sua carteira"
+  },
+  "injectedCall": {
+    "method": "chamada injetada",
+    "title": "Solicitação de chamada injetada",
+    "result": "Resultado da chamada injetada",
+    "headers": {
+      "request": "Aprovar a seguinte chamada injetada?",
+      "result": "A seguinte chamada injetada foi aprovada:"
+    },
+    "tooltip": "Pede à sua carteira para lidar com uma operação de blockchain injetada"
+  },
+  "regproposer": {
+    "method": "Registrar Proposta WPS",
+    "title": "Solicitação de Registro de Proposta WPS",
+    "result": "Resultado do Registro de Proposta WPS",
+    "headers": {
+      "request": "Registrar a seguinte conta como proponente WPS?",
+      "result": "A seguinte conta foi registrada como proponente WPS:"
+    },
+    "rows": {
+      "proposer": "Proponente: {proposer}",
+      "proposer_key": "Chave do Proponente: {proposer_key}"
+    },
+    "tooltip": "Registrar uma conta de proponente WPS"
+  },
+  "regproposal": {
+    "method": "Registrar Proposta WPS",
+    "title": "Solicitação de Registro de Proposta WPS",
+    "result": "Resultado do Registro de Proposta WPS",
+    "headers": {
+      "request": "Registrar a seguinte proposta WPS?",
+      "result": "A seguinte proposta WPS foi registrada:"
+    },
+    "rows": {
+      "proposer": "Proponente: {proposer}",
+      "proposal_name": "Nome da Proposta: {proposal_name}",
+      "title": "Título: {title}",
+      "pay_amount": "Valor do Pagamento: {pay_amount}"
+    },
+    "tooltip": "Registrar uma nova proposta WPS"
+  },
+  "voteproposal": {
+    "method": "Votar na Proposta WPS",
+    "title": "Solicitação de Voto na Proposta WPS",
+    "result": "Resultado do Voto na Proposta WPS",
+    "headers": {
+      "request": "Votar na seguinte proposta WPS?",
+      "result": "O voto na seguinte proposta WPS foi aprovado:"
+    },
+    "rows": {
+      "voter": "Eleitor: {voter}",
+      "proposal_name": "Nome da Proposta: {proposal_name}",
+      "vote": "Voto: {vote}"
+    },
+    "tooltip": "Votar em uma proposta WPS"
+  },
+  "claimfunds": {
+    "method": "Reivindicar Fundos WPS",
+    "title": "Solicitação de Reivindicação de Fundos WPS",
+    "result": "Resultado da Reivindicação de Fundos WPS",
+    "headers": {
+      "request": "Reivindicar fundos WPS para a seguinte proposta?",
+      "result": "Os fundos WPS foram reivindicados para a seguinte proposta:"
+    },
+    "rows": {
+      "account": "Conta: {account}",
+      "proposal_name": "Nome da Proposta: {proposal_name}"
+    },
+    "tooltip": "Reivindicar fundos de uma proposta WPS aprovada"
+  },
+  "voterclaim": {
+    "method": "Reivindicar Recompensas de Eleitor WPS",
+    "title": "Solicitação de Recompensas de Eleitor WPS",
+    "result": "Resultado das Recompensas de Eleitor WPS",
+    "headers": {
+      "request": "Reivindicar recompensas de eleitor WPS?",
+      "result": "As recompensas de eleitor WPS foram reivindicadas:"
+    },
+    "rows": {
+      "owner": "Proprietário: {owner}"
+    },
+    "tooltip": "Reivindicar recompensas de eleitor WPS"
+  },
+  "voterclaimst": {
+    "method": "Reivindicar Recompensas de Eleitor Apostado WPS",
+    "title": "Solicitação de Recompensas de Eleitor Apostado WPS",
+    "result": "Resultado das Recompensas de Eleitor Apostado WPS",
+    "headers": {
+      "request": "Reivindicar recompensas de eleitor apostado WPS?",
+      "result": "As recompensas de eleitor apostado WPS foram reivindicadas:"
+    },
+    "rows": {
+      "owner": "Proprietário: {owner}",
+      "amount": "Valor: {amount}"
+    },
+    "tooltip": "Reivindicar recompensas de eleitor apostado WPS"
+  },
+  "awardgenesis": {
+    "method": "Conceder Gênesis",
+    "title": "Solicitação de Concessão de Gênesis",
+    "result": "Resultado da Concessão de Gênesis",
+    "headers": {
+      "request": "Conceder tokens gênesis para a seguinte conta?",
+      "result": "Os tokens gênesis foram concedidos para a seguinte conta:"
+    },
+    "rows": {
+      "receiver": "Receptor: {receiver}",
+      "amount": "Valor: {amount}"
+    },
+    "tooltip": "Conceder tokens gênesis para uma conta"
+  },
+  "claimgenesis": {
+    "method": "Reivindicar Gênesis",
+    "title": "Solicitação de Reivindicação de Gênesis",
+    "result": "Resultado da Reivindicação de Gênesis",
+    "headers": {
+      "request": "Reivindicar tokens gênesis para a seguinte conta?",
+      "result": "Os tokens gênesis foram reivindicados para a seguinte conta:"
+    },
+    "rows": {
+      "receiver": "Receptor: {receiver}"
+    },
+    "tooltip": "Reivindicar tokens gênesis"
+  },
+  "createcol": {
+    "method": "Criar Coleção NFT",
+    "title": "Solicitação de Criação de Coleção NFT",
+    "result": "Resultado da Criação de Coleção NFT",
+    "headers": {
+      "request": "Criar a seguinte coleção NFT?",
+      "result": "A seguinte coleção NFT foi criada:"
+    },
+    "rows": {
+      "author": "Autor: {author}",
+      "collection_name": "Nome da Coleção: {collection_name}",
+      "allow_notify": "Permitir Notificação: {allow_notify}",
+      "market_fee": "Taxa de Mercado: {market_fee}"
+    },
+    "tooltip": "Criar uma nova coleção NFT"
+  },
+  "mintasset": {
+    "method": "Cunhar Ativo NFT",
+    "title": "Solicitação de Cunhagem de Ativo NFT",
+    "result": "Resultado da Cunhagem de Ativo NFT",
+    "headers": {
+      "request": "Cunhar o seguinte ativo NFT?",
+      "result": "O seguinte ativo NFT foi cunhado:"
+    },
+    "rows": {
+      "authorized_minter": "Cunhador Autorizado: {authorized_minter}",
+      "collection_name": "Nome da Coleção: {collection_name}",
+      "schema_name": "Nome do Esquema: {schema_name}",
+      "template_id": "ID do Modelo: {template_id}",
+      "new_asset_owner": "Novo Proprietário do Ativo: {new_asset_owner}"
+    },
+    "tooltip": "Cunhar um novo ativo NFT"
+  },
+  "burnasset": {
+    "method": "Queimar Ativo NFT",
+    "title": "Solicitação de Queima de Ativo NFT",
+    "result": "Resultado da Queima de Ativo NFT",
+    "headers": {
+      "request": "Queimar o seguinte ativo NFT?",
+      "result": "O seguinte ativo NFT foi queimado:"
+    },
+    "rows": {
+      "asset_owner": "Proprietário do Ativo: {asset_owner}",
+      "asset_id": "ID do Ativo: {asset_id}"
+    },
+    "tooltip": "Queimar um ativo NFT"
+  },
+  "createoffer": {
+    "method": "Criar Oferta NFT",
+    "title": "Solicitação de Criação de Oferta NFT",
+    "result": "Resultado da Criação de Oferta NFT",
+    "headers": {
+      "request": "Criar a seguinte oferta NFT?",
+      "result": "A seguinte oferta NFT foi criada:"
+    },
+    "rows": {
+      "sender": "Remetente: {sender}",
+      "recipient": "Destinatário: {recipient}",
+      "sender_asset_ids": "IDs dos Ativos do Remetente: {sender_asset_ids}",
+      "recipient_asset_ids": "IDs dos Ativos do Destinatário: {recipient_asset_ids}",
+      "memo": "Memorando: {memo}"
+    },
+    "tooltip": "Criar uma nova oferta NFT"
+  },
+  "acceptoffer": {
+    "method": "Aceitar Oferta NFT",
+    "title": "Solicitação de Aceitação de Oferta NFT",
+    "result": "Resultado da Aceitação de Oferta NFT",
+    "headers": {
+      "request": "Aceitar a seguinte oferta NFT?",
+      "result": "A seguinte oferta NFT foi aceita:"
+    },
+    "rows": {
+      "offer_id": "ID da Oferta: {offer_id}"
+    },
+    "tooltip": "Aceitar uma oferta NFT"
+  },
+  "announcesale": {
+    "method": "Anunciar Venda NFT",
+    "title": "Solicitação de Anúncio de Venda NFT",
+    "result": "Resultado do Anúncio de Venda NFT",
+    "headers": {
+      "request": "Anunciar a seguinte venda NFT?",
+      "result": "A seguinte venda NFT foi anunciada:"
+    },
+    "rows": {
+      "seller": "Vendedor: {seller}",
+      "asset_ids": "IDs dos Ativos: {asset_ids}",
+      "listing_price": "Preço de Listagem: {listing_price}",
+      "settlement_symbol": "Símbolo de Liquidação: {settlement_symbol}"
+    },
+    "tooltip": "Anunciar um NFT para venda"
+  },
+  "purchasesale": {
+    "method": "Comprar Venda NFT",
+    "title": "Solicitação de Compra de Venda NFT",
+    "result": "Resultado da Compra de Venda NFT",
+    "headers": {
+      "request": "Comprar a seguinte venda NFT?",
+      "result": "A seguinte venda NFT foi comprada:"
+    },
+    "rows": {
+      "buyer": "Comprador: {buyer}",
+      "sale_id": "ID da Venda: {sale_id}",
+      "taker_marketplace": "Marketplace do Taker: {taker_marketplace}"
+    },
+    "tooltip": "Comprar um NFT de uma venda"
+  },
+  "announceauct": {
+    "method": "Anunciar Leilão NFT",
+    "title": "Solicitação de Anúncio de Leilão NFT",
+    "result": "Resultado do Anúncio de Leilão NFT",
+    "headers": {
+      "request": "Anunciar o seguinte leilão NFT?",
+      "result": "O seguinte leilão NFT foi anunciado:"
+    },
+    "rows": {
+      "seller": "Vendedor: {seller}",
+      "asset_ids": "IDs dos Ativos: {asset_ids}",
+      "starting_bid": "Lance Inicial: {starting_bid}",
+      "duration": "Duração: {duration}"
+    },
+    "tooltip": "Anunciar um leilão NFT"
+  },
+  "auctionbid": {
+    "method": "Dar Lance no Leilão NFT",
+    "title": "Solicitação de Lance no Leilão NFT",
+    "result": "Resultado do Lance no Leilão NFT",
+    "headers": {
+      "request": "Dar lance no seguinte leilão NFT?",
+      "result": "O lance no seguinte leilão NFT foi feito:"
+    },
+    "rows": {
+      "bidder": "Licitante: {bidder}",
+      "auction_id": "ID do Leilão: {auction_id}",
+      "bid": "Lance: {bid}"
+    },
+    "tooltip": "Dar lance em um leilão NFT"
+  },
+  "createbuyo": {
+    "method": "Criar Pedido de Compra NFT",
+    "title": "Solicitação de Pedido de Compra NFT",
+    "result": "Resultado do Pedido de Compra NFT",
+    "headers": {
+      "request": "Criar o seguinte pedido de compra NFT?",
+      "result": "O seguinte pedido de compra NFT foi criado:"
+    },
+    "rows": {
+      "buyer": "Comprador: {buyer}",
+      "recipient": "Destinatário: {recipient}",
+      "asset_ids": "IDs dos Ativos: {asset_ids}",
+      "price": "Preço: {price}",
+      "memo": "Memorando: {memo}"
+    },
+    "tooltip": "Criar um novo pedido de compra NFT"
+  },
+  "transfer": {
+    "method": "Transferir NFT",
+    "title": "Solicitação de Transferência NFT",
+    "result": "Resultado da Transferência NFT",
+    "headers": {
+      "request": "Transferir o seguinte NFT?",
+      "result": "O seguinte NFT foi transferido:"
+    },
+    "rows": {
+      "from": "De: {from}",
+      "to": "Para: {to}",
+      "asset_ids": "IDs dos Ativos: {asset_ids}",
+      "memo": "Memorando: {memo}"
+    },
+    "tooltip": "Transferir ativos NFT entre contas"
+  },
+  "withdraw": {
+    "method": "Retirar NFT",
+    "title": "Solicitação de Retirada NFT",
+    "result": "Resultado da Retirada NFT",
+    "headers": {
+      "request": "Retirar o seguinte NFT?",
+      "result": "O seguinte NFT foi retirado:"
+    },
+    "rows": {
+      "owner": "Proprietário: {owner}",
+      "token_to_receive": "Token para Receber: {token_to_receive}",
+      "quantity": "Quantidade: {quantity}"
+    },
+    "tooltip": "Retirar ativos NFT para um saldo de token"
+  }
+}

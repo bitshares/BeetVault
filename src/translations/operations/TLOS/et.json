@@ -1,0 +1,272 @@
+{
+  "getAccount": {
+    "method": "getAccount",
+    "title": "Konto üksikasjade taotlus",
+    "result": "Konto üksikasjade tulemus",
+    "headers": {
+      "request": "Kas soovite oma konto andmeid jagada?",
+      "result": "Teie konto üksikasju jagati."
+    },
+    "tooltip": "Küsib teie rahakotilt plokiahela konto üksikasju"
+  },
+  "requestSignature": {
+    "method": "requestSignature",
+    "title": "Allkirjataotlus",
+    "result": "Allkirja tulemus",
+    "headers": {
+      "request": "Kas soovite oma allkirja jagada?",
+      "result": "Teie allkirja jagati:"
+    },
+    "tooltip": "Küsib teie rahakotilt plokiahela allkirju"
+  },
+  "injectedCall": {
+    "method": "süstitud Helista",
+    "title": "Süstitud kõne taotlus",
+    "result": "Süstitud kõne tulemus",
+    "headers": {
+      "request": "Kas kinnitada järgmine süstitud kõne?",
+      "result": "Järgmine süstitud kõne kiideti heaks:"
+    },
+    "tooltip": "Palub teie rahakotil süstitud plokiahela operatsiooniga hakkama saada"
+  },
+  "newballot": {
+    "method": "Loo Decide hääletus",
+    "title": "Loo Decide hääletuse taotlus",
+    "result": "Loo Decide hääletuse tulemus",
+    "headers": {
+      "request": "Loo järgmine Decide hääletus?",
+      "result": "Järgmine Decide hääletus loodi:"
+    },
+    "rows": {
+      "title": "Pealkiri: {title}",
+      "description": "Kirjeldus: {description}",
+      "treasury_symbol": "Kassa sümbol: {treasury_symbol}",
+      "category": "Kategooria: {category}",
+      "voting_method": "Hääletamise meetod: {voting_method}",
+      "quorum": "Kvoorumi: {quorum}",
+      "duration": "Kestus: {duration}"
+    },
+    "tooltip": "Loo uus Telos Decide hääletus"
+  },
+  "castvote": {
+    "method": "Esita Decide hääl",
+    "title": "Esita Decide hääle taotlus",
+    "result": "Esita Decide hääle tulemus",
+    "headers": {
+      "request": "Esita järgmine Decide hääl?",
+      "result": "Järgmine Decide hääl esitati:"
+    },
+    "rows": {
+      "voter": "Hääletaja: {voter}",
+      "ballot_name": "Hääletuse nimi: {ballot_name}",
+      "votes": "Hääled: {votes}"
+    },
+    "tooltip": "Esita hääl Telos Decide hääletusel"
+  },
+  "openvoting": {
+    "method": "Ava Decide hääletamine",
+    "title": "Ava Decide hääletamise taotlus",
+    "result": "Ava Decide hääletamise tulemus",
+    "headers": {
+      "request": "Ava hääletamine järgmise Decide hääletuse jaoks?",
+      "result": "Hääletamine avati järgmise Decide hääletuse jaoks:"
+    },
+    "rows": {
+      "ballot_name": "Hääletuse nimi: {ballot_name}"
+    },
+    "tooltip": "Ava hääletamine Telos Decide hääletusel"
+  },
+  "closevoting": {
+    "method": "Sulge Decide hääletamine",
+    "title": "Sulge Decide hääletamise taotlus",
+    "result": "Sulge Decide hääletamise tulemus",
+    "headers": {
+      "request": "Sulge hääletamine järgmise Decide hääletuse jaoks?",
+      "result": "Hääletamine suleti järgmise Decide hääletuse jaoks:"
+    },
+    "rows": {
+      "ballot_name": "Hääletuse nimi: {ballot_name}"
+    },
+    "tooltip": "Sulge hääletamine Telos Decide hääletusel"
+  },
+  "cancelballot": {
+    "method": "Tühista Decide hääletus",
+    "title": "Tühista Decide hääletuse taotlus",
+    "result": "Tühista Decide hääletuse tulemus",
+    "headers": {
+      "request": "Tühista järgmine Decide hääletus?",
+      "result": "Järgmine Decide hääletus tühistati:"
+    },
+    "rows": {
+      "ballot_name": "Hääletuse nimi: {ballot_name}"
+    },
+    "tooltip": "Tühista Telos Decide hääletus"
+  },
+  "deleteballot": {
+    "method": "Kustuta Decide hääletus",
+    "title": "Kustuta Decide hääletuse taotlus",
+    "result": "Kustuta Decide hääletuse tulemus",
+    "headers": {
+      "request": "Kustuta järgmine Decide hääletus?",
+      "result": "Järgmine Decide hääletus kustutati:"
+    },
+    "rows": {
+      "ballot_name": "Hääletuse nimi: {ballot_name}"
+    },
+    "tooltip": "Kustuta Telos Decide hääletus"
+  },
+  "regvoter": {
+    "method": "Registreeri Decide hääletaja",
+    "title": "Registreeri Decide hääletaja taotlus",
+    "result": "Registreeri Decide hääletaja tulemus",
+    "headers": {
+      "request": "Registreeri järgmine konto Decide hääletajana?",
+      "result": "Järgmine konto registreeriti Decide hääletajana:"
+    },
+    "rows": {
+      "voter": "Hääletaja: {voter}",
+      "treasury_symbol": "Kassa sümbol: {treasury_symbol}"
+    },
+    "tooltip": "Registreeri Telos Decide hääletaja"
+  },
+  "stake": {
+    "method": "Panusta TLOS",
+    "title": "Panusta TLOS taotlus",
+    "result": "Panusta TLOS tulemus",
+    "headers": {
+      "request": "Panusta järgmine TLOS summa?",
+      "result": "Järgmine TLOS summa pandi:"
+    },
+    "rows": {
+      "voter": "Hääletaja: {voter}",
+      "quantity": "Kogus: {quantity}"
+    },
+    "tooltip": "Panusta TLOS märgid"
+  },
+  "unstake": {
+    "method": "Võta TLOS välja",
+    "title": "Võta TLOS välja taotlus",
+    "result": "Võta TLOS välja tulemus",
+    "headers": {
+      "request": "Võta järgmine TLOS summa välja?",
+      "result": "Järgmine TLOS summa võeti välja:"
+    },
+    "rows": {
+      "voter": "Hääletaja: {voter}",
+      "quantity": "Kogus: {quantity}"
+    },
+    "tooltip": "Võta TLOS märgid välja"
+  },
+  "newtreasury": {
+    "method": "Loo Decide kassa",
+    "title": "Loo Decide kassa taotlus",
+    "result": "Loo Decide kassa tulemus",
+    "headers": {
+      "request": "Loo järgmine Decide kassa?",
+      "result": "Järgmine Decide kassa loodi:"
+    },
+    "rows": {
+      "manager": "Haldur: {manager}",
+      "max_supply": "Maksimaalne pakkumine: {max_supply}",
+      "access_type": "Juurdepääsu tüüp: {access_type}"
+    },
+    "tooltip": "Loo uus Telos Decide kassa"
+  },
+  "mint": {
+    "method": "Märgista Decide märgid",
+    "title": "Märgista Decide märkide taotlus",
+    "result": "Märgista Decide märkide tulemus",
+    "headers": {
+      "request": "Märgista järgmised Decide märgid?",
+      "result": "Järgmised Decide märgid märgistati:"
+    },
+    "rows": {
+      "to": "Saaja: {to}",
+      "quantity": "Kogus: {quantity}",
+      "memo": "Memo: {memo}"
+    },
+    "tooltip": "Märgista Telos Decide märgid"
+  },
+  "burn": {
+    "method": "Põleta Decide märgid",
+    "title": "Põleta Decide märkide taotlus",
+    "result": "Põleta Decide märkide tulemus",
+    "headers": {
+      "request": "Põleta järgmised Decide märgid?",
+      "result": "Järgmised Decide märgid põletati:"
+    },
+    "rows": {
+      "quantity": "Kogus: {quantity}",
+      "memo": "Memo: {memo}"
+    },
+    "tooltip": "Põleta Telos Decide märgid"
+  },
+  "claimpayment": {
+    "method": "Nõua Decide makse",
+    "title": "Nõua Decide makse taotlus",
+    "result": "Nõua Decide makse tulemus",
+    "headers": {
+      "request": "Nõua järgmine Decide makse?",
+      "result": "Järgmine Decide makse nõuti:"
+    },
+    "rows": {
+      "worker": "Töötaja: {worker}"
+    },
+    "tooltip": "Nõu Telos Decide töötaja makse"
+  },
+  "regcommittee": {
+    "method": "Registreeri Decide komisjon",
+    "title": "Registreeri Decide komisjoni taotlus",
+    "result": "Registreeri Decide komisjoni tulemus",
+    "headers": {
+      "request": "Registreeri järgmine Decide komisjon?",
+      "result": "Järgmine Decide komisjon registreeriti:"
+    },
+    "rows": {
+      "committee_name": "Komisjoni nimi: {committee_name}",
+      "account": "Konto: {account}"
+    },
+    "tooltip": "Registreeri Telos Decide komisjon"
+  },
+  "raw": {
+    "method": "Töötlemata EVM tehing",
+    "title": "Töötlemata EVM tehingu taotlus",
+    "result": "Töötlemata EVM tehingu tulemus",
+    "headers": {
+      "request": "Esita järgmine töötlemata EVM tehing?",
+      "result": "Järgmine töötlemata EVM tehing esitati:"
+    },
+    "rows": {
+      "tx_hex": "Tehingu kuueteistkümnekohaline: {tx_hex}"
+    },
+    "tooltip": "Esita töötlemata EVM tehing Telosel"
+  },
+  "withdraw": {
+    "method": "Võta EVM-st välja",
+    "title": "Võta EVM-st välja taotlus",
+    "result": "Võta EVM-st välja tulemus",
+    "headers": {
+      "request": "Võta Telos EVM-st välja?",
+      "result": "Järgnev summa võeti Telos EVM-st välja:"
+    },
+    "rows": {
+      "to": "Saaja: {to}",
+      "quantity": "Kogus: {quantity}"
+    },
+    "tooltip": "Võta märgid Telos EVM-st välja"
+  },
+  "create": {
+    "method": "Loo EVM konto",
+    "title": "Loo EVM konto taotlus",
+    "result": "Loo EVM konto tulemus",
+    "headers": {
+      "request": "Loo Telos EVM konto?",
+      "result": "Järgmine Telos EVM konto loodi:"
+    },
+    "rows": {
+      "account": "Konto: {account}",
+      "data": "Andmed: {data}"
+    },
+    "tooltip": "Loo uus Telos EVM konto"
+  }
+}

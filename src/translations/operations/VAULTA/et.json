@@ -1,0 +1,704 @@
+{
+  "getAccount": {
+    "method": "hankige konto",
+    "title": "Konto üksikasjade taotlus",
+    "result": "Konto üksikasjade tulemus",
+    "headers": {
+      "request": "Kas soovite oma konto andmeid jagada?",
+      "result": "Teie konto üksikasju jagati."
+    },
+    "tooltip": "Küsib teie rahakotilt plokiahela konto üksikasju"
+  },
+  "requestSignature": {
+    "method": "taotlusallkiri",
+    "title": "Allkirjataotlus",
+    "result": "Allkirja tulemus",
+    "headers": {
+      "request": "Kas soovite oma allkirja jagada?",
+      "result": "Teie allkirja jagati:"
+    },
+    "tooltip": "Küsib teie rahakotilt plokiahela allkirju"
+  },
+  "injectedCall": {
+    "method": "süstitud Helista",
+    "title": "Süstitud kõne taotlus",
+    "result": "Süstitud kõne tulemus",
+    "headers": {
+      "request": "Kas kinnitada järgmine süstitud kõne?",
+      "result": "Järgmine süstitud kõne kiideti heaks:"
+    },
+    "tooltip": "Palub teie rahakotil süstitud plokiahela operatsiooniga hakkama saada"
+  },
+  "voteFor": {
+    "method": "hääletama poolt",
+    "title": "Hääletustaotlus",
+    "result": "Hääletustulemus",
+    "headers": {
+      "request": "Kas kinnitada järgmine hääletustaotlus?",
+      "result": "Kiideti heaks järgmine hääletustaotlus"
+    },
+    "tooltip": "Tehke plokiahela hääletus"
+  },
+  "signMessage": {
+    "method": "märk Sõnum",
+    "title": "Kirjutage sõnumitaotlus alla",
+    "result": "Allkiri Sõnumi tulemus",
+    "headers": {
+      "request": "Kas nõustuda järgmise sõnumi allkirjastamisega?",
+      "result": "Allkirjastati järgmine teade:"
+    },
+    "tooltip": "Allkirjastage plokiahelapõhine sõnum"
+  },
+  "verifyMessage": {
+    "method": "kinnita sõnum",
+    "title": "Kinnitage sõnumitaotlus",
+    "result": "Kinnitage sõnumi tulemus",
+    "headers": {
+      "request": "Kas soovite kinnitada järgmist sõnumit?",
+      "result": "Järgmine teade kinnitati:"
+    },
+    "tooltip": "Kinnitage plokiahelapõhine allkirjastatud sõnum"
+  },
+  "transfer": {
+    "method": "Ülekanne",
+    "title": "Ülekandmise taotlus",
+    "result": "Ülekande tulemus",
+    "headers": {
+      "request": "Kas soovite kinnitada järgmise ülekandetaotluse?",
+      "result": "Järgmine ülekandetaotlus kinnitati:"
+    },
+    "rows": {
+      "from": "Saatja: {from}",
+      "to": "Saaja: {to}",
+      "quantity": "Kogus: {quantity}",
+      "memo": "Memo: {memo}"
+    },
+    "tooltip": "Saatke varasid ühelt kontolt teisele"
+  },
+  "setalimits": {
+    "method": "Seadke konto limiidid",
+    "title": "Seadistage kontopiirangute taotlus",
+    "result": "Konto limiidi tulemuse määramine",
+    "headers": {
+      "request": "Kas määrata järgmised kontopiirangud?",
+      "result": "Määrati järgmised kontolimiidid:"
+    },
+    "rows": {
+      "account": "Konto: {account}",
+      "ram_bytes": "RAM-i limiit baitides: {ram_bytes}",
+      "net_weight": "Netokaal: {net_weight}",
+      "cpu_weight": "Protsessori kaal: {cpu_weight}"
+    },
+    "tooltip": "Konto ressursipiirangute seadistamine"
+  },
+  "setacctram": {
+    "method": "Määrake konto RAM-i piirangud",
+    "title": "Määrake konto RAM-i piirangute taotlus",
+    "result": "Konto RAM-i piirangute tulemuse määramine",
+    "headers": {
+      "request": "Kas määrata järgmised konto RAM-i piirangud?",
+      "result": "Määrati järgmised konto RAM-i piirangud:"
+    },
+    "rows": {
+      "account": "Konto: {account}",
+      "ram_bytes": "RAM-i limiit baitides: {ram_bytes}"
+    },
+    "tooltip": "Konto seadistamine RAM piirab toimimist"
+  },
+  "setacctnet": {
+    "method": "Määrake konto NET-limiidid",
+    "title": "Määrake konto NET-i piirangute taotlus",
+    "result": "Konto NET limiitide tulemuse määramine",
+    "headers": {
+      "request": "Kas määrata järgmised konto NET-limiidid?",
+      "result": "Määrati järgmised konto NET-limiidid:"
+    },
+    "rows": {
+      "account": "Konto: {account}",
+      "net_weight": "Netokaal: {net_weight}"
+    },
+    "tooltip": "Konto seadistamine NET piirab toimimist"
+  },
+  "setacctcpu": {
+    "method": "Konto CPU piirangute määramine",
+    "title": "Konto CPU piirangute taotluse määramine",
+    "result": "Konto CPU piirangute tulemuse määramine",
+    "headers": {
+      "request": "Kas määrata järgmised konto protsessori piirangud?",
+      "result": "Määrati järgmised konto protsessori piirangud:"
+    },
+    "rows": {
+      "account": "Konto: {account}",
+      "cpu_weight": "Protsessori kaal: {cpu_weight}"
+    },
+    "tooltip": "Konto seadistamine CPU piirab tööd"
+  },
+  "activate": {
+    "method": "Protokolli funktsiooni aktiveerimine",
+    "title": "Aktiveerige protokolli funktsiooni taotlus",
+    "result": "Aktiveerige protokolli funktsiooni tulemus",
+    "headers": {
+      "request": "Kas aktiveerida järgmine protokolli funktsioon?",
+      "result": "Aktiveeriti järgmine protokolli funktsioon:"
+    },
+    "rows": {
+      "feature_digest": "Funktsiooni kokkuvõte: {feature_digest}"
+    },
+    "tooltip": "Protokolli funktsiooni aktiveerimine"
+  },
+  "delegatebw": {
+    "method": "Delegeeri ribalaius",
+    "title": "Delegeeri ribalaiuse taotlus",
+    "result": "Delegeeri ribalaiuse tulemus",
+    "headers": {
+      "request": "Kas delegeerida järgmine ribalaius?",
+      "result": "Delegeeriti järgmine ribalaius:"
+    },
+    "rows": {
+      "from": "Saatja: {from}",
+      "receiver": "Vastuvõtja: {receiver}",
+      "stake_net_quantity": "Panuse NET kogus: {stake_net_quantity}",
+      "stake_cpu_quantity": "Panuse CPU kogus: {stake_cpu_quantity}",
+      "transfer": "Ülekanne: {transfer}"
+    },
+    "tooltip": "Ribalaiuse toimingu delegeerimine"
+  },
+  "setrex": {
+    "method": "Seadistage REX-i tasakaal",
+    "title": "Määra REX-i saldonõue",
+    "result": "Määra REX tasakaalu tulemus",
+    "headers": {
+      "request": "Kas määrata järgmine REX-saldo?",
+      "result": "Määrati järgmine REX-saldo:"
+    },
+    "rows": {
+      "balance": "Saldo: {balance}"
+    },
+    "tooltip": "REX-i tasakaalu toimimise seadistamine"
+  },
+  "deposit": {
+    "method": "Deposiit REX fondi",
+    "title": "Deposiit REXi fondi taotlusele",
+    "result": "Sissemakse REX fondi tulemus",
+    "headers": {
+      "request": "Deponeerida REX fondi järgmised asjad?",
+      "result": "REX fondi deponeeriti:"
+    },
+    "rows": {
+      "owner": "Omanik: {owner}",
+      "amount": "Summa: {amount}"
+    },
+    "tooltip": "Deposiit REX fondi operatsioonile"
+  },
+  "withdraw": {
+    "method": "REX-fondist väljavõtmine",
+    "title": "Loobuge REX-i fonditaotlusest",
+    "result": "REX fondi tulemusest välja võtmine",
+    "headers": {
+      "request": "Kas võtta REX-fondist välja järgmised asjad?",
+      "result": "REX-fondist võeti välja:"
+    },
+    "rows": {
+      "owner": "Omanik: {owner}",
+      "amount": "Summa: {amount}"
+    },
+    "tooltip": "REX fondi tegevusest taganemine"
+  },
+  "buyrex": {
+    "method": "Osta REX",
+    "title": "Ostke REX-i taotlus",
+    "result": "Osta REX-i tulemus",
+    "headers": {
+      "request": "Kas osta järgmine REX?",
+      "result": "Ostetud on järgmine REX:"
+    },
+    "rows": {
+      "from": "Saatja: {from}",
+      "amount": "Summa: {amount}"
+    },
+    "tooltip": "REX operatsiooni ostmine"
+  },
+  "unstaketorex": {
+    "method": "Eemaldage panus REX-ile",
+    "title": "Tühista panus REX-i taotlusele",
+    "result": "Unstake to REX tulemus",
+    "headers": {
+      "request": "Kas tühistada REXile järgmised panused?",
+      "result": "REXile tühistati järgmine:"
+    },
+    "rows": {
+      "owner": "Omanik: {owner}",
+      "receiver": "Vastuvõtja: {receiver}",
+      "from_net": "NETist: {from_net}",
+      "from_cpu": "Protsessorist: {from_cpu}"
+    },
+    "tooltip": "Vabastamine REX-operatsioonile"
+  },
+  "sellrex": {
+    "method": "Müüa REX",
+    "title": "Müüa REX taotlus",
+    "result": "Müüa REX tulemus",
+    "headers": {
+      "request": "Müüa järgmine REX?",
+      "result": "Müüdi järgmine REX:"
+    },
+    "rows": {
+      "from": "Saatja: {from}",
+      "rex": "REX: {rex}"
+    },
+    "tooltip": "Müüa REX operatsioon"
+  },
+  "cnclrexorder": {
+    "method": "Tühista REX tellimus",
+    "title": "Tühista REX-i tellimuse taotlus",
+    "result": "Tühista REX tellimuse tulemus",
+    "headers": {
+      "request": "Kas tühistada järgmine REX-tellimus?",
+      "result": "Järgmine REX-i tellimus tühistati:"
+    },
+    "rows": {
+      "owner": "Omanik: {owner}"
+    },
+    "tooltip": "REX tellimuse toimingu tühistamine"
+  },
+  "rentcpu": {
+    "method": "Rentida CPU",
+    "title": "Protsessori rentimise taotlus",
+    "result": "Rendi protsessori tulemus",
+    "headers": {
+      "request": "Kas rentida järgmine protsessor?",
+      "result": "Renditi järgmine protsessor:"
+    },
+    "rows": {
+      "from": "Saatja: {from}",
+      "receiver": "Vastuvõtja: {receiver}",
+      "loan_payment": "Laenumakse: {loan_payment}",
+      "loan_fund": "Laenufond: {loan_fund}"
+    },
+    "tooltip": "Protsessori töö rentimine"
+  },
+  "rentnet": {
+    "method": "Rentida NET",
+    "title": "Üüri NET soov",
+    "result": "Rent NET tulemus",
+    "headers": {
+      "request": "Kas rentida järgmine NET?",
+      "result": "Renditi järgmine NET:"
+    },
+    "rows": {
+      "from": "Saatja: {from}",
+      "receiver": "Vastuvõtja: {receiver}",
+      "loan_payment": "Laenumakse: {loan_payment}",
+      "loan_fund": "Laenufond: {loan_fund}"
+    },
+    "tooltip": "NET operatsiooni rentimine"
+  },
+  "fundcpuloan": {
+    "method": "Fondi protsessori laen",
+    "title": "Fondi protsessori laenutaotlus",
+    "result": "Fondi CPU laenu tulemus",
+    "headers": {
+      "request": "Kas rahastada järgmist CPU laenu?",
+      "result": "Rahastati järgmist CPU laenu:"
+    },
+    "rows": {
+      "from": "Saatja: {from}",
+      "loan_num": "Laenunumber: {loan_num}",
+      "payment": "Makse: {payment}"
+    },
+    "tooltip": "CPU laenu operatsiooni rahastamine"
+  },
+  "fundnetloan": {
+    "method": "Fond NET Laen",
+    "title": "Fondi NET laenutaotlus",
+    "result": "Fondi NET-laenu tulemus",
+    "headers": {
+      "request": "Rahastada järgmist NET-laenu?",
+      "result": "Rahastati järgmist NET-laenu:"
+    },
+    "rows": {
+      "from": "Saatja: {from}",
+      "loan_num": "Laenunumber: {loan_num}",
+      "payment": "Makse: {payment}"
+    },
+    "tooltip": "NET-laenu operatsiooni rahastamine"
+  },
+  "defcpuloan": {
+    "method": "CPU laenu tagastamine",
+    "title": "CPU laenutaotluse hüvitamine",
+    "result": "CPU laenu tulemuse tagastamine",
+    "headers": {
+      "request": "Kas tagastada järgmine protsessorilaen?",
+      "result": "Järgmine protsessori laen tagastati:"
+    },
+    "rows": {
+      "from": "Saatja: {from}",
+      "loan_num": "Laenunumber: {loan_num}",
+      "amount": "Summa: {amount}"
+    },
+    "tooltip": "Protsessori laenuoperatsiooni rahastamine"
+  },
+  "defnetloan": {
+    "method": "Hüvitage NET-laen",
+    "title": "Hüvitage NET-laenu taotlus",
+    "result": "Hüvitage NET-laenu tulemus",
+    "headers": {
+      "request": "Kas tagastada järgmine NET-laen?",
+      "result": "Järgmine NET-laen tagastati:"
+    },
+    "rows": {
+      "from": "Saatja: {from}",
+      "loan_num": "Laenunumber: {loan_num}",
+      "amount": "Summa: {amount}"
+    },
+    "tooltip": "NET-laenu toimingu tagastamine"
+  },
+  "updaterex": {
+    "method": "Värskendage REX-i",
+    "title": "Värskendage REX-i taotlust",
+    "result": "Värskendage REX-i tulemust",
+    "headers": {
+      "request": "Kas värskendada järgmist REX-i?",
+      "result": "Järgmist REX-i värskendati:"
+    },
+    "rows": {
+      "owner": "Omanik: {owner}"
+    },
+    "tooltip": "REX-i töö värskendamine"
+  },
+  "rexexec": {
+    "method": "Käivitage REX",
+    "title": "Täitke REX-i päring",
+    "result": "Käivitage REX-i tulemus",
+    "headers": {
+      "request": "Kas käivitada järgmine REX?",
+      "result": "Viidi läbi järgmine REX:"
+    },
+    "rows": {
+      "user": "Kasutaja: {user}",
+      "max": "Max: {max}"
+    },
+    "tooltip": "REX-operatsiooni täitmine"
+  },
+  "consolidate": {
+    "method": "Konsolideerige REX",
+    "title": "Konsolideerige REX-i taotlus",
+    "result": "Konsolideerige REX-i tulemus",
+    "headers": {
+      "request": "Kas konsolideerida järgmine REX?",
+      "result": "Konsolideeriti järgmine REX:"
+    },
+    "rows": {
+      "owner": "Omanik: {owner}"
+    },
+    "tooltip": "REX-i toimimise konsolideerimine"
+  },
+  "mvtosavings": {
+    "method": "Liigutage REX jaotisesse Säästud",
+    "title": "Teisaldage REX jaotisse Säästutaotlus",
+    "result": "Teisaldage REX jaotisse Säästutulemus",
+    "headers": {
+      "request": "Kas teisaldada säästuämbrisse järgmine kogus REX-i?",
+      "result": "Säästuämbrisse kanti järgmine kogus REX-i:"
+    },
+    "rows": {
+      "owner": "Omanik: {owner}",
+      "rex": "REX: {rex}"
+    },
+    "tooltip": "REX-i üleviimine säästuoperatsioonile"
+  },
+  "mvfrsavings": {
+    "method": "Teisaldage REX säästudest",
+    "title": "Teisaldage REX säästutaotlusest",
+    "result": "Teisaldage REX säästutulemustest",
+    "headers": {
+      "request": "Kas viia säästuämbrist välja järgmine kogus REX-i?",
+      "result": "Säästuämbrist viidi välja järgmine summa REX-i:"
+    },
+    "rows": {
+      "owner": "Omanik: {owner}",
+      "rex": "REX: {rex}"
+    },
+    "tooltip": "REX-i teisaldamine säästuoperatsioonist"
+  },
+  "closerex": {
+    "method": "Sulgege REX",
+    "title": "Sule REX-i taotlus",
+    "result": "Sule REX-i tulemus",
+    "headers": {
+      "request": "Kas kustutada REX-i tabelitest omanikukirjed ja vabastada järgmise omaniku kasutatud RAM?",
+      "result": "REX-i tabelite omanikukirjed kustutati ja RAM vabastati järgmisele omanikule:"
+    },
+    "rows": {
+      "owner": "Omanik: {owner}"
+    },
+    "tooltip": "REX-operatsiooni sulgemine"
+  },
+  "undelegatebw": {
+    "method": "Tühista ribalaius",
+    "title": "Delegeeri ribalaiuse taotlus",
+    "result": "Delegeeri ribalaiuse tulemus",
+    "headers": {
+      "request": "Kas vähendada delegeeritud lubade koguarvu ja/või vabastada mälu järgmistel juhtudel?",
+      "result": "Delegeeritud žetoonide koguarvu vähendati ja/või mälu vabastati järgmiste jaoks:"
+    },
+    "rows": {
+      "from": "Saatja: {from}",
+      "receiver": "Vastuvõtja: {receiver}",
+      "unstake_net_quantity": "NET Unstake'i kogus: {unstake_net_quantity}",
+      "unstake_cpu_quantity": "Protsessori mahapanemise kogus: {unstake_cpu_quantity}"
+    },
+    "tooltip": "Ribalaiuse delegeerimise tühistamise toiming"
+  },
+  "buyram": {
+    "method": "Osta RAM",
+    "title": "RAM-i ostmise taotlus",
+    "result": "Osta RAM-i tulemus",
+    "headers": {
+      "request": "Kas suurendada järgmise vastuvõtja RAM-i kvooti?",
+      "result": "RAM-i kvooti suurendati järgmise vastuvõtja jaoks:"
+    },
+    "rows": {
+      "payer": "Maksja: {payer}",
+      "receiver": "Vastuvõtja: {receiver}",
+      "quant": "Kogus: {quant}"
+    },
+    "tooltip": "RAM-i ostmine"
+  },
+  "buyrambytes": {
+    "method": "Osta RAM-i baite",
+    "title": "Ostke RAM-i baitide taotlus",
+    "result": "Osta RAM-i baite tulemus",
+    "headers": {
+      "request": "Kas suurendada järgmise vastuvõtja RAM-i määratud baitide võrra?",
+      "result": "RAM-i suurendati järgmise vastuvõtja jaoks:"
+    },
+    "rows": {
+      "payer": "Maksja: {payer}",
+      "receiver": "Vastuvõtja: {receiver}",
+      "bytes": "Baidid: {bytes}"
+    },
+    "tooltip": "RAM-i baitide ostmise operatsioon"
+  },
+  "sellram": {
+    "method": "Müüa RAM",
+    "title": "Müüa RAM-i taotlus",
+    "result": "Müüa RAM-i tulemus",
+    "headers": {
+      "request": "Kas vähendada RAM-i kvooti ja kanda märgid vastuvõtjasse?",
+      "result": "RAM-i kvooti vähendati ja märgid kanti üle:"
+    },
+    "rows": {
+      "account": "Konto: {account}",
+      "bytes": "Baidid: {bytes}"
+    },
+    "tooltip": "Müüa operatiivmälu"
+  },
+  "refund": {
+    "method": "Tagasimakse",
+    "title": "Tagasimakse taotlus",
+    "result": "Tagasimakse tulemus",
+    "headers": {
+      "request": "Kas taotleda kõik järgmise omaniku ootel panustamata märgid?",
+      "result": "Kõik ootel panustamata märgid taotleti järgmisele omanikule:"
+    },
+    "rows": {
+      "owner": "Omanik: {owner}"
+    },
+    "tooltip": "Tagastamise operatsioon"
+  },
+  "regproducer": {
+    "method": "Registreeri tootja",
+    "title": "Registreeri tootja taotlus",
+    "result": "Registreeri Tootja Tulemus",
+    "headers": {
+      "request": "Kas registreerida järgmine konto tootjakandidaadiks?",
+      "result": "Tootjakandidaadiks registreeriti järgmine konto:"
+    },
+    "rows": {
+      "producer": "Tootja: {producer}",
+      "producer_key": "Tootja võti: {producer_key}",
+      "url": "URL: {url}",
+      "location": "Asukoht: {location}"
+    },
+    "tooltip": "Tootja toimingu registreerimine"
+  },
+  "unregprod": {
+    "method": "Tühista tootja registreerimine",
+    "title": "Tootja registreerimise tühistamise taotlus",
+    "result": "Tühista tootjatulemuse registreerimine",
+    "headers": {
+      "request": "Kas deaktiveerida järgmine plokitootja konto?",
+      "result": "Järgmine plokitootja konto deaktiveeriti:"
+    },
+    "rows": {
+      "producer": "Tootja: {producer}"
+    },
+    "tooltip": "Tootja toimingu registreerimise tühistamine"
+  },
+  "setram": {
+    "method": "Määra RAM",
+    "title": "Määrake RAM-i taotlus",
+    "result": "Määra RAM-i tulemus",
+    "headers": {
+      "request": "Kas seadistada RAM-i varustus järgmisele summale?",
+      "result": "RAM-i pakkumiseks määrati järgmine summa:"
+    },
+    "rows": {
+      "max_ram_size": "Maksimaalne RAM-i suurus: {max_ram_size}"
+    },
+    "tooltip": "RAM-i töö seadistamine"
+  },
+  "setramrate": {
+    "method": "Määrake RAM-i kiirus",
+    "title": "Määrake RAM-i kiiruse taotlus",
+    "result": "Määrake RAM-i kiiruse tulemus",
+    "headers": {
+      "request": "Kas määrata RAM-i suurendamise kiirus baitides ploki kohta?",
+      "result": "RAM-i suurendamise kiirus määrati:"
+    },
+    "rows": {
+      "bytes_per_block": "Baite ploki kohta: {bytes_per_block}"
+    },
+    "tooltip": "RAM Rate'i töö seadistamine"
+  },
+  "voteproducer": {
+    "method": "Produtsent hääletada",
+    "title": "Produtsendi taotlus hääletada",
+    "result": "Hääletage tootja tulemust",
+    "headers": {
+      "request": "Kas hääletada produtsentide komplekti või volikirja poolt?",
+      "result": "Hääletas järgmiste tootjate komplekti või volikirja poolt:"
+    },
+    "rows": {
+      "voter": "Valija: {voter}",
+      "proxy": "Puhverserver: {proxy}",
+      "producers": "Tootjad:\n"
+    },
+    "tooltip": "Hääletamine Produtsendi operatsioon"
+  },
+  "regproxy": {
+    "method": "Registreeri puhverserver",
+    "title": "Registreeri puhverserveri taotlus",
+    "result": "Registreeri puhverserveri tulemus",
+    "headers": {
+      "request": "Kas registreerida järgmine konto valija puhverserverina?",
+      "result": "Valija volikirjaks registreeriti järgmine konto:"
+    },
+    "rows": {
+      "proxy": "Puhverserver: {proxy}",
+      "isproxy": "Kas puhverserver: {isproxy}"
+    },
+    "tooltip": "Puhverserveri toimingu registreerimine"
+  },
+  "setparams": {
+    "method": "Määra parameetrid",
+    "title": "Parameetrite määramise taotlus",
+    "result": "Määra parameetrid Tulemus",
+    "headers": {
+      "request": "Kas määrata plokiahela parameetrid?",
+      "result": "Plokiahela parameetrid määrati:"
+    },
+    "rows": {
+      "params": "Parameetrid:\n"
+    },
+    "tooltip": "Parameetrite seadistamine"
+  },
+  "claimrewards": {
+    "method": "Nõudke preemiaid",
+    "title": "Nõudke preemiate taotlus",
+    "result": "Nõudke preemiate tulemust",
+    "headers": {
+      "request": "Kas taotleda järgmise tootjakonto jaoks blokeeritud tootmist ja hääletada preemiaid?",
+      "result": "Blokeeritud tootmise ja hääletamise preemiad taotleti järgmisele tootjakontole:"
+    },
+    "rows": {
+      "owner": "Omanik: {owner}"
+    },
+    "tooltip": "Preemiate taotlemise toiming"
+  },
+  "setpriv": {
+    "method": "Määra privileeg",
+    "title": "Määra privileegide taotlus",
+    "result": "Määra privileegide tulemus",
+    "headers": {
+      "request": "Kas määrata järgmise konto privileegi olek?",
+      "result": "Privileegi olek määrati järgmisele kontole:"
+    },
+    "rows": {
+      "account": "Konto: {account}",
+      "is_priv": "On privilegeeritud: {is_priv}"
+    },
+    "tooltip": "Privileegide toimingu seadistamine"
+  },
+  "rmvproducer": {
+    "method": "Eemalda tootja",
+    "title": "Eemalda tootja taotlus",
+    "result": "Eemalda tootja tulemus",
+    "headers": {
+      "request": "Kas desaktiveerida järgmine tootja nime järgi?",
+      "result": "Järgmine tootja deaktiveeriti:"
+    },
+    "rows": {
+      "producer": "Tootja: {producer}"
+    },
+    "tooltip": "Tootja eemaldamise toiming"
+  },
+  "updtrevision": {
+    "method": "Värskenda versiooni",
+    "title": "Värskenda läbivaatamise taotlust",
+    "result": "Värskenda läbivaatamise tulemust",
+    "headers": {
+      "request": "Kas värskendada praegust versiooni?",
+      "result": "Praegust versiooni värskendati:"
+    },
+    "rows": {
+      "revision": "Redaktsioon: {revision}"
+    },
+    "tooltip": "Revisjoni toimimise värskendamine"
+  },
+  "bidname": {
+    "method": "Pakkumise nimi",
+    "title": "Pakkumise nime taotlus",
+    "result": "Pakkumise nimetuse tulemus",
+    "headers": {
+      "request": "Kas teha nimele pakkumine?",
+      "result": "Nimele tehti pakkumine:"
+    },
+    "rows": {
+      "bidder": "Pakkuja: {bidder}",
+      "newname": "Uus nimi: {newname}",
+      "bid": "Pakkumine: {bid}"
+    },
+    "tooltip": "Pakkumise nime toiming"
+  },
+  "bidrefund": {
+    "method": "Pakkumise tagastus",
+    "title": "Pakkumise tagasimakse taotlus",
+    "result": "Pakkumise tagasimakse tulemus",
+    "headers": {
+      "request": "Kas tagastada nime pakkumine?",
+      "result": "Pakkumine tagastati nimele:"
+    },
+    "rows": {
+      "bidder": "Pakkuja: {bidder}",
+      "newname": "Uus nimi: {newname}"
+    },
+    "tooltip": "Pakkumise tagasimakse toiming"
+  },
+  "ramtransfer": {
+    "method": "RAM-i ülekanne",
+    "title": "RAM-i ülekande taotlus",
+    "result": "RAM-i ülekande tulemus",
+    "headers": {
+      "request": "Kas teisaldada RAM-i ühelt kontolt teisele?",
+      "result": "RAM kanti ühelt kontolt teisele:"
+    },
+    "rows": {
+      "from": "Saatja: {from}",
+      "to": "Saaja: {to}",
+      "bytes": "Baidid: {bytes}"
+    },
+    "tooltip": "RAM-i toimingute edastamine"
+  }
+}

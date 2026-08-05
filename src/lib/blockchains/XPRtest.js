@@ -1,6 +1,6 @@
-import EOSmainnet from "./EOSmainnet.js";
+import XPR from "./XPR.js";
 
-export default class XPRtest extends EOSmainnet {
+export default class XPRtest extends XPR {
 
     getExplorer(object, chain) {
         if (object.accountName) {

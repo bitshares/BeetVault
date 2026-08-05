@@ -1,0 +1,257 @@
+{
+  "getAccount": {
+    "method": "getAccount",
+    "title": "Account Details Request",
+    "result": "Account details result",
+    "headers": {
+      "request": "Do you want to share your account details?",
+      "result": "Your account details were shared."
+    },
+    "tooltip": "Asks your wallet for blockchain account details"
+  },
+  "requestSignature": {
+    "method": "requestSignature",
+    "title": "Signature Request",
+    "result": "Signature result",
+    "headers": {
+      "request": "Do you want to share your signature?",
+      "result": "Your signature was shared:"
+    },
+    "tooltip": "Asks your wallet for blockchain signatures"
+  },
+  "injectedCall": {
+    "method": "injectedCall",
+    "title": "Injected Call Request",
+    "result": "Injected call result",
+    "headers": {
+      "request": "Approve the following injected call?",
+      "result": "The following injected call was approved:"
+    },
+    "tooltip": "Asks your wallet to handle an injected blockchain operation"
+  },
+  "stakexpr": {
+    "method": "Stake XPR",
+    "title": "Stake XPR Request",
+    "result": "Stake XPR Result",
+    "headers": {
+      "request": "Stake the following XPR amount?",
+      "result": "The following XPR amount was staked:"
+    },
+    "rows": {
+      "account": "Account: {account}",
+      "quantity": "Quantity: {quantity}"
+    },
+    "tooltip": "Stake XPR tokens"
+  },
+  "unstakexpr": {
+    "method": "Unstake XPR",
+    "title": "Unstake XPR Request",
+    "result": "Unstake XPR Result",
+    "headers": {
+      "request": "Unstake the following XPR amount?",
+      "result": "The following XPR amount was unstaked:"
+    },
+    "rows": {
+      "account": "Account: {account}",
+      "quantity": "Quantity: {quantity}"
+    },
+    "tooltip": "Unstake XPR tokens"
+  },
+  "updstakexpr": {
+    "method": "Update XPR Stake",
+    "title": "Update XPR Stake Request",
+    "result": "Update XPR Stake Result",
+    "headers": {
+      "request": "Update the following XPR stake?",
+      "result": "The following XPR stake was updated:"
+    },
+    "rows": {
+      "account": "Account: {account}",
+      "quantity": "Quantity: {quantity}"
+    },
+    "tooltip": "Update XPR staking amount"
+  },
+  "refundxpr": {
+    "method": "Refund XPR Stake",
+    "title": "Refund XPR Stake Request",
+    "result": "Refund XPR Stake Result",
+    "headers": {
+      "request": "Refund the following XPR stake?",
+      "result": "The following XPR stake was refunded:"
+    },
+    "rows": {
+      "account": "Account: {account}"
+    },
+    "tooltip": "Refund XPR staked tokens"
+  },
+  "voterclaim": {
+    "method": "Claim XPR Voter Rewards",
+    "title": "Claim XPR Voter Rewards Request",
+    "result": "Claim XPR Voter Rewards Result",
+    "headers": {
+      "request": "Claim XPR voter rewards?",
+      "result": "XPR voter rewards were claimed:"
+    },
+    "rows": {
+      "owner": "Owner: {owner}"
+    },
+    "tooltip": "Claim XPR voter rewards"
+  },
+  "voterclaimst": {
+    "method": "Claim XPR Voter Staked Rewards",
+    "title": "Claim XPR Voter Staked Rewards Request",
+    "result": "Claim XPR Voter Staked Rewards Result",
+    "headers": {
+      "request": "Claim XPR voter staked rewards?",
+      "result": "XPR voter staked rewards were claimed:"
+    },
+    "rows": {
+      "owner": "Owner: {owner}",
+      "amount": "Amount: {amount}"
+    },
+    "tooltip": "Claim XPR voter staked rewards"
+  },
+  "setperm": {
+    "method": "Set Account Permission",
+    "title": "Set Account Permission Request",
+    "result": "Set Account Permission Result",
+    "headers": {
+      "request": "Set the following account permission?",
+      "result": "The following account permission was set:"
+    },
+    "rows": {
+      "account": "Account: {account}",
+      "permission": "Permission: {permission}",
+      "allowed_actions": "Allowed Actions: {allowed_actions}"
+    },
+    "tooltip": "Set account permission on Proton/XPR"
+  },
+  "setusername": {
+    "method": "Set Proton Username",
+    "title": "Set Proton Username Request",
+    "result": "Set Proton Username Result",
+    "headers": {
+      "request": "Set the following Proton username?",
+      "result": "The following Proton username was set:"
+    },
+    "rows": {
+      "account": "Account: {account}",
+      "username": "Username: {username}"
+    },
+    "tooltip": "Set a Proton/XPR username"
+  },
+  "userverify": {
+    "method": "Verify Proton User",
+    "title": "Verify Proton User Request",
+    "result": "Verify Proton User Result",
+    "headers": {
+      "request": "Verify the following Proton user?",
+      "result": "The following Proton user was verified:"
+    },
+    "rows": {
+      "account": "Account: {account}",
+      "is_verified": "Is Verified: {is_verified}"
+    },
+    "tooltip": "Verify a Proton/XPR user"
+  },
+  "addkyc": {
+    "method": "Add KYC",
+    "title": "Add KYC Request",
+    "result": "Add KYC Result",
+    "headers": {
+      "request": "Add the following KYC information?",
+      "result": "The following KYC information was added:"
+    },
+    "rows": {
+      "account": "Account: {account}",
+      "kyc_provider": "KYC Provider: {kyc_provider}",
+      "kyc_app_id": "KYC App ID: {kyc_app_id}",
+      "kyc_status": "KYC Status: {kyc_status}"
+    },
+    "tooltip": "Add KYC information to an account"
+  },
+  "updatekyc": {
+    "method": "Update KYC",
+    "title": "Update KYC Request",
+    "result": "Update KYC Result",
+    "headers": {
+      "request": "Update the following KYC information?",
+      "result": "The following KYC information was updated:"
+    },
+    "rows": {
+      "account": "Account: {account}",
+      "kyc_provider": "KYC Provider: {kyc_provider}",
+      "kyc_app_id": "KYC App ID: {kyc_app_id}",
+      "kyc_status": "KYC Status: {kyc_status}"
+    },
+    "tooltip": "Update KYC information on an account"
+  },
+  "removekyc": {
+    "method": "Remove KYC",
+    "title": "Remove KYC Request",
+    "result": "Remove KYC Result",
+    "headers": {
+      "request": "Remove the following KYC information?",
+      "result": "The following KYC information was removed:"
+    },
+    "rows": {
+      "account": "Account: {account}"
+    },
+    "tooltip": "Remove KYC information from an account"
+  },
+  "reg": {
+    "method": "Register Proton Fund",
+    "title": "Register Proton Fund Request",
+    "result": "Register Proton Fund Result",
+    "headers": {
+      "request": "Register with the following Proton community fund?",
+      "result": "Registration with the following Proton community fund was completed:"
+    },
+    "rows": {
+      "account": "Account: {account}"
+    },
+    "tooltip": "Register with a Proton community fund"
+  },
+  "claimreward": {
+    "method": "Claim Proton Fund Reward",
+    "title": "Claim Proton Fund Reward Request",
+    "result": "Claim Proton Fund Reward Result",
+    "headers": {
+      "request": "Claim Proton community fund reward?",
+      "result": "The Proton community fund reward was claimed:"
+    },
+    "rows": {
+      "account": "Account: {account}"
+    },
+    "tooltip": "Claim reward from a Proton community fund"
+  },
+  "process": {
+    "method": "Process Proton Fund",
+    "title": "Process Proton Fund Request",
+    "result": "Process Proton Fund Result",
+    "headers": {
+      "request": "Process the following Proton community fund?",
+      "result": "The following Proton community fund was processed:"
+    },
+    "rows": {
+      "account": "Account: {account}"
+    },
+    "tooltip": "Process a Proton community fund"
+  },
+  "transfer": {
+    "method": "Transfer XPR Tokens",
+    "title": "Transfer XPR Tokens Request",
+    "result": "Transfer XPR Tokens Result",
+    "headers": {
+      "request": "Transfer the following XPR tokens?",
+      "result": "The following XPR tokens were transferred:"
+    },
+    "rows": {
+      "from": "From: {from}",
+      "to": "To: {to}",
+      "quantity": "Quantity: {quantity}",
+      "memo": "Memo: {memo}"
+    },
+    "tooltip": "Transfer XPR tokens between accounts"
+  }
+}

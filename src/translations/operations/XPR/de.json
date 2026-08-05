@@ -1,0 +1,257 @@
+{
+  "getAccount": {
+    "method": "getAccount",
+    "title": "Kontodetails-Anfrage",
+    "result": "Kontodetails-Ergebnis",
+    "headers": {
+      "request": "Möchten Sie Ihre Kontodetails freigeben?",
+      "result": "Ihre Kontodetails wurden freigegeben."
+    },
+    "tooltip": "Fragt Ihr Wallet nach Blockchain-Kontodetails"
+  },
+  "requestSignature": {
+    "method": "requestSignature",
+    "title": "Signaturanfrage",
+    "result": "Signatur-Ergebnis",
+    "headers": {
+      "request": "Möchten Sie Ihre Signatur freigeben?",
+      "result": "Ihre Signatur wurde freigegeben:"
+    },
+    "tooltip": "Fragt Ihr Wallet nach Blockchain-Signaturen"
+  },
+  "injectedCall": {
+    "method": "injectedCall",
+    "title": "Injizierter Aufruf Request",
+    "result": "Injizierter Aufruf Ergebnis",
+    "headers": {
+      "request": "Folgenden injizierten Aufruf genehmigen?",
+      "result": "Folgender injizierter Aufruf wurde genehmigt:"
+    },
+    "tooltip": "Bittet Ihr Wallet, einen injizierten Blockchain-Vorgang zu verarbeiten"
+  },
+  "stakexpr": {
+    "method": "XPR staken",
+    "title": "XPR-Staking Anfrage",
+    "result": "XPR-Staking Ergebnis",
+    "headers": {
+      "request": "Folgenden XPR-Betrag staken?",
+      "result": "Folgender XPR-Betrag wurde gestakt:"
+    },
+    "rows": {
+      "account": "Konto: {account}",
+      "quantity": "Menge: {quantity}"
+    },
+    "tooltip": "XPR-Token staken"
+  },
+  "unstakexpr": {
+    "method": "XPR unstaken",
+    "title": "XPR-Unstaking Anfrage",
+    "result": "XPR-Unstaking Ergebnis",
+    "headers": {
+      "request": "Folgenden XPR-Betrag unstaken?",
+      "result": "Folgender XPR-Betrag wurde ungestakt:"
+    },
+    "rows": {
+      "account": "Konto: {account}",
+      "quantity": "Menge: {quantity}"
+    },
+    "tooltip": "XPR-Token unstaken"
+  },
+  "updstakexpr": {
+    "method": "XPR-Staking aktualisieren",
+    "title": "XPR-Staking-Aktualisierung Anfrage",
+    "result": "XPR-Staking-Aktualisierung Ergebnis",
+    "headers": {
+      "request": "Folgenden XPR-Staking aktualisieren?",
+      "result": "Folgender XPR-Staking wurde aktualisiert:"
+    },
+    "rows": {
+      "account": "Konto: {account}",
+      "quantity": "Menge: {quantity}"
+    },
+    "tooltip": "XPR-Staking-Betrag aktualisieren"
+  },
+  "refundxpr": {
+    "method": "XPR-Staking erstatten",
+    "title": "XPR-Staking-Erstattung Anfrage",
+    "result": "XPR-Staking-Erstattung Ergebnis",
+    "headers": {
+      "request": "Folgenden XPR-Staking erstatten?",
+      "result": "Folgender XPR-Staking wurde erstattet:"
+    },
+    "rows": {
+      "account": "Konto: {account}"
+    },
+    "tooltip": "XPR-gestakte Token erstatten"
+  },
+  "voterclaim": {
+    "method": "XPR-Wählerbelohnungen beanspruchen",
+    "title": "XPR-Wählerbelohnungen-Beanspruchung Anfrage",
+    "result": "XPR-Wählerbelohnungen-Beanspruchung Ergebnis",
+    "headers": {
+      "request": "XPR-Wählerbelohnungen beanspruchen?",
+      "result": "XPR-Wählerbelohnungen wurden beansprucht:"
+    },
+    "rows": {
+      "owner": "Besitzer: {owner}"
+    },
+    "tooltip": "XPR-Wählerbelohnungen beanspruchen"
+  },
+  "voterclaimst": {
+    "method": "XPR-Gestakete Wählerbelohnungen beanspruchen",
+    "title": "XPR-Gestakete Wählerbelohnungen-Beanspruchung Anfrage",
+    "result": "XPR-Gestakete Wählerbelohnungen-Beanspruchung Ergebnis",
+    "headers": {
+      "request": "XPR-gestakete Wählerbelohnungen beanspruchen?",
+      "result": "XPR-gestakete Wählerbelohnungen wurden beansprucht:"
+    },
+    "rows": {
+      "owner": "Besitzer: {owner}",
+      "amount": "Betrag: {amount}"
+    },
+    "tooltip": "XPR-gestakete Wählerbelohnungen beanspruchen"
+  },
+  "setperm": {
+    "method": "Kontoberechtigung festlegen",
+    "title": "Kontoberechtigungsfestlegung Anfrage",
+    "result": "Kontoberechtigungsfestlegung Ergebnis",
+    "headers": {
+      "request": "Folgende Kontoberechtigung festlegen?",
+      "result": "Folgende Kontoberechtigung wurde festgelegt:"
+    },
+    "rows": {
+      "account": "Konto: {account}",
+      "permission": "Berechtigung: {permission}",
+      "allowed_actions": "Erlaubte Aktionen: {allowed_actions}"
+    },
+    "tooltip": "Kontoberechtigung auf Proton/XPR festlegen"
+  },
+  "setusername": {
+    "method": "Proton-Benutzernamen festlegen",
+    "title": "Proton-Benutzernamenfestlegung Anfrage",
+    "result": "Proton-Benutzernamenfestlegung Ergebnis",
+    "headers": {
+      "request": "Folgenden Proton-Benutzernamen festlegen?",
+      "result": "Folgender Proton-Benutzername wurde festgelegt:"
+    },
+    "rows": {
+      "account": "Konto: {account}",
+      "username": "Benutzername: {username}"
+    },
+    "tooltip": "Einen Proton/XPR-Benutzernamen festlegen"
+  },
+  "userverify": {
+    "method": "Proton-Benutzer verifizieren",
+    "title": "Proton-Benutzerverifizierung Anfrage",
+    "result": "Proton-Benutzerverifizierung Ergebnis",
+    "headers": {
+      "request": "Folgenden Proton-Benutzer verifizieren?",
+      "result": "Folgender Proton-Benutzer wurde verifiziert:"
+    },
+    "rows": {
+      "account": "Konto: {account}",
+      "is_verified": "Ist verifiziert: {is_verified}"
+    },
+    "tooltip": "Einen Proton/XPR-Benutzer verifizieren"
+  },
+  "addkyc": {
+    "method": "KYC hinzufügen",
+    "title": "KYC-Hinzufügung Anfrage",
+    "result": "KYC-Hinzufügung Ergebnis",
+    "headers": {
+      "request": "Folgende KYC-Informationen hinzufügen?",
+      "result": "Folgende KYC-Informationen wurden hinzugefügt:"
+    },
+    "rows": {
+      "account": "Konto: {account}",
+      "kyc_provider": "KYC-Anbieter: {kyc_provider}",
+      "kyc_app_id": "KYC-App-ID: {kyc_app_id}",
+      "kyc_status": "KYC-Status: {kyc_status}"
+    },
+    "tooltip": "KYC-Informationen zu einem Konto hinzufügen"
+  },
+  "updatekyc": {
+    "method": "KYC aktualisieren",
+    "title": "KYC-Aktualisierung Anfrage",
+    "result": "KYC-Aktualisierung Ergebnis",
+    "headers": {
+      "request": "Folgende KYC-Informationen aktualisieren?",
+      "result": "Folgende KYC-Informationen wurden aktualisiert:"
+    },
+    "rows": {
+      "account": "Konto: {account}",
+      "kyc_provider": "KYC-Anbieter: {kyc_provider}",
+      "kyc_app_id": "KYC-App-ID: {kyc_app_id}",
+      "kyc_status": "KYC-Status: {kyc_status}"
+    },
+    "tooltip": "KYC-Informationen auf einem Konto aktualisieren"
+  },
+  "removekyc": {
+    "method": "KYC entfernen",
+    "title": "KYC-Entfernung Anfrage",
+    "result": "KYC-Entfernung Ergebnis",
+    "headers": {
+      "request": "Folgende KYC-Informationen entfernen?",
+      "result": "Folgende KYC-Informationen wurden entfernt:"
+    },
+    "rows": {
+      "account": "Konto: {account}"
+    },
+    "tooltip": "KYC-Informationen von einem Konto entfernen"
+  },
+  "reg": {
+    "method": "Proton-Gemeinschaftsfonds registrieren",
+    "title": "Proton-Gemeinschaftsfonds-Registrierung Anfrage",
+    "result": "Proton-Gemeinschaftsfonds-Registrierung Ergebnis",
+    "headers": {
+      "request": "Bei folgendem Proton-Gemeinschaftsfonds registrieren?",
+      "result": "Registrierung bei folgendem Proton-Gemeinschaftsfonds wurde abgeschlossen:"
+    },
+    "rows": {
+      "account": "Konto: {account}"
+    },
+    "tooltip": "Bei einem Proton-Gemeinschaftsfonds registrieren"
+  },
+  "claimreward": {
+    "method": "Proton-Gemeinschaftsfonds-Belohnung beanspruchen",
+    "title": "Proton-Gemeinschaftsfonds-Belohnungs-Beanspruchung Anfrage",
+    "result": "Proton-Gemeinschaftsfonds-Belohnungs-Beanspruchung Ergebnis",
+    "headers": {
+      "request": "Proton-Gemeinschaftsfonds-Belohnung beanspruchen?",
+      "result": "Die Proton-Gemeinschaftsfonds-Belohnung wurde beansprucht:"
+    },
+    "rows": {
+      "account": "Konto: {account}"
+    },
+    "tooltip": "Belohnung von einem Proton-Gemeinschaftsfonds beanspruchen"
+  },
+  "process": {
+    "method": "Proton-Gemeinschaftsfonds verarbeiten",
+    "title": "Proton-Gemeinschaftsfonds-Verarbeitung Anfrage",
+    "result": "Proton-Gemeinschaftsfonds-Verarbeitung Ergebnis",
+    "headers": {
+      "request": "Folgenden Proton-Gemeinschaftsfonds verarbeiten?",
+      "result": "Folgender Proton-Gemeinschaftsfonds wurde verarbeitet:"
+    },
+    "rows": {
+      "account": "Konto: {account}"
+    },
+    "tooltip": "Einen Proton-Gemeinschaftsfonds verarbeiten"
+  },
+  "transfer": {
+    "method": "XPR-Token übertragen",
+    "title": "XPR-Token-Übertragung Anfrage",
+    "result": "XPR-Token-Übertragung Ergebnis",
+    "headers": {
+      "request": "Folgende XPR-Token übertragen?",
+      "result": "Folgende XPR-Token wurden übertragen:"
+    },
+    "rows": {
+      "from": "Von: {from}",
+      "to": "An: {to}",
+      "quantity": "Menge: {quantity}",
+      "memo": "Nachricht: {memo}"
+    },
+    "tooltip": "XPR-Token zwischen Konten übertragen"
+  }
+}

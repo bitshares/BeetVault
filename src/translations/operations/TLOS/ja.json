@@ -1,0 +1,272 @@
+{
+  "getAccount": {
+    "method": "getAccount",
+    "title": "アカウント詳細リクエスト",
+    "result": "アカウント詳細結果",
+    "headers": {
+      "request": "アカウントの詳細を共有しますか?",
+      "result": "アカウントの詳細が共有されました。"
+    },
+    "tooltip": "ウォレットにブロックチェーンアカウントの詳細を要求します"
+  },
+  "requestSignature": {
+    "method": "要求署名",
+    "title": "署名リクエスト",
+    "result": "署名結果",
+    "headers": {
+      "request": "あなたの署名を共有したいですか?",
+      "result": "あなたの署名が共有されました:"
+    },
+    "tooltip": "ウォレットにブロックチェーン署名を要求します"
+  },
+  "injectedCall": {
+    "method": "注入されたコール",
+    "title": "挿入された通話リクエスト",
+    "result": "挿入された呼び出しの結果",
+    "headers": {
+      "request": "次の挿入された呼び出しを承認しますか?",
+      "result": "次の挿入された呼び出しが承認されました。"
+    },
+    "tooltip": "挿入されたブロックチェーン操作を処理するようにウォレットに要求します"
+  },
+  "newballot": {
+    "method": "Decide投票の作成",
+    "title": "Decide投票作成リクエスト",
+    "result": "Decide投票作成結果",
+    "headers": {
+      "request": "以下のDecide投票を作成しますか?",
+      "result": "以下のDecide投票が作成されました:"
+    },
+    "rows": {
+      "title": "タイトル: {title}",
+      "description": "説明: {description}",
+      "treasury_symbol": "トレジャリーシンボル: {treasury_symbol}",
+      "category": "カテゴリ: {category}",
+      "voting_method": "投票方法: {voting_method}",
+      "quorum": "法定定員: {quorum}",
+      "duration": "期間: {duration}"
+    },
+    "tooltip": "新しいTelos Decide投票を作成する"
+  },
+  "castvote": {
+    "method": "Decide投票の実行",
+    "title": "Decide投票実行リクエスト",
+    "result": "Decide投票実行結果",
+    "headers": {
+      "request": "以下のDecide投票を実行しますか?",
+      "result": "以下のDecide投票が実行されました:"
+    },
+    "rows": {
+      "voter": "投票者: {voter}",
+      "ballot_name": "投票名: {ballot_name}",
+      "votes": "投票数: {votes}"
+    },
+    "tooltip": "Telos Decide投票で投票する"
+  },
+  "openvoting": {
+    "method": "Decide投票の開始",
+    "title": "Decide投票開始リクエスト",
+    "result": "Decide投票開始結果",
+    "headers": {
+      "request": "以下のDecide投票の投票を開始しますか?",
+      "result": "以下のDecide投票の投票が開始されました:"
+    },
+    "rows": {
+      "ballot_name": "投票名: {ballot_name}"
+    },
+    "tooltip": "Telos Decide投票の投票を開始する"
+  },
+  "closevoting": {
+    "method": "Decide投票の終了",
+    "title": "Decide投票終了リクエスト",
+    "result": "Decide投票終了結果",
+    "headers": {
+      "request": "以下のDecide投票の投票を終了しますか?",
+      "result": "以下のDecide投票の投票が終了されました:"
+    },
+    "rows": {
+      "ballot_name": "投票名: {ballot_name}"
+    },
+    "tooltip": "Telos Decide投票の投票を終了する"
+  },
+  "cancelballot": {
+    "method": "Decide投票のキャンセル",
+    "title": "Decide投票キャンセルリクエスト",
+    "result": "Decide投票キャンセル結果",
+    "headers": {
+      "request": "以下のDecide投票をキャンセルしますか?",
+      "result": "以下のDecide投票がキャンセルされました:"
+    },
+    "rows": {
+      "ballot_name": "投票名: {ballot_name}"
+    },
+    "tooltip": "Telos Decide投票をキャンセルする"
+  },
+  "deleteballot": {
+    "method": "Decide投票の削除",
+    "title": "Decide投票削除リクエスト",
+    "result": "Decide投票削除結果",
+    "headers": {
+      "request": "以下のDecide投票を削除しますか?",
+      "result": "以下のDecide投票が削除されました:"
+    },
+    "rows": {
+      "ballot_name": "投票名: {ballot_name}"
+    },
+    "tooltip": "Telos Decide投票を削除する"
+  },
+  "regvoter": {
+    "method": "Decide有権者の登録",
+    "title": "Decide有権者登録リクエスト",
+    "result": "Decide有権者登録結果",
+    "headers": {
+      "request": "以下のアカウントをDecide有権者として登録しますか?",
+      "result": "以下のアカウントがDecide有権者として登録されました:"
+    },
+    "rows": {
+      "voter": "投票者: {voter}",
+      "treasury_symbol": "トレジャリーシンボル: {treasury_symbol}"
+    },
+    "tooltip": "Telos Decide有権者を登録する"
+  },
+  "stake": {
+    "method": "TLOSのステーク",
+    "title": "TLOSステークリクエスト",
+    "result": "TLOSステーク結果",
+    "headers": {
+      "request": "以下のTLOS数量をステークしますか?",
+      "result": "以下のTLOS数量がステークされました:"
+    },
+    "rows": {
+      "voter": "投票者: {voter}",
+      "quantity": "数量: {quantity}"
+    },
+    "tooltip": "TLOSトークンをステークする"
+  },
+  "unstake": {
+    "method": "TLOSのアンステーク",
+    "title": "TLOSアンステークリクエスト",
+    "result": "TLOSアンステーク結果",
+    "headers": {
+      "request": "以下のTLOS数量をアンステークしますか?",
+      "result": "以下のTLOS数量がアンステークされました:"
+    },
+    "rows": {
+      "voter": "投票者: {voter}",
+      "quantity": "数量: {quantity}"
+    },
+    "tooltip": "TLOSトークンをアンステークする"
+  },
+  "newtreasury": {
+    "method": "Decideトレジャリーの作成",
+    "title": "Decideトレジャリー作成リクエスト",
+    "result": "Decideトレジャリー作成結果",
+    "headers": {
+      "request": "以下のDecideトレジャリーを作成しますか?",
+      "result": "以下のDecideトレジャリーが作成されました:"
+    },
+    "rows": {
+      "manager": "管理者: {manager}",
+      "max_supply": "最大供給量: {max_supply}",
+      "access_type": "アクセスタイプ: {access_type}"
+    },
+    "tooltip": "新しいTelos Decideトレジャリーを作成する"
+  },
+  "mint": {
+    "method": "Decideトークンの発行",
+    "title": "Decideトークン発行リクエスト",
+    "result": "Decideトークン発行結果",
+    "headers": {
+      "request": "以下のDecideトークンを発行しますか?",
+      "result": "以下のDecideトークンが発行されました:"
+    },
+    "rows": {
+      "to": "宛先: {to}",
+      "quantity": "数量: {quantity}",
+      "memo": "メモ: {memo}"
+    },
+    "tooltip": "Telos Decideトークンを発行する"
+  },
+  "burn": {
+    "method": "Decideトークンのバーン",
+    "title": "Decideトークンバーンリクエスト",
+    "result": "Decideトークンバーン結果",
+    "headers": {
+      "request": "以下のDecideトークンをバーンしますか?",
+      "result": "以下のDecideトークンがバーンされました:"
+    },
+    "rows": {
+      "quantity": "数量: {quantity}",
+      "memo": "メモ: {memo}"
+    },
+    "tooltip": "Telos Decideトークンをバーンする"
+  },
+  "claimpayment": {
+    "method": "Decide報酬の請求",
+    "title": "Decide報酬請求リクエスト",
+    "result": "Decide報酬請求結果",
+    "headers": {
+      "request": "以下のDecide報酬を請求しますか?",
+      "result": "以下のDecide報酬が請求されました:"
+    },
+    "rows": {
+      "worker": "ワーカー: {worker}"
+    },
+    "tooltip": "Telos Decideワーカー報酬を請求する"
+  },
+  "regcommittee": {
+    "method": "Decide委員会の登録",
+    "title": "Decide委員会登録リクエスト",
+    "result": "Decide委員会登録結果",
+    "headers": {
+      "request": "以下のDecide委員会を登録しますか?",
+      "result": "以下のDecide委員会が登録されました:"
+    },
+    "rows": {
+      "committee_name": "委員会名: {committee_name}",
+      "account": "アカウント: {account}"
+    },
+    "tooltip": "Telos Decide委員会を登録する"
+  },
+  "raw": {
+    "method": "生のEVMトランザクション",
+    "title": "生のEVMトランザクションリクエスト",
+    "result": "生のEVMトランザクション結果",
+    "headers": {
+      "request": "以下の生のEVMトランザクションを送信しますか?",
+      "result": "以下の生のEVMトランザクションが送信されました:"
+    },
+    "rows": {
+      "tx_hex": "トランザクション HEX: {tx_hex}"
+    },
+    "tooltip": "Telosで生のEVMトランザクションを送信する"
+  },
+  "withdraw": {
+    "method": "EVMからの引き出し",
+    "title": "EVMからの引き出しリクエスト",
+    "result": "EVMからの引き出し結果",
+    "headers": {
+      "request": "Telos EVMから引き出しますか?",
+      "result": "以下の数量がTelos EVMから引き出されました:"
+    },
+    "rows": {
+      "to": "宛先: {to}",
+      "quantity": "数量: {quantity}"
+    },
+    "tooltip": "Telos EVMからトークンを引き出す"
+  },
+  "create": {
+    "method": "EVMアカウントの作成",
+    "title": "EVMアカウント作成リクエスト",
+    "result": "EVMアカウント作成結果",
+    "headers": {
+      "request": "Telos EVMアカウントを作成しますか?",
+      "result": "以下のTelos EVMアカウントが作成されました:"
+    },
+    "rows": {
+      "account": "アカウント: {account}",
+      "data": "データ: {data}"
+    },
+    "tooltip": "新しいTelos EVMアカウントを作成する"
+  }
+}

@@ -1,0 +1,332 @@
+{
+  "getAccount": {
+    "method": "getAccount",
+    "title": "Richiesta dettagli account",
+    "result": "Risultato dei dettagli dell'account",
+    "headers": {
+      "request": "Vuoi condividere i dettagli del tuo account?",
+      "result": "I dettagli del tuo account sono stati condivisi."
+    },
+    "tooltip": "Chiede al tuo portafoglio i dettagli dell'account blockchain"
+  },
+  "requestSignature": {
+    "method": "requestSignature",
+    "title": "Richiesta di firma",
+    "result": "Risultato della firma",
+    "headers": {
+      "request": "Vuoi condividere la tua firma?",
+      "result": "La tua firma è stata condivisa:"
+    },
+    "tooltip": "Chiede al tuo portafoglio le firme blockchain"
+  },
+  "injectedCall": {
+    "method": "iniettatoCall",
+    "title": "Richiesta di chiamata inserita",
+    "result": "Risultato della chiamata inserito",
+    "headers": {
+      "request": "Approvare la seguente chiamata inserita?",
+      "result": "È stata approvata la seguente chiamata inserita:"
+    },
+    "tooltip": "Chiede al tuo portafoglio di gestire un'operazione blockchain iniettata"
+  },
+  "regproposer": {
+    "method": "Registra proponente WPS",
+    "title": "Richiesta di registrazione proponente WPS",
+    "result": "Risultato della registrazione proponente WPS",
+    "headers": {
+      "request": "Registrare il seguente account come proponente WPS?",
+      "result": "Il seguente account è stato registrato come proponente WPS:"
+    },
+    "rows": {
+      "proposer": "Proponente: {proposer}",
+      "proposer_key": "Chiave del proponente: {proposer_key}"
+    },
+    "tooltip": "Registra un account proponente WPS"
+  },
+  "regproposal": {
+    "method": "Registra proposta WPS",
+    "title": "Richiesta di registrazione proposta WPS",
+    "result": "Risultato della registrazione proposta WPS",
+    "headers": {
+      "request": "Registrare la seguente proposta WPS?",
+      "result": "La seguente proposta WPS è stata registrata:"
+    },
+    "rows": {
+      "proposer": "Proponente: {proposer}",
+      "proposal_name": "Nome della proposta: {proposal_name}",
+      "title": "Titolo: {title}",
+      "pay_amount": "Importo del pagamento: {pay_amount}"
+    },
+    "tooltip": "Registra una nuova proposta WPS"
+  },
+  "voteproposal": {
+    "method": "Vota proposta WPS",
+    "title": "Richiesta di voto proposta WPS",
+    "result": "Risultato del voto proposta WPS",
+    "headers": {
+      "request": "Votare per la seguente proposta WPS?",
+      "result": "Il voto per la seguente proposta WPS è stato approvato:"
+    },
+    "rows": {
+      "voter": "Votante: {voter}",
+      "proposal_name": "Nome della proposta: {proposal_name}",
+      "vote": "Voto: {vote}"
+    },
+    "tooltip": "Vota per una proposta WPS"
+  },
+  "claimfunds": {
+    "method": "Richiedi fondi WPS",
+    "title": "Richiesta di richiesta fondi WPS",
+    "result": "Risultato della richiesta fondi WPS",
+    "headers": {
+      "request": "Richiedere i fondi WPS per la seguente proposta?",
+      "result": "I fondi WPS sono stati richiesti per la seguente proposta:"
+    },
+    "rows": {
+      "account": "Account: {account}",
+      "proposal_name": "Nome della proposta: {proposal_name}"
+    },
+    "tooltip": "Richiedi i fondi di una proposta WPS approvata"
+  },
+  "voterclaim": {
+    "method": "Richiedi ricompense elettore WPS",
+    "title": "Richiesta di ricompense elettore WPS",
+    "result": "Risultato delle ricompense elettore WPS",
+    "headers": {
+      "request": "Richiedere le ricompense elettore WPS?",
+      "result": "Le ricompense elettore WPS sono state richieste:"
+    },
+    "rows": {
+      "owner": "Proprietario: {owner}"
+    },
+    "tooltip": "Richiedi le ricompense elettore WPS"
+  },
+  "voterclaimst": {
+    "method": "Richiedi ricompense elettore WPS puntate",
+    "title": "Richiesta di ricompense elettore WPS puntate",
+    "result": "Risultato delle ricompense elettore WPS puntate",
+    "headers": {
+      "request": "Richiedere le ricompense elettore WPS puntate?",
+      "result": "Le ricompense elettore WPS puntate sono state richieste:"
+    },
+    "rows": {
+      "owner": "Proprietario: {owner}",
+      "amount": "Importo: {amount}"
+    },
+    "tooltip": "Richiedi le ricompense elettore WPS puntate"
+  },
+  "awardgenesis": {
+    "method": "Assegna token genesis",
+    "title": "Richiesta di assegnazione token genesis",
+    "result": "Risultato dell'assegnazione token genesis",
+    "headers": {
+      "request": "Assegnare i token genesis al seguente account?",
+      "result": "I token genesis sono stati assegnati al seguente account:"
+    },
+    "rows": {
+      "receiver": "Destinatario: {receiver}",
+      "amount": "Importo: {amount}"
+    },
+    "tooltip": "Assegna token genesis a un account"
+  },
+  "claimgenesis": {
+    "method": "Richiedi token genesis",
+    "title": "Richiesta di token genesis",
+    "result": "Risultato della richiesta token genesis",
+    "headers": {
+      "request": "Richiedere i token genesis per il seguente account?",
+      "result": "I token genesis sono stati richiesti per il seguente account:"
+    },
+    "rows": {
+      "receiver": "Destinatario: {receiver}"
+    },
+    "tooltip": "Richiedi token genesis"
+  },
+  "createcol": {
+    "method": "Crea collezione NFT",
+    "title": "Richiesta di creazione collezione NFT",
+    "result": "Risultato della creazione collezione NFT",
+    "headers": {
+      "request": "Creare la seguente collezione NFT?",
+      "result": "La seguente collezione NFT è stata creata:"
+    },
+    "rows": {
+      "author": "Autore: {author}",
+      "collection_name": "Nome della collezione: {collection_name}",
+      "allow_notify": "Consenti notifiche: {allow_notify}",
+      "market_fee": "Commissione di mercato: {market_fee}"
+    },
+    "tooltip": "Crea una nuova collezione NFT"
+  },
+  "mintasset": {
+    "method": "Minta asset NFT",
+    "title": "Richiesta di mint asset NFT",
+    "result": "Risultato del mint asset NFT",
+    "headers": {
+      "request": "Mintare il seguente asset NFT?",
+      "result": "Il seguente asset NFT è stato mintato:"
+    },
+    "rows": {
+      "authorized_minter": "Minter autorizzato: {authorized_minter}",
+      "collection_name": "Nome della collezione: {collection_name}",
+      "schema_name": "Nome dello schema: {schema_name}",
+      "template_id": "ID del modello: {template_id}",
+      "new_asset_owner": "Nuovo proprietario dell'asset: {new_asset_owner}"
+    },
+    "tooltip": "Minta un nuovo asset NFT"
+  },
+  "burnasset": {
+    "method": "Brucia asset NFT",
+    "title": "Richiesta di burn asset NFT",
+    "result": "Risultato del burn asset NFT",
+    "headers": {
+      "request": "Bruciare il seguente asset NFT?",
+      "result": "Il seguente asset NFT è stato bruciato:"
+    },
+    "rows": {
+      "asset_owner": "Proprietario dell'asset: {asset_owner}",
+      "asset_id": "ID dell'asset: {asset_id}"
+    },
+    "tooltip": "Brucia un asset NFT"
+  },
+  "createoffer": {
+    "method": "Crea offerta NFT",
+    "title": "Richiesta di creazione offerta NFT",
+    "result": "Risultato della creazione offerta NFT",
+    "headers": {
+      "request": "Creare la seguente offerta NFT?",
+      "result": "La seguente offerta NFT è stata creata:"
+    },
+    "rows": {
+      "sender": "Mittente: {sender}",
+      "recipient": "Destinatario: {recipient}",
+      "sender_asset_ids": "ID degli asset del mittente: {sender_asset_ids}",
+      "recipient_asset_ids": "ID degli asset del destinatario: {recipient_asset_ids}",
+      "memo": "Memo: {memo}"
+    },
+    "tooltip": "Crea una nuova offerta NFT"
+  },
+  "acceptoffer": {
+    "method": "Accetta offerta NFT",
+    "title": "Richiesta di accettazione offerta NFT",
+    "result": "Risultato dell'accettazione offerta NFT",
+    "headers": {
+      "request": "Accettare la seguente offerta NFT?",
+      "result": "La seguente offerta NFT è stata accettata:"
+    },
+    "rows": {
+      "offer_id": "ID dell'offerta: {offer_id}"
+    },
+    "tooltip": "Accetta un'offerta NFT"
+  },
+  "announcesale": {
+    "method": "Annuncia vendita NFT",
+    "title": "Richiesta di annuncio vendita NFT",
+    "result": "Risultato dell'annuncio vendita NFT",
+    "headers": {
+      "request": "Annunciare la seguente vendita NFT?",
+      "result": "La seguente vendita NFT è stata annunciata:"
+    },
+    "rows": {
+      "seller": "Venditore: {seller}",
+      "asset_ids": "ID degli asset: {asset_ids}",
+      "listing_price": "Prezzo di listino: {listing_price}",
+      "settlement_symbol": "Simbolo di regolamento: {settlement_symbol}"
+    },
+    "tooltip": "Annuncia un NFT per la vendita"
+  },
+  "purchasesale": {
+    "method": "Acquista vendita NFT",
+    "title": "Richiesta di acquisto vendita NFT",
+    "result": "Risultato dell'acquisto vendita NFT",
+    "headers": {
+      "request": "Acquistare la seguente vendita NFT?",
+      "result": "La seguente vendita NFT è stata acquistata:"
+    },
+    "rows": {
+      "buyer": "Acquirente: {buyer}",
+      "sale_id": "ID della vendita: {sale_id}",
+      "taker_marketplace": "Marketplace del prenditore: {taker_marketplace}"
+    },
+    "tooltip": "Acquista un NFT da una vendita"
+  },
+  "announceauct": {
+    "method": "Annuncia asta NFT",
+    "title": "Richiesta di annuncio asta NFT",
+    "result": "Risultato dell'annuncio asta NFT",
+    "headers": {
+      "request": "Annunciare la seguente asta NFT?",
+      "result": "La seguente asta NFT è stata annunciata:"
+    },
+    "rows": {
+      "seller": "Venditore: {seller}",
+      "asset_ids": "ID degli asset: {asset_ids}",
+      "starting_bid": "Offerta iniziale: {starting_bid}",
+      "duration": "Durata: {duration}"
+    },
+    "tooltip": "Annuncia un NFT all'asta"
+  },
+  "auctionbid": {
+    "method": "Offerta asta NFT",
+    "title": "Richiesta di offerta asta NFT",
+    "result": "Risultato dell'offerta asta NFT",
+    "headers": {
+      "request": "Fare un'offerta per la seguente asta NFT?",
+      "result": "La seguente offerta asta NFT è stata effettuata:"
+    },
+    "rows": {
+      "bidder": "Offerente: {bidder}",
+      "auction_id": "ID dell'asta: {auction_id}",
+      "bid": "Offerta: {bid}"
+    },
+    "tooltip": "Fai un'offerta per un'asta NFT"
+  },
+  "createbuyo": {
+    "method": "Crea ordine di acquisto NFT",
+    "title": "Richiesta di creazione ordine di acquisto NFT",
+    "result": "Risultato della creazione ordine di acquisto NFT",
+    "headers": {
+      "request": "Creare il seguente ordine di acquisto NFT?",
+      "result": "Il seguente ordine di acquisto NFT è stato creato:"
+    },
+    "rows": {
+      "buyer": "Acquirente: {buyer}",
+      "recipient": "Destinatario: {recipient}",
+      "asset_ids": "ID degli asset: {asset_ids}",
+      "price": "Prezzo: {price}",
+      "memo": "Memo: {memo}"
+    },
+    "tooltip": "Crea un nuovo ordine di acquisto NFT"
+  },
+  "transfer": {
+    "method": "Trasferisci NFT",
+    "title": "Richiesta di trasferimento NFT",
+    "result": "Risultato del trasferimento NFT",
+    "headers": {
+      "request": "Trasferire il seguente NFT?",
+      "result": "Il seguente NFT è stato trasferito:"
+    },
+    "rows": {
+      "from": "Da: {from}",
+      "to": "A: {to}",
+      "asset_ids": "ID degli asset: {asset_ids}",
+      "memo": "Memo: {memo}"
+    },
+    "tooltip": "Trasferisci asset NFT tra account"
+  },
+  "withdraw": {
+    "method": "Preleva NFT",
+    "title": "Richiesta di prelievo NFT",
+    "result": "Risultato del prelievo NFT",
+    "headers": {
+      "request": "Prelevare il seguente NFT?",
+      "result": "Il seguente NFT è stato prelevato:"
+    },
+    "rows": {
+      "owner": "Proprietario: {owner}",
+      "token_to_receive": "Token da ricevere: {token_to_receive}",
+      "quantity": "Quantità: {quantity}"
+    },
+    "tooltip": "Preleva asset NFT su un saldo token"
+  }
+}

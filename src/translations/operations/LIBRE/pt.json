@@ -1,0 +1,151 @@
+{
+  "getAccount": {
+    "method": "obter conta",
+    "title": "Solicitação de detalhes da conta",
+    "result": "Resultado dos detalhes da conta",
+    "headers": {
+      "request": "Quer compartilhar os detalhes da sua conta?",
+      "result": "Os detalhes da sua conta foram compartilhados."
+    },
+    "tooltip": "Solicita à sua carteira detalhes da conta blockchain"
+  },
+  "requestSignature": {
+    "method": "solicitaçãoAssinatura",
+    "title": "Solicitação de assinatura",
+    "result": "Resultado da assinatura",
+    "headers": {
+      "request": "Quer compartilhar sua assinatura?",
+      "result": "Sua assinatura foi compartilhada:"
+    },
+    "tooltip": "Solicita assinaturas de blockchain à sua carteira"
+  },
+  "injectedCall": {
+    "method": "chamada injetada",
+    "title": "Solicitação de chamada injetada",
+    "result": "Resultado da chamada injetada",
+    "headers": {
+      "request": "Aprovar a seguinte chamada injetada?",
+      "result": "A seguinte chamada injetada foi aprovada:"
+    },
+    "tooltip": "Pede à sua carteira para lidar com uma operação de blockchain injetada"
+  },
+  "voteproducer": {
+    "method": "Votar em Produtor Libre",
+    "title": "Solicitação de Voto em Produtor Libre",
+    "result": "Resultado do Voto em Produtor Libre",
+    "headers": {
+      "request": "Votar nos seguintes produtores Libre?",
+      "result": "Os votos foram registrados para os seguintes produtores Libre:"
+    },
+    "rows": {
+      "voter": "Eleitor: {voter}",
+      "producers": "Produtores: {producers}"
+    },
+    "tooltip": "Votar em produtores de blocos Libre"
+  },
+  "regproducer": {
+    "method": "Registrar Produtor Libre",
+    "title": "Solicitação de Registro de Produtor Libre",
+    "result": "Resultado do Registro de Produtor Libre",
+    "headers": {
+      "request": "Registrar o seguinte como produtor de blocos Libre?",
+      "result": "O seguinte foi registrado como produtor de blocos Libre:"
+    },
+    "rows": {
+      "producer": "Produtor: {producer}",
+      "producer_key": "Chave do Produtor: {producer_key}",
+      "url": "URL: {url}",
+      "location": "Localização: {location}"
+    },
+    "tooltip": "Registrar como produtor de blocos Libre"
+  },
+  "claimrewards": {
+    "method": "Reivindicar Recompensas Libre",
+    "title": "Solicitação de Recompensas Libre",
+    "result": "Resultado das Recompensas Libre",
+    "headers": {
+      "request": "Reivindicar recompensas de produção de blocos?",
+      "result": "As recompensas de produção de blocos foram reivindicadas:"
+    },
+    "rows": {
+      "owner": "Proprietário: {owner}"
+    },
+    "tooltip": "Reivindicar recompensas de produção de blocos Libre"
+  },
+  "setalimits": {
+    "method": "Definir Limites de Conta",
+    "title": "Solicitação de Definição de Limites de Conta",
+    "result": "Resultado da Definição de Limites de Conta",
+    "headers": {
+      "request": "Definir os seguintes limites de recursos da conta?",
+      "result": "Os seguintes limites de recursos da conta foram definidos:"
+    },
+    "rows": {
+      "account": "Conta: {account}",
+      "ram_bytes": "Limite de RAM: {ram_bytes}",
+      "net_weight": "Peso da Rede: {net_weight}",
+      "cpu_weight": "Peso da CPU: {cpu_weight}"
+    },
+    "tooltip": "Definir limites de recursos da conta no Libre"
+  },
+  "stake": {
+    "method": "Apostar Tokens Libre",
+    "title": "Solicitação de Aposta de Tokens Libre",
+    "result": "Resultado da Aposta de Tokens Libre",
+    "headers": {
+      "request": "Apostar os seguintes tokens Libre?",
+      "result": "Os seguintes tokens Libre foram apostados:"
+    },
+    "rows": {
+      "from": "De: {from}",
+      "to": "Para: {to}",
+      "quantity": "Quantidade: {quantity}",
+      "memo": "Memorando: {memo}"
+    },
+    "tooltip": "Apostar tokens Libre via o contrato de aposta"
+  },
+  "unstake": {
+    "method": "Desapostar Tokens Libre",
+    "title": "Solicitação de Desaposta de Tokens Libre",
+    "result": "Resultado da Desaposta de Tokens Libre",
+    "headers": {
+      "request": "Desapostar os seguintes tokens Libre?",
+      "result": "Os seguintes tokens Libre foram desapostados:"
+    },
+    "rows": {
+      "account": "Conta: {account}",
+      "index": "Índice: {index}"
+    },
+    "tooltip": "Desapostar tokens Libre"
+  },
+  "claim": {
+    "method": "Reivindicar Recompensas de Aposta Libre",
+    "title": "Solicitação de Recompensas de Aposta Libre",
+    "result": "Resultado das Recompensas de Aposta Libre",
+    "headers": {
+      "request": "Reivindicar recompensas de aposta Libre?",
+      "result": "As recompensas de aposta Libre foram reivindicadas:"
+    },
+    "rows": {
+      "account": "Conta: {account}",
+      "index": "Índice: {index}"
+    },
+    "tooltip": "Reivindicar recompensas de aposta Libre"
+  },
+  "transfer": {
+    "method": "Transferir Tokens Libre",
+    "title": "Solicitação de Transferência de Tokens Libre",
+    "result": "Resultado da Transferência de Tokens Libre",
+    "headers": {
+      "request": "Transferir os seguintes tokens Libre?",
+      "result": "Os seguintes tokens Libre foram transferidos:"
+    },
+    "rows": {
+      "from": "De: {from}",
+      "to": "Para: {to}",
+      "quantity": "Quantidade: {quantity}",
+      "memo": "Memorando: {memo}"
+    },
+    "tooltip": "Transferir tokens Libre entre contas"
+  }
+}

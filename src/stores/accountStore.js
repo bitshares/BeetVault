@@ -59,7 +59,7 @@ export const useAccountStore = defineStore('account', {
             let currentAccount = state.accountlist[state.selectedIndex];
             return currentAccount.keys.active;
         },
-        getEOSKey: (state) => () => {
+        getVaultaKey: (state) => () => {
             let currentAccount = state.accountlist[state.selectedIndex];
             return currentAccount.keys.privateKey;
         },

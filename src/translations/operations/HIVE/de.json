@@ -1,0 +1,784 @@
+{
+  "getAccount": {
+    "method": "getAccount",
+    "title": "Kontodetails-Anfrage",
+    "result": "Ergebnis der Kontodetails",
+    "headers": {
+      "request": "Möchten Sie Ihre Kontodetails teilen?",
+      "result": "Ihre Kontodetails wurden geteilt."
+    },
+    "tooltip": "Fordert Kontodetails der Blockchain von Ihrer Wallet an"
+  },
+  "requestSignature": {
+    "method": "requestSignature",
+    "title": "Signaturanfrage",
+    "result": "Signaturergebnis",
+    "headers": {
+      "request": "Möchten Sie Ihre Signatur teilen?",
+      "result": "Ihre Signatur wurde geteilt:"
+    },
+    "tooltip": "Fordert Blockchain-Signaturen von Ihrer Wallet an"
+  },
+  "injectedCall": {
+    "method": "injectedCall",
+    "title": "Injizierte Call-Anfrage",
+    "result": "Ergebnis des injizierten Calls",
+    "headers": {
+      "request": "Den folgenden injizierten Call genehmigen?",
+      "result": "Der folgende injizierte Call wurde genehmigt:"
+    },
+    "tooltip": "Fordert Ihre Wallet auf, eine injizierte Blockchain-Operation zu verarbeiten"
+  },
+  "vote": {
+    "method": "Abstimmen",
+    "title": "Abstimmungsanfrage",
+    "result": "Abstimmungsergebnis",
+    "headers": {
+      "request": "Möchten Sie die folgende Abstimmung genehmigen?",
+      "result": "Die folgende Abstimmung wurde genehmigt:"
+    },
+    "rows": {
+      "voter": "Wähler: {voter}",
+      "author": "Autor: {author}",
+      "permlink": "Permlink: {permlink}",
+      "weight": "Gewicht: {weight}"
+    },
+    "tooltip": "Über einen Beitrag oder Kommentar abstimmen"
+  },
+  "vote2": {
+    "method": "Abstimmen 2",
+    "title": "Abstimmungsanfrage 2",
+    "result": "Abstimmungsergebnis 2",
+    "headers": {
+      "request": "Möchten Sie die folgende Abstimmung 2 genehmigen?",
+      "result": "Die folgende Abstimmung 2 wurde genehmigt:"
+    },
+    "rows": {
+      "voter": "Wähler: {voter}",
+      "author": "Autor: {author}",
+      "permlink": "Permlink: {permlink}",
+      "rshares": "Rshares: {rshares}",
+      "extensions": "Erweiterungen: {extensions}"
+    },
+    "tooltip": "Abstimmung 2 über einen Beitrag oder Kommentar abgeben"
+  },
+  "comment": {
+    "method": "Kommentar",
+    "title": "Kommentaranfrage",
+    "result": "Kommentarergebnis",
+    "headers": {
+      "request": "Möchten Sie den folgenden Kommentar genehmigen?",
+      "result": "Der folgende Kommentar wurde genehmigt:"
+    },
+    "rows": {
+      "parent_author": "Übergeordneter Autor: {parent_author}",
+      "parent_permlink": "Übergeordneter Permlink: {parent_permlink}",
+      "author": "Autor: {author}",
+      "permlink": "Permlink: {permlink}",
+      "title": "Titel: {title}",
+      "body": "Inhalt: {body}",
+      "json_metadata": "JSON-Metadaten: {json_metadata}"
+    },
+    "tooltip": "Einen Beitrag oder Kommentar erstellen"
+  },
+  "transfer": {
+    "method": "Überweisung",
+    "title": "Überweisungsanfrage",
+    "result": "Überweisungsergebnis",
+    "headers": {
+      "request": "Möchten Sie die folgende Überweisung genehmigen?",
+      "result": "Die folgende Überweisung wurde genehmigt:"
+    },
+    "rows": {
+      "from": "Von: {from}",
+      "to": "An: {to}",
+      "amount": "Betrag: {amount}",
+      "memo": "Memofeld: {memo}"
+    },
+    "tooltip": "Vermögenswerte von einem Konto an ein anderes senden"
+  },
+  "transfer_to_vesting": {
+    "method": "In Vesting übertragen",
+    "title": "Anfrage zur Übertragung in Vesting",
+    "result": "Ergebnis der Übertragung in Vesting",
+    "headers": {
+      "request": "Möchten Sie die folgende Übertragung in Vesting genehmigen?",
+      "result": "Die folgende Übertragung in Vesting wurde genehmigt:"
+    },
+    "rows": {
+      "from": "Von: {from}",
+      "to": "An: {to}",
+      "amount": "Betrag: {amount}"
+    },
+    "tooltip": "Vermögenswerte in Vesting-Fonds übertragen"
+  },
+  "withdraw_vesting": {
+    "method": "Vesting abheben",
+    "title": "Anfrage zum Abheben von Vesting",
+    "result": "Ergebnis des Abhebens von Vesting",
+    "headers": {
+      "request": "Möchten Sie die folgende Vesting-Abhebung genehmigen?",
+      "result": "Die folgende Vesting-Abhebung wurde genehmigt:"
+    },
+    "rows": {
+      "account": "Konto: {account}",
+      "vesting_shares": "Vesting-Anteile: {vesting_shares}"
+    },
+    "tooltip": "Einen Abhebungsplan für Vesting einrichten"
+  },
+  "limit_order_create": {
+    "method": "Limit-Auftrag erstellen",
+    "title": "Anfrage zum Erstellen eines Limit-Auftrags",
+    "result": "Ergebnis des Limit-Auftrags",
+    "headers": {
+      "request": "Möchten Sie den folgenden Limit-Auftrag genehmigen?",
+      "result": "Der folgende Limit-Auftrag wurde genehmigt:"
+    },
+    "rows": {
+      "owner": "Eigentümer: {owner}",
+      "orderid": "Auftrags-ID: {orderid}",
+      "amount_to_sell": "Zu verkaufende Menge: {amount_to_sell}",
+      "min_to_receive": "Mindestempfang: {min_to_receive}",
+      "fill_or_kill": "Fill oder Kill: {fill_or_kill}",
+      "expiration": "Ablauf: {expiration}"
+    },
+    "tooltip": "Einen Limit-Auftrag auf dem Markt erstellen"
+  },
+  "limit_order_create2": {
+    "method": "Limit-Auftrag 2 erstellen",
+    "title": "Anfrage zum Erstellen eines Limit-Auftrags 2",
+    "result": "Ergebnis des Limit-Auftrags 2",
+    "headers": {
+      "request": "Möchten Sie den folgenden Limit-Auftrag 2 genehmigen?",
+      "result": "Der folgende Limit-Auftrag 2 wurde genehmigt:"
+    },
+    "rows": {
+      "owner": "Eigentümer: {owner}",
+      "orderid": "Auftrags-ID: {orderid}",
+      "amount_to_sell": "Zu verkaufende Menge: {amount_to_sell}",
+      "exchange_rate": "Wechselkurs: {exchange_rate}",
+      "fill_or_kill": "Fill oder Kill: {fill_or_kill}",
+      "expiration": "Ablauf: {expiration}"
+    },
+    "tooltip": "Einen Limit-Auftrag mit Wechselkurs auf dem Markt erstellen"
+  },
+  "limit_order_cancel": {
+    "method": "Limit-Auftrag stornieren",
+    "title": "Anfrage zum Stornieren eines Limit-Auftrags",
+    "result": "Ergebnis der Stornierung des Limit-Auftrags",
+    "headers": {
+      "request": "Möchten Sie die folgende Stornierung des Limit-Auftrags genehmigen?",
+      "result": "Die folgende Stornierung des Limit-Auftrags wurde genehmigt:"
+    },
+    "rows": {
+      "owner": "Eigentümer: {owner}",
+      "orderid": "Auftrags-ID: {orderid}"
+    },
+    "tooltip": "Einen bestehenden Limit-Auftrag stornieren"
+  },
+  "feed_publish": {
+    "method": "Feed veröffentlichen",
+    "title": "Anfrage zum Veröffentlichen des Feeds",
+    "result": "Ergebnis der Feed-Veröffentlichung",
+    "headers": {
+      "request": "Möchten Sie die folgende Feed-Veröffentlichung genehmigen?",
+      "result": "Die folgende Feed-Veröffentlichung wurde genehmigt:"
+    },
+    "rows": {
+      "publisher": "Herausgeber: {publisher}",
+      "exchange_rate": "Wechselkurs: {exchange_rate}"
+    },
+    "tooltip": "Als Witness einen Preis-Feed veröffentlichen"
+  },
+  "convert": {
+    "method": "Konvertieren",
+    "title": "Konvertierungsanfrage",
+    "result": "Konvertierungsergebnis",
+    "headers": {
+      "request": "Möchten Sie die folgende Konvertierung genehmigen?",
+      "result": "Die folgende Konvertierung wurde genehmigt:"
+    },
+    "rows": {
+      "owner": "Eigentümer: {owner}",
+      "requestid": "Anfrage-ID: {requestid}",
+      "amount": "Betrag: {amount}"
+    },
+    "tooltip": "HIVE in HBD konvertieren oder umgekehrt"
+  },
+  "collateralized_convert": {
+    "method": "Besicherte Konvertierung",
+    "title": "Anfrage zur besicherten Konvertierung",
+    "result": "Ergebnis der besicherten Konvertierung",
+    "headers": {
+      "request": "Möchten Sie die folgende besicherte Konvertierung genehmigen?",
+      "result": "Die folgende besicherte Konvertierung wurde genehmigt:"
+    },
+    "rows": {
+      "owner": "Eigentümer: {owner}",
+      "requestid": "Anfrage-ID: {requestid}",
+      "amount": "Betrag: {amount}"
+    },
+    "tooltip": "Mit Sicherheiten HIVE in HBD konvertieren"
+  },
+  "account_create": {
+    "method": "Konto erstellen",
+    "title": "Anfrage zur Kontoeinrichtung",
+    "result": "Ergebnis der Kontoeinrichtung",
+    "headers": {
+      "request": "Möchten Sie die folgende Kontoeinrichtung genehmigen?",
+      "result": "Die folgende Kontoeinrichtung wurde genehmigt:"
+    },
+    "rows": {
+      "fee": "Gebühr: {fee}",
+      "creator": "Ersteller: {creator}",
+      "new_account_name": "Neuer Kontoname: {new_account_name}",
+      "owner": "Eigentümer: {owner}",
+      "active": "Aktiv: {active}",
+      "posting": "Posting: {posting}",
+      "memo_key": "Memo-Schlüssel: {memo_key}",
+      "json_metadata": "JSON-Metadaten: {json_metadata}"
+    },
+    "tooltip": "Ein neues Blockchain-Konto erstellen"
+  },
+  "create_claimed_account": {
+    "method": "Beanspruchtes Konto erstellen",
+    "title": "Anfrage zum Erstellen eines beanspruchten Kontos",
+    "result": "Ergebnis des beanspruchten Kontos",
+    "headers": {
+      "request": "Möchten Sie die folgende Erstellung eines beanspruchten Kontos genehmigen?",
+      "result": "Die folgende Erstellung eines beanspruchten Kontos wurde genehmigt:"
+    },
+    "rows": {
+      "creator": "Ersteller: {creator}",
+      "new_account_name": "Neuer Kontoname: {new_account_name}",
+      "owner": "Eigentümer: {owner}",
+      "active": "Aktiv: {active}",
+      "posting": "Posting: {posting}",
+      "memo_key": "Memo-Schlüssel: {memo_key}",
+      "json_metadata": "JSON-Metadaten: {json_metadata}"
+    },
+    "tooltip": "Ein neues Konto aus einem zuvor beanspruchten Konto erstellen"
+  },
+  "account_update": {
+    "method": "Konto aktualisieren",
+    "title": "Anfrage zur Kontoaktualisierung",
+    "result": "Ergebnis der Kontoaktualisierung",
+    "headers": {
+      "request": "Möchten Sie die folgende Kontoaktualisierung genehmigen?",
+      "result": "Die folgende Kontoaktualisierung wurde genehmigt:"
+    },
+    "rows": {
+      "account": "Konto: {account}",
+      "owner": "Eigentümer: {owner}",
+      "active": "Aktiv: {active}",
+      "posting": "Posting: {posting}",
+      "memo_key": "Memo-Schlüssel: {memo_key}",
+      "json_metadata": "JSON-Metadaten: {json_metadata}"
+    },
+    "tooltip": "Kontoschlüssel oder Metadaten aktualisieren"
+  },
+  "account_update2": {
+    "method": "Konto 2 aktualisieren",
+    "title": "Anfrage zur Kontoaktualisierung 2",
+    "result": "Ergebnis der Kontoaktualisierung 2",
+    "headers": {
+      "request": "Möchten Sie die folgende Kontoaktualisierung 2 genehmigen?",
+      "result": "Die folgende Kontoaktualisierung 2 wurde genehmigt:"
+    },
+    "rows": {
+      "account": "Konto: {account}",
+      "owner": "Eigentümer: {owner}",
+      "active": "Aktiv: {active}",
+      "posting": "Posting: {posting}",
+      "memo_key": "Memo-Schlüssel: {memo_key}",
+      "json_metadata": "JSON-Metadaten: {json_metadata}",
+      "posting_json_metadata": "Posting-JSON-Metadaten: {posting_json_metadata}"
+    },
+    "tooltip": "Kontoschlüssel und Metadaten aktualisieren"
+  },
+  "witness_update": {
+    "method": "Witness aktualisieren",
+    "title": "Anfrage zur Witness-Aktualisierung",
+    "result": "Ergebnis der Witness-Aktualisierung",
+    "headers": {
+      "request": "Möchten Sie die folgende Witness-Aktualisierung genehmigen?",
+      "result": "Die folgende Witness-Aktualisierung wurde genehmigt:"
+    },
+    "rows": {
+      "owner": "Eigentümer: {owner}",
+      "url": "URL: {url}",
+      "block_signing_key": "Blocksignaturschlüssel: {block_signing_key}",
+      "props": "Eigenschaften: {props}",
+      "fee": "Gebühr: {fee}"
+    },
+    "tooltip": "Witness-Konfiguration aktualisieren"
+  },
+  "witness_set_properties": {
+    "method": "Witness-Eigenschaften festlegen",
+    "title": "Anfrage zum Festlegen der Witness-Eigenschaften",
+    "result": "Ergebnis der Witness-Eigenschaften",
+    "headers": {
+      "request": "Möchten Sie die folgende Aktualisierung der Witness-Eigenschaften genehmigen?",
+      "result": "Die folgende Aktualisierung der Witness-Eigenschaften wurde genehmigt:"
+    },
+    "rows": {
+      "owner": "Eigentümer: {owner}",
+      "props": "Eigenschaften: {props}",
+      "extensions": "Erweiterungen: {extensions}"
+    },
+    "tooltip": "Witness-Eigenschaften festlegen"
+  },
+  "account_witness_vote": {
+    "method": "Für Witness abstimmen",
+    "title": "Anfrage zur Witness-Abstimmung",
+    "result": "Ergebnis der Witness-Abstimmung",
+    "headers": {
+      "request": "Möchten Sie die folgende Witness-Abstimmung genehmigen?",
+      "result": "Die folgende Witness-Abstimmung wurde genehmigt:"
+    },
+    "rows": {
+      "account": "Konto: {account}",
+      "witness": "Witness: {witness}",
+      "approve": "Genehmigen: {approve}"
+    },
+    "tooltip": "Für oder gegen einen Witness abstimmen"
+  },
+  "account_witness_proxy": {
+    "method": "Witness-Abstimmung delegieren",
+    "title": "Anfrage zur Delegation der Witness-Abstimmung",
+    "result": "Ergebnis der Delegation der Witness-Abstimmung",
+    "headers": {
+      "request": "Möchten Sie den folgenden Witness-Proxy genehmigen?",
+      "result": "Der folgende Witness-Proxy wurde genehmigt:"
+    },
+    "rows": {
+      "account": "Konto: {account}",
+      "proxy": "Proxy: {proxy}"
+    },
+    "tooltip": "Einen Proxy für Ihre Witness-Abstimmungen festlegen"
+  },
+  "delete_comment": {
+    "method": "Kommentar löschen",
+    "title": "Anfrage zum Löschen eines Kommentars",
+    "result": "Ergebnis der Kommentarlöschung",
+    "headers": {
+      "request": "Möchten Sie die folgende Kommentarlöschung genehmigen?",
+      "result": "Die folgende Kommentarlöschung wurde genehmigt:"
+    },
+    "rows": {
+      "author": "Autor: {author}",
+      "permlink": "Permlink: {permlink}"
+    },
+    "tooltip": "Einen Beitrag oder Kommentar löschen"
+  },
+  "custom_json": {
+    "method": "Benutzerdefiniertes JSON",
+    "title": "Anfrage für benutzerdefiniertes JSON",
+    "result": "Ergebnis von benutzerdefiniertem JSON",
+    "headers": {
+      "request": "Möchten Sie die folgende benutzerdefinierte JSON-Operation genehmigen?",
+      "result": "Die folgende benutzerdefinierte JSON-Operation wurde genehmigt:"
+    },
+    "rows": {
+      "required_auths": "Erforderliche Autorisierungen: {required_auths}",
+      "required_posting_auths": "Erforderliche Posting-Autorisierungen: {required_posting_auths}",
+      "id": "ID: {id}",
+      "json": "JSON: {json}"
+    },
+    "tooltip": "Eine benutzerdefinierte JSON-Operation übermitteln"
+  },
+  "comment_options": {
+    "method": "Kommentaroptionen",
+    "title": "Anfrage für Kommentaroptionen",
+    "result": "Ergebnis der Kommentaroptionen",
+    "headers": {
+      "request": "Möchten Sie die folgenden Kommentaroptionen genehmigen?",
+      "result": "Die folgenden Kommentaroptionen wurden genehmigt:"
+    },
+    "rows": {
+      "author": "Autor: {author}",
+      "permlink": "Permlink: {permlink}",
+      "max_accepted_payout": "Maximale akzeptierte Auszahlung: {max_accepted_payout}",
+      "percent_hbd": "Prozent HBD: {percent_hbd}",
+      "allow_votes": "Abstimmungen zulassen: {allow_votes}",
+      "allow_curation_rewards": "Kuratorenbelohnungen zulassen: {allow_curation_rewards}",
+      "extensions": "Erweiterungen: {extensions}"
+    },
+    "tooltip": "Optionen für einen Beitrag oder Kommentar festlegen"
+  },
+  "set_withdraw_vesting_route": {
+    "method": "Vesting-Abhebungsroute festlegen",
+    "title": "Anfrage zum Festlegen der Vesting-Abhebungsroute",
+    "result": "Ergebnis der Vesting-Abhebungsroute",
+    "headers": {
+      "request": "Möchten Sie die folgende Vesting-Abhebungsroute genehmigen?",
+      "result": "Die folgende Vesting-Abhebungsroute wurde genehmigt:"
+    },
+    "rows": {
+      "from_account": "Von Konto: {from_account}",
+      "to_account": "An Konto: {to_account}",
+      "percent": "Prozent: {percent}",
+      "auto_vest": "Auto-Vesting: {auto_vest}"
+    },
+    "tooltip": "Eine Zuteilung für die Vesting-Abhebungsroute einrichten"
+  },
+  "claim_reward_balance": {
+    "method": "Belohnungsguthaben einfordern",
+    "title": "Anfrage zum Einfordern des Belohnungsguthabens",
+    "result": "Ergebnis des Belohnungsguthabens",
+    "headers": {
+      "request": "Möchten Sie die folgende Belohnungsanforderung genehmigen?",
+      "result": "Die folgende Belohnungsanforderung wurde genehmigt:"
+    },
+    "rows": {
+      "account": "Konto: {account}",
+      "reward_hive": "Belohnung HIVE: {reward_hive}",
+      "reward_hbd": "Belohnung HBD: {reward_hbd}",
+      "reward_vests": "Belohnung VESTS: {reward_vests}"
+    },
+    "tooltip": "Angesammelte Belohnungen einfordern"
+  },
+  "delegate_vesting_shares": {
+    "method": "Vesting-Anteile delegieren",
+    "title": "Anfrage zur Delegation von Vesting-Anteilen",
+    "result": "Ergebnis der Delegation von Vesting-Anteilen",
+    "headers": {
+      "request": "Möchten Sie die folgende Vesting-Delegation genehmigen?",
+      "result": "Die folgende Vesting-Delegation wurde genehmigt:"
+    },
+    "rows": {
+      "delegator": "Delegierender: {delegator}",
+      "delegatee": "Delegierter: {delegatee}",
+      "vesting_shares": "Vesting-Anteile: {vesting_shares}"
+    },
+    "tooltip": "Vesting-Anteile an ein anderes Konto delegieren"
+  },
+  "recover_account": {
+    "method": "Konto wiederherstellen",
+    "title": "Anfrage zur Kontowiederherstellung",
+    "result": "Ergebnis der Kontowiederherstellung",
+    "headers": {
+      "request": "Möchten Sie die folgende Kontowiederherstellung genehmigen?",
+      "result": "Die folgende Kontowiederherstellung wurde genehmigt:"
+    },
+    "rows": {
+      "account_to_recover": "Wiederherzustellendes Konto: {account_to_recover}",
+      "new_owner_authority": "Neue Eigentümer-Autorität: {new_owner_authority}",
+      "recent_owner_authority": "Letzte Eigentümer-Autorität: {recent_owner_authority}",
+      "extensions": "Erweiterungen: {extensions}"
+    },
+    "tooltip": "Ein gestohlenes oder kompromittiertes Konto wiederherstellen"
+  },
+  "request_account_recovery": {
+    "method": "Kontowiederherstellung anfordern",
+    "title": "Anfrage zur Kontowiederherstellung",
+    "result": "Ergebnis der Kontowiederherstellung",
+    "headers": {
+      "request": "Möchten Sie die folgende Anforderung zur Kontowiederherstellung genehmigen?",
+      "result": "Die folgende Anforderung zur Kontowiederherstellung wurde genehmigt:"
+    },
+    "rows": {
+      "recovery_account": "Wiederherstellungskonto: {recovery_account}",
+      "account_to_recover": "Wiederherzustellendes Konto: {account_to_recover}",
+      "new_owner_authority": "Neue Eigentümer-Autorität: {new_owner_authority}",
+      "extensions": "Erweiterungen: {extensions}"
+    },
+    "tooltip": "Als Wiederherstellungskonto die Kontowiederherstellung anfordern"
+  },
+  "change_recovery_account": {
+    "method": "Wiederherstellungskonto ändern",
+    "title": "Anfrage zum Ändern des Wiederherstellungskontos",
+    "result": "Ergebnis des Wiederherstellungskontos",
+    "headers": {
+      "request": "Möchten Sie die folgende Änderung des Wiederherstellungskontos genehmigen?",
+      "result": "Die folgende Änderung des Wiederherstellungskontos wurde genehmigt:"
+    },
+    "rows": {
+      "account_to_recover": "Wiederherzustellendes Konto: {account_to_recover}",
+      "new_recovery_account": "Neues Wiederherstellungskonto: {new_recovery_account}",
+      "extensions": "Erweiterungen: {extensions}"
+    },
+    "tooltip": "Das Wiederherstellungskonto eines Kontos ändern"
+  },
+  "transfer_to_savings": {
+    "method": "In Ersparnisse übertragen",
+    "title": "Anfrage zur Übertragung in Ersparnisse",
+    "result": "Ergebnis der Übertragung in Ersparnisse",
+    "headers": {
+      "request": "Möchten Sie die folgende Übertragung in Ersparnisse genehmigen?",
+      "result": "Die folgende Übertragung in Ersparnisse wurde genehmigt:"
+    },
+    "rows": {
+      "from": "Von: {from}",
+      "to": "An: {to}",
+      "amount": "Betrag: {amount}",
+      "memo": "Memofeld: {memo}"
+    },
+    "tooltip": "Vermögenswerte in Ersparnisse übertragen"
+  },
+  "transfer_from_savings": {
+    "method": "Von Ersparnissen übertragen",
+    "title": "Anfrage zur Übertragung von Ersparnissen",
+    "result": "Ergebnis der Übertragung von Ersparnissen",
+    "headers": {
+      "request": "Möchten Sie die folgende Übertragung von Ersparnissen genehmigen?",
+      "result": "Die folgende Übertragung von Ersparnissen wurde genehmigt:"
+    },
+    "rows": {
+      "from": "Von: {from}",
+      "request_id": "Anfrage-ID: {request_id}",
+      "to": "An: {to}",
+      "amount": "Betrag: {amount}",
+      "memo": "Memofeld: {memo}"
+    },
+    "tooltip": "Eine Übertragung aus Ersparnissen anfordern"
+  },
+  "cancel_transfer_from_savings": {
+    "method": "Übertragung von Ersparnissen stornieren",
+    "title": "Anfrage zum Stornieren einer Übertragung von Ersparnissen",
+    "result": "Ergebnis der Stornierung der Übertragung",
+    "headers": {
+      "request": "Möchten Sie die folgende Stornierung der Übertragung genehmigen?",
+      "result": "Die folgende Stornierung der Übertragung wurde genehmigt:"
+    },
+    "rows": {
+      "from": "Von: {from}",
+      "request_id": "Anfrage-ID: {request_id}"
+    },
+    "tooltip": "Eine ausstehende Übertragung von Ersparnissen stornieren"
+  },
+  "decline_voting_rights": {
+    "method": "Stimmrechte ablehnen",
+    "title": "Anfrage zur Ablehnung der Stimmrechte",
+    "result": "Ergebnis der Ablehnung der Stimmrechte",
+    "headers": {
+      "request": "Möchten Sie die folgende Ablehnung der Stimmrechte genehmigen?",
+      "result": "Die folgende Ablehnung der Stimmrechte wurde genehmigt:"
+    },
+    "rows": {
+      "account": "Konto: {account}",
+      "decline": "Ablehnen: {decline}"
+    },
+    "tooltip": "Stimmrechte dauerhaft ablehnen"
+  },
+  "claim_account": {
+    "method": "Konto beanspruchen",
+    "title": "Anfrage zur Kontoanforderung",
+    "result": "Ergebnis der Kontoanforderung",
+    "headers": {
+      "request": "Möchten Sie die folgende Kontoanforderung genehmigen?",
+      "result": "Die folgende Kontoanforderung wurde genehmigt:"
+    },
+    "rows": {
+      "fee": "Gebühr: {fee}",
+      "creator": "Ersteller: {creator}",
+      "extensions": "Erweiterungen: {extensions}"
+    },
+    "tooltip": "Die Erstellung eines neuen Kontos beanspruchen"
+  },
+  "escrow_transfer": {
+    "method": "Treuhandübertragung",
+    "title": "Anfrage zur Treuhandübertragung",
+    "result": "Ergebnis der Treuhandübertragung",
+    "headers": {
+      "request": "Möchten Sie die folgende Treuhandübertragung genehmigen?",
+      "result": "Die folgende Treuhandübertragung wurde genehmigt:"
+    },
+    "rows": {
+      "from": "Von: {from}",
+      "to": "An: {to}",
+      "agent": "Vermittler: {agent}",
+      "escrow_id": "Treuhand-ID: {escrow_id}",
+      "hbd_amount": "HBD-Betrag: {hbd_amount}",
+      "hive_amount": "HIVE-Betrag: {hive_amount}",
+      "fee": "Gebühr: {fee}",
+      "ratification_deadline": "Ratifikationsfrist: {ratification_deadline}",
+      "escrow_expiration": "Treuhandablauf: {escrow_expiration}",
+      "json_meta": "JSON-Metadaten: {json_meta}"
+    },
+    "tooltip": "Eine Treuhandübertragung zwischen Konten einrichten"
+  },
+  "escrow_dispute": {
+    "method": "Treuhandstreit",
+    "title": "Anfrage zum Treuhandstreit",
+    "result": "Ergebnis des Treuhandstreits",
+    "headers": {
+      "request": "Möchten Sie den folgenden Treuhandstreit genehmigen?",
+      "result": "Der folgende Treuhandstreit wurde genehmigt:"
+    },
+    "rows": {
+      "from": "Von: {from}",
+      "to": "An: {to}",
+      "agent": "Vermittler: {agent}",
+      "who": "Wer: {who}",
+      "escrow_id": "Treuhand-ID: {escrow_id}"
+    },
+    "tooltip": "Einen Streit bei einer Treuhandübertragung erheben"
+  },
+  "escrow_release": {
+    "method": "Treuhandfreigabe",
+    "title": "Anfrage zur Treuhandfreigabe",
+    "result": "Ergebnis der Treuhandfreigabe",
+    "headers": {
+      "request": "Möchten Sie die folgende Treuhandfreigabe genehmigen?",
+      "result": "Die folgende Treuhandfreigabe wurde genehmigt:"
+    },
+    "rows": {
+      "from": "Von: {from}",
+      "to": "An: {to}",
+      "agent": "Vermittler: {agent}",
+      "who": "Wer: {who}",
+      "receiver": "Empfänger: {receiver}",
+      "escrow_id": "Treuhand-ID: {escrow_id}",
+      "hbd_amount": "HBD-Betrag: {hbd_amount}",
+      "hive_amount": "HIVE-Betrag: {hive_amount}"
+    },
+    "tooltip": "Gelder aus einer Treuhandübertragung freigeben"
+  },
+  "escrow_approve": {
+    "method": "Treuhand genehmigen",
+    "title": "Anfrage zur Treuhandgenehmigung",
+    "result": "Ergebnis der Treuhandgenehmigung",
+    "headers": {
+      "request": "Möchten Sie die folgende Treuhandgenehmigung genehmigen?",
+      "result": "Die folgende Treuhandgenehmigung wurde genehmigt:"
+    },
+    "rows": {
+      "from": "Von: {from}",
+      "to": "An: {to}",
+      "agent": "Vermittler: {agent}",
+      "who": "Wer: {who}",
+      "escrow_id": "Treuhand-ID: {escrow_id}",
+      "approve": "Genehmigen: {approve}"
+    },
+    "tooltip": "Eine Treuhandübertragung genehmigen"
+  },
+  "create_proposal": {
+    "method": "Vorschlag erstellen",
+    "title": "Anfrage zur Erstellung eines Vorschlags",
+    "result": "Ergebnis der Vorschlagserstellung",
+    "headers": {
+      "request": "Möchten Sie die folgende Vorschlagserstellung genehmigen?",
+      "result": "Die folgende Vorschlagserstellung wurde genehmigt:"
+    },
+    "rows": {
+      "creator": "Ersteller: {creator}",
+      "receiver": "Empfänger: {receiver}",
+      "start_date": "Startdatum: {start_date}",
+      "end_date": "Enddatum: {end_date}",
+      "daily_pay": "Tägliche Zahlung: {daily_pay}",
+      "subject": "Betreff: {subject}",
+      "permlink": "Permlink: {permlink}"
+    },
+    "tooltip": "Einen Governanz-Vorschlag erstellen"
+  },
+  "update_proposal_votes": {
+    "method": "Vorschlagsabstimmungen aktualisieren",
+    "title": "Anfrage zur Aktualisierung der Vorschlagsabstimmungen",
+    "result": "Ergebnis der Vorschlagsabstimmungen",
+    "headers": {
+      "request": "Möchten Sie die folgende Aktualisierung der Vorschlagsabstimmung genehmigen?",
+      "result": "Die folgende Aktualisierung der Vorschlagsabstimmung wurde genehmigt:"
+    },
+    "rows": {
+      "voter": "Wähler: {voter}",
+      "proposal_ids": "Vorschlags-IDs: {proposal_ids}",
+      "approve": "Genehmigen: {approve}",
+      "extensions": "Erweiterungen: {extensions}"
+    },
+    "tooltip": "Für oder gegen Vorschläge abstimmen"
+  },
+  "remove_proposal": {
+    "method": "Vorschlag entfernen",
+    "title": "Anfrage zum Entfernen eines Vorschlags",
+    "result": "Ergebnis der Vorschlagsentfernung",
+    "headers": {
+      "request": "Möchten Sie die folgende Vorschlagsentfernung genehmigen?",
+      "result": "Die folgende Vorschlagsentfernung wurde genehmigt:"
+    },
+    "rows": {
+      "creator": "Ersteller: {creator}",
+      "proposal_ids": "Vorschlags-IDs: {proposal_ids}"
+    },
+    "tooltip": "Einen oder mehrere Vorschläge entfernen"
+  },
+  "update_proposal": {
+    "method": "Vorschlag aktualisieren",
+    "title": "Anfrage zur Aktualisierung eines Vorschlags",
+    "result": "Ergebnis der Vorschlagsaktualisierung",
+    "headers": {
+      "request": "Möchten Sie die folgende Vorschlagsaktualisierung genehmigen?",
+      "result": "Die folgende Vorschlagsaktualisierung wurde genehmigt:"
+    },
+    "rows": {
+      "proposal_id": "Vorschlags-ID: {proposal_id}",
+      "creator": "Ersteller: {creator}",
+      "daily_pay": "Tägliche Zahlung: {daily_pay}",
+      "subject": "Betreff: {subject}",
+      "permlink": "Permlink: {permlink}"
+    },
+    "tooltip": "Einen bestehenden Vorschlag aktualisieren"
+  },
+  "recurrent_transfer": {
+    "method": "Wiederkehrende Überweisung",
+    "title": "Anfrage zur wiederkehrenden Überweisung",
+    "result": "Ergebnis der wiederkehrenden Überweisung",
+    "headers": {
+      "request": "Möchten Sie die folgende wiederkehrende Überweisung genehmigen?",
+      "result": "Die folgende wiederkehrende Überweisung wurde genehmigt:"
+    },
+    "rows": {
+      "from": "Von: {from}",
+      "to": "An: {to}",
+      "amount": "Betrag: {amount}",
+      "memo": "Memofeld: {memo}",
+      "recurrence": "Wiederholung: {recurrence}",
+      "executions": "Ausführungen: {executions}",
+      "extensions": "Erweiterungen: {extensions}"
+    },
+    "tooltip": "Einen Plan für wiederkehrende Überweisungen einrichten"
+  },
+  "custom_binary": {
+    "method": "Benutzerdefiniertes Binärformat",
+    "title": "Anfrage für benutzerdefiniertes Binärformat",
+    "result": "Ergebnis von benutzerdefiniertem Binärformat",
+    "headers": {
+      "request": "Möchten Sie die folgende benutzerdefinierte Binäroperation genehmigen?",
+      "result": "Die folgende benutzerdefinierte Binäroperation wurde genehmigt:"
+    },
+    "rows": {
+      "id": "ID: {id}",
+      "data": "Daten: {data}"
+    },
+    "tooltip": "Eine benutzerdefinierte Binäroperation übermitteln"
+  },
+  "custom": {
+    "method": "Benutzerdefiniert",
+    "title": "Anfrage für eine benutzerdefinierte Operation",
+    "result": "Ergebnis der benutzerdefinierten Operation",
+    "headers": {
+      "request": "Möchten Sie die folgende benutzerdefinierte Operation genehmigen?",
+      "result": "Die folgende benutzerdefinierte Operation wurde genehmigt:"
+    },
+    "rows": {
+      "required_auths": "Erforderliche Autorisierungen: {required_auths}",
+      "id": "ID: {id}",
+      "data": "Daten: {data}"
+    },
+    "tooltip": "Eine benutzerdefinierte Operation übermitteln"
+  },
+  "prove_authority": {
+    "method": "Autorität nachweisen",
+    "title": "Anfrage zum Nachweis der Autorität",
+    "result": "Ergebnis des Autoritätsnachweises",
+    "headers": {
+      "request": "Möchten Sie den folgenden Autoritätsnachweis genehmigen?",
+      "result": "Der folgende Autoritätsnachweis wurde genehmigt:"
+    },
+    "rows": {
+      "challenged": "Angefochten: {challenged}",
+      "require_owner": "Eigentümer erforderlich: {require_owner}"
+    },
+    "tooltip": "Den Besitz einer Kontobefugnis nachweisen"
+  }
+}

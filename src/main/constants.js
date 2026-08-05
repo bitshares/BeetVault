@@ -16,9 +16,9 @@ export const SAFE_DOMAINS = [
     'beos.world',
     // Telos
     'telos.eosx.io',
-    // EOS / WAX (shared explorer)
+    // Vaulta / WAX (shared explorer)
     'eosauthority.com',
-    // EOS testnet
+    // Vaulta testnet
     'jungle4.cryptolions.io',
     // FIO
     'bloks.io',

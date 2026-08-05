@@ -1,10 +1,10 @@
 # Readme
 
-These scripts enable you to easily craft multi-operation transactions for EOS based blockchains.
+These scripts enable you to easily craft multi-operation transactions for Vaulta based blockchains.
 
 Edit the contents of the `trx` actions array to reference your accounts, and to perform the actions you want.
 
-For more info on how to construct an EOS blockchain based operation, [check these docs](https://github.com/EOSIO/eosjs/tree/master/docs/how-to-guides), and check out the [EOS beautify file](https://github.com/beetapp/beeteos/blob/master/src/lib/blockchains/EOS/beautify.js) to check the supported operations and their expected parameters.
+For more info on how to construct an Antelope blockchain based operation, [check these docs](https://github.com/EOSIO/eosjs/tree/master/docs/how-to-guides), and check out the [Antelope beautify file](https://github.com/beetapp/beeteos/blob/master/src/lib/blockchains/Antelope/beautify.js) to check the supported operations and their expected parameters.
 
 ## Pre-requisites
 
@@ -17,14 +17,14 @@ npm install
 
 This will install the required package dependencies for these scripts to run properly.
 
-Once the packages are installed, navigate to this EOS script folder, then for example run the following command:
+Once the packages are installed, navigate to this Vaulta script folder, then for example run the following command:
 ```
 node ./buyrambytes.js
 ```
 
 This will output the raw deeplink in your console window like the following:
 ```
-rawbeeteos://api?chain=EOS&request=DATA
+rawbeeteos://api?chain=VAULTA&request=DATA
 ```
 
 Copy the entire URL and paste it into a web browser URL bar & hit enter.

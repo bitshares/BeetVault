@@ -1,13 +1,13 @@
 import { blockchains } from "../../config/config.js";
 
 import BitShares from "./BitShares.js";
-import EOSmainnet from "./EOSmainnet.js";
+import VaultaMainnet from "./VaultaMainnet.js";
 import TLOS from "./TLOS.js";
 import TLOStest from "./TLOStest.js";
 import BEOS from "./BEOS.js";
 import WAX from "./WAX.js";
 import WAXtest from "./WAXtest.js";
-import EOStest from "./EOStest.js";
+import VaultaTestnet from "./VaultaTestnet.js";
 import FIO from "./FIO.js";
 import FIOtest from "./FIOtest.js";
 import Libre from "./Libre.js";
@@ -39,8 +39,8 @@ export default async function getBlockchainAPI(chain = null, node = null) {
 
     if (!storedChain) {
         try {
-            if (chain === "EOS") {
-                storedChain = new EOSmainnet(config, node);
+            if (chain === "VAULTA") {
+                storedChain = new VaultaMainnet(config, node);
             } else if (chain === "BEOS") {
                 storedChain = new BEOS(config, node);
             } else if (chain === "TLOS") {
@@ -51,8 +51,8 @@ export default async function getBlockchainAPI(chain = null, node = null) {
                 storedChain = new WAX(config, node);
             } else if (chain === "WAXTEST") {
                 storedChain = new WAXtest(config, node);
-            } else if (chain === "EOSTEST") {
-                storedChain = new EOStest(config, node);
+            } else if (chain === "VAULTATEST") {
+                storedChain = new VaultaTestnet(config, node);
             } else if (chain === "FIO") {
                 storedChain = new FIO(config, node);
             } else if (chain === "FIOTEST") {

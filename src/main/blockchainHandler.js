@@ -1,7 +1,7 @@
 import fsPromises from 'fs/promises';
 import path from 'path';
 import { validateSender } from './securityGuards.js';
-import { BTS_FAMILY, EOS_FAMILY, HIVE_FAMILY } from '../lib/blockchains/chainFamilies.js';
+import { BTS_FAMILY, VAULTA_FAMILY, HIVE_FAMILY } from '../lib/blockchains/chainFamilies.js';
 import * as Actions from '../lib/Actions.js';
 import { SAFE_DOMAINS } from './constants.js';
 import { inject } from '../lib/inject.js';
@@ -224,13 +224,13 @@ export async function parseDeeplink(requestContent, type, chain, blockchain, blo
                     }
                 }
             }
-        } else if (EOS_FAMILY.includes(chain)) {
+        } else if (VAULTA_FAMILY.includes(chain)) {
             if (request.payload.params && request.payload.params.length > 1) {
                 let actions;
                 try {
                     actions = JSON.parse(request.payload.params[1]).actions;
                 } catch (error) {
-                    console.log({ error, location: '_parseDeeplink.EOS.parse' });
+                    console.log({ error, location: '_parseDeeplink.VAULTA.parse' });
                     return;
                 }
 
@@ -653,7 +653,7 @@ export async function handleBlockchainRequest(event, arg) {
                     break;
                 }
             }
-        } else if (EOS_FAMILY.includes(chain)) {
+        } else if (VAULTA_FAMILY.includes(chain)) {
             const ops = parsedData.actions;
             for (let i = 0; i < ops.length; i++) {
                 let operation = ops[i];

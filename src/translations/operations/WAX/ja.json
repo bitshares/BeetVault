@@ -1,0 +1,332 @@
+{
+  "getAccount": {
+    "method": "getAccount",
+    "title": "アカウント詳細リクエスト",
+    "result": "アカウント詳細結果",
+    "headers": {
+      "request": "アカウントの詳細を共有しますか?",
+      "result": "アカウントの詳細が共有されました。"
+    },
+    "tooltip": "ウォレットにブロックチェーンアカウントの詳細を要求します"
+  },
+  "requestSignature": {
+    "method": "要求署名",
+    "title": "署名リクエスト",
+    "result": "署名結果",
+    "headers": {
+      "request": "あなたの署名を共有したいですか?",
+      "result": "あなたの署名が共有されました:"
+    },
+    "tooltip": "ウォレットにブロックチェーン署名を要求します"
+  },
+  "injectedCall": {
+    "method": "注入されたコール",
+    "title": "挿入された通話リクエスト",
+    "result": "挿入された呼び出しの結果",
+    "headers": {
+      "request": "次の挿入された呼び出しを承認しますか?",
+      "result": "次の挿入された呼び出しが承認されました。"
+    },
+    "tooltip": "挿入されたブロックチェーン操作を処理するようにウォレットに要求します"
+  },
+  "regproposer": {
+    "method": "WPS提案者の登録",
+    "title": "WPS提案者登録リクエスト",
+    "result": "WPS提案者登録結果",
+    "headers": {
+      "request": "以下のアカウントをWPS提案者として登録しますか?",
+      "result": "以下のアカウントがWPS提案者として登録されました:"
+    },
+    "rows": {
+      "proposer": "提案者: {proposer}",
+      "proposer_key": "提案者キー: {proposer_key}"
+    },
+    "tooltip": "WPS提案者アカウントを登録する"
+  },
+  "regproposal": {
+    "method": "WPS提案の登録",
+    "title": "WPS提案登録リクエスト",
+    "result": "WPS提案登録結果",
+    "headers": {
+      "request": "以下のWPS提案を登録しますか?",
+      "result": "以下のWPS提案が登録されました:"
+    },
+    "rows": {
+      "proposer": "提案者: {proposer}",
+      "proposal_name": "提案名: {proposal_name}",
+      "title": "タイトル: {title}",
+      "pay_amount": "支払金額: {pay_amount}"
+    },
+    "tooltip": "新しいWPS提案を登録する"
+  },
+  "voteproposal": {
+    "method": "WPS提案への投票",
+    "title": "WPS提案投票リクエスト",
+    "result": "WPS提案投票結果",
+    "headers": {
+      "request": "以下のWPS提案に投票しますか?",
+      "result": "以下のWPS提案への投票が承認されました:"
+    },
+    "rows": {
+      "voter": "投票者: {voter}",
+      "proposal_name": "提案名: {proposal_name}",
+      "vote": "投票: {vote}"
+    },
+    "tooltip": "WPS提案に投票する"
+  },
+  "claimfunds": {
+    "method": "WPS資金の請求",
+    "title": "WPS資金請求リクエスト",
+    "result": "WPS資金請求結果",
+    "headers": {
+      "request": "以下の提案のWPS資金を請求しますか?",
+      "result": "以下の提案のWPS資金が請求されました:"
+    },
+    "rows": {
+      "account": "アカウント: {account}",
+      "proposal_name": "提案名: {proposal_name}"
+    },
+    "tooltip": "承認されたWPS提案から資金を請求する"
+  },
+  "voterclaim": {
+    "method": "WPS有権者報酬の請求",
+    "title": "WPS有権者報酬請求リクエスト",
+    "result": "WPS有権者報酬請求結果",
+    "headers": {
+      "request": "WPS有権者報酬を請求しますか?",
+      "result": "WPS有権者報酬が請求されました:"
+    },
+    "rows": {
+      "owner": "所有者: {owner}"
+    },
+    "tooltip": "WPS有権者報酬を請求する"
+  },
+  "voterclaimst": {
+    "method": "WPS有権者ステーク報酬の請求",
+    "title": "WPS有権者ステーク報酬請求リクエスト",
+    "result": "WPS有権者ステーク報酬請求結果",
+    "headers": {
+      "request": "WPS有権者ステーク報酬を請求しますか?",
+      "result": "WPS有権者ステーク報酬が請求されました:"
+    },
+    "rows": {
+      "owner": "所有者: {owner}",
+      "amount": "金額: {amount}"
+    },
+    "tooltip": "WPS有権者ステーク報酬を請求する"
+  },
+  "awardgenesis": {
+    "method": "ジェネシスの授与",
+    "title": "ジェネシス授与リクエスト",
+    "result": "ジェネシス授与結果",
+    "headers": {
+      "request": "以下のアカウントにジェネシストークンを授与しますか?",
+      "result": "以下のアカウントにジェネシストークンが授与されました:"
+    },
+    "rows": {
+      "receiver": "受信者: {receiver}",
+      "amount": "金額: {amount}"
+    },
+    "tooltip": "アカウントにジェネシストークンを授与する"
+  },
+  "claimgenesis": {
+    "method": "ジェネシスの請求",
+    "title": "ジェネシス請求リクエスト",
+    "result": "ジェネシス請求結果",
+    "headers": {
+      "request": "以下のアカウントのジェネシストークンを請求しますか?",
+      "result": "以下のアカウントのジェネシストークンが請求されました:"
+    },
+    "rows": {
+      "receiver": "受信者: {receiver}"
+    },
+    "tooltip": "ジェネシストークンを請求する"
+  },
+  "createcol": {
+    "method": "NFTコレクションの作成",
+    "title": "NFTコレクション作成リクエスト",
+    "result": "NFTコレクション作成結果",
+    "headers": {
+      "request": "以下のNFTコレクションを作成しますか?",
+      "result": "以下のNFTコレクションが作成されました:"
+    },
+    "rows": {
+      "author": "著者: {author}",
+      "collection_name": "コレクション名: {collection_name}",
+      "allow_notify": "通知を許可: {allow_notify}",
+      "market_fee": "マーケット手数料: {market_fee}"
+    },
+    "tooltip": "新しいNFTコレクションを作成する"
+  },
+  "mintasset": {
+    "method": "NFTアセットの発行",
+    "title": "NFTアセット発行リクエスト",
+    "result": "NFTアセット発行結果",
+    "headers": {
+      "request": "以下のNFTアセットを発行しますか?",
+      "result": "以下のNFTアセットが発行されました:"
+    },
+    "rows": {
+      "authorized_minter": "承認された発行者: {authorized_minter}",
+      "collection_name": "コレクション名: {collection_name}",
+      "schema_name": "スキーマ名: {schema_name}",
+      "template_id": "テンプレート ID: {template_id}",
+      "new_asset_owner": "新しいアセット所有者: {new_asset_owner}"
+    },
+    "tooltip": "新しいNFTアセットを発行する"
+  },
+  "burnasset": {
+    "method": "NFTアセットのバーン",
+    "title": "NFTアセットバーンリクエスト",
+    "result": "NFTアセットバーン結果",
+    "headers": {
+      "request": "以下のNFTアセットをバーンしますか?",
+      "result": "以下のNFTアセットがバーンされました:"
+    },
+    "rows": {
+      "asset_owner": "アセット所有者: {asset_owner}",
+      "asset_id": "アセット ID: {asset_id}"
+    },
+    "tooltip": "NFTアセットをバーンする"
+  },
+  "createoffer": {
+    "method": "NFTオファーの作成",
+    "title": "NFTオファー作成リクエスト",
+    "result": "NFTオファー作成結果",
+    "headers": {
+      "request": "以下のNFTオファーを作成しますか?",
+      "result": "以下のNFTオファーが作成されました:"
+    },
+    "rows": {
+      "sender": "送信者: {sender}",
+      "recipient": "受信者: {recipient}",
+      "sender_asset_ids": "送信者アセット ID: {sender_asset_ids}",
+      "recipient_asset_ids": "受信者アセット ID: {recipient_asset_ids}",
+      "memo": "メモ: {memo}"
+    },
+    "tooltip": "新しいNFTオファーを作成する"
+  },
+  "acceptoffer": {
+    "method": "NFTオファーの承諾",
+    "title": "NFTオファー承諾リクエスト",
+    "result": "NFTオファー承諾結果",
+    "headers": {
+      "request": "以下のNFTオファーを承諾しますか?",
+      "result": "以下のNFTオファーが承諾されました:"
+    },
+    "rows": {
+      "offer_id": "オファー ID: {offer_id}"
+    },
+    "tooltip": "NFTオファーを承諾する"
+  },
+  "announcesale": {
+    "method": "NFT販売の告知",
+    "title": "NFT販売告知リクエスト",
+    "result": "NFT販売告知結果",
+    "headers": {
+      "request": "以下のNFT販売を告知しますか?",
+      "result": "以下のNFT販売が告知されました:"
+    },
+    "rows": {
+      "seller": "販売者: {seller}",
+      "asset_ids": "アセット ID: {asset_ids}",
+      "listing_price": "掲載価格: {listing_price}",
+      "settlement_symbol": "決済シンボル: {settlement_symbol}"
+    },
+    "tooltip": "NFTの販売を告知する"
+  },
+  "purchasesale": {
+    "method": "NFT販売の購入",
+    "title": "NFT販売購入リクエスト",
+    "result": "NFT販売購入結果",
+    "headers": {
+      "request": "以下のNFT販売を購入しますか?",
+      "result": "以下のNFT販売が購入されました:"
+    },
+    "rows": {
+      "buyer": "購入者: {buyer}",
+      "sale_id": "販売 ID: {sale_id}",
+      "taker_marketplace": "テイカーマーケットプレース: {taker_marketplace}"
+    },
+    "tooltip": "販売からNFTを購入する"
+  },
+  "announceauct": {
+    "method": "NFTオークションの告知",
+    "title": "NFTオークション告知リクエスト",
+    "result": "NFTオークション告知結果",
+    "headers": {
+      "request": "以下のNFTオークションを告知しますか?",
+      "result": "以下のNFTオークションが告知されました:"
+    },
+    "rows": {
+      "seller": "販売者: {seller}",
+      "asset_ids": "アセット ID: {asset_ids}",
+      "starting_bid": "開始入札: {starting_bid}",
+      "duration": "期間: {duration}"
+    },
+    "tooltip": "NFTオークションを告知する"
+  },
+  "auctionbid": {
+    "method": "NFTオークションへの入札",
+    "title": "NFTオークション入札リクエスト",
+    "result": "NFTオークション入札結果",
+    "headers": {
+      "request": "以下のNFTオークションに入札しますか?",
+      "result": "以下のNFTオークションへの入札が行われました:"
+    },
+    "rows": {
+      "bidder": "入札者: {bidder}",
+      "auction_id": "オークション ID: {auction_id}",
+      "bid": "入札: {bid}"
+    },
+    "tooltip": "NFTオークションに入札する"
+  },
+  "createbuyo": {
+    "method": "NFT買い注文の作成",
+    "title": "NFT買い注文作成リクエスト",
+    "result": "NFT買い注文作成結果",
+    "headers": {
+      "request": "以下のNFT買い注文を作成しますか?",
+      "result": "以下のNFT買い注文が作成されました:"
+    },
+    "rows": {
+      "buyer": "購入者: {buyer}",
+      "recipient": "受信者: {recipient}",
+      "asset_ids": "アセット ID: {asset_ids}",
+      "price": "価格: {price}",
+      "memo": "メモ: {memo}"
+    },
+    "tooltip": "新しいNFT買い注文を作成する"
+  },
+  "transfer": {
+    "method": "NFTの転送",
+    "title": "NFT転送リクエスト",
+    "result": "NFT転送結果",
+    "headers": {
+      "request": "以下のNFTを転送しますか?",
+      "result": "以下のNFTが転送されました:"
+    },
+    "rows": {
+      "from": "差出人: {from}",
+      "to": "宛先: {to}",
+      "asset_ids": "アセット ID: {asset_ids}",
+      "memo": "メモ: {memo}"
+    },
+    "tooltip": "アカウント間でNFTアセットを転送する"
+  },
+  "withdraw": {
+    "method": "NFTの引き出し",
+    "title": "NFT引き出しリクエスト",
+    "result": "NFT引き出し結果",
+    "headers": {
+      "request": "以下のNFTを引き出しますか?",
+      "result": "以下のNFTが引き出されました:"
+    },
+    "rows": {
+      "owner": "所有者: {owner}",
+      "token_to_receive": "受信トークン: {token_to_receive}",
+      "quantity": "数量: {quantity}"
+    },
+    "tooltip": "トークン残高にNFTアセットを引き出す"
+  }
+}

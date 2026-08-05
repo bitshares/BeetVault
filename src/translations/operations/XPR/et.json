@@ -1,0 +1,257 @@
+{
+  "getAccount": {
+    "method": "getAccount",
+    "title": "Konto üksikasjade taotlus",
+    "result": "Konto üksikasjade tulemus",
+    "headers": {
+      "request": "Kas soovite oma konto andmeid jagada?",
+      "result": "Teie konto üksikasju jagati."
+    },
+    "tooltip": "Küsib teie rahakotilt plokiahela konto üksikasju"
+  },
+  "requestSignature": {
+    "method": "requestSignature",
+    "title": "Allkirjataotlus",
+    "result": "Allkirja tulemus",
+    "headers": {
+      "request": "Kas soovite oma allkirja jagada?",
+      "result": "Teie allkirja jagati:"
+    },
+    "tooltip": "Küsib teie rahakotilt plokiahela allkirju"
+  },
+  "injectedCall": {
+    "method": "süstitud Helista",
+    "title": "Süstitud kõne taotlus",
+    "result": "Süstitud kõne tulemus",
+    "headers": {
+      "request": "Kas kinnitada järgmine süstitud kõne?",
+      "result": "Järgmine süstitud kõne kiideti heaks:"
+    },
+    "tooltip": "Palub teie rahakotil süstitud plokiahela operatsiooniga hakkama saada"
+  },
+  "stakexpr": {
+    "method": "Panusta XPR",
+    "title": "Panusta XPR taotlus",
+    "result": "Panusta XPR tulemus",
+    "headers": {
+      "request": "Panusta järgmine XPR summa?",
+      "result": "Järgmine XPR summa pandi:"
+    },
+    "rows": {
+      "account": "Konto: {account}",
+      "quantity": "Kogus: {quantity}"
+    },
+    "tooltip": "Panusta XPR märgid"
+  },
+  "unstakexpr": {
+    "method": "Võta XPR välja",
+    "title": "Võta XPR välja taotlus",
+    "result": "Võta XPR välja tulemus",
+    "headers": {
+      "request": "Võta järgmine XPR summa välja?",
+      "result": "Järgmine XPR summa võeti välja:"
+    },
+    "rows": {
+      "account": "Konto: {account}",
+      "quantity": "Kogus: {quantity}"
+    },
+    "tooltip": "Võta XPR märgid välja"
+  },
+  "updstakexpr": {
+    "method": "Uuenda XPR panust",
+    "title": "Uuenda XPR panuse taotlus",
+    "result": "Uuenda XPR panuse tulemus",
+    "headers": {
+      "request": "Uuenda järgmine XPR panus?",
+      "result": "Järgmine XPR panus uuendati:"
+    },
+    "rows": {
+      "account": "Konto: {account}",
+      "quantity": "Kogus: {quantity}"
+    },
+    "tooltip": "Uuenda XPR panustamise summa"
+  },
+  "refundxpr": {
+    "method": "Tagasta XPR panus",
+    "title": "Tagasta XPR panuse taotlus",
+    "result": "Tagasta XPR panuse tulemus",
+    "headers": {
+      "request": "Tagasta järgmine XPR panus?",
+      "result": "Järgmine XPR panus tagastati:"
+    },
+    "rows": {
+      "account": "Konto: {account}"
+    },
+    "tooltip": "Tagasta XPR panustatud märgid"
+  },
+  "voterclaim": {
+    "method": "Nõua XPR hääletaja preemiaid",
+    "title": "Nõua XPR hääletaja preemiaid taotlus",
+    "result": "Nõua XPR hääletaja preemiaid tulemus",
+    "headers": {
+      "request": "Nõua XPR hääletaja preemiaid?",
+      "result": "XPR hääletaja preemiad nõuti:"
+    },
+    "rows": {
+      "owner": "Omanik: {owner}"
+    },
+    "tooltip": "Nõu XPR hääletaja preemiaid"
+  },
+  "voterclaimst": {
+    "method": "Nõua XPR hääletaja panustatud preemiaid",
+    "title": "Nõua XPR hääletaja panustatud preemiaid taotlus",
+    "result": "Nõua XPR hääletaja panustatud preemiaid tulemus",
+    "headers": {
+      "request": "Nõua XPR hääletaja panustatud preemiaid?",
+      "result": "XPR hääletaja panustatud preemiad nõuti:"
+    },
+    "rows": {
+      "owner": "Omanik: {owner}",
+      "amount": "Summa: {amount}"
+    },
+    "tooltip": "Nõu XPR hääletaja panustatud preemiaid"
+  },
+  "setperm": {
+    "method": "Määra konto õigused",
+    "title": "Määra konto õiguste taotlus",
+    "result": "Määra konto õiguste tulemus",
+    "headers": {
+      "request": "Määra järgmised konto õigused?",
+      "result": "Järgmised konto õigused määramati:"
+    },
+    "rows": {
+      "account": "Konto: {account}",
+      "permission": "Luba: {permission}",
+      "allowed_actions": "Lubatud tegevused: {allowed_actions}"
+    },
+    "tooltip": "Määra konto õigused Proton/XPR-s"
+  },
+  "setusername": {
+    "method": "Määra Proton kasutajanimi",
+    "title": "Määra Proton kasutajanime taotlus",
+    "result": "Määra Proton kasutajanime tulemus",
+    "headers": {
+      "request": "Määra järgmine Proton kasutajanimi?",
+      "result": "Järgmine Proton kasutajanimi määramati:"
+    },
+    "rows": {
+      "account": "Konto: {account}",
+      "username": "Kasutajanimi: {username}"
+    },
+    "tooltip": "Määra Proton/XPR kasutajanimi"
+  },
+  "userverify": {
+    "method": "Kinnita Proton kasutaja",
+    "title": "Kinnita Proton kasutaja taotlus",
+    "result": "Kinnita Proton kasutaja tulemus",
+    "headers": {
+      "request": "Kinnita järgmine Proton kasutaja?",
+      "result": "Järgmine Proton kasutaja kinnitati:"
+    },
+    "rows": {
+      "account": "Konto: {account}",
+      "is_verified": "On kinnitatud: {is_verified}"
+    },
+    "tooltip": "Kinnita Proton/XPR kasutaja"
+  },
+  "addkyc": {
+    "method": "Lisa KYC",
+    "title": "Lisa KYC taotlus",
+    "result": "Lisa KYC tulemus",
+    "headers": {
+      "request": "Lisa järgmine KYC teave?",
+      "result": "Järgmine KYC teave lisati:"
+    },
+    "rows": {
+      "account": "Konto: {account}",
+      "kyc_provider": "KYC pakkuja: {kyc_provider}",
+      "kyc_app_id": "KYC rakenduse ID: {kyc_app_id}",
+      "kyc_status": "KYC olek: {kyc_status}"
+    },
+    "tooltip": "Lisa KYC teave kontole"
+  },
+  "updatekyc": {
+    "method": "Uuenda KYC",
+    "title": "Uuenda KYC taotlus",
+    "result": "Uuenda KYC tulemus",
+    "headers": {
+      "request": "Uuenda järgmine KYC teave?",
+      "result": "Järgmine KYC teave uuendati:"
+    },
+    "rows": {
+      "account": "Konto: {account}",
+      "kyc_provider": "KYC pakkuja: {kyc_provider}",
+      "kyc_app_id": "KYC rakenduse ID: {kyc_app_id}",
+      "kyc_status": "KYC olek: {kyc_status}"
+    },
+    "tooltip": "Uuenda KYC teavet kontol"
+  },
+  "removekyc": {
+    "method": "Eemalda KYC",
+    "title": "Eemalda KYC taotlus",
+    "result": "Eemalda KYC tulemus",
+    "headers": {
+      "request": "Eemalda järgmine KYC teave?",
+      "result": "Järgmine KYC teave eemaldati:"
+    },
+    "rows": {
+      "account": "Konto: {account}"
+    },
+    "tooltip": "Eemalda KYC teave kontolt"
+  },
+  "reg": {
+    "method": "Registreeri Proton fond",
+    "title": "Registreeri Proton fondi taotlus",
+    "result": "Registreeri Proton fondi tulemus",
+    "headers": {
+      "request": "Registreeri järgmise Proton kogukonna fondiga?",
+      "result": "Registreerimine järgmise Proton kogukonna fondiga lõpetati:"
+    },
+    "rows": {
+      "account": "Konto: {account}"
+    },
+    "tooltip": "Registreeri Proton kogukonna fondiga"
+  },
+  "claimreward": {
+    "method": "Nõua Proton fondi preemiat",
+    "title": "Nõua Proton fondi preemia taotlus",
+    "result": "Nõua Proton fondi preemia tulemus",
+    "headers": {
+      "request": "Nõua Proton kogukonna fondi preemiat?",
+      "result": "Proton kogukonna fondi preemia nõuti:"
+    },
+    "rows": {
+      "account": "Konto: {account}"
+    },
+    "tooltip": "Nõu Proton kogukonna fondi preemiat"
+  },
+  "process": {
+    "method": "Töötle Proton fond",
+    "title": "Töötle Proton fondi taotlus",
+    "result": "Töötle Proton fondi tulemus",
+    "headers": {
+      "request": "Töötle järgmine Proton kogukonna fond?",
+      "result": "Järgmine Proton kogukonna fond töödeldi:"
+    },
+    "rows": {
+      "account": "Konto: {account}"
+    },
+    "tooltip": "Töötle Proton kogukonna fond"
+  },
+  "transfer": {
+    "method": "Teisalda XPR märgid",
+    "title": "Teisalda XPR märkide taotlus",
+    "result": "Teisalda XPR märkide tulemus",
+    "headers": {
+      "request": "Teisalda järgmised XPR märgid?",
+      "result": "Järgmised XPR märgid teisaldati:"
+    },
+    "rows": {
+      "from": "Saatja: {from}",
+      "to": "Saaja: {to}",
+      "quantity": "Kogus: {quantity}",
+      "memo": "Memo: {memo}"
+    },
+    "tooltip": "Teisalda XPR märgid kontode vahel"
+  }
+}

@@ -1,6 +1,6 @@
-import EOSmainnet from "./EOSmainnet.js";
+import Libre from "./Libre.js";
 
-export default class Libretest extends EOSmainnet {
+export default class Libretest extends Libre {
 
     getExplorer(object, chain) {
         if (object.accountName) {

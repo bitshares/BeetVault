@@ -33,9 +33,9 @@ let _blockchains = {
             { url: "wss://testnet.bitshares.im/ws" },
         ],
     },
-    EOS: {
-        coreSymbol: "EOS",
-        name: "EOSmainnet",
+    VAULTA: {
+        coreSymbol: "A",
+        name: "Vaulta",
         chainId: "aca376f206b8fc25a6ed44dbdc66547c36c6c33e3a119ffbeaef943642f0e906",
         nodeList: [
             { url: "https://eos.greymass.com" },
@@ -59,9 +59,9 @@ let _blockchains = {
             { url: "https://eospush.tokenpocket.pro" },
         ],
     },
-    EOSTEST: {
-        coreSymbol: "EOS",
-        name: "EOS Testnet",
+    VAULTATEST: {
+        coreSymbol: "A",
+        name: "Vaulta Testnet",
         testnet: true,
         chainId: "73e4385a2708e6d7048834fbc1079f2fabb17b3c125b146af438971e90716c4d",
         nodeList: [

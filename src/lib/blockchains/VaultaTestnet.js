@@ -1,6 +1,6 @@
-import EOSmainnet from "./EOSmainnet.js";
+import VaultaMainnet from "./VaultaMainnet.js";
 
-export default class EOStest extends EOSmainnet {
+export default class VaultaTestnet extends VaultaMainnet {
 
     getExplorer(object, chain) {
         if (object.accountName) {

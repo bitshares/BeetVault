@@ -1,0 +1,272 @@
+{
+  "getAccount": {
+    "method": "getAccount",
+    "title": "Demande de détails du compte",
+    "result": "Résultat des détails du compte",
+    "headers": {
+      "request": "Voulez-vous partager les détails de votre compte?",
+      "result": "Les détails de votre compte ont été partagés."
+    },
+    "tooltip": "Demande à votre portefeuille les détails du compte blockchain"
+  },
+  "requestSignature": {
+    "method": "demandeSignature",
+    "title": "Demande de signature",
+    "result": "Résultat de la signature",
+    "headers": {
+      "request": "Voulez-vous partager votre signature?",
+      "result": "Votre signature a été partagée :"
+    },
+    "tooltip": "Demande à votre portefeuille les signatures blockchain"
+  },
+  "injectedCall": {
+    "method": "Appel injecté",
+    "title": "Demande d'appel injecté",
+    "result": "Résultat de l'appel injecté",
+    "headers": {
+      "request": "Approuver l'appel injecté suivant ?",
+      "result": "L'appel injecté suivant a été approuvé :"
+    },
+    "tooltip": "Demande à votre portefeuille de gérer une opération de blockchain injectée"
+  },
+  "newballot": {
+    "method": "Créer un bulletin Decide",
+    "title": "Demande de création d'un bulletin Decide",
+    "result": "Résultat de la création d'un bulletin Decide",
+    "headers": {
+      "request": "Créer le bulletin Decide suivant ?",
+      "result": "Le bulletin Decide suivant a été créé :"
+    },
+    "rows": {
+      "title": "Titre : {title}",
+      "description": "Description : {description}",
+      "treasury_symbol": "Symbole du trésor : {treasury_symbol}",
+      "category": "Catégorie : {category}",
+      "voting_method": "Méthode de vote : {voting_method}",
+      "quorum": "Quorum : {quorum}",
+      "duration": "Durée : {duration}"
+    },
+    "tooltip": "Créer un nouveau bulletin Telos Decide"
+  },
+  "castvote": {
+    "method": "Voter sur Decide",
+    "title": "Demande de vote Decide",
+    "result": "Résultat du vote Decide",
+    "headers": {
+      "request": "Voter sur le bulletin Decide suivant ?",
+      "result": "Le vote Decide suivant a été soumis :"
+    },
+    "rows": {
+      "voter": "Votant : {voter}",
+      "ballot_name": "Nom du bulletin : {ballot_name}",
+      "votes": "Votes : {votes}"
+    },
+    "tooltip": "Voter sur un bulletin Telos Decide"
+  },
+  "openvoting": {
+    "method": "Ouvrir le vote Decide",
+    "title": "Demande d'ouverture du vote Decide",
+    "result": "Résultat de l'ouverture du vote Decide",
+    "headers": {
+      "request": "Ouvrir le vote pour le bulletin Decide suivant ?",
+      "result": "Le vote a été ouvert pour le bulletin Decide suivant :"
+    },
+    "rows": {
+      "ballot_name": "Nom du bulletin : {ballot_name}"
+    },
+    "tooltip": "Ouvrir le vote sur un bulletin Telos Decide"
+  },
+  "closevoting": {
+    "method": "Fermer le vote Decide",
+    "title": "Demande de fermeture du vote Decide",
+    "result": "Résultat de la fermeture du vote Decide",
+    "headers": {
+      "request": "Fermer le vote pour le bulletin Decide suivant ?",
+      "result": "Le vote a été fermé pour le bulletin Decide suivant :"
+    },
+    "rows": {
+      "ballot_name": "Nom du bulletin : {ballot_name}"
+    },
+    "tooltip": "Fermer le vote sur un bulletin Telos Decide"
+  },
+  "cancelballot": {
+    "method": "Annuler le bulletin Decide",
+    "title": "Demande d'annulation du bulletin Decide",
+    "result": "Résultat de l'annulation du bulletin Decide",
+    "headers": {
+      "request": "Annuler le bulletin Decide suivant ?",
+      "result": "Le bulletin Decide suivant a été annulé :"
+    },
+    "rows": {
+      "ballot_name": "Nom du bulletin : {ballot_name}"
+    },
+    "tooltip": "Annuler un bulletin Telos Decide"
+  },
+  "deleteballot": {
+    "method": "Supprimer le bulletin Decide",
+    "title": "Demande de suppression du bulletin Decide",
+    "result": "Résultat de la suppression du bulletin Decide",
+    "headers": {
+      "request": "Supprimer le bulletin Decide suivant ?",
+      "result": "Le bulletin Decide suivant a été supprimé :"
+    },
+    "rows": {
+      "ballot_name": "Nom du bulletin : {ballot_name}"
+    },
+    "tooltip": "Supprimer un bulletin Telos Decide"
+  },
+  "regvoter": {
+    "method": "Enregistrer un votant Decide",
+    "title": "Demande d'enregistrement d'un votant Decide",
+    "result": "Résultat de l'enregistrement d'un votant Decide",
+    "headers": {
+      "request": "Enregistrer le compte suivant en tant que votant Decide ?",
+      "result": "Le compte suivant a été enregistré en tant que votant Decide :"
+    },
+    "rows": {
+      "voter": "Votant : {voter}",
+      "treasury_symbol": "Symbole du trésor : {treasury_symbol}"
+    },
+    "tooltip": "Enregistrer un votant Telos Decide"
+  },
+  "stake": {
+    "method": "Mettre en enjeu TLOS",
+    "title": "Demande de mise en enjeu de TLOS",
+    "result": "Résultat de la mise en enjeu de TLOS",
+    "headers": {
+      "request": "Mettre en enjeu le montant TLOS suivant ?",
+      "result": "Le montant TLOS suivant a été mis en enjeu :"
+    },
+    "rows": {
+      "voter": "Votant : {voter}",
+      "quantity": "Quantité : {quantity}"
+    },
+    "tooltip": "Mettre en enjeu des tokens TLOS"
+  },
+  "unstake": {
+    "method": "Retirer de l'enjeu TLOS",
+    "title": "Demande de retrait de l'enjeu TLOS",
+    "result": "Résultat du retrait de l'enjeu TLOS",
+    "headers": {
+      "request": "Retirer le montant TLOS suivant de l'enjeu ?",
+      "result": "Le montant TLOS suivant a été retiré de l'enjeu :"
+    },
+    "rows": {
+      "voter": "Votant : {voter}",
+      "quantity": "Quantité : {quantity}"
+    },
+    "tooltip": "Retirer des tokens TLOS de l'enjeu"
+  },
+  "newtreasury": {
+    "method": "Créer un trésor Decide",
+    "title": "Demande de création d'un trésor Decide",
+    "result": "Résultat de la création d'un trésor Decide",
+    "headers": {
+      "request": "Créer le trésor Decide suivant ?",
+      "result": "Le trésor Decide suivant a été créé :"
+    },
+    "rows": {
+      "manager": "Gestionnaire : {manager}",
+      "max_supply": "Offre maximale : {max_supply}",
+      "access_type": "Type d'accès : {access_type}"
+    },
+    "tooltip": "Créer un nouveau trésor Telos Decide"
+  },
+  "mint": {
+    "method": "Minter des tokens Decide",
+    "title": "Demande de mint de tokens Decide",
+    "result": "Résultat du mint de tokens Decide",
+    "headers": {
+      "request": "Minter les tokens Decide suivants ?",
+      "result": "Les tokens Decide suivants ont été mintés :"
+    },
+    "rows": {
+      "to": "À : {to}",
+      "quantity": "Quantité : {quantity}",
+      "memo": "Mémo : {memo}"
+    },
+    "tooltip": "Minter des tokens Telos Decide"
+  },
+  "burn": {
+    "method": "Brûler des tokens Decide",
+    "title": "Demande de burn de tokens Decide",
+    "result": "Résultat du burn de tokens Decide",
+    "headers": {
+      "request": "Brûler les tokens Decide suivants ?",
+      "result": "Les tokens Decide suivants ont été brûlés :"
+    },
+    "rows": {
+      "quantity": "Quantité : {quantity}",
+      "memo": "Mémo : {memo}"
+    },
+    "tooltip": "Brûler des tokens Telos Decide"
+  },
+  "claimpayment": {
+    "method": "Réclamer le paiement Decide",
+    "title": "Demande de réclamation du paiement Decide",
+    "result": "Résultat de la réclamation du paiement Decide",
+    "headers": {
+      "request": "Réclamer le paiement Decide suivant ?",
+      "result": "Le paiement Decide suivant a été réclamé :"
+    },
+    "rows": {
+      "worker": "Travailleur : {worker}"
+    },
+    "tooltip": "Réclamer le paiement du travailleur Telos Decide"
+  },
+  "regcommittee": {
+    "method": "Enregistrer un comité Decide",
+    "title": "Demande d'enregistrement d'un comité Decide",
+    "result": "Résultat de l'enregistrement d'un comité Decide",
+    "headers": {
+      "request": "Enregistrer le comité Decide suivant ?",
+      "result": "Le comité Decide suivant a été enregistré :"
+    },
+    "rows": {
+      "committee_name": "Nom du comité : {committee_name}",
+      "account": "Compte : {account}"
+    },
+    "tooltip": "Enregistrer un comité Telos Decide"
+  },
+  "raw": {
+    "method": "Transaction EVM brute",
+    "title": "Demande de transaction EVM brute",
+    "result": "Résultat de la transaction EVM brute",
+    "headers": {
+      "request": "Soumettre la transaction EVM brute suivante ?",
+      "result": "La transaction EVM brute suivante a été soumise :"
+    },
+    "rows": {
+      "tx_hex": "Hexadécimal de la transaction : {tx_hex}"
+    },
+    "tooltip": "Soumettre une transaction EVM brute sur Telos"
+  },
+  "withdraw": {
+    "method": "Retirer de l'EVM",
+    "title": "Demande de retrait de l'EVM",
+    "result": "Résultat du retrait de l'EVM",
+    "headers": {
+      "request": "Retirer du Telos EVM ?",
+      "result": "Le montant suivant a été retiré du Telos EVM :"
+    },
+    "rows": {
+      "to": "À : {to}",
+      "quantity": "Quantité : {quantity}"
+    },
+    "tooltip": "Retirer des tokens du Telos EVM"
+  },
+  "create": {
+    "method": "Créer un compte EVM",
+    "title": "Demande de création d'un compte EVM",
+    "result": "Résultat de la création d'un compte EVM",
+    "headers": {
+      "request": "Créer un compte Telos EVM ?",
+      "result": "Le compte Telos EVM suivant a été créé :"
+    },
+    "rows": {
+      "account": "Compte : {account}",
+      "data": "Données : {data}"
+    },
+    "tooltip": "Créer un nouveau compte Telos EVM"
+  }
+}

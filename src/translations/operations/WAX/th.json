@@ -1,0 +1,332 @@
+{
+  "getAccount": {
+    "method": "รับบัญชี",
+    "title": "ขอรายละเอียดบัญชี",
+    "result": "ผลรายละเอียดบัญชี",
+    "headers": {
+      "request": "คุณต้องการแบ่งปันรายละเอียดบัญชีของคุณหรือไม่?",
+      "result": "รายละเอียดบัญชีของคุณถูกแชร์"
+    },
+    "tooltip": "ขอรายละเอียดบัญชีบล็อคเชนจากกระเป๋าเงินของคุณ"
+  },
+  "requestSignature": {
+    "method": "ขอลายเซ็น",
+    "title": "คำขอลงนาม",
+    "result": "ผลลัพธ์ลายเซ็น",
+    "headers": {
+      "request": "คุณต้องการแบ่งปันลายเซ็นของคุณหรือไม่?",
+      "result": "ลายเซ็นของคุณถูกแชร์:"
+    },
+    "tooltip": "ขอลายเซ็นบล็อคเชนจากกระเป๋าเงินของคุณ"
+  },
+  "injectedCall": {
+    "method": "ฉีดโทร",
+    "title": "คำขอโทรที่ฉีดเข้าไป",
+    "result": "ฉีดผลการโทร",
+    "headers": {
+      "request": "อนุมัติการโทรที่แทรกต่อไปนี้หรือไม่",
+      "result": "การโทรที่แทรกต่อไปนี้ได้รับการอนุมัติ:"
+    },
+    "tooltip": "ขอให้กระเป๋าเงินของคุณจัดการกับการดำเนินการบล็อคเชนที่ถูกแทรกเข้าไป"
+  },
+  "regproposer": {
+    "method": "ลงทะเบียนผู้เสนอ WPS",
+    "title": "ขอลงทะเบียนผู้เสนอ WPS",
+    "result": "ผลลงทะเบียนผู้เสนอ WPS",
+    "headers": {
+      "request": "ลงทะเบียนบัญชีต่อไปนี้เป็นผู้เสนอ WPS หรือไม่",
+      "result": "บัญชีต่อไปนี้ได้รับการลงทะเบียนเป็นผู้เสนอ WPS:"
+    },
+    "rows": {
+      "proposer": "ผู้เสนอ: {proposer}",
+      "proposer_key": "คีย์ผู้เสนอ: {proposer_key}"
+    },
+    "tooltip": "ลงทะเบียนบัญชีผู้เสนอ WPS"
+  },
+  "regproposal": {
+    "method": "ลงทะเบียนข้อเสนอ WPS",
+    "title": "ขอลงทะเบียนข้อเสนอ WPS",
+    "result": "ผลลงทะเบียนข้อเสนอ WPS",
+    "headers": {
+      "request": "ลงทะเบียนข้อเสนอ WPS ต่อไปนี้หรือไม่",
+      "result": "ข้อเสนอ WPS ต่อไปนี้ได้รับการลงทะเบียน:"
+    },
+    "rows": {
+      "proposer": "ผู้เสนอ: {proposer}",
+      "proposal_name": "ชื่อข้อเสนอ: {proposal_name}",
+      "title": "ชื่อเรื่อง: {title}",
+      "pay_amount": "จำนวนเงินที่จ่าย: {pay_amount}"
+    },
+    "tooltip": "ลงทะเบียนข้อเสนอ WPS ใหม่"
+  },
+  "voteproposal": {
+    "method": "ลงคะแนนข้อเสนอ WPS",
+    "title": "ขอลงคะแนนข้อเสนอ WPS",
+    "result": "ผลการลงคะแนนข้อเสนอ WPS",
+    "headers": {
+      "request": "ลงคะแนนในข้อเสนอ WPS ต่อไปนี้หรือไม่",
+      "result": "การลงคะแนนในข้อเสนอ WPS ต่อไปนี้ได้รับการอนุมัติ:"
+    },
+    "rows": {
+      "voter": "ผู้มีสิทธิเลือกตั้ง: {voter}",
+      "proposal_name": "ชื่อข้อเสนอ: {proposal_name}",
+      "vote": "คะแนนเสียง: {vote}"
+    },
+    "tooltip": "ลงคะแนนในข้อเสนอ WPS"
+  },
+  "claimfunds": {
+    "method": "เรียกร้องเงินทุน WPS",
+    "title": "ขอเรียกร้องเงินทุน WPS",
+    "result": "ผลเรียกร้องเงินทุน WPS",
+    "headers": {
+      "request": "เรียกร้องเงินทุน WPS สำหรับข้อเสนอต่อไปนี้หรือไม่",
+      "result": "เงินทุน WPS ได้รับการเรียกร้องสำหรับข้อเสนอต่อไปนี้:"
+    },
+    "rows": {
+      "account": "บัญชี: {account}",
+      "proposal_name": "ชื่อข้อเสนอ: {proposal_name}"
+    },
+    "tooltip": "เรียกร้องเงินทุนจากข้อเสนอ WPS ที่ได้รับอนุมัติ"
+  },
+  "voterclaim": {
+    "method": "เรียกร้องรางวัลผู้ลงคะแนน WPS",
+    "title": "ขอเรียกร้องรางวัลผู้ลงคะแนน WPS",
+    "result": "ผลเรียกร้องรางวัลผู้ลงคะแนน WPS",
+    "headers": {
+      "request": "เรียกร้องรางวัลผู้ลงคะแนน WPS หรือไม่",
+      "result": "รางวัลผู้ลงคะแนน WPS ได้รับการเรียกร้อง:"
+    },
+    "rows": {
+      "owner": "เจ้าของ: {owner}"
+    },
+    "tooltip": "เรียกร้องรางวัลผู้ลงคะแนน WPS"
+  },
+  "voterclaimst": {
+    "method": "เรียกร้องรางวัลผู้ลงคะแนนเดิมพัน WPS",
+    "title": "ขอเรียกร้องรางวัลผู้ลงคะแนนเดิมพัน WPS",
+    "result": "ผลเรียกร้องรางวัลผู้ลงคะแนนเดิมพัน WPS",
+    "headers": {
+      "request": "เรียกร้องรางวัลผู้ลงคะแนนเดิมพัน WPS หรือไม่",
+      "result": "รางวัลผู้ลงคะแนนเดิมพัน WPS ได้รับการเรียกร้อง:"
+    },
+    "rows": {
+      "owner": "เจ้าของ: {owner}",
+      "amount": "จำนวนเงิน: {amount}"
+    },
+    "tooltip": "เรียกร้องรางวัลผู้ลงคะแนนเดิมพัน WPS"
+  },
+  "awardgenesis": {
+    "method": "มอบรางวัลเจนีซิส",
+    "title": "ขอรางวัลเจนีซิส",
+    "result": "ผลรางวัลเจนีซิส",
+    "headers": {
+      "request": "มอบโทเค็นเจนีซิสให้กับบัญชีต่อไปนี้หรือไม่",
+      "result": "โทเค็นเจนีซิสถูกมอบให้กับบัญชีต่อไปนี้:"
+    },
+    "rows": {
+      "receiver": "ผู้รับ: {receiver}",
+      "amount": "จำนวนเงิน: {amount}"
+    },
+    "tooltip": "มอบโทเค็นเจนีซิสให้กับบัญชี"
+  },
+  "claimgenesis": {
+    "method": "เรียกร้องเจนีซิส",
+    "title": "ขอเรียกร้องเจนีซิส",
+    "result": "ผลเรียกร้องเจนีซิส",
+    "headers": {
+      "request": "เรียกร้องโทเค็นเจนีซิสสำหรับบัญชีต่อไปนี้หรือไม่",
+      "result": "โทเค็นเจนีซิสถูกเรียกร้องสำหรับบัญชีต่อไปนี้:"
+    },
+    "rows": {
+      "receiver": "ผู้รับ: {receiver}"
+    },
+    "tooltip": "เรียกร้องโทเค็นเจนีซิส"
+  },
+  "createcol": {
+    "method": "สร้างคอลเลกชัน NFT",
+    "title": "ขอสร้างคอลเลกชัน NFT",
+    "result": "ผลสร้างคอลเลกชัน NFT",
+    "headers": {
+      "request": "สร้างคอลเลกชัน NFT ต่อไปนี้หรือไม่",
+      "result": "คอลเลกชัน NFT ต่อไปนี้ถูกสร้างขึ้น:"
+    },
+    "rows": {
+      "author": "ผู้เขียน: {author}",
+      "collection_name": "ชื่อคอลเลกชัน: {collection_name}",
+      "allow_notify": "อนุญาตการแจ้งเตือน: {allow_notify}",
+      "market_fee": "ค่าธรรมเนียมตลาด: {market_fee}"
+    },
+    "tooltip": "สร้างคอลเลกชัน NFT ใหม่"
+  },
+  "mintasset": {
+    "method": "ขุดสินทรัพย์ NFT",
+    "title": "ขอขุดสินทรัพย์ NFT",
+    "result": "ผลขุดสินทรัพย์ NFT",
+    "headers": {
+      "request": "ขุดสินทรัพย์ NFT ต่อไปนี้หรือไม่",
+      "result": "สินทรัพย์ NFT ต่อไปนี้ถูกขุด:"
+    },
+    "rows": {
+      "authorized_minter": "ผู้ขุดที่ได้รับอนุญาต: {authorized_minter}",
+      "collection_name": "ชื่อคอลเลกชัน: {collection_name}",
+      "schema_name": "ชื่อสคีมา: {schema_name}",
+      "template_id": "รหัสแม่แบบ: {template_id}",
+      "new_asset_owner": "เจ้าของสินทรัพย์ใหม่: {new_asset_owner}"
+    },
+    "tooltip": "ขุดสินทรัพย์ NFT ใหม่"
+  },
+  "burnasset": {
+    "method": "เผาสินทรัพย์ NFT",
+    "title": "ขอเผาสินทรัพย์ NFT",
+    "result": "ผลเผาสินทรัพย์ NFT",
+    "headers": {
+      "request": "เผาสินทรัพย์ NFT ต่อไปนี้หรือไม่",
+      "result": "สินทรัพย์ NFT ต่อไปนี้ถูกเผา:"
+    },
+    "rows": {
+      "asset_owner": "เจ้าของสินทรัพย์: {asset_owner}",
+      "asset_id": "รหัสสินทรัพย์: {asset_id}"
+    },
+    "tooltip": "เผาสินทรัพย์ NFT"
+  },
+  "createoffer": {
+    "method": "สร้างข้อเสนอ NFT",
+    "title": "ขอสร้างข้อเสนอ NFT",
+    "result": "ผลสร้างข้อเสนอ NFT",
+    "headers": {
+      "request": "สร้างข้อเสนอ NFT ต่อไปนี้หรือไม่",
+      "result": "ข้อเสนอ NFT ต่อไปนี้ถูกสร้างขึ้น:"
+    },
+    "rows": {
+      "sender": "ผู้ส่ง: {sender}",
+      "recipient": "ผู้รับ: {recipient}",
+      "sender_asset_ids": "รหัสสินทรัพย์ของผู้ส่ง: {sender_asset_ids}",
+      "recipient_asset_ids": "รหัสสินทรัพย์ของผู้รับ: {recipient_asset_ids}",
+      "memo": "บันทึก: {memo}"
+    },
+    "tooltip": "สร้างข้อเสนอ NFT ใหม่"
+  },
+  "acceptoffer": {
+    "method": "ยอมรับข้อเสนอ NFT",
+    "title": "ขอยอมรับข้อเสนอ NFT",
+    "result": "ผลยอมรับข้อเสนอ NFT",
+    "headers": {
+      "request": "ยอมรับข้อเสนอ NFT ต่อไปนี้หรือไม่",
+      "result": "ข้อเสนอ NFT ต่อไปนี้ได้รับการยอมรับ:"
+    },
+    "rows": {
+      "offer_id": "รหัสข้อเสนอ: {offer_id}"
+    },
+    "tooltip": "ยอมรับข้อเสนอ NFT"
+  },
+  "announcesale": {
+    "method": "ประกาศขาย NFT",
+    "title": "ขอประกาศขาย NFT",
+    "result": "ผลประกาศขาย NFT",
+    "headers": {
+      "request": "ประกาศขาย NFT ต่อไปนี้หรือไม่",
+      "result": "การขาย NFT ต่อไปนี้ถูกประกาศ:"
+    },
+    "rows": {
+      "seller": "ผู้ขาย: {seller}",
+      "asset_ids": "รหัสสินทรัพย์: {asset_ids}",
+      "listing_price": "ราคาขาย: {listing_price}",
+      "settlement_symbol": "สัญลักษณ์การชำระบัญชี: {settlement_symbol}"
+    },
+    "tooltip": "ประกาศ NFT เพื่อขาย"
+  },
+  "purchasesale": {
+    "method": "ซื้อการขาย NFT",
+    "title": "ขอซื้อการขาย NFT",
+    "result": "ผลซื้อการขาย NFT",
+    "headers": {
+      "request": "ซื้อการขาย NFT ต่อไปนี้หรือไม่",
+      "result": "การขาย NFT ต่อไปนี้ถูกซื้อ:"
+    },
+    "rows": {
+      "buyer": "ผู้ซื้อ: {buyer}",
+      "sale_id": "รหัสการขาย: {sale_id}",
+      "taker_marketplace": "ตลาดของผู้รับ: {taker_marketplace}"
+    },
+    "tooltip": "ซื้อ NFT จากการขาย"
+  },
+  "announceauct": {
+    "method": "ประกาศประมูล NFT",
+    "title": "ขอประกาศประมูล NFT",
+    "result": "ผลประกาศประมูล NFT",
+    "headers": {
+      "request": "ประกาศการประมูล NFT ต่อไปนี้หรือไม่",
+      "result": "การประมูล NFT ต่อไปนี้ถูกประกาศ:"
+    },
+    "rows": {
+      "seller": "ผู้ขาย: {seller}",
+      "asset_ids": "รหัสสินทรัพย์: {asset_ids}",
+      "starting_bid": "ราคาเสนอเริ่มต้น: {starting_bid}",
+      "duration": "ระยะเวลา: {duration}"
+    },
+    "tooltip": "ประกาศการประมูล NFT"
+  },
+  "auctionbid": {
+    "method": "เสนอราคาประมูล NFT",
+    "title": "ขอเสนอราคาประมูล NFT",
+    "result": "ผลเสนอราคาประมูล NFT",
+    "headers": {
+      "request": "เสนอราคาในการประมูล NFT ต่อไปนี้หรือไม่",
+      "result": "มีการเสนอราคาในการประมูล NFT ต่อไปนี้:"
+    },
+    "rows": {
+      "bidder": "ผู้เสนอราคา: {bidder}",
+      "auction_id": "รหัสการประมูล: {auction_id}",
+      "bid": "ราคาเสนอ: {bid}"
+    },
+    "tooltip": "เสนอราคาในการประมูล NFT"
+  },
+  "createbuyo": {
+    "method": "สร้างคำสั่งซื้อ NFT",
+    "title": "ขอสร้างคำสั่งซื้อ NFT",
+    "result": "ผลสร้างคำสั่งซื้อ NFT",
+    "headers": {
+      "request": "สร้างคำสั่งซื้อ NFT ต่อไปนี้หรือไม่",
+      "result": "คำสั่งซื้อ NFT ต่อไปนี้ถูกสร้างขึ้น:"
+    },
+    "rows": {
+      "buyer": "ผู้ซื้อ: {buyer}",
+      "recipient": "ผู้รับ: {recipient}",
+      "asset_ids": "รหัสสินทรัพย์: {asset_ids}",
+      "price": "ราคา: {price}",
+      "memo": "บันทึก: {memo}"
+    },
+    "tooltip": "สร้างคำสั่งซื้อ NFT ใหม่"
+  },
+  "transfer": {
+    "method": "โอน NFT",
+    "title": "ขอโอน NFT",
+    "result": "ผลโอน NFT",
+    "headers": {
+      "request": "โอน NFT ต่อไปนี้หรือไม่",
+      "result": "NFT ต่อไปนี้ถูกโอน:"
+    },
+    "rows": {
+      "from": "จาก: {from}",
+      "to": "ถึง: {to}",
+      "asset_ids": "รหัสสินทรัพย์: {asset_ids}",
+      "memo": "บันทึก: {memo}"
+    },
+    "tooltip": "โอนสินทรัพย์ NFT ระหว่างบัญชี"
+  },
+  "withdraw": {
+    "method": "ถอน NFT",
+    "title": "ขอถอน NFT",
+    "result": "ผลถอน NFT",
+    "headers": {
+      "request": "ถอน NFT ต่อไปนี้หรือไม่",
+      "result": "NFT ต่อไปนี้ถูกถอน:"
+    },
+    "rows": {
+      "owner": "เจ้าของ: {owner}",
+      "token_to_receive": "โทเค็นที่จะได้รับ: {token_to_receive}",
+      "quantity": "ปริมาณ: {quantity}"
+    },
+    "tooltip": "ถอนสินทรัพย์ NFT ไปยังยอดคงเหลือโทเค็น"
+  }
+}

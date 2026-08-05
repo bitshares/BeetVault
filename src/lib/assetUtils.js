@@ -1,5 +1,5 @@
 const lookupPrecision = {
-    "EOS": 4,
+    "A": 4,
     "TLOS": 4,
     "BEOS": 4,
     "WAX": 8,

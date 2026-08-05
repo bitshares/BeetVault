@@ -1,4 +1,4 @@
-import { BTS_FAMILY, EOS_FAMILY, HIVE_FAMILY } from "./blockchains/chainFamilies.js";
+import { BTS_FAMILY, VAULTA_FAMILY, HIVE_FAMILY } from "./blockchains/chainFamilies.js";
 import { validateSender } from "./senderValidation.js";
 import { ipcOnceWithTimeout } from "./ipcMainWrapper.js";
 
@@ -95,7 +95,7 @@ export async function inject(blockchain, request, webContents) {
             }
         }
     } else if (
-        EOS_FAMILY.includes(blockchain._config.identifier)
+        VAULTA_FAMILY.includes(blockchain._config.identifier)
     ) {
         const params = request.payload.params[1];
         const _actions =

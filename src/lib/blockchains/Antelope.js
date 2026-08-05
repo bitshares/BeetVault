@@ -11,59 +11,41 @@ import {
     Bytes
 } from '@wharfkit/antelope';
 
-import beautify from "./EOS/beautify.js";
 import * as Actions from "../Actions.js";
 
-const operations = [
-    Actions.INJECTED_CALL,
-    "setalimits",
-    "setacctram",
-    "setacctnet",
-    "setacctcpu",
-    "activate",
-    "delegatebw",
-    "setrex",
-    "deposit",
-    "withdraw",
-    "buyrex",
-    "unstaketorex",
-    "sellrex",
-    "cnclrexorder",
-    "rentcpu",
-    "rentnet",
-    "fundcpuloan",
-    "fundnetloan",
-    "defcpuloan",
-    "defnetloan",
-    "transfer",
-    "updaterex",
-    "rexexec",
-    "consolidate",
-    "mvtosavings",
-    "mvfrsavings",
-    "closerex",
-    "undelegatebw",
-    "buyram",
-    "buyrambytes",
-    "sellram",
-    "refund",
-    "regproducer",
-    "unregprod",
-    "setram",
-    "setramrate",
-    "voteproducer",
-    "regproxy",
-    "setparams",
-    "claimrewards",
-    "setpriv",
-    "rmvproducer",
-    "updtrevision",
-    "bidname",
-    "bidrefund",
-    "ramtransfer",
+export const BASE_EOSIO_OPERATIONS = [
+    "activate", "setparams", "setpriv", "rmvproducer", "updtrevision",
+    "regproducer", "regproducer2", "unregprod", "voteproducer", "regproxy",
+    "claimrewards", "delegatebw", "undelegatebw", "refund",
+    "buyram", "buyrambytes", "sellram", "setram", "setramrate",
+    "bidname", "bidrefund",
+    // full REX set
+    "setrex", "deposit", "withdraw", "buyrex", "unstaketorex", "sellrex",
+    "cnclrexorder", "rentcpu", "rentnet", "fundcpuloan", "fundnetloan",
+    "defcpuloan", "defnetloan", "updaterex", "rexexec", "consolidate",
+    "mvtosavings", "mvfrsavings", "closerex",
+    // token
+    "create", "issue", "retire", "transfer", "open", "close",
+    // msig
+    "propose", "approve", "unapprove", "cancel", "exec",
+    // native
+    "newaccount", "updateauth", "deleteauth", "linkauth", "unlinkauth",
+    "canceldelay", "onerror", "setabi", "setcode",
 ];
 
-export default class EOS extends BlockchainAPI {
+export default class Antelope extends BlockchainAPI {
+    get operations() {
+        return [Actions.INJECTED_CALL, ...BASE_EOSIO_OPERATIONS];
+    }
+
+    getTokenContract() {
+        return this._config.tokenContract || "eosio.token";
+    }
+
+    get beautifyModule() {
+        throw new Error("Subclass must implement beautifyModule");
+    }
+
     /*
      * Establish a connection
      * @param {String} nodeToConnect
@@ -110,7 +92,7 @@ export default class EOS extends BlockchainAPI {
      */
     getOperationTypes() {
         // No virtual operations included
-        const _ops = operations.map((op) => {
+        const _ops = this.operations.map((op) => {
             return {
                 id: op,
                 method: op,
@@ -231,7 +213,7 @@ export default class EOS extends BlockchainAPI {
      * @param {string} privateKey
      * @param {string} chain // EOS, TLOS, BEOS (note: chain parameter is not needed by wharfkit, left here for compatibility)
      */
-    async verifyAccount(accountName, credentials, chain = "EOS") {
+    async verifyAccount(accountName, credentials, chain = "VAULTA") {
         let fetchedAccount;
         try {
             fetchedAccount = await this.getAccount(accountName);
@@ -389,7 +371,7 @@ export default class EOS extends BlockchainAPI {
 
         try {
             const tableRows = await this.getTableRows(
-                "eosio.token",
+                this.getTokenContract(),
                 accountName,
                 "accounts",
                 100
@@ -571,7 +553,7 @@ export default class EOS extends BlockchainAPI {
         let beautifiedOpPromises = [];
         for (let i = 0; i < _trx.actions.length; i++) {
             let operation = _trx.actions[i];
-            beautifiedOpPromises.push(beautify(operation));
+            beautifiedOpPromises.push(this.beautifyModule(operation));
         }
 
         return Promise.all(beautifiedOpPromises)

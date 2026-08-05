@@ -1,0 +1,151 @@
+{
+  "getAccount": {
+    "method": "getAccount",
+    "title": "Account Details Request",
+    "result": "Account details result",
+    "headers": {
+      "request": "Do you want to share your account details?",
+      "result": "Your account details were shared."
+    },
+    "tooltip": "Asks your wallet for blockchain account details"
+  },
+  "requestSignature": {
+    "method": "requestSignature",
+    "title": "Signature Request",
+    "result": "Signature result",
+    "headers": {
+      "request": "Do you want to share your signature?",
+      "result": "Your signature was shared:"
+    },
+    "tooltip": "Asks your wallet for blockchain signatures"
+  },
+  "injectedCall": {
+    "method": "injectedCall",
+    "title": "Injected Call Request",
+    "result": "Injected call result",
+    "headers": {
+      "request": "Approve the following injected call?",
+      "result": "The following injected call was approved:"
+    },
+    "tooltip": "Asks your wallet to handle an injected blockchain operation"
+  },
+  "voteproducer": {
+    "method": "Vote Libre Producer",
+    "title": "Vote Libre Producer Request",
+    "result": "Vote Libre Producer Result",
+    "headers": {
+      "request": "Vote for the following Libre producers?",
+      "result": "Votes were cast for the following Libre producers:"
+    },
+    "rows": {
+      "voter": "Voter: {voter}",
+      "producers": "Producers: {producers}"
+    },
+    "tooltip": "Vote for Libre block producers"
+  },
+  "regproducer": {
+    "method": "Register Libre Producer",
+    "title": "Register Libre Producer Request",
+    "result": "Register Libre Producer Result",
+    "headers": {
+      "request": "Register the following as a Libre block producer?",
+      "result": "The following was registered as a Libre block producer:"
+    },
+    "rows": {
+      "producer": "Producer: {producer}",
+      "producer_key": "Producer Key: {producer_key}",
+      "url": "URL: {url}",
+      "location": "Location: {location}"
+    },
+    "tooltip": "Register as a Libre block producer"
+  },
+  "claimrewards": {
+    "method": "Claim Libre Rewards",
+    "title": "Claim Libre Rewards Request",
+    "result": "Claim Libre Rewards Result",
+    "headers": {
+      "request": "Claim block producing rewards?",
+      "result": "Block producing rewards were claimed:"
+    },
+    "rows": {
+      "owner": "Owner: {owner}"
+    },
+    "tooltip": "Claim Libre block producing rewards"
+  },
+  "setalimits": {
+    "method": "Set Account Limits",
+    "title": "Set Account Limits Request",
+    "result": "Set Account Limits Result",
+    "headers": {
+      "request": "Set the following account resource limits?",
+      "result": "The following account resource limits were set:"
+    },
+    "rows": {
+      "account": "Account: {account}",
+      "ram_bytes": "RAM Limit: {ram_bytes}",
+      "net_weight": "Net Weight: {net_weight}",
+      "cpu_weight": "CPU Weight: {cpu_weight}"
+    },
+    "tooltip": "Set account resource limits on Libre"
+  },
+  "stake": {
+    "method": "Stake Libre Tokens",
+    "title": "Stake Libre Tokens Request",
+    "result": "Stake Libre Tokens Result",
+    "headers": {
+      "request": "Stake the following Libre tokens?",
+      "result": "The following Libre tokens were staked:"
+    },
+    "rows": {
+      "from": "From: {from}",
+      "to": "To: {to}",
+      "quantity": "Quantity: {quantity}",
+      "memo": "Memo: {memo}"
+    },
+    "tooltip": "Stake Libre tokens via the stake contract"
+  },
+  "unstake": {
+    "method": "Unstake Libre Tokens",
+    "title": "Unstake Libre Tokens Request",
+    "result": "Unstake Libre Tokens Result",
+    "headers": {
+      "request": "Unstake the following Libre tokens?",
+      "result": "The following Libre tokens were unstaked:"
+    },
+    "rows": {
+      "account": "Account: {account}",
+      "index": "Index: {index}"
+    },
+    "tooltip": "Unstake Libre tokens"
+  },
+  "claim": {
+    "method": "Claim Libre Staking Rewards",
+    "title": "Claim Libre Staking Rewards Request",
+    "result": "Claim Libre Staking Rewards Result",
+    "headers": {
+      "request": "Claim Libre staking rewards?",
+      "result": "Libre staking rewards were claimed:"
+    },
+    "rows": {
+      "account": "Account: {account}",
+      "index": "Index: {index}"
+    },
+    "tooltip": "Claim Libre staking rewards"
+  },
+  "transfer": {
+    "method": "Transfer Libre Tokens",
+    "title": "Transfer Libre Tokens Request",
+    "result": "Transfer Libre Tokens Result",
+    "headers": {
+      "request": "Transfer the following Libre tokens?",
+      "result": "The following Libre tokens were transferred:"
+    },
+    "rows": {
+      "from": "From: {from}",
+      "to": "To: {to}",
+      "quantity": "Quantity: {quantity}",
+      "memo": "Memo: {memo}"
+    },
+    "tooltip": "Transfer Libre tokens between accounts"
+  }
+}

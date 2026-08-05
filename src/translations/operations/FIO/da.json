@@ -1,0 +1,404 @@
+{
+  "getAccount": {
+    "method": "getAccount",
+    "title": "Account Details Request",
+    "result": "Account details result",
+    "headers": {
+      "request": "Do you want to share your account details?",
+      "result": "Your account details were shared."
+    },
+    "tooltip": "Asks your wallet for blockchain account details"
+  },
+  "requestSignature": {
+    "method": "requestSignature",
+    "title": "Signature Request",
+    "result": "Signature result",
+    "headers": {
+      "request": "Do you want to share your signature?",
+      "result": "Your signature was shared:"
+    },
+    "tooltip": "Asks your wallet for blockchain signatures"
+  },
+  "injectedCall": {
+    "method": "injectedCall",
+    "title": "Injected Call Request",
+    "result": "Injected call result",
+    "headers": {
+      "request": "Approve the following injected call?",
+      "result": "The following injected call was approved:"
+    },
+    "tooltip": "Asks your wallet to handle an injected blockchain operation"
+  },
+  "regaddress": {
+    "method": "Register FIO Address",
+    "title": "Register FIO Address Request",
+    "result": "Register FIO Address Result",
+    "headers": {
+      "request": "Register the following FIO address?",
+      "result": "The following FIO address was registered:"
+    },
+    "rows": {
+      "fio_address": "FIO Address: {fio_address}",
+      "owner_fio_public_key": "Owner FIO Public Key: {owner_fio_public_key}",
+      "max_fee": "Max Fee: {max_fee}",
+      "tpid": "TPID: {tpid}"
+    },
+    "tooltip": "Register a new FIO address"
+  },
+  "renewaddress": {
+    "method": "Renew FIO Address",
+    "title": "Renew FIO Address Request",
+    "result": "Renew FIO Address Result",
+    "headers": {
+      "request": "Renew the following FIO address?",
+      "result": "The following FIO address was renewed:"
+    },
+    "rows": {
+      "fio_address": "FIO Address: {fio_address}",
+      "max_fee": "Max Fee: {max_fee}",
+      "tpid": "TPID: {tpid}"
+    },
+    "tooltip": "Renew an existing FIO address"
+  },
+  "regdomain": {
+    "method": "Register FIO Domain",
+    "title": "Register FIO Domain Request",
+    "result": "Register FIO Domain Result",
+    "headers": {
+      "request": "Register the following FIO domain?",
+      "result": "The following FIO domain was registered:"
+    },
+    "rows": {
+      "fio_domain": "FIO Domain: {fio_domain}",
+      "owner_fio_public_key": "Owner FIO Public Key: {owner_fio_public_key}",
+      "max_fee": "Max Fee: {max_fee}",
+      "tpid": "TPID: {tpid}"
+    },
+    "tooltip": "Register a new FIO domain"
+  },
+  "renewdomain": {
+    "method": "Renew FIO Domain",
+    "title": "Renew FIO Domain Request",
+    "result": "Renew FIO Domain Result",
+    "headers": {
+      "request": "Renew the following FIO domain?",
+      "result": "The following FIO domain was renewed:"
+    },
+    "rows": {
+      "fio_domain": "FIO Domain: {fio_domain}",
+      "max_fee": "Max Fee: {max_fee}",
+      "tpid": "TPID: {tpid}"
+    },
+    "tooltip": "Renew an existing FIO domain"
+  },
+  "addaddress": {
+    "method": "Add FIO Address Link",
+    "title": "Add FIO Address Link Request",
+    "result": "Add FIO Address Link Result",
+    "headers": {
+      "request": "Add the following FIO address link?",
+      "result": "The following FIO address link was added:"
+    },
+    "rows": {
+      "fio_address": "FIO Address: {fio_address}",
+      "chain_code": "Chain Code: {chain_code}",
+      "token_code": "Token Code: {token_code}",
+      "public_address": "Public Address: {public_address}",
+      "max_fee": "Max Fee: {max_fee}",
+      "tpid": "TPID: {tpid}"
+    },
+    "tooltip": "Link a chain address to a FIO address"
+  },
+  "remaddress": {
+    "method": "Remove FIO Address Link",
+    "title": "Remove FIO Address Link Request",
+    "result": "Remove FIO Address Link Result",
+    "headers": {
+      "request": "Remove the following FIO address link?",
+      "result": "The following FIO address link was removed:"
+    },
+    "rows": {
+      "fio_address": "FIO Address: {fio_address}",
+      "chain_code": "Chain Code: {chain_code}",
+      "token_code": "Token Code: {token_code}",
+      "token_public_address": "Token Public Address: {token_public_address}",
+      "max_fee": "Max Fee: {max_fee}",
+      "tpid": "TPID: {tpid}"
+    },
+    "tooltip": "Remove a chain address link from a FIO address"
+  },
+  "xferdomain": {
+    "method": "Transfer FIO Domain",
+    "title": "Transfer FIO Domain Request",
+    "result": "Transfer FIO Domain Result",
+    "headers": {
+      "request": "Transfer the following FIO domain?",
+      "result": "The following FIO domain was transferred:"
+    },
+    "rows": {
+      "fio_domain": "FIO Domain: {fio_domain}",
+      "new_owner_key": "New Owner Key: {new_owner_key}",
+      "max_fee": "Max Fee: {max_fee}",
+      "tpid": "TPID: {tpid}"
+    },
+    "tooltip": "Transfer a FIO domain to a new owner"
+  },
+  "xferaddress": {
+    "method": "Transfer FIO Address",
+    "title": "Transfer FIO Address Request",
+    "result": "Transfer FIO Address Result",
+    "headers": {
+      "request": "Transfer the following FIO address?",
+      "result": "The following FIO address was transferred:"
+    },
+    "rows": {
+      "fio_address": "FIO Address: {fio_address}",
+      "new_owner_key": "New Owner Key: {new_owner_key}",
+      "max_fee": "Max Fee: {max_fee}",
+      "tpid": "TPID: {tpid}"
+    },
+    "tooltip": "Transfer a FIO address to a new owner"
+  },
+  "burnexpired": {
+    "method": "Burn Expired FIO",
+    "title": "Burn Expired FIO Request",
+    "result": "Burn Expired FIO Result",
+    "headers": {
+      "request": "Burn the following expired FIO address?",
+      "result": "The following expired FIO address was burned:"
+    },
+    "rows": {
+      "fio_address": "FIO Address: {fio_address}",
+      "max_fee": "Max Fee: {max_fee}",
+      "tpid": "TPID: {tpid}"
+    },
+    "tooltip": "Burn an expired FIO address or domain"
+  },
+  "trnsfiopubky": {
+    "method": "Transfer FIO Tokens",
+    "title": "Transfer FIO Tokens Request",
+    "result": "Transfer FIO Tokens Result",
+    "headers": {
+      "request": "Transfer FIO tokens to the following public key?",
+      "result": "FIO tokens were transferred to the following public key:"
+    },
+    "rows": {
+      "payee_fio_public_key": "Payee FIO Public Key: {payee_fio_public_key}",
+      "amount": "Amount: {amount}",
+      "max_fee": "Max Fee: {max_fee}",
+      "tpid": "TPID: {tpid}"
+    },
+    "tooltip": "Transfer FIO tokens to a public key"
+  },
+  "recordobt": {
+    "method": "Record OBT Data",
+    "title": "Record OBT Data Request",
+    "result": "Record OBT Data Result",
+    "headers": {
+      "request": "Record the following OBT data?",
+      "result": "The following OBT data was recorded:"
+    },
+    "rows": {
+      "payer_fio_address": "Payer FIO Address: {payer_fio_address}",
+      "payee_fio_address": "Payee FIO Address: {payee_fio_address}",
+      "amount": "Amount: {amount}",
+      "chain_code": "Chain Code: {chain_code}",
+      "token_code": "Token Code: {token_code}",
+      "obt_id": "OBT ID: {obt_id}",
+      "memo": "Memo: {memo}",
+      "max_fee": "Max Fee: {max_fee}",
+      "tpid": "TPID: {tpid}"
+    },
+    "tooltip": "Record off-chain transaction data on the FIO chain"
+  },
+  "newfundsreq": {
+    "method": "Request FIO Funds",
+    "title": "Request FIO Funds Request",
+    "result": "Request FIO Funds Result",
+    "headers": {
+      "request": "Create the following FIO funds request?",
+      "result": "The following FIO funds request was created:"
+    },
+    "rows": {
+      "payer_fio_address": "Payer FIO Address: {payer_fio_address}",
+      "payee_fio_address": "Payee FIO Address: {payee_fio_address}",
+      "amount": "Amount: {amount}",
+      "chain_code": "Chain Code: {chain_code}",
+      "token_code": "Token Code: {token_code}",
+      "memo": "Memo: {memo}",
+      "max_fee": "Max Fee: {max_fee}",
+      "tpid": "TPID: {tpid}"
+    },
+    "tooltip": "Request funds via FIO protocol"
+  },
+  "stakefio": {
+    "method": "Stake FIO",
+    "title": "Stake FIO Request",
+    "result": "Stake FIO Result",
+    "headers": {
+      "request": "Stake the following FIO amount?",
+      "result": "The following FIO amount was staked:"
+    },
+    "rows": {
+      "amount": "Amount: {amount}",
+      "fio_public_key": "FIO Public Key: {fio_public_key}",
+      "max_fee": "Max Fee: {max_fee}",
+      "tpid": "TPID: {tpid}"
+    },
+    "tooltip": "Stake FIO tokens"
+  },
+  "unstakefio": {
+    "method": "Unstake FIO",
+    "title": "Unstake FIO Request",
+    "result": "Unstake FIO Result",
+    "headers": {
+      "request": "Unstake the following FIO amount?",
+      "result": "The following FIO amount was unstaked:"
+    },
+    "rows": {
+      "amount": "Amount: {amount}",
+      "fio_public_key": "FIO Public Key: {fio_public_key}",
+      "max_fee": "Max Fee: {max_fee}",
+      "tpid": "TPID: {tpid}"
+    },
+    "tooltip": "Unstake FIO tokens"
+  },
+  "newfioacc": {
+    "method": "Create FIO Account",
+    "title": "Create FIO Account Request",
+    "result": "Create FIO Account Result",
+    "headers": {
+      "request": "Create a new FIO account?",
+      "result": "The following FIO account was created:"
+    },
+    "rows": {
+      "owner_fio_public_key": "Owner FIO Public Key: {owner_fio_public_key}",
+      "max_fee": "Max Fee: {max_fee}",
+      "tpid": "TPID: {tpid}"
+    },
+    "tooltip": "Create a new FIO account"
+  },
+  "regproducer": {
+    "method": "Register FIO Producer",
+    "title": "Register FIO Producer Request",
+    "result": "Register FIO Producer Result",
+    "headers": {
+      "request": "Register the following as an FIO block producer?",
+      "result": "The following was registered as an FIO block producer:"
+    },
+    "rows": {
+      "fio_address": "FIO Address: {fio_address}",
+      "fio_pub_key": "FIO Public Key: {fio_pub_key}",
+      "url": "URL: {url}",
+      "location": "Location: {location}"
+    },
+    "tooltip": "Register as an FIO block producer"
+  },
+  "voteproducer": {
+    "method": "Vote FIO Producers",
+    "title": "Vote FIO Producers Request",
+    "result": "Vote FIO Producers Result",
+    "headers": {
+      "request": "Vote for the following FIO producers?",
+      "result": "Votes were cast for the following FIO producers:"
+    },
+    "rows": {
+      "fio_address": "FIO Address: {fio_address}",
+      "producers": "Producers: {producers}"
+    },
+    "tooltip": "Vote for FIO block producers"
+  },
+  "listdomain": {
+    "method": "List FIO Domain for Sale",
+    "title": "List FIO Domain for Sale Request",
+    "result": "List FIO Domain for Sale Result",
+    "headers": {
+      "request": "List the following FIO domain for sale?",
+      "result": "The following FIO domain was listed for sale:"
+    },
+    "rows": {
+      "fio_domain": "FIO Domain: {fio_domain}",
+      "sale_price": "Sale Price: {sale_price}",
+      "max_fee": "Max Fee: {max_fee}",
+      "tpid": "TPID: {tpid}"
+    },
+    "tooltip": "List a FIO domain for sale on the marketplace"
+  },
+  "buydomain": {
+    "method": "Buy FIO Domain",
+    "title": "Buy FIO Domain Request",
+    "result": "Buy FIO Domain Result",
+    "headers": {
+      "request": "Buy the following FIO domain?",
+      "result": "The following FIO domain was purchased:"
+    },
+    "rows": {
+      "fio_domain": "FIO Domain: {fio_domain}",
+      "buyer_key": "Buyer Key: {buyer_key}",
+      "max_fee": "Max Fee: {max_fee}",
+      "tpid": "TPID: {tpid}"
+    },
+    "tooltip": "Buy a FIO domain from the marketplace"
+  },
+  "wraptokens": {
+    "method": "Wrap Tokens to FIO",
+    "title": "Wrap Tokens to FIO Request",
+    "result": "Wrap Tokens to FIO Result",
+    "headers": {
+      "request": "Wrap the following tokens to FIO?",
+      "result": "The following tokens were wrapped to FIO:"
+    },
+    "rows": {
+      "chain_code": "Chain Code: {chain_code}",
+      "public_address": "Public Address: {public_address}",
+      "amount": "Amount: {amount}",
+      "max_fee": "Max Fee: {max_fee}",
+      "tpid": "TPID: {tpid}"
+    },
+    "tooltip": "Wrap tokens from another chain to the FIO chain"
+  },
+  "bpclaim": {
+    "method": "Claim Block Producer Reward",
+    "title": "Claim Block Producer Reward Request",
+    "result": "Claim Block Producer Reward Result",
+    "headers": {
+      "request": "Claim block producer rewards?",
+      "result": "Block producer rewards were claimed:"
+    },
+    "rows": {
+      "fio_address": "FIO Address: {fio_address}",
+      "tpid": "TPID: {tpid}"
+    },
+    "tooltip": "Claim FIO block producer rewards"
+  },
+  "setfeevote": {
+    "method": "Set Fee Vote",
+    "title": "Set Fee Vote Request",
+    "result": "Set Fee Vote Result",
+    "headers": {
+      "request": "Set the following fee vote?",
+      "result": "The following fee vote was set:"
+    },
+    "rows": {
+      "max_fee": "Max Fee: {max_fee}",
+      "tpid": "TPID: {tpid}"
+    },
+    "tooltip": "Vote on FIO fee values"
+  },
+  "transfer": {
+    "method": "Transfer FIO Tokens",
+    "title": "Transfer FIO Tokens Request",
+    "result": "Transfer FIO Tokens Result",
+    "headers": {
+      "request": "Transfer the following FIO tokens?",
+      "result": "The following FIO tokens were transferred:"
+    },
+    "rows": {
+      "from": "From: {from}",
+      "to": "To: {to}",
+      "quantity": "Quantity: {quantity}",
+      "memo": "Memo: {memo}"
+    },
+    "tooltip": "Transfer FIO tokens between accounts"
+  }
+}

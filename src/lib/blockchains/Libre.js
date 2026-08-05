@@ -1,6 +1,45 @@
-import EOSmainnet from "./EOSmainnet.js";
+import Antelope from "./Antelope.js";
+import * as Actions from "../Actions.js";
+import beautify from "./Libre/beautify.js";
 
-export default class Libre extends EOSmainnet {
+const libreSystemOperations = [
+    "init", "activate", "regproducer", "regproducer2", "unregprod",
+    "voteproducer", "vonstake", "kickbp", "setalimits", "setparams",
+    "setpriv", "rmvproducer", "claimrewards", "updtrevision", "onblock", "migrate",
+];
+
+const libreNativeOperations = [
+    "newaccount", "updateauth", "deleteauth", "linkauth", "unlinkauth",
+    "canceldelay", "onerror", "setabi", "setcode",
+];
+
+const stakeLibreOperations = [
+    "stake", "unstake", "claim", "updatevp", "mintprocess",
+];
+
+const libreRewardOperations = [
+    "init", "addpool", "rmpool", "setblockrwd", "setinterval", "updateall", "claim", "receipt",
+];
+
+const libreFarmingOperations = [
+    "stake", "withdraw",
+];
+
+export default class Libre extends Antelope {
+    get operations() {
+        return [
+            Actions.INJECTED_CALL,
+            ...libreSystemOperations,
+            ...libreNativeOperations,
+            ...stakeLibreOperations,
+            ...libreRewardOperations,
+            ...libreFarmingOperations,
+        ];
+    }
+
+    get beautifyModule() {
+        return beautify;
+    }
 
     getExplorer(object, chain) {
         if (object.accountName) {
@@ -11,5 +50,4 @@ export default class Libre extends EOSmainnet {
             return false;
         }
     }
-
 }

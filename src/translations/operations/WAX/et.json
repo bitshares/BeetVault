@@ -1,0 +1,332 @@
+{
+  "getAccount": {
+    "method": "getAccount",
+    "title": "Konto üksikasjade taotlus",
+    "result": "Konto üksikasjade tulemus",
+    "headers": {
+      "request": "Kas soovite oma konto andmeid jagada?",
+      "result": "Teie konto üksikasju jagati."
+    },
+    "tooltip": "Küsib teie rahakotilt plokiahela konto üksikasju"
+  },
+  "requestSignature": {
+    "method": "requestSignature",
+    "title": "Allkirjataotlus",
+    "result": "Allkirja tulemus",
+    "headers": {
+      "request": "Kas soovite oma allkirja jagada?",
+      "result": "Teie allkirja jagati:"
+    },
+    "tooltip": "Küsib teie rahakotilt plokiahela allkirju"
+  },
+  "injectedCall": {
+    "method": "süstitud Helista",
+    "title": "Süstitud kõne taotlus",
+    "result": "Süstitud kõne tulemus",
+    "headers": {
+      "request": "Kas kinnitada järgmine süstitud kõne?",
+      "result": "Järgmine süstitud kõne kiideti heaks:"
+    },
+    "tooltip": "Palub teie rahakotil süstitud plokiahela operatsiooniga hakkama saada"
+  },
+  "regproposer": {
+    "method": "Registreeri WPS pakkuja",
+    "title": "Registreeri WPS pakkuja taotlus",
+    "result": "Registreeri WPS pakkuja tulemus",
+    "headers": {
+      "request": "Registreeri järgmine konto WPS pakkujana?",
+      "result": "Järgmine konto registreeriti WPS pakkujana:"
+    },
+    "rows": {
+      "proposer": "Pakkuja: {proposer}",
+      "proposer_key": "Pakkuja võti: {proposer_key}"
+    },
+    "tooltip": "Registreeri WPS pakkuja konto"
+  },
+  "regproposal": {
+    "method": "Registreeri WPS ettepanek",
+    "title": "Registreeri WPS ettepaneku taotlus",
+    "result": "Registreeri WPS ettepaneku tulemus",
+    "headers": {
+      "request": "Registreeri järgmine WPS ettepanek?",
+      "result": "Järgmine WPS ettepanek registreeriti:"
+    },
+    "rows": {
+      "proposer": "Pakkuja: {proposer}",
+      "proposal_name": "Ettepaneku nimi: {proposal_name}",
+      "title": "Pealkiri: {title}",
+      "pay_amount": "Makse summa: {pay_amount}"
+    },
+    "tooltip": "Registreeri uus WPS ettepanek"
+  },
+  "voteproposal": {
+    "method": "Hääleta WPS ettepaneku poolt",
+    "title": "Hääleta WPS ettepaneku taotlus",
+    "result": "Hääleta WPS ettepaneku tulemus",
+    "headers": {
+      "request": "Hääleta järgmise WPS ettepaneku poolt?",
+      "result": "Hääletati järgmise WPS ettepaneku poolt:"
+    },
+    "rows": {
+      "voter": "Hääletaja: {voter}",
+      "proposal_name": "Ettepaneku nimi: {proposal_name}",
+      "vote": "Hääl: {vote}"
+    },
+    "tooltip": "Hääleta WPS ettepaneku poolt"
+  },
+  "claimfunds": {
+    "method": "Nõua WPS vahendeid",
+    "title": "Nõua WPS vahendite taotlus",
+    "result": "Nõua WPS vahendite tulemus",
+    "headers": {
+      "request": "Nõua WPS vahendeid järgmise ettepaneku jaoks?",
+      "result": "WPS vahendid nõuti järgmise ettepaneku jaoks:"
+    },
+    "rows": {
+      "account": "Konto: {account}",
+      "proposal_name": "Ettepaneku nimi: {proposal_name}"
+    },
+    "tooltip": "Nõu heakskiidetud WPS ettepaneku vahendeid"
+  },
+  "voterclaim": {
+    "method": "Nõua WPS hääletaja preemiaid",
+    "title": "Nõua WPS hääletaja preemiaid taotlus",
+    "result": "Nõua WPS hääletaja preemiaid tulemus",
+    "headers": {
+      "request": "Nõua WPS hääletaja preemiaid?",
+      "result": "WPS hääletaja preemiad nõuti:"
+    },
+    "rows": {
+      "owner": "Omanik: {owner}"
+    },
+    "tooltip": "Nõu WPS hääletaja preemiaid"
+  },
+  "voterclaimst": {
+    "method": "Nõua WPS hääletaja panustatud preemiaid",
+    "title": "Nõua WPS hääletaja panustatud preemiaid taotlus",
+    "result": "Nõua WPS hääletaja panustatud preemiaid tulemus",
+    "headers": {
+      "request": "Nõua WPS hääletaja panustatud preemiaid?",
+      "result": "WPS hääletaja panustatud preemiad nõuti:"
+    },
+    "rows": {
+      "owner": "Omanik: {owner}",
+      "amount": "Summa: {amount}"
+    },
+    "tooltip": "Nõu WPS hääletaja panustatud preemiaid"
+  },
+  "awardgenesis": {
+    "method": "Autasusta genesis",
+    "title": "Autasusta genesis taotlus",
+    "result": "Autasusta genesis tulemus",
+    "headers": {
+      "request": "Autasusta genesis märgid järgmisele kontole?",
+      "result": "Genesis märgid autasustati järgmisele kontole:"
+    },
+    "rows": {
+      "receiver": "Saaja: {receiver}",
+      "amount": "Summa: {amount}"
+    },
+    "tooltip": "Autasusta genesis märgid kontole"
+  },
+  "claimgenesis": {
+    "method": "Nõua genesis",
+    "title": "Nõua genesis taotlus",
+    "result": "Nõua genesis tulemus",
+    "headers": {
+      "request": "Nõua genesis märgid järgmisele kontole?",
+      "result": "Genesis märgid nõuti järgmisele kontole:"
+    },
+    "rows": {
+      "receiver": "Saaja: {receiver}"
+    },
+    "tooltip": "Nõu genesis märgid"
+  },
+  "createcol": {
+    "method": "Loo NFT kollektsioon",
+    "title": "Loo NFT kollektsiooni taotlus",
+    "result": "Loo NFT kollektsiooni tulemus",
+    "headers": {
+      "request": "Loo järgmine NFT kollektsioon?",
+      "result": "Järgmine NFT kollektsioon loodi:"
+    },
+    "rows": {
+      "author": "Autor: {author}",
+      "collection_name": "Kollektsiooni nimi: {collection_name}",
+      "allow_notify": "Luba teavitused: {allow_notify}",
+      "market_fee": "Turu tasu: {market_fee}"
+    },
+    "tooltip": "Loo uus NFT kollektsioon"
+  },
+  "mintasset": {
+    "method": "Märgista NFT vara",
+    "title": "Märgista NFT vara taotlus",
+    "result": "Märgista NFT vara tulemus",
+    "headers": {
+      "request": "Märgista järgmine NFT vara?",
+      "result": "Järgmine NFT vara märgistati:"
+    },
+    "rows": {
+      "authorized_minter": "Volitatud märgistaja: {authorized_minter}",
+      "collection_name": "Kollektsiooni nimi: {collection_name}",
+      "schema_name": "Skeemi nimi: {schema_name}",
+      "template_id": "Malli ID: {template_id}",
+      "new_asset_owner": "Uue vara omanik: {new_asset_owner}"
+    },
+    "tooltip": "Märgista uus NFT vara"
+  },
+  "burnasset": {
+    "method": "Põleta NFT vara",
+    "title": "Põleta NFT vara taotlus",
+    "result": "Põleta NFT vara tulemus",
+    "headers": {
+      "request": "Põleta järgmine NFT vara?",
+      "result": "Järgmine NFT vara põletati:"
+    },
+    "rows": {
+      "asset_owner": "Vara omanik: {asset_owner}",
+      "asset_id": "Vara ID: {asset_id}"
+    },
+    "tooltip": "Põleta NFT vara"
+  },
+  "createoffer": {
+    "method": "Loo NFT pakkumine",
+    "title": "Loo NFT pakkumise taotlus",
+    "result": "Loo NFT pakkumise tulemus",
+    "headers": {
+      "request": "Loo järgmine NFT pakkumine?",
+      "result": "Järgmine NFT pakkumine loodi:"
+    },
+    "rows": {
+      "sender": "Saatja: {sender}",
+      "recipient": "Saaja: {recipient}",
+      "sender_asset_ids": "Saatja varade ID-d: {sender_asset_ids}",
+      "recipient_asset_ids": "Saaja varade ID-d: {recipient_asset_ids}",
+      "memo": "Memo: {memo}"
+    },
+    "tooltip": "Loo uus NFT pakkumine"
+  },
+  "acceptoffer": {
+    "method": "Nõustu NFT pakkumisega",
+    "title": "Nõustu NFT pakkumise taotlus",
+    "result": "Nõustu NFT pakkumise tulemus",
+    "headers": {
+      "request": "Nõustu järgmise NFT pakkumisega?",
+      "result": "Järgmine NFT pakkumine aktsepteeriti:"
+    },
+    "rows": {
+      "offer_id": "Pakkumise ID: {offer_id}"
+    },
+    "tooltip": "Nõustu NFT pakkumisega"
+  },
+  "announcesale": {
+    "method": "Kuuluta NFT müük",
+    "title": "Kuuluta NFT müügi taotlus",
+    "result": "Kuuluta NFT müügi tulemus",
+    "headers": {
+      "request": "Kuuluta järgmine NFT müük?",
+      "result": "Järgmine NFT müük kuulutati:"
+    },
+    "rows": {
+      "seller": "Müüja: {seller}",
+      "asset_ids": "Varade ID-d: {asset_ids}",
+      "listing_price": "Kuulutushind: {listing_price}",
+      "settlement_symbol": "Arvelduse sümbol: {settlement_symbol}"
+    },
+    "tooltip": "Kuuluta NFT müügiks"
+  },
+  "purchasesale": {
+    "method": "Osta NFT müük",
+    "title": "Osta NFT müügi taotlus",
+    "result": "Osta NFT müügi tulemus",
+    "headers": {
+      "request": "Osta järgmine NFT müük?",
+      "result": "Järgmine NFT müük osteti:"
+    },
+    "rows": {
+      "buyer": "Ostja: {buyer}",
+      "sale_id": "Müügi ID: {sale_id}",
+      "taker_marketplace": "Turuplatvorm: {taker_marketplace}"
+    },
+    "tooltip": "Osta NFT müügilt"
+  },
+  "announceauct": {
+    "method": "Kuuluta NFT oksjon",
+    "title": "Kuuluta NFT oksjoni taotlus",
+    "result": "Kuuluta NFT oksjoni tulemus",
+    "headers": {
+      "request": "Kuuluta järgmine NFT oksjon?",
+      "result": "Järgmine NFT oksjon kuulutati:"
+    },
+    "rows": {
+      "seller": "Müüja: {seller}",
+      "asset_ids": "Varade ID-d: {asset_ids}",
+      "starting_bid": "Alghind: {starting_bid}",
+      "duration": "Kestus: {duration}"
+    },
+    "tooltip": "Kuuluta NFT oksjon"
+  },
+  "auctionbid": {
+    "method": "Pakkumine NFT oksjonil",
+    "title": "Pakkumine NFT oksjoni taotlus",
+    "result": "Pakkumine NFT oksjoni tulemus",
+    "headers": {
+      "request": "Tee pakkumine järgmisele NFT oksjonile?",
+      "result": "Järgmine NFT oksjoni pakkumine tehti:"
+    },
+    "rows": {
+      "bidder": "Pakkuja: {bidder}",
+      "auction_id": "Oksjoni ID: {auction_id}",
+      "bid": "Pakkumine: {bid}"
+    },
+    "tooltip": "Tee pakkumine NFT oksjonil"
+  },
+  "createbuyo": {
+    "method": "Loo NFT ostutellimus",
+    "title": "Loo NFT ostutellimuse taotlus",
+    "result": "Loo NFT ostutellimuse tulemus",
+    "headers": {
+      "request": "Loo järgmine NFT ostutellimus?",
+      "result": "Järgmine NFT ostutellimus loodi:"
+    },
+    "rows": {
+      "buyer": "Ostja: {buyer}",
+      "recipient": "Saaja: {recipient}",
+      "asset_ids": "Varade ID-d: {asset_ids}",
+      "price": "Hind: {price}",
+      "memo": "Memo: {memo}"
+    },
+    "tooltip": "Loo uus NFT ostutellimus"
+  },
+  "transfer": {
+    "method": "Teisalda NFT",
+    "title": "Teisalda NFT taotlus",
+    "result": "Teisalda NFT tulemus",
+    "headers": {
+      "request": "Teisalda järgmine NFT?",
+      "result": "Järgmine NFT teisaldati:"
+    },
+    "rows": {
+      "from": "Saatja: {from}",
+      "to": "Saaja: {to}",
+      "asset_ids": "Varade ID-d: {asset_ids}",
+      "memo": "Memo: {memo}"
+    },
+    "tooltip": "Teisalda NFT varasid kontode vahel"
+  },
+  "withdraw": {
+    "method": "Võta NFT välja",
+    "title": "Võta NFT välja taotlus",
+    "result": "Võta NFT välja tulemus",
+    "headers": {
+      "request": "Võta järgmine NFT välja?",
+      "result": "Järgmine NFT võeti välja:"
+    },
+    "rows": {
+      "owner": "Omanik: {owner}",
+      "token_to_receive": "Märgis saamiseks: {token_to_receive}",
+      "quantity": "Kogus: {quantity}"
+    },
+    "tooltip": "Võta NFT varasid märgis saldole"
+  }
+}

@@ -1,0 +1,151 @@
+{
+  "getAccount": {
+    "method": "getAccount",
+    "title": "Demande de détails du compte",
+    "result": "Résultat des détails du compte",
+    "headers": {
+      "request": "Voulez-vous partager les détails de votre compte?",
+      "result": "Les détails de votre compte ont été partagés."
+    },
+    "tooltip": "Demande à votre portefeuille les détails du compte blockchain"
+  },
+  "requestSignature": {
+    "method": "demandeSignature",
+    "title": "Demande de signature",
+    "result": "Résultat de la signature",
+    "headers": {
+      "request": "Voulez-vous partager votre signature?",
+      "result": "Votre signature a été partagée :"
+    },
+    "tooltip": "Demande à votre portefeuille les signatures blockchain"
+  },
+  "injectedCall": {
+    "method": "Appel injecté",
+    "title": "Demande d'appel injecté",
+    "result": "Résultat de l'appel injecté",
+    "headers": {
+      "request": "Approuver l'appel injecté suivant ?",
+      "result": "L'appel injecté suivant a été approuvé :"
+    },
+    "tooltip": "Demande à votre portefeuille de gérer une opération de blockchain injectée"
+  },
+  "voteproducer": {
+    "method": "Voter pour un producteur Libre",
+    "title": "Demande de vote pour un producteur Libre",
+    "result": "Résultat du vote pour un producteur Libre",
+    "headers": {
+      "request": "Voter pour le producteur Libre suivant ?",
+      "result": "Les votes ont été donnés pour le producteur Libre suivant :"
+    },
+    "rows": {
+      "voter": "Votant : {voter}",
+      "producers": "Producteurs : {producers}"
+    },
+    "tooltip": "Voter pour les producteurs de blocs Libre"
+  },
+  "regproducer": {
+    "method": "Enregistrer un producteur Libre",
+    "title": "Demande d'enregistrement d'un producteur Libre",
+    "result": "Résultat de l'enregistrement d'un producteur Libre",
+    "headers": {
+      "request": "Enregistrer ce qui suit en tant que producteur de blocs Libre ?",
+      "result": "Ce qui suit a été enregistré en tant que producteur de blocs Libre :"
+    },
+    "rows": {
+      "producer": "Producteur : {producer}",
+      "producer_key": "Clé du producteur : {producer_key}",
+      "url": "URL : {url}",
+      "location": "Emplacement : {location}"
+    },
+    "tooltip": "Enregistrer en tant que producteur de blocs Libre"
+  },
+  "claimrewards": {
+    "method": "Réclamer les récompenses Libre",
+    "title": "Demande de réclamation des récompenses Libre",
+    "result": "Résultat de la réclamation des récompenses Libre",
+    "headers": {
+      "request": "Réclamer les récompenses de production de blocs ?",
+      "result": "Les récompenses de production de blocs ont été réclamées :"
+    },
+    "rows": {
+      "owner": "Propriétaire : {owner}"
+    },
+    "tooltip": "Réclamer les récompenses de production de blocs Libre"
+  },
+  "setalimits": {
+    "method": "Définir les limites du compte",
+    "title": "Demande de définition des limites du compte",
+    "result": "Résultat de la définition des limites du compte",
+    "headers": {
+      "request": "Définir les limites de ressources du compte suivant ?",
+      "result": "Les limites de ressources du compte suivant ont été définies :"
+    },
+    "rows": {
+      "account": "Compte : {account}",
+      "ram_bytes": "Limite RAM : {ram_bytes}",
+      "net_weight": "Poids Net : {net_weight}",
+      "cpu_weight": "Poids CPU : {cpu_weight}"
+    },
+    "tooltip": "Définir les limites de ressources du compte sur Libre"
+  },
+  "stake": {
+    "method": "Mettre en enjeu des tokens Libre",
+    "title": "Demande de mise en enjeu de tokens Libre",
+    "result": "Résultat de la mise en enjeu de tokens Libre",
+    "headers": {
+      "request": "Mettre en enjeu les tokens Libre suivants ?",
+      "result": "Les tokens Libre suivants ont été mis en enjeu :"
+    },
+    "rows": {
+      "from": "De : {from}",
+      "to": "À : {to}",
+      "quantity": "Quantité : {quantity}",
+      "memo": "Mémo : {memo}"
+    },
+    "tooltip": "Mettre en enjeu des tokens Libre via le contrat de mise en enjeu"
+  },
+  "unstake": {
+    "method": "Retirer de l'enjeu des tokens Libre",
+    "title": "Demande de retrait de l'enjeu de tokens Libre",
+    "result": "Résultat du retrait de l'enjeu de tokens Libre",
+    "headers": {
+      "request": "Retirer les tokens Libre suivants de l'enjeu ?",
+      "result": "Les tokens Libre suivants ont été retirés de l'enjeu :"
+    },
+    "rows": {
+      "account": "Compte : {account}",
+      "index": "Index : {index}"
+    },
+    "tooltip": "Retirer des tokens Libre de l'enjeu"
+  },
+  "claim": {
+    "method": "Réclamer les récompenses de mise en enjeu Libre",
+    "title": "Demande de réclamation des récompenses de mise en enjeu Libre",
+    "result": "Résultat de la réclamation des récompenses de mise en enjeu Libre",
+    "headers": {
+      "request": "Réclamer les récompenses de mise en enjeu Libre ?",
+      "result": "Les récompenses de mise en enjeu Libre ont été réclamées :"
+    },
+    "rows": {
+      "account": "Compte : {account}",
+      "index": "Index : {index}"
+    },
+    "tooltip": "Réclamer les récompenses de mise en enjeu Libre"
+  },
+  "transfer": {
+    "method": "Transférer des tokens Libre",
+    "title": "Demande de transfert de tokens Libre",
+    "result": "Résultat du transfert de tokens Libre",
+    "headers": {
+      "request": "Transférer les tokens Libre suivants ?",
+      "result": "Les tokens Libre suivants ont été transférés :"
+    },
+    "rows": {
+      "from": "De : {from}",
+      "to": "À : {to}",
+      "quantity": "Quantité : {quantity}",
+      "memo": "Mémo : {memo}"
+    },
+    "tooltip": "Transférer des tokens Libre entre comptes"
+  }
+}

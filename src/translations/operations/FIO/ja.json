@@ -1,0 +1,404 @@
+{
+  "getAccount": {
+    "method": "getAccount",
+    "title": "アカウント詳細リクエスト",
+    "result": "アカウント詳細結果",
+    "headers": {
+      "request": "アカウントの詳細を共有しますか?",
+      "result": "アカウントの詳細が共有されました。"
+    },
+    "tooltip": "ウォレットにブロックチェーンアカウントの詳細を要求します"
+  },
+  "requestSignature": {
+    "method": "要求署名",
+    "title": "署名リクエスト",
+    "result": "署名結果",
+    "headers": {
+      "request": "あなたの署名を共有したいですか?",
+      "result": "あなたの署名が共有されました:"
+    },
+    "tooltip": "ウォレットにブロックチェーン署名を要求します"
+  },
+  "injectedCall": {
+    "method": "注入されたコール",
+    "title": "挿入された通話リクエスト",
+    "result": "挿入された呼び出しの結果",
+    "headers": {
+      "request": "次の挿入された呼び出しを承認しますか?",
+      "result": "次の挿入された呼び出しが承認されました。"
+    },
+    "tooltip": "挿入されたブロックチェーン操作を処理するようにウォレットに要求します"
+  },
+  "regaddress": {
+    "method": "FIOアドレスの登録",
+    "title": "FIOアドレス登録リクエスト",
+    "result": "FIOアドレス登録結果",
+    "headers": {
+      "request": "以下のFIOアドレスを登録しますか?",
+      "result": "以下のFIOアドレスが登録されました:"
+    },
+    "rows": {
+      "fio_address": "FIOアドレス: {fio_address}",
+      "owner_fio_public_key": "所有者FIO公開キー: {owner_fio_public_key}",
+      "max_fee": "最大手数料: {max_fee}",
+      "tpid": "TPID: {tpid}"
+    },
+    "tooltip": "新しいFIOアドレスを登録する"
+  },
+  "renewaddress": {
+    "method": "FIOアドレスの更新",
+    "title": "FIOアドレス更新リクエスト",
+    "result": "FIOアドレス更新結果",
+    "headers": {
+      "request": "以下のFIOアドレスを更新しますか?",
+      "result": "以下のFIOアドレスが更新されました:"
+    },
+    "rows": {
+      "fio_address": "FIOアドレス: {fio_address}",
+      "max_fee": "最大手数料: {max_fee}",
+      "tpid": "TPID: {tpid}"
+    },
+    "tooltip": "既存のFIOアドレスを更新する"
+  },
+  "regdomain": {
+    "method": "FIOドメインの登録",
+    "title": "FIOドメイン登録リクエスト",
+    "result": "FIOドメイン登録結果",
+    "headers": {
+      "request": "以下のFIOドメインを登録しますか?",
+      "result": "以下のFIOドメインが登録されました:"
+    },
+    "rows": {
+      "fio_domain": "FIOドメイン: {fio_domain}",
+      "owner_fio_public_key": "所有者FIO公開キー: {owner_fio_public_key}",
+      "max_fee": "最大手数料: {max_fee}",
+      "tpid": "TPID: {tpid}"
+    },
+    "tooltip": "新しいFIOドメインを登録する"
+  },
+  "renewdomain": {
+    "method": "FIOドメインの更新",
+    "title": "FIOドメイン更新リクエスト",
+    "result": "FIOドメイン更新結果",
+    "headers": {
+      "request": "以下のFIOドメインを更新しますか?",
+      "result": "以下のFIOドメインが更新されました:"
+    },
+    "rows": {
+      "fio_domain": "FIOドメイン: {fio_domain}",
+      "max_fee": "最大手数料: {max_fee}",
+      "tpid": "TPID: {tpid}"
+    },
+    "tooltip": "既存のFIOドメインを更新する"
+  },
+  "addaddress": {
+    "method": "FIOアドレスリンクの追加",
+    "title": "FIOアドレスリンク追加リクエスト",
+    "result": "FIOアドレスリンク追加結果",
+    "headers": {
+      "request": "以下のFIOアドレスリンクを追加しますか?",
+      "result": "以下のFIOアドレスリンクが追加されました:"
+    },
+    "rows": {
+      "fio_address": "FIOアドレス: {fio_address}",
+      "chain_code": "チェーンコード: {chain_code}",
+      "token_code": "トークンコード: {token_code}",
+      "public_address": "公開アドレス: {public_address}",
+      "max_fee": "最大手数料: {max_fee}",
+      "tpid": "TPID: {tpid}"
+    },
+    "tooltip": "チェーンアドレスをFIOアドレスにリンクする"
+  },
+  "remaddress": {
+    "method": "FIOアドレスリンクの削除",
+    "title": "FIOアドレスリンク削除リクエスト",
+    "result": "FIOアドレスリンク削除結果",
+    "headers": {
+      "request": "以下のFIOアドレスリンクを削除しますか?",
+      "result": "以下のFIOアドレスリンクが削除されました:"
+    },
+    "rows": {
+      "fio_address": "FIOアドレス: {fio_address}",
+      "chain_code": "チェーンコード: {chain_code}",
+      "token_code": "トークンコード: {token_code}",
+      "token_public_address": "トークン公開アドレス: {token_public_address}",
+      "max_fee": "最大手数料: {max_fee}",
+      "tpid": "TPID: {tpid}"
+    },
+    "tooltip": "FIOアドレスからチェーンアドレスリンクを削除する"
+  },
+  "xferdomain": {
+    "method": "FIOドメインの転送",
+    "title": "FIOドメイン転送リクエスト",
+    "result": "FIOドメイン転送結果",
+    "headers": {
+      "request": "以下のFIOドメインを転送しますか?",
+      "result": "以下のFIOドメインが転送されました:"
+    },
+    "rows": {
+      "fio_domain": "FIOドメイン: {fio_domain}",
+      "new_owner_key": "新しい所有者キー: {new_owner_key}",
+      "max_fee": "最大手数料: {max_fee}",
+      "tpid": "TPID: {tpid}"
+    },
+    "tooltip": "FIOドメインを新しい所有者に転送する"
+  },
+  "xferaddress": {
+    "method": "FIOアドレスの転送",
+    "title": "FIOアドレス転送リクエスト",
+    "result": "FIOアドレス転送結果",
+    "headers": {
+      "request": "以下のFIOアドレスを転送しますか?",
+      "result": "以下のFIOアドレスが転送されました:"
+    },
+    "rows": {
+      "fio_address": "FIOアドレス: {fio_address}",
+      "new_owner_key": "新しい所有者キー: {new_owner_key}",
+      "max_fee": "最大手数料: {max_fee}",
+      "tpid": "TPID: {tpid}"
+    },
+    "tooltip": "FIOアドレスを新しい所有者に転送する"
+  },
+  "burnexpired": {
+    "method": "期限切れFIOのバーン",
+    "title": "期限切れFIOバーンリクエスト",
+    "result": "期限切れFIOバーン結果",
+    "headers": {
+      "request": "以下の期限切れFIOアドレスをバーンしますか?",
+      "result": "以下の期限切れFIOアドレスがバーンされました:"
+    },
+    "rows": {
+      "fio_address": "FIOアドレス: {fio_address}",
+      "max_fee": "最大手数料: {max_fee}",
+      "tpid": "TPID: {tpid}"
+    },
+    "tooltip": "期限切れのFIOアドレスまたはドメインをバーンする"
+  },
+  "trnsfiopubky": {
+    "method": "FIOトークンの転送",
+    "title": "FIOトークン転送リクエスト",
+    "result": "FIOトークン転送結果",
+    "headers": {
+      "request": "以下の公開キーにFIOトークンを転送しますか?",
+      "result": "FIOトークンが以下の公開キーに転送されました:"
+    },
+    "rows": {
+      "payee_fio_public_key": "受取人FIO公開キー: {payee_fio_public_key}",
+      "amount": "金額: {amount}",
+      "max_fee": "最大手数料: {max_fee}",
+      "tpid": "TPID: {tpid}"
+    },
+    "tooltip": "公開キーにFIOトークンを転送する"
+  },
+  "recordobt": {
+    "method": "OBTデータの記録",
+    "title": "OBTデータ記録リクエスト",
+    "result": "OBTデータ記録結果",
+    "headers": {
+      "request": "以下のOBTデータを記録しますか?",
+      "result": "以下のOBTデータが記録されました:"
+    },
+    "rows": {
+      "payer_fio_address": "支払者FIOアドレス: {payer_fio_address}",
+      "payee_fio_address": "受取人FIOアドレス: {payee_fio_address}",
+      "amount": "金額: {amount}",
+      "chain_code": "チェーンコード: {chain_code}",
+      "token_code": "トークンコード: {token_code}",
+      "obt_id": "OBT ID: {obt_id}",
+      "memo": "メモ: {memo}",
+      "max_fee": "最大手数料: {max_fee}",
+      "tpid": "TPID: {tpid}"
+    },
+    "tooltip": "FIOチェーンにオフチェーントランザクションデータを記録する"
+  },
+  "newfundsreq": {
+    "method": "FIO資金の請求",
+    "title": "FIO資金請求リクエスト",
+    "result": "FIO資金請求結果",
+    "headers": {
+      "request": "以下のFIO資金リクエストを作成しますか?",
+      "result": "以下のFIO資金リクエストが作成されました:"
+    },
+    "rows": {
+      "payer_fio_address": "支払者FIOアドレス: {payer_fio_address}",
+      "payee_fio_address": "受取人FIOアドレス: {payee_fio_address}",
+      "amount": "金額: {amount}",
+      "chain_code": "チェーンコード: {chain_code}",
+      "token_code": "トークンコード: {token_code}",
+      "memo": "メモ: {memo}",
+      "max_fee": "最大手数料: {max_fee}",
+      "tpid": "TPID: {tpid}"
+    },
+    "tooltip": "FIOプロトコルを通じて資金を請求する"
+  },
+  "stakefio": {
+    "method": "FIOのステーク",
+    "title": "FIOステークリクエスト",
+    "result": "FIOステーク結果",
+    "headers": {
+      "request": "以下のFIO数量をステークしますか?",
+      "result": "以下のFIO数量がステークされました:"
+    },
+    "rows": {
+      "amount": "金額: {amount}",
+      "fio_public_key": "FIO公開キー: {fio_public_key}",
+      "max_fee": "最大手数料: {max_fee}",
+      "tpid": "TPID: {tpid}"
+    },
+    "tooltip": "FIOトークンをステークする"
+  },
+  "unstakefio": {
+    "method": "FIOのアンステーク",
+    "title": "FIOアンステークリクエスト",
+    "result": "FIOアンステーク結果",
+    "headers": {
+      "request": "以下のFIO数量をアンステークしますか?",
+      "result": "以下のFIO数量がアンステークされました:"
+    },
+    "rows": {
+      "amount": "金額: {amount}",
+      "fio_public_key": "FIO公開キー: {fio_public_key}",
+      "max_fee": "最大手数料: {max_fee}",
+      "tpid": "TPID: {tpid}"
+    },
+    "tooltip": "FIOトークンをアンステークする"
+  },
+  "newfioacc": {
+    "method": "FIOアカウントの作成",
+    "title": "FIOアカウント作成リクエスト",
+    "result": "FIOアカウント作成結果",
+    "headers": {
+      "request": "新しいFIOアカウントを作成しますか?",
+      "result": "以下のFIOアカウントが作成されました:"
+    },
+    "rows": {
+      "owner_fio_public_key": "所有者FIO公開キー: {owner_fio_public_key}",
+      "max_fee": "最大手数料: {max_fee}",
+      "tpid": "TPID: {tpid}"
+    },
+    "tooltip": "新しいFIOアカウントを作成する"
+  },
+  "regproducer": {
+    "method": "FIOプロデューサーの登録",
+    "title": "FIOプロデューサー登録リクエスト",
+    "result": "FIOプロデューサー登録結果",
+    "headers": {
+      "request": "以下のアカウントをFIOブロックプロデューサーとして登録しますか?",
+      "result": "以下のアカウントがFIOブロックプロデューサーとして登録されました:"
+    },
+    "rows": {
+      "fio_address": "FIOアドレス: {fio_address}",
+      "fio_pub_key": "FIO公開キー: {fio_pub_key}",
+      "url": "URL: {url}",
+      "location": "場所: {location}"
+    },
+    "tooltip": "FIOブロックプロデューサーとして登録する"
+  },
+  "voteproducer": {
+    "method": "FIOプロデューサーへの投票",
+    "title": "FIOプロデューサー投票リクエスト",
+    "result": "FIOプロデューサー投票結果",
+    "headers": {
+      "request": "以下のFIOプロデューサーに投票しますか?",
+      "result": "以下のFIOプロデューサーに投票されました:"
+    },
+    "rows": {
+      "fio_address": "FIOアドレス: {fio_address}",
+      "producers": "プロデューサー: {producers}"
+    },
+    "tooltip": "FIOブロックプロデューサーに投票する"
+  },
+  "listdomain": {
+    "method": "FIOドメインの販売登録",
+    "title": "FIOドメイン販売登録リクエスト",
+    "result": "FIOドメイン販売登録結果",
+    "headers": {
+      "request": "以下のFIOドメインを販売用に登録しますか?",
+      "result": "以下のFIOドメインが販売用に登録されました:"
+    },
+    "rows": {
+      "fio_domain": "FIOドメイン: {fio_domain}",
+      "sale_price": "販売価格: {sale_price}",
+      "max_fee": "最大手数料: {max_fee}",
+      "tpid": "TPID: {tpid}"
+    },
+    "tooltip": "マーケットプレースでFIOドメインを販売用に登録する"
+  },
+  "buydomain": {
+    "method": "FIOドメインの購入",
+    "title": "FIOドメイン購入リクエスト",
+    "result": "FIOドメイン購入結果",
+    "headers": {
+      "request": "以下のFIOドメインを購入しますか?",
+      "result": "以下のFIOドメインが購入されました:"
+    },
+    "rows": {
+      "fio_domain": "FIOドメイン: {fio_domain}",
+      "buyer_key": "購入者キー: {buyer_key}",
+      "max_fee": "最大手数料: {max_fee}",
+      "tpid": "TPID: {tpid}"
+    },
+    "tooltip": "マーケットプレースからFIOドメインを購入する"
+  },
+  "wraptokens": {
+    "method": "トークンのFIOへのラップ",
+    "title": "トークンのFIOへのラップリクエスト",
+    "result": "トークンのFIOへのラップ結果",
+    "headers": {
+      "request": "以下のトークンをFIOにラップしますか?",
+      "result": "以下のトークンがFIOにラップされました:"
+    },
+    "rows": {
+      "chain_code": "チェーンコード: {chain_code}",
+      "public_address": "公開アドレス: {public_address}",
+      "amount": "金額: {amount}",
+      "max_fee": "最大手数料: {max_fee}",
+      "tpid": "TPID: {tpid}"
+    },
+    "tooltip": "他のチェーンからトークンをFIOチェーンにラップする"
+  },
+  "bpclaim": {
+    "method": "ブロックプロデューサー報酬の請求",
+    "title": "ブロックプロデューサー報酬請求リクエスト",
+    "result": "ブロックプロデューサー報酬請求結果",
+    "headers": {
+      "request": "ブロックプロデューサー報酬を請求しますか?",
+      "result": "ブロックプロデューサー報酬が請求されました:"
+    },
+    "rows": {
+      "fio_address": "FIOアドレス: {fio_address}",
+      "tpid": "TPID: {tpid}"
+    },
+    "tooltip": "FIOブロックプロデューサー報酬を請求する"
+  },
+  "setfeevote": {
+    "method": "手数料投票の設定",
+    "title": "手数料投票設定リクエスト",
+    "result": "手数料投票設定結果",
+    "headers": {
+      "request": "以下の手数料投票を設定しますか?",
+      "result": "以下の手数料投票が設定されました:"
+    },
+    "rows": {
+      "max_fee": "最大手数料: {max_fee}",
+      "tpid": "TPID: {tpid}"
+    },
+    "tooltip": "FIO手数料値に投票する"
+  },
+  "transfer": {
+    "method": "FIOトークンの転送",
+    "title": "FIOトークン転送リクエスト",
+    "result": "FIOトークン転送結果",
+    "headers": {
+      "request": "以下のFIOトークンを転送しますか?",
+      "result": "以下のFIOトークンが転送されました:"
+    },
+    "rows": {
+      "from": "差出人: {from}",
+      "to": "宛先: {to}",
+      "quantity": "数量: {quantity}",
+      "memo": "メモ: {memo}"
+    },
+    "tooltip": "アカウント間でFIOトークンを転送する"
+  }
+}

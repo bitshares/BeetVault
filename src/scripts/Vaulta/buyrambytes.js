@@ -26,8 +26,8 @@ let run = async function () {
         payload: {
             method: "injectedCall",
             params: ["signAndBroadcast", JSON.stringify(trx), []],
-            appName: "An EOS raw deeplink script",
-            chain: "EOS",
+            appName: "A Vaulta raw deeplink script",
+            chain: "VAULTA",
             browser: "web browser",
             origin: "localhost",
         },
@@ -40,7 +40,7 @@ let run = async function () {
         console.log(error);
     }
 
-    console.log(`rawbeeteos://api?chain=EOS&request=${encodedPayload}`);
+    console.log(`rawbeeteos://api?chain=VAULTA&request=${encodedPayload}`);
     process.exit(0);
 }
 

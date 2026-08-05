@@ -1,0 +1,404 @@
+{
+  "getAccount": {
+    "method": "getAccount",
+    "title": "Kontodetails-Anfrage",
+    "result": "Kontodetails-Ergebnis",
+    "headers": {
+      "request": "Möchten Sie Ihre Kontodetails freigeben?",
+      "result": "Ihre Kontodetails wurden freigegeben."
+    },
+    "tooltip": "Fragt Ihr Wallet nach Blockchain-Kontodetails"
+  },
+  "requestSignature": {
+    "method": "requestSignature",
+    "title": "Signaturanfrage",
+    "result": "Signatur-Ergebnis",
+    "headers": {
+      "request": "Möchten Sie Ihre Signatur freigeben?",
+      "result": "Ihre Signatur wurde freigegeben:"
+    },
+    "tooltip": "Fragt Ihr Wallet nach Blockchain-Signaturen"
+  },
+  "injectedCall": {
+    "method": "injectedCall",
+    "title": "Injizierter Aufruf Request",
+    "result": "Injizierter Aufruf Ergebnis",
+    "headers": {
+      "request": "Folgenden injizierten Aufruf genehmigen?",
+      "result": "Folgender injizierter Aufruf wurde genehmigt:"
+    },
+    "tooltip": "Bittet Ihr Wallet, einen injizierten Blockchain-Vorgang zu verarbeiten"
+  },
+  "regaddress": {
+    "method": "FIO-Adresse registrieren",
+    "title": "FIO-Adressregistrierung Anfrage",
+    "result": "FIO-Adressregistrierung Ergebnis",
+    "headers": {
+      "request": "Folgende FIO-Adresse registrieren?",
+      "result": "Folgende FIO-Adresse wurde registriert:"
+    },
+    "rows": {
+      "fio_address": "FIO-Adresse: {fio_address}",
+      "owner_fio_public_key": "Besitzer FIO-Öffentlicher Schlüssel: {owner_fio_public_key}",
+      "max_fee": "Maximale Gebühr: {max_fee}",
+      "tpid": "TPID: {tpid}"
+    },
+    "tooltip": "Eine neue FIO-Adresse registrieren"
+  },
+  "renewaddress": {
+    "method": "FIO-Adresse erneuern",
+    "title": "FIO-Adresserneuerung Anfrage",
+    "result": "FIO-Adresserneuerung Ergebnis",
+    "headers": {
+      "request": "Folgende FIO-Adresse erneuern?",
+      "result": "Folgende FIO-Adresse wurde erneuert:"
+    },
+    "rows": {
+      "fio_address": "FIO-Adresse: {fio_address}",
+      "max_fee": "Maximale Gebühr: {max_fee}",
+      "tpid": "TPID: {tpid}"
+    },
+    "tooltip": "Eine bestehende FIO-Adresse erneuern"
+  },
+  "regdomain": {
+    "method": "FIO-Domäne registrieren",
+    "title": "FIO-Domänenregistrierung Anfrage",
+    "result": "FIO-Domänenregistrierung Ergebnis",
+    "headers": {
+      "request": "Folgende FIO-Domäne registrieren?",
+      "result": "Folgende FIO-Domäne wurde registriert:"
+    },
+    "rows": {
+      "fio_domain": "FIO-Domäne: {fio_domain}",
+      "owner_fio_public_key": "Besitzer FIO-Öffentlicher Schlüssel: {owner_fio_public_key}",
+      "max_fee": "Maximale Gebühr: {max_fee}",
+      "tpid": "TPID: {tpid}"
+    },
+    "tooltip": "Eine neue FIO-Domäne registrieren"
+  },
+  "renewdomain": {
+    "method": "FIO-Domäne erneuern",
+    "title": "FIO-Domänenerneuerung Anfrage",
+    "result": "FIO-Domänenerneuerung Ergebnis",
+    "headers": {
+      "request": "Folgende FIO-Domäne erneuern?",
+      "result": "Folgende FIO-Domäne wurde erneuert:"
+    },
+    "rows": {
+      "fio_domain": "FIO-Domäne: {fio_domain}",
+      "max_fee": "Maximale Gebühr: {max_fee}",
+      "tpid": "TPID: {tpid}"
+    },
+    "tooltip": "Eine bestehende FIO-Domäne erneuern"
+  },
+  "addaddress": {
+    "method": "FIO-Adressverknüpfung hinzufügen",
+    "title": "FIO-Adressverknüpfungsanfrage hinzufügen",
+    "result": "FIO-Adressverknüpfung hinzufügen Ergebnis",
+    "headers": {
+      "request": "Folgende FIO-Adressverknüpfung hinzufügen?",
+      "result": "Folgende FIO-Adressverknüpfung wurde hinzugefügt:"
+    },
+    "rows": {
+      "fio_address": "FIO-Adresse: {fio_address}",
+      "chain_code": "Chain-Code: {chain_code}",
+      "token_code": "Token-Code: {token_code}",
+      "public_address": "Öffentliche Adresse: {public_address}",
+      "max_fee": "Maximale Gebühr: {max_fee}",
+      "tpid": "TPID: {tpid}"
+    },
+    "tooltip": "Eine Chain-Adresse mit einer FIO-Adresse verknüpfen"
+  },
+  "remaddress": {
+    "method": "FIO-Adressverknüpfung entfernen",
+    "title": "FIO-Adressverknüpfungsentfernung Anfrage",
+    "result": "FIO-Adressverknüpfungsentfernung Ergebnis",
+    "headers": {
+      "request": "Folgende FIO-Adressverknüpfung entfernen?",
+      "result": "Folgende FIO-Adressverknüpfung wurde entfernt:"
+    },
+    "rows": {
+      "fio_address": "FIO-Adresse: {fio_address}",
+      "chain_code": "Chain-Code: {chain_code}",
+      "token_code": "Token-Code: {token_code}",
+      "token_public_address": "Token-Öffentliche Adresse: {token_public_address}",
+      "max_fee": "Maximale Gebühr: {max_fee}",
+      "tpid": "TPID: {tpid}"
+    },
+    "tooltip": "Eine Chain-Adressverknüpfung von einer FIO-Adresse entfernen"
+  },
+  "xferdomain": {
+    "method": "FIO-Domäne übertragen",
+    "title": "FIO-Domänenübertragung Anfrage",
+    "result": "FIO-Domänenübertragung Ergebnis",
+    "headers": {
+      "request": "Folgende FIO-Domäne übertragen?",
+      "result": "Folgende FIO-Domäne wurde übertragen:"
+    },
+    "rows": {
+      "fio_domain": "FIO-Domäne: {fio_domain}",
+      "new_owner_key": "Neuer Besitzerschlüssel: {new_owner_key}",
+      "max_fee": "Maximale Gebühr: {max_fee}",
+      "tpid": "TPID: {tpid}"
+    },
+    "tooltip": "Eine FIO-Domäne an einen neuen Besitzer übertragen"
+  },
+  "xferaddress": {
+    "method": "FIO-Adresse übertragen",
+    "title": "FIO-Adressübertragung Anfrage",
+    "result": "FIO-Adressübertragung Ergebnis",
+    "headers": {
+      "request": "Folgende FIO-Adresse übertragen?",
+      "result": "Folgende FIO-Adresse wurde übertragen:"
+    },
+    "rows": {
+      "fio_address": "FIO-Adresse: {fio_address}",
+      "new_owner_key": "Neuer Besitzerschlüssel: {new_owner_key}",
+      "max_fee": "Maximale Gebühr: {max_fee}",
+      "tpid": "TPID: {tpid}"
+    },
+    "tooltip": "Eine FIO-Adresse an einen neuen Besitzer übertragen"
+  },
+  "burnexpired": {
+    "method": "Abgelaufenes FIO verbrennen",
+    "title": "Abgelaufenes FIO-Verbrennung Anfrage",
+    "result": "Abgelaufenes FIO-Verbrennung Ergebnis",
+    "headers": {
+      "request": "Folgende abgelaufene FIO-Adresse verbrennen?",
+      "result": "Folgende abgelaufene FIO-Adresse wurde verbrannt:"
+    },
+    "rows": {
+      "fio_address": "FIO-Adresse: {fio_address}",
+      "max_fee": "Maximale Gebühr: {max_fee}",
+      "tpid": "TPID: {tpid}"
+    },
+    "tooltip": "Eine abgelaufene FIO-Adresse oder Domäne verbrennen"
+  },
+  "trnsfiopubky": {
+    "method": "FIO-Token übertragen",
+    "title": "FIO-Token-Übertragung Anfrage",
+    "result": "FIO-Token-Übertragung Ergebnis",
+    "headers": {
+      "request": "FIO-Token an folgenden öffentlichen Schlüssel übertragen?",
+      "result": "FIO-Token wurden an folgenden öffentlichen Schlüssel übertragen:"
+    },
+    "rows": {
+      "payee_fio_public_key": "Zahlungsempfänger FIO-Öffentlicher Schlüssel: {payee_fio_public_key}",
+      "amount": "Betrag: {amount}",
+      "max_fee": "Maximale Gebühr: {max_fee}",
+      "tpid": "TPID: {tpid}"
+    },
+    "tooltip": "FIO-Token an einen öffentlichen Schlüssel übertragen"
+  },
+  "recordobt": {
+    "method": "OBT-Daten aufzeichnen",
+    "title": "OBT-Datenaufzeichnung Anfrage",
+    "result": "OBT-Datenaufzeichnung Ergebnis",
+    "headers": {
+      "request": "Folgende OBT-Daten aufzeichnen?",
+      "result": "Folgende OBT-Daten wurden aufgezeichnet:"
+    },
+    "rows": {
+      "payer_fio_address": "Zahler FIO-Adresse: {payer_fio_address}",
+      "payee_fio_address": "Zahlungsempfänger FIO-Adresse: {payee_fio_address}",
+      "amount": "Betrag: {amount}",
+      "chain_code": "Chain-Code: {chain_code}",
+      "token_code": "Token-Code: {token_code}",
+      "obt_id": "OBT-ID: {obt_id}",
+      "memo": "Nachricht: {memo}",
+      "max_fee": "Maximale Gebühr: {max_fee}",
+      "tpid": "TPID: {tpid}"
+    },
+    "tooltip": "Off-Chain-Transaktionsdaten auf der FIO-Chain aufzeichnen"
+  },
+  "newfundsreq": {
+    "method": "FIO-Mittel anfordern",
+    "title": "FIO-Mittelanforderung Anfrage",
+    "result": "FIO-Mittelanforderung Ergebnis",
+    "headers": {
+      "request": "Folgende FIO-Mittelanforderung erstellen?",
+      "result": "Folgende FIO-Mittelanforderung wurde erstellt:"
+    },
+    "rows": {
+      "payer_fio_address": "Zahler FIO-Adresse: {payer_fio_address}",
+      "payee_fio_address": "Zahlungsempfänger FIO-Adresse: {payee_fio_address}",
+      "amount": "Betrag: {amount}",
+      "chain_code": "Chain-Code: {chain_code}",
+      "token_code": "Token-Code: {token_code}",
+      "memo": "Nachricht: {memo}",
+      "max_fee": "Maximale Gebühr: {max_fee}",
+      "tpid": "TPID: {tpid}"
+    },
+    "tooltip": "Mittel über das FIO-Protokoll anfordern"
+  },
+  "stakefio": {
+    "method": "FIO staken",
+    "title": "FIO-Staking Anfrage",
+    "result": "FIO-Staking Ergebnis",
+    "headers": {
+      "request": "Folgenden FIO-Betrag staken?",
+      "result": "Folgender FIO-Betrag wurde gestakt:"
+    },
+    "rows": {
+      "amount": "Betrag: {amount}",
+      "fio_public_key": "FIO-Öffentlicher Schlüssel: {fio_public_key}",
+      "max_fee": "Maximale Gebühr: {max_fee}",
+      "tpid": "TPID: {tpid}"
+    },
+    "tooltip": "FIO-Token staken"
+  },
+  "unstakefio": {
+    "method": "FIO unstaken",
+    "title": "FIO-Unstaking Anfrage",
+    "result": "FIO-Unstaking Ergebnis",
+    "headers": {
+      "request": "Folgenden FIO-Betrag unstaken?",
+      "result": "Folgender FIO-Betrag wurde ungestakt:"
+    },
+    "rows": {
+      "amount": "Betrag: {amount}",
+      "fio_public_key": "FIO-Öffentlicher Schlüssel: {fio_public_key}",
+      "max_fee": "Maximale Gebühr: {max_fee}",
+      "tpid": "TPID: {tpid}"
+    },
+    "tooltip": "FIO-Token unstaken"
+  },
+  "newfioacc": {
+    "method": "FIO-Konto erstellen",
+    "title": "FIO-Kontoerstellung Anfrage",
+    "result": "FIO-Kontoerstellung Ergebnis",
+    "headers": {
+      "request": "Ein neues FIO-Konto erstellen?",
+      "result": "Folgendes FIO-Konto wurde erstellt:"
+    },
+    "rows": {
+      "owner_fio_public_key": "Besitzer FIO-Öffentlicher Schlüssel: {owner_fio_public_key}",
+      "max_fee": "Maximale Gebühr: {max_fee}",
+      "tpid": "TPID: {tpid}"
+    },
+    "tooltip": "Ein neues FIO-Konto erstellen"
+  },
+  "regproducer": {
+    "method": "FIO-Blockproduzent registrieren",
+    "title": "FIO-Blockproduzentenregistrierung Anfrage",
+    "result": "FIO-Blockproduzentenregistrierung Ergebnis",
+    "headers": {
+      "request": "Folgendes als FIO-Blockproduzent registrieren?",
+      "result": "Folgendes wurde als FIO-Blockproduzent registriert:"
+    },
+    "rows": {
+      "fio_address": "FIO-Adresse: {fio_address}",
+      "fio_pub_key": "FIO-Öffentlicher Schlüssel: {fio_pub_key}",
+      "url": "URL: {url}",
+      "location": "Standort: {location}"
+    },
+    "tooltip": "Als FIO-Blockproduzent registrieren"
+  },
+  "voteproducer": {
+    "method": "FIO-Blockproduzenten wählen",
+    "title": "FIO-Blockproduzentenwahl Anfrage",
+    "result": "FIO-Blockproduzentenwahl Ergebnis",
+    "headers": {
+      "request": "Für folgende FIO-Blockproduzenten stimmen?",
+      "result": "Stimmen wurden für folgende FIO-Blockproduzenten abgegeben:"
+    },
+    "rows": {
+      "fio_address": "FIO-Adresse: {fio_address}",
+      "producers": "Produzenten: {producers}"
+    },
+    "tooltip": "Für FIO-Blockproduzenten stimmen"
+  },
+  "listdomain": {
+    "method": "FIO-Domäne zum Verkauf anbieten",
+    "title": "FIO-Domänenverkaufsangebot Anfrage",
+    "result": "FIO-Domänenverkaufsangebot Ergebnis",
+    "headers": {
+      "request": "Folgende FIO-Domäne zum Verkauf anbieten?",
+      "result": "Folgende FIO-Domäne wurde zum Verkauf angeboten:"
+    },
+    "rows": {
+      "fio_domain": "FIO-Domäne: {fio_domain}",
+      "sale_price": "Verkaufspreis: {sale_price}",
+      "max_fee": "Maximale Gebühr: {max_fee}",
+      "tpid": "TPID: {tpid}"
+    },
+    "tooltip": "Eine FIO-Domäne auf dem Marktplatz zum Verkauf anbieten"
+  },
+  "buydomain": {
+    "method": "FIO-Domäne kaufen",
+    "title": "FIO-Domänenkauf Anfrage",
+    "result": "FIO-Domänenkauf Ergebnis",
+    "headers": {
+      "request": "Folgende FIO-Domäne kaufen?",
+      "result": "Folgende FIO-Domäne wurde gekauft:"
+    },
+    "rows": {
+      "fio_domain": "FIO-Domäne: {fio_domain}",
+      "buyer_key": "Käuferschlüssel: {buyer_key}",
+      "max_fee": "Maximale Gebühr: {max_fee}",
+      "tpid": "TPID: {tpid}"
+    },
+    "tooltip": "Eine FIO-Domäne vom Marktplatz kaufen"
+  },
+  "wraptokens": {
+    "method": "Token in FIO wrappen",
+    "title": "Token-in-FIO-Wrapping Anfrage",
+    "result": "Token-in-FIO-Wrapping Ergebnis",
+    "headers": {
+      "request": "Folgende Token in FIO wrappen?",
+      "result": "Folgende Token wurden in FIO gewrapped:"
+    },
+    "rows": {
+      "chain_code": "Chain-Code: {chain_code}",
+      "public_address": "Öffentliche Adresse: {public_address}",
+      "amount": "Betrag: {amount}",
+      "max_fee": "Maximale Gebühr: {max_fee}",
+      "tpid": "TPID: {tpid}"
+    },
+    "tooltip": "Token von einer anderen Chain in die FIO-Chain wrappen"
+  },
+  "bpclaim": {
+    "method": "Blockproduzentenbelohnung beanspruchen",
+    "title": "Blockproduzentenbelohnungs-Beanspruchung Anfrage",
+    "result": "Blockproduzentenbelohnungs-Beanspruchung Ergebnis",
+    "headers": {
+      "request": "Blockproduzentenbelohnungen beanspruchen?",
+      "result": "Blockproduzentenbelohnungen wurden beansprucht:"
+    },
+    "rows": {
+      "fio_address": "FIO-Adresse: {fio_address}",
+      "tpid": "TPID: {tpid}"
+    },
+    "tooltip": "FIO-Blockproduzentenbelohnungen beanspruchen"
+  },
+  "setfeevote": {
+    "method": "Gebührenabstimmung festlegen",
+    "title": "Gebührenabstimmungsfestlegung Anfrage",
+    "result": "Gebührenabstimmungsfestlegung Ergebnis",
+    "headers": {
+      "request": "Folgende Gebührenabstimmung festlegen?",
+      "result": "Folgende Gebührenabstimmung wurde festgelegt:"
+    },
+    "rows": {
+      "max_fee": "Maximale Gebühr: {max_fee}",
+      "tpid": "TPID: {tpid}"
+    },
+    "tooltip": "Über FIO-Gebührenwerte abstimmen"
+  },
+  "transfer": {
+    "method": "FIO-Token übertragen",
+    "title": "FIO-Token-Übertragung Anfrage",
+    "result": "FIO-Token-Übertragung Ergebnis",
+    "headers": {
+      "request": "Folgende FIO-Token übertragen?",
+      "result": "Folgende FIO-Token wurden übertragen:"
+    },
+    "rows": {
+      "from": "Von: {from}",
+      "to": "An: {to}",
+      "quantity": "Menge: {quantity}",
+      "memo": "Nachricht: {memo}"
+    },
+    "tooltip": "FIO-Token zwischen Konten übertragen"
+  }
+}

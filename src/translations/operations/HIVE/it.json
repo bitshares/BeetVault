@@ -1,0 +1,784 @@
+{
+  "getAccount": {
+    "method": "getAccount",
+    "title": "Richiesta dettagli account",
+    "result": "Risultato dettagli account",
+    "headers": {
+      "request": "Vuoi condividere i dettagli del tuo account?",
+      "result": "I dettagli del tuo account sono stati condivisi."
+    },
+    "tooltip": "Chiede al tuo portafoglio i dettagli dell'account blockchain"
+  },
+  "requestSignature": {
+    "method": "requestSignature",
+    "title": "Richiesta firma",
+    "result": "Risultato firma",
+    "headers": {
+      "request": "Vuoi condividere la tua firma?",
+      "result": "La tua firma è stata condivisa:"
+    },
+    "tooltip": "Chiede al tuo portafoglio firme blockchain"
+  },
+  "injectedCall": {
+    "method": "injectedCall",
+    "title": "Richiesta chiamata iniettata",
+    "result": "Risultato della chiamata iniettata",
+    "headers": {
+      "request": "Approvare la seguente chiamata iniettata?",
+      "result": "La seguente chiamata iniettata è stata approvata:"
+    },
+    "tooltip": "Chiede al tuo portafoglio di gestire un'operazione blockchain iniettata"
+  },
+  "vote": {
+    "method": "Vota",
+    "title": "Richiesta voto",
+    "result": "Risultato voto",
+    "headers": {
+      "request": "Vuoi approvare il seguente voto?",
+      "result": "Il seguente voto è stato approvato:"
+    },
+    "rows": {
+      "voter": "Elettore: {voter}",
+      "author": "Autore: {author}",
+      "permlink": "Permalink: {permlink}",
+      "weight": "Peso: {weight}"
+    },
+    "tooltip": "Vota su un post o commento"
+  },
+  "vote2": {
+    "method": "Vota 2",
+    "title": "Richiesta voto 2",
+    "result": "Risultato voto 2",
+    "headers": {
+      "request": "Vuoi approvare il seguente voto 2?",
+      "result": "Il seguente voto 2 è stato approvato:"
+    },
+    "rows": {
+      "voter": "Elettore: {voter}",
+      "author": "Autore: {author}",
+      "permlink": "Permalink: {permlink}",
+      "rshares": "Rshares: {rshares}",
+      "extensions": "Estensioni: {extensions}"
+    },
+    "tooltip": "Vota 2 su un post o commento"
+  },
+  "comment": {
+    "method": "Commenta",
+    "title": "Richiesta commento",
+    "result": "Risultato commento",
+    "headers": {
+      "request": "Vuoi approvare il seguente commento?",
+      "result": "Il seguente commento è stato approvato:"
+    },
+    "rows": {
+      "parent_author": "Autore principale: {parent_author}",
+      "parent_permlink": "Permalink principale: {parent_permlink}",
+      "author": "Autore: {author}",
+      "permlink": "Permalink: {permlink}",
+      "title": "Titolo: {title}",
+      "body": "Corpo: {body}",
+      "json_metadata": "Metadati JSON: {json_metadata}"
+    },
+    "tooltip": "Crea un post o commento"
+  },
+  "transfer": {
+    "method": "Trasferisci",
+    "title": "Richiesta di trasferimento",
+    "result": "Risultato del trasferimento",
+    "headers": {
+      "request": "Vuoi approvare il seguente trasferimento?",
+      "result": "Il seguente trasferimento è stato approvato:"
+    },
+    "rows": {
+      "from": "Da: {from}",
+      "to": "A: {to}",
+      "amount": "Importo: {amount}",
+      "memo": "Memo: {memo}"
+    },
+    "tooltip": "Invia attivi da un account a un altro"
+  },
+  "transfer_to_vesting": {
+    "method": "Trasferisci in vesting",
+    "title": "Richiesta di trasferimento in vesting",
+    "result": "Risultato del trasferimento in vesting",
+    "headers": {
+      "request": "Vuoi approvare il seguente trasferimento in vesting?",
+      "result": "Il seguente trasferimento in vesting è stato approvato:"
+    },
+    "rows": {
+      "from": "Da: {from}",
+      "to": "A: {to}",
+      "amount": "Importo: {amount}"
+    },
+    "tooltip": "Trasferisci attivi in fondi di vesting"
+  },
+  "withdraw_vesting": {
+    "method": "Preleva vesting",
+    "title": "Richiesta di prelievo del vesting",
+    "result": "Risultato del prelievo del vesting",
+    "headers": {
+      "request": "Vuoi approvare il seguente prelievo del vesting?",
+      "result": "Il seguente prelievo del vesting è stato approvato:"
+    },
+    "rows": {
+      "account": "Account: {account}",
+      "vesting_shares": "Quote di vesting: {vesting_shares}"
+    },
+    "tooltip": "Imposta un programma di prelievo del vesting"
+  },
+  "limit_order_create": {
+    "method": "Crea ordine limite",
+    "title": "Richiesta di creazione ordine limite",
+    "result": "Risultato ordine limite",
+    "headers": {
+      "request": "Vuoi approvare il seguente ordine limite?",
+      "result": "Il seguente ordine limite è stato approvato:"
+    },
+    "rows": {
+      "owner": "Proprietario: {owner}",
+      "orderid": "ID ordine: {orderid}",
+      "amount_to_sell": "Importo da vendere: {amount_to_sell}",
+      "min_to_receive": "Minimo da ricevere: {min_to_receive}",
+      "fill_or_kill": "Fill o Kill: {fill_or_kill}",
+      "expiration": "Scadenza: {expiration}"
+    },
+    "tooltip": "Crea un ordine limite sul mercato"
+  },
+  "limit_order_create2": {
+    "method": "Crea ordine limite 2",
+    "title": "Richiesta di creazione ordine limite 2",
+    "result": "Risultato ordine limite 2",
+    "headers": {
+      "request": "Vuoi approvare il seguente ordine limite 2?",
+      "result": "Il seguente ordine limite 2 è stato approvato:"
+    },
+    "rows": {
+      "owner": "Proprietario: {owner}",
+      "orderid": "ID ordine: {orderid}",
+      "amount_to_sell": "Importo da vendere: {amount_to_sell}",
+      "exchange_rate": "Tasso di cambio: {exchange_rate}",
+      "fill_or_kill": "Fill o Kill: {fill_or_kill}",
+      "expiration": "Scadenza: {expiration}"
+    },
+    "tooltip": "Crea un ordine limite con tasso di cambio sul mercato"
+  },
+  "limit_order_cancel": {
+    "method": "Annulla ordine limite",
+    "title": "Richiesta di annullamento ordine limite",
+    "result": "Risultato dell'annullamento ordine limite",
+    "headers": {
+      "request": "Vuoi approvare il seguente annullamento dell'ordine limite?",
+      "result": "Il seguente annullamento dell'ordine limite è stato approvato:"
+    },
+    "rows": {
+      "owner": "Proprietario: {owner}",
+      "orderid": "ID ordine: {orderid}"
+    },
+    "tooltip": "Annulla un ordine limite esistente"
+  },
+  "feed_publish": {
+    "method": "Pubblica feed",
+    "title": "Richiesta di pubblicazione del feed",
+    "result": "Risultato della pubblicazione del feed",
+    "headers": {
+      "request": "Vuoi approvare la seguente pubblicazione del feed?",
+      "result": "La seguente pubblicazione del feed è stata approvata:"
+    },
+    "rows": {
+      "publisher": "Editore: {publisher}",
+      "exchange_rate": "Tasso di cambio: {exchange_rate}"
+    },
+    "tooltip": "Pubblica un feed dei prezzi come testimone"
+  },
+  "convert": {
+    "method": "Converti",
+    "title": "Richiesta di conversione",
+    "result": "Risultato della conversione",
+    "headers": {
+      "request": "Vuoi approvare la seguente conversione?",
+      "result": "La seguente conversione è stata approvata:"
+    },
+    "rows": {
+      "owner": "Proprietario: {owner}",
+      "requestid": "ID richiesta: {requestid}",
+      "amount": "Importo: {amount}"
+    },
+    "tooltip": "Converti HIVE in HBD o viceversa"
+  },
+  "collateralized_convert": {
+    "method": "Conversione collateralizzata",
+    "title": "Richiesta di conversione collateralizzata",
+    "result": "Risultato della conversione collateralizzata",
+    "headers": {
+      "request": "Vuoi approvare la seguente conversione collateralizzata?",
+      "result": "La seguente conversione collateralizzata è stata approvata:"
+    },
+    "rows": {
+      "owner": "Proprietario: {owner}",
+      "requestid": "ID richiesta: {requestid}",
+      "amount": "Importo: {amount}"
+    },
+    "tooltip": "Converti HIVE in HBD con collaterale"
+  },
+  "account_create": {
+    "method": "Crea account",
+    "title": "Richiesta di creazione account",
+    "result": "Risultato della creazione dell'account",
+    "headers": {
+      "request": "Vuoi approvare la seguente creazione dell'account?",
+      "result": "La seguente creazione dell'account è stata approvata:"
+    },
+    "rows": {
+      "fee": "Commissione: {fee}",
+      "creator": "Creatore: {creator}",
+      "new_account_name": "Nuovo nome account: {new_account_name}",
+      "owner": "Proprietario: {owner}",
+      "active": "Attivo: {active}",
+      "posting": "Posting: {posting}",
+      "memo_key": "Chiave memo: {memo_key}",
+      "json_metadata": "Metadati JSON: {json_metadata}"
+    },
+    "tooltip": "Crea un nuovo account blockchain"
+  },
+  "create_claimed_account": {
+    "method": "Crea account rivendicato",
+    "title": "Richiesta di creazione account rivendicato",
+    "result": "Risultato dell'account rivendicato",
+    "headers": {
+      "request": "Vuoi approvare la seguente creazione dell'account rivendicato?",
+      "result": "La seguente creazione dell'account rivendicato è stata approvata:"
+    },
+    "rows": {
+      "creator": "Creatore: {creator}",
+      "new_account_name": "Nuovo nome account: {new_account_name}",
+      "owner": "Proprietario: {owner}",
+      "active": "Attivo: {active}",
+      "posting": "Posting: {posting}",
+      "memo_key": "Chiave memo: {memo_key}",
+      "json_metadata": "Metadati JSON: {json_metadata}"
+    },
+    "tooltip": "Crea un nuovo account da uno precedentemente rivendicato"
+  },
+  "account_update": {
+    "method": "Aggiorna account",
+    "title": "Richiesta di aggiornamento account",
+    "result": "Risultato dell'aggiornamento dell'account",
+    "headers": {
+      "request": "Vuoi approvare il seguente aggiornamento dell'account?",
+      "result": "Il seguente aggiornamento dell'account è stato approvato:"
+    },
+    "rows": {
+      "account": "Account: {account}",
+      "owner": "Proprietario: {owner}",
+      "active": "Attivo: {active}",
+      "posting": "Posting: {posting}",
+      "memo_key": "Chiave memo: {memo_key}",
+      "json_metadata": "Metadati JSON: {json_metadata}"
+    },
+    "tooltip": "Aggiorna le chiavi o i metadati dell'account"
+  },
+  "account_update2": {
+    "method": "Aggiorna account 2",
+    "title": "Richiesta di aggiornamento account 2",
+    "result": "Risultato dell'aggiornamento dell'account 2",
+    "headers": {
+      "request": "Vuoi approvare il seguente aggiornamento dell'account 2?",
+      "result": "Il seguente aggiornamento dell'account 2 è stato approvato:"
+    },
+    "rows": {
+      "account": "Account: {account}",
+      "owner": "Proprietario: {owner}",
+      "active": "Attivo: {active}",
+      "posting": "Posting: {posting}",
+      "memo_key": "Chiave memo: {memo_key}",
+      "json_metadata": "Metadati JSON: {json_metadata}",
+      "posting_json_metadata": "Metadati JSON di posting: {posting_json_metadata}"
+    },
+    "tooltip": "Aggiorna le chiavi e i metadati dell'account"
+  },
+  "witness_update": {
+    "method": "Aggiorna testimone",
+    "title": "Richiesta di aggiornamento del testimone",
+    "result": "Risultato dell'aggiornamento del testimone",
+    "headers": {
+      "request": "Vuoi approvare il seguente aggiornamento del testimone?",
+      "result": "Il seguente aggiornamento del testimone è stato approvato:"
+    },
+    "rows": {
+      "owner": "Proprietario: {owner}",
+      "url": "URL: {url}",
+      "block_signing_key": "Chiave di firma del blocco: {block_signing_key}",
+      "props": "Proprietà: {props}",
+      "fee": "Commissione: {fee}"
+    },
+    "tooltip": "Aggiorna la configurazione del testimone"
+  },
+  "witness_set_properties": {
+    "method": "Imposta proprietà del testimone",
+    "title": "Richiesta di impostazione delle proprietà del testimone",
+    "result": "Risultato delle proprietà del testimone",
+    "headers": {
+      "request": "Vuoi approvare il seguente aggiornamento delle proprietà del testimone?",
+      "result": "Il seguente aggiornamento delle proprietà del testimone è stato approvato:"
+    },
+    "rows": {
+      "owner": "Proprietario: {owner}",
+      "props": "Proprietà: {props}",
+      "extensions": "Estensioni: {extensions}"
+    },
+    "tooltip": "Imposta le proprietà del testimone"
+  },
+  "account_witness_vote": {
+    "method": "Vota per il testimone",
+    "title": "Richiesta di voto per il testimone",
+    "result": "Risultato del voto per il testimone",
+    "headers": {
+      "request": "Vuoi approvare il seguente voto per il testimone?",
+      "result": "Il seguente voto per il testimone è stato approvato:"
+    },
+    "rows": {
+      "account": "Account: {account}",
+      "witness": "Testimone: {witness}",
+      "approve": "Approva: {approve}"
+    },
+    "tooltip": "Vota a favore o contro un testimone"
+  },
+  "account_witness_proxy": {
+    "method": "Delega voto testimone",
+    "title": "Richiesta di delega del voto del testimone",
+    "result": "Risultato della delega del voto del testimone",
+    "headers": {
+      "request": "Vuoi approvare il seguente proxy del testimone?",
+      "result": "Il seguente proxy del testimone è stato approvato:"
+    },
+    "rows": {
+      "account": "Account: {account}",
+      "proxy": "Proxy: {proxy}"
+    },
+    "tooltip": "Imposta un proxy per i tuoi voti dei testimoni"
+  },
+  "delete_comment": {
+    "method": "Elimina commento",
+    "title": "Richiesta di eliminazione del commento",
+    "result": "Risultato dell'eliminazione del commento",
+    "headers": {
+      "request": "Vuoi approvare la seguente eliminazione del commento?",
+      "result": "La seguente eliminazione del commento è stata approvata:"
+    },
+    "rows": {
+      "author": "Autore: {author}",
+      "permlink": "Permalink: {permlink}"
+    },
+    "tooltip": "Elimina un post o commento"
+  },
+  "custom_json": {
+    "method": "JSON personalizzato",
+    "title": "Richiesta JSON personalizzato",
+    "result": "Risultato JSON personalizzato",
+    "headers": {
+      "request": "Vuoi approvare la seguente operazione JSON personalizzata?",
+      "result": "La seguente operazione JSON personalizzata è stata approvata:"
+    },
+    "rows": {
+      "required_auths": "Autorizzazioni richieste: {required_auths}",
+      "required_posting_auths": "Autorizzazioni di posting richieste: {required_posting_auths}",
+      "id": "ID: {id}",
+      "json": "JSON: {json}"
+    },
+    "tooltip": "Invia un'operazione JSON personalizzata"
+  },
+  "comment_options": {
+    "method": "Opzioni commento",
+    "title": "Richiesta di opzioni del commento",
+    "result": "Risultato delle opzioni del commento",
+    "headers": {
+      "request": "Vuoi approvare le seguenti opzioni del commento?",
+      "result": "Le seguenti opzioni del commento sono state approvate:"
+    },
+    "rows": {
+      "author": "Autore: {author}",
+      "permlink": "Permalink: {permlink}",
+      "max_accepted_payout": "Pagamento massimo accettato: {max_accepted_payout}",
+      "percent_hbd": "Percentuale HBD: {percent_hbd}",
+      "allow_votes": "Consenti voti: {allow_votes}",
+      "allow_curation_rewards": "Consenti ricompense di cura: {allow_curation_rewards}",
+      "extensions": "Estensioni: {extensions}"
+    },
+    "tooltip": "Imposta le opzioni di un post o commento"
+  },
+  "set_withdraw_vesting_route": {
+    "method": "Imposta rotta di prelievo vesting",
+    "title": "Richiesta di impostazione della rotta di prelievo del vesting",
+    "result": "Risultato della rotta di prelievo del vesting",
+    "headers": {
+      "request": "Vuoi approvare la seguente rotta di prelievo del vesting?",
+      "result": "La seguente rotta di prelievo del vesting è stata approvata:"
+    },
+    "rows": {
+      "from_account": "Account di origine: {from_account}",
+      "to_account": "Account di destinazione: {to_account}",
+      "percent": "Percentuale: {percent}",
+      "auto_vest": "Auto-vesting: {auto_vest}"
+    },
+    "tooltip": "Imposta l'allocazione di una rotta di prelievo del vesting"
+  },
+  "claim_reward_balance": {
+    "method": "Rivendi saldo ricompense",
+    "title": "Richiesta di riscossione del saldo delle ricompense",
+    "result": "Risultato del saldo delle ricompense",
+    "headers": {
+      "request": "Vuoi approvare la seguente riscossione delle ricompense?",
+      "result": "La seguente riscossione delle ricompense è stata approvata:"
+    },
+    "rows": {
+      "account": "Account: {account}",
+      "reward_hive": "Ricompensa HIVE: {reward_hive}",
+      "reward_hbd": "Ricompensa HBD: {reward_hbd}",
+      "reward_vests": "Ricompensa VESTS: {reward_vests}"
+    },
+    "tooltip": "Riscuoti le ricompense accumulate"
+  },
+  "delegate_vesting_shares": {
+    "method": "Delega quote di vesting",
+    "title": "Richiesta di delega delle quote di vesting",
+    "result": "Risultato della delega del vesting",
+    "headers": {
+      "request": "Vuoi approvare la seguente delega del vesting?",
+      "result": "La seguente delega del vesting è stata approvata:"
+    },
+    "rows": {
+      "delegator": "Delegante: {delegator}",
+      "delegatee": "Delegato: {delegatee}",
+      "vesting_shares": "Quote di vesting: {vesting_shares}"
+    },
+    "tooltip": "Delega quote di vesting a un altro account"
+  },
+  "recover_account": {
+    "method": "Recupera account",
+    "title": "Richiesta di recupero account",
+    "result": "Risultato del recupero dell'account",
+    "headers": {
+      "request": "Vuoi approvare il seguente recupero dell'account?",
+      "result": "Il seguente recupero dell'account è stato approvato:"
+    },
+    "rows": {
+      "account_to_recover": "Account da recuperare: {account_to_recover}",
+      "new_owner_authority": "Nuova autorità proprietario: {new_owner_authority}",
+      "recent_owner_authority": "Autorità proprietario recente: {recent_owner_authority}",
+      "extensions": "Estensioni: {extensions}"
+    },
+    "tooltip": "Recupera un account rubato o compromesso"
+  },
+  "request_account_recovery": {
+    "method": "Richiedi recupero account",
+    "title": "Richiesta di recupero account",
+    "result": "Risultato della richiesta di recupero account",
+    "headers": {
+      "request": "Vuoi approvare la seguente richiesta di recupero account?",
+      "result": "La seguente richiesta di recupero account è stata approvata:"
+    },
+    "rows": {
+      "recovery_account": "Account di recupero: {recovery_account}",
+      "account_to_recover": "Account da recuperare: {account_to_recover}",
+      "new_owner_authority": "Nuova autorità proprietario: {new_owner_authority}",
+      "extensions": "Estensioni: {extensions}"
+    },
+    "tooltip": "Richiedi il recupero di un account come account di recupero"
+  },
+  "change_recovery_account": {
+    "method": "Cambia account di recupero",
+    "title": "Richiesta di modifica dell'account di recupero",
+    "result": "Risultato della modifica dell'account di recupero",
+    "headers": {
+      "request": "Vuoi approvare la seguente modifica dell'account di recupero?",
+      "result": "La seguente modifica dell'account di recupero è stata approvata:"
+    },
+    "rows": {
+      "account_to_recover": "Account da recuperare: {account_to_recover}",
+      "new_recovery_account": "Nuovo account di recupero: {new_recovery_account}",
+      "extensions": "Estensioni: {extensions}"
+    },
+    "tooltip": "Cambia l'account di recupero di un account"
+  },
+  "transfer_to_savings": {
+    "method": "Trasferisci in risparmi",
+    "title": "Richiesta di trasferimento in risparmi",
+    "result": "Risultato del trasferimento in risparmi",
+    "headers": {
+      "request": "Vuoi approvare il seguente trasferimento in risparmi?",
+      "result": "Il seguente trasferimento in risparmi è stato approvato:"
+    },
+    "rows": {
+      "from": "Da: {from}",
+      "to": "A: {to}",
+      "amount": "Importo: {amount}",
+      "memo": "Memo: {memo}"
+    },
+    "tooltip": "Trasferisci attivi in risparmi"
+  },
+  "transfer_from_savings": {
+    "method": "Trasferisci dai risparmi",
+    "title": "Richiesta di trasferimento dai risparmi",
+    "result": "Risultato del trasferimento dai risparmi",
+    "headers": {
+      "request": "Vuoi approvare il seguente trasferimento dai risparmi?",
+      "result": "Il seguente trasferimento dai risparmi è stato approvato:"
+    },
+    "rows": {
+      "from": "Da: {from}",
+      "request_id": "ID richiesta: {request_id}",
+      "to": "A: {to}",
+      "amount": "Importo: {amount}",
+      "memo": "Memo: {memo}"
+    },
+    "tooltip": "Richiedi un trasferimento dai risparmi"
+  },
+  "cancel_transfer_from_savings": {
+    "method": "Annulla trasferimento dai risparmi",
+    "title": "Richiesta di annullamento del trasferimento dai risparmi",
+    "result": "Risultato dell'annullamento del trasferimento",
+    "headers": {
+      "request": "Vuoi approvare il seguente annullamento del trasferimento?",
+      "result": "Il seguente annullamento del trasferimento è stato approvato:"
+    },
+    "rows": {
+      "from": "Da: {from}",
+      "request_id": "ID richiesta: {request_id}"
+    },
+    "tooltip": "Annulla un trasferimento in sospeso dai risparmi"
+  },
+  "decline_voting_rights": {
+    "method": "Rinuncia ai diritti di voto",
+    "title": "Richiesta di rinuncia ai diritti di voto",
+    "result": "Risultato della rinuncia ai diritti di voto",
+    "headers": {
+      "request": "Vuoi approvare la seguente rinuncia ai diritti di voto?",
+      "result": "La seguente rinuncia ai diritti di voto è stata approvata:"
+    },
+    "rows": {
+      "account": "Account: {account}",
+      "decline": "Rinuncia: {decline}"
+    },
+    "tooltip": "Rinuncia definitivamente ai diritti di voto"
+  },
+  "claim_account": {
+    "method": "Rivendica account",
+    "title": "Richiesta di rivendicazione dell'account",
+    "result": "Risultato della rivendicazione dell'account",
+    "headers": {
+      "request": "Vuoi approvare la seguente rivendicazione dell'account?",
+      "result": "La seguente rivendicazione dell'account è stata approvata:"
+    },
+    "rows": {
+      "fee": "Commissione: {fee}",
+      "creator": "Creatore: {creator}",
+      "extensions": "Estensioni: {extensions}"
+    },
+    "tooltip": "Rivendica la creazione di un nuovo account"
+  },
+  "escrow_transfer": {
+    "method": "Trasferimento escrow",
+    "title": "Richiesta di trasferimento escrow",
+    "result": "Risultato del trasferimento escrow",
+    "headers": {
+      "request": "Vuoi approvare il seguente trasferimento escrow?",
+      "result": "Il seguente trasferimento escrow è stato approvato:"
+    },
+    "rows": {
+      "from": "Da: {from}",
+      "to": "A: {to}",
+      "agent": "Agente: {agent}",
+      "escrow_id": "ID escrow: {escrow_id}",
+      "hbd_amount": "Importo HBD: {hbd_amount}",
+      "hive_amount": "Importo HIVE: {hive_amount}",
+      "fee": "Commissione: {fee}",
+      "ratification_deadline": "Scadenza ratifica: {ratification_deadline}",
+      "escrow_expiration": "Scadenza escrow: {escrow_expiration}",
+      "json_meta": "Metadati JSON: {json_meta}"
+    },
+    "tooltip": "Imposta un trasferimento escrow tra account"
+  },
+  "escrow_dispute": {
+    "method": "Contestazione escrow",
+    "title": "Richiesta di contestazione escrow",
+    "result": "Risultato della contestazione escrow",
+    "headers": {
+      "request": "Vuoi approvare la seguente contestazione escrow?",
+      "result": "La seguente contestazione escrow è stata approvata:"
+    },
+    "rows": {
+      "from": "Da: {from}",
+      "to": "A: {to}",
+      "agent": "Agente: {agent}",
+      "who": "Chi: {who}",
+      "escrow_id": "ID escrow: {escrow_id}"
+    },
+    "tooltip": "Solleva una contestazione su un trasferimento escrow"
+  },
+  "escrow_release": {
+    "method": "Rilascio escrow",
+    "title": "Richiesta di rilascio escrow",
+    "result": "Risultato del rilascio escrow",
+    "headers": {
+      "request": "Vuoi approvare il seguente rilascio escrow?",
+      "result": "Il seguente rilascio escrow è stato approvato:"
+    },
+    "rows": {
+      "from": "Da: {from}",
+      "to": "A: {to}",
+      "agent": "Agente: {agent}",
+      "who": "Chi: {who}",
+      "receiver": "Destinatario: {receiver}",
+      "escrow_id": "ID escrow: {escrow_id}",
+      "hbd_amount": "Importo HBD: {hbd_amount}",
+      "hive_amount": "Importo HIVE: {hive_amount}"
+    },
+    "tooltip": "Rilascia fondi da un trasferimento escrow"
+  },
+  "escrow_approve": {
+    "method": "Approva escrow",
+    "title": "Richiesta di approvazione escrow",
+    "result": "Risultato dell'approvazione escrow",
+    "headers": {
+      "request": "Vuoi approvare la seguente approvazione escrow?",
+      "result": "La seguente approvazione escrow è stata approvata:"
+    },
+    "rows": {
+      "from": "Da: {from}",
+      "to": "A: {to}",
+      "agent": "Agente: {agent}",
+      "who": "Chi: {who}",
+      "escrow_id": "ID escrow: {escrow_id}",
+      "approve": "Approva: {approve}"
+    },
+    "tooltip": "Approva un trasferimento escrow"
+  },
+  "create_proposal": {
+    "method": "Crea proposta",
+    "title": "Richiesta di creazione della proposta",
+    "result": "Risultato della creazione della proposta",
+    "headers": {
+      "request": "Vuoi approvare la seguente creazione della proposta?",
+      "result": "La seguente creazione della proposta è stata approvata:"
+    },
+    "rows": {
+      "creator": "Creatore: {creator}",
+      "receiver": "Destinatario: {receiver}",
+      "start_date": "Data di inizio: {start_date}",
+      "end_date": "Data di fine: {end_date}",
+      "daily_pay": "Pagamento giornaliero: {daily_pay}",
+      "subject": "Oggetto: {subject}",
+      "permlink": "Permalink: {permlink}"
+    },
+    "tooltip": "Crea una proposta di governance"
+  },
+  "update_proposal_votes": {
+    "method": "Aggiorna voti proposta",
+    "title": "Richiesta di aggiornamento dei voti della proposta",
+    "result": "Risultato dell'aggiornamento dei voti della proposta",
+    "headers": {
+      "request": "Vuoi approvare il seguente aggiornamento dei voti della proposta?",
+      "result": "Il seguente aggiornamento dei voti della proposta è stato approvato:"
+    },
+    "rows": {
+      "voter": "Elettore: {voter}",
+      "proposal_ids": "ID proposte: {proposal_ids}",
+      "approve": "Approva: {approve}",
+      "extensions": "Estensioni: {extensions}"
+    },
+    "tooltip": "Vota a favore o contro le proposte"
+  },
+  "remove_proposal": {
+    "method": "Rimuovi proposta",
+    "title": "Richiesta di rimozione della proposta",
+    "result": "Risultato della rimozione della proposta",
+    "headers": {
+      "request": "Vuoi approvare la seguente rimozione della proposta?",
+      "result": "La seguente rimozione della proposta è stata approvata:"
+    },
+    "rows": {
+      "creator": "Creatore: {creator}",
+      "proposal_ids": "ID proposte: {proposal_ids}"
+    },
+    "tooltip": "Rimuovi una o più proposte"
+  },
+  "update_proposal": {
+    "method": "Aggiorna proposta",
+    "title": "Richiesta di aggiornamento della proposta",
+    "result": "Risultato dell'aggiornamento della proposta",
+    "headers": {
+      "request": "Vuoi approvare il seguente aggiornamento della proposta?",
+      "result": "Il seguente aggiornamento della proposta è stato approvato:"
+    },
+    "rows": {
+      "proposal_id": "ID proposta: {proposal_id}",
+      "creator": "Creatore: {creator}",
+      "daily_pay": "Pagamento giornaliero: {daily_pay}",
+      "subject": "Oggetto: {subject}",
+      "permlink": "Permalink: {permlink}"
+    },
+    "tooltip": "Aggiorna una proposta esistente"
+  },
+  "recurrent_transfer": {
+    "method": "Trasferimento ricorrente",
+    "title": "Richiesta di trasferimento ricorrente",
+    "result": "Risultato del trasferimento ricorrente",
+    "headers": {
+      "request": "Vuoi approvare il seguente trasferimento ricorrente?",
+      "result": "Il seguente trasferimento ricorrente è stato approvato:"
+    },
+    "rows": {
+      "from": "Da: {from}",
+      "to": "A: {to}",
+      "amount": "Importo: {amount}",
+      "memo": "Memo: {memo}",
+      "recurrence": "Ricorrenza: {recurrence}",
+      "executions": "Esecuzioni: {executions}",
+      "extensions": "Estensioni: {extensions}"
+    },
+    "tooltip": "Imposta un programma di trasferimenti ricorrenti"
+  },
+  "custom_binary": {
+    "method": "Binario personalizzato",
+    "title": "Richiesta binario personalizzato",
+    "result": "Risultato binario personalizzato",
+    "headers": {
+      "request": "Vuoi approvare la seguente operazione binaria personalizzata?",
+      "result": "La seguente operazione binaria personalizzata è stata approvata:"
+    },
+    "rows": {
+      "id": "ID: {id}",
+      "data": "Dati: {data}"
+    },
+    "tooltip": "Invia un'operazione binaria personalizzata"
+  },
+  "custom": {
+    "method": "Personalizzato",
+    "title": "Richiesta operazione personalizzata",
+    "result": "Risultato dell'operazione personalizzata",
+    "headers": {
+      "request": "Vuoi approvare la seguente operazione personalizzata?",
+      "result": "La seguente operazione personalizzata è stata approvata:"
+    },
+    "rows": {
+      "required_auths": "Autorizzazioni richieste: {required_auths}",
+      "id": "ID: {id}",
+      "data": "Dati: {data}"
+    },
+    "tooltip": "Invia un'operazione personalizzata"
+  },
+  "prove_authority": {
+    "method": "Prova autorità",
+    "title": "Richiesta di prova di autorità",
+    "result": "Risultato della prova di autorità",
+    "headers": {
+      "request": "Vuoi approvare la seguente prova di autorità?",
+      "result": "La seguente prova di autorità è stata approvata:"
+    },
+    "rows": {
+      "challenged": "Contestato: {challenged}",
+      "require_owner": "Richiedi proprietario: {require_owner}"
+    },
+    "tooltip": "Prova il possesso di un'autorità dell'account"
+  }
+}

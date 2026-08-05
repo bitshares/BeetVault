@@ -1,0 +1,784 @@
+{
+  "getAccount": {
+    "method": "getAccount",
+    "title": "アカウント詳細のリクエスト",
+    "result": "アカウント詳細の結果",
+    "headers": {
+      "request": "アカウントの詳細を共有しますか？",
+      "result": "アカウントの詳細が共有されました。"
+    },
+    "tooltip": "ウォレットにブロックチェーンのアカウント詳細を要求します"
+  },
+  "requestSignature": {
+    "method": "requestSignature",
+    "title": "署名リクエスト",
+    "result": "署名の結果",
+    "headers": {
+      "request": "署名を共有しますか？",
+      "result": "署名が共有されました："
+    },
+    "tooltip": "ウォレットにブロックチェーンの署名を要求します"
+  },
+  "injectedCall": {
+    "method": "injectedCall",
+    "title": "インジェクトコールのリクエスト",
+    "result": "インジェクトコールの結果",
+    "headers": {
+      "request": "次のインジェクトコールを承認しますか？",
+      "result": "次のインジェクトコールが承認されました："
+    },
+    "tooltip": "ウォレットにインジェクトされたブロックチェーン操作の処理を要求します"
+  },
+  "vote": {
+    "method": "投票",
+    "title": "投票リクエスト",
+    "result": "投票の結果",
+    "headers": {
+      "request": "次の投票を承認しますか？",
+      "result": "次の投票が承認されました："
+    },
+    "rows": {
+      "voter": "投票者：{voter}",
+      "author": "著者：{author}",
+      "permlink": "パーマリンク：{permlink}",
+      "weight": "重み：{weight}"
+    },
+    "tooltip": "投稿またはコメントに投票します"
+  },
+  "vote2": {
+    "method": "投票2",
+    "title": "投票2リクエスト",
+    "result": "投票2の結果",
+    "headers": {
+      "request": "次の投票2を承認しますか？",
+      "result": "次の投票2が承認されました："
+    },
+    "rows": {
+      "voter": "投票者：{voter}",
+      "author": "著者：{author}",
+      "permlink": "パーマリンク：{permlink}",
+      "rshares": "rシェア：{rshares}",
+      "extensions": "拡張：{extensions}"
+    },
+    "tooltip": "投稿またはコメントに投票2をします"
+  },
+  "comment": {
+    "method": "コメント",
+    "title": "コメントリクエスト",
+    "result": "コメントの結果",
+    "headers": {
+      "request": "次のコメントを承認しますか？",
+      "result": "次のコメントが承認されました："
+    },
+    "rows": {
+      "parent_author": "親の著者：{parent_author}",
+      "parent_permlink": "親のパーマリンク：{parent_permlink}",
+      "author": "著者：{author}",
+      "permlink": "パーマリンク：{permlink}",
+      "title": "タイトル：{title}",
+      "body": "本文：{body}",
+      "json_metadata": "JSONメタデータ：{json_metadata}"
+    },
+    "tooltip": "投稿またはコメントを作成します"
+  },
+  "transfer": {
+    "method": "送金",
+    "title": "送金リクエスト",
+    "result": "送金の結果",
+    "headers": {
+      "request": "次の送金を承認しますか？",
+      "result": "次の送金が承認されました："
+    },
+    "rows": {
+      "from": "送金元：{from}",
+      "to": "送金先：{to}",
+      "amount": "金額：{amount}",
+      "memo": "メモ：{memo}"
+    },
+    "tooltip": "アカウント間で資産を送信します"
+  },
+  "transfer_to_vesting": {
+    "method": "ベスティングへ送金",
+    "title": "ベスティングへの送金リクエスト",
+    "result": "ベスティングへの送金の結果",
+    "headers": {
+      "request": "次のベスティングへの送金を承認しますか？",
+      "result": "次のベスティングへの送金が承認されました："
+    },
+    "rows": {
+      "from": "送金元：{from}",
+      "to": "送金先：{to}",
+      "amount": "金額：{amount}"
+    },
+    "tooltip": "資産をベスティング資金に送金します"
+  },
+  "withdraw_vesting": {
+    "method": "ベスティング引き出し",
+    "title": "ベスティング引き出しリクエスト",
+    "result": "ベスティング引き出しの結果",
+    "headers": {
+      "request": "次のベスティング引き出しを承認しますか？",
+      "result": "次のベスティング引き出しが承認されました："
+    },
+    "rows": {
+      "account": "アカウント：{account}",
+      "vesting_shares": "ベスティングシェア：{vesting_shares}"
+    },
+    "tooltip": "ベスティングの引き出しスケジュールを設定します"
+  },
+  "limit_order_create": {
+    "method": "指値注文を作成",
+    "title": "指値注文作成リクエスト",
+    "result": "指値注文の結果",
+    "headers": {
+      "request": "次の指値注文を承認しますか？",
+      "result": "次の指値注文が承認されました："
+    },
+    "rows": {
+      "owner": "所有者：{owner}",
+      "orderid": "注文ID：{orderid}",
+      "amount_to_sell": "売却額：{amount_to_sell}",
+      "min_to_receive": "受取最小額：{min_to_receive}",
+      "fill_or_kill": "フィルオアキル：{fill_or_kill}",
+      "expiration": "有効期限：{expiration}"
+    },
+    "tooltip": "市場に指値注文を作成します"
+  },
+  "limit_order_create2": {
+    "method": "指値注文2を作成",
+    "title": "指値注文2作成リクエスト",
+    "result": "指値注文2の結果",
+    "headers": {
+      "request": "次の指値注文2を承認しますか？",
+      "result": "次の指値注文2が承認されました："
+    },
+    "rows": {
+      "owner": "所有者：{owner}",
+      "orderid": "注文ID：{orderid}",
+      "amount_to_sell": "売却額：{amount_to_sell}",
+      "exchange_rate": "為替レート：{exchange_rate}",
+      "fill_or_kill": "フィルオアキル：{fill_or_kill}",
+      "expiration": "有効期限：{expiration}"
+    },
+    "tooltip": "市場に為替レート付きの指値注文を作成します"
+  },
+  "limit_order_cancel": {
+    "method": "指値注文をキャンセル",
+    "title": "指値注文キャンセルリクエスト",
+    "result": "指値注文キャンセルの結果",
+    "headers": {
+      "request": "次の指値注文のキャンセルを承認しますか？",
+      "result": "次の指値注文のキャンセルが承認されました："
+    },
+    "rows": {
+      "owner": "所有者：{owner}",
+      "orderid": "注文ID：{orderid}"
+    },
+    "tooltip": "既存の指値注文をキャンセルします"
+  },
+  "feed_publish": {
+    "method": "フィードを公開",
+    "title": "フィード公開リクエスト",
+    "result": "フィード公開の結果",
+    "headers": {
+      "request": "次のフィード公開を承認しますか？",
+      "result": "次のフィード公開が承認されました："
+    },
+    "rows": {
+      "publisher": "公開者：{publisher}",
+      "exchange_rate": "為替レート：{exchange_rate}"
+    },
+    "tooltip": "ウィットネスとして価格フィードを公開します"
+  },
+  "convert": {
+    "method": "変換",
+    "title": "変換リクエスト",
+    "result": "変換の結果",
+    "headers": {
+      "request": "次の変換を承認しますか？",
+      "result": "次の変換が承認されました："
+    },
+    "rows": {
+      "owner": "所有者：{owner}",
+      "requestid": "リクエストID：{requestid}",
+      "amount": "金額：{amount}"
+    },
+    "tooltip": "HIVEをHBDに変換、またはその逆を行います"
+  },
+  "collateralized_convert": {
+    "method": "担保付き変換",
+    "title": "担保付き変換リクエスト",
+    "result": "担保付き変換の結果",
+    "headers": {
+      "request": "次の担保付き変換を承認しますか？",
+      "result": "次の担保付き変換が承認されました："
+    },
+    "rows": {
+      "owner": "所有者：{owner}",
+      "requestid": "リクエストID：{requestid}",
+      "amount": "金額：{amount}"
+    },
+    "tooltip": "担保付きでHIVEをHBDに変換します"
+  },
+  "account_create": {
+    "method": "アカウントを作成",
+    "title": "アカウント作成リクエスト",
+    "result": "アカウント作成の結果",
+    "headers": {
+      "request": "次のアカウント作成を承認しますか？",
+      "result": "次のアカウント作成が承認されました："
+    },
+    "rows": {
+      "fee": "手数料：{fee}",
+      "creator": "作成者：{creator}",
+      "new_account_name": "新しいアカウント名：{new_account_name}",
+      "owner": "所有者：{owner}",
+      "active": "アクティブ：{active}",
+      "posting": "ポスティング：{posting}",
+      "memo_key": "メモキー：{memo_key}",
+      "json_metadata": "JSONメタデータ：{json_metadata}"
+    },
+    "tooltip": "新しいブロックチェーンアカウントを作成します"
+  },
+  "create_claimed_account": {
+    "method": "請求済みアカウントを作成",
+    "title": "請求済みアカウント作成リクエスト",
+    "result": "請求済みアカウントの結果",
+    "headers": {
+      "request": "次の請求済みアカウントの作成を承認しますか？",
+      "result": "次の請求済みアカウントの作成が承認されました："
+    },
+    "rows": {
+      "creator": "作成者：{creator}",
+      "new_account_name": "新しいアカウント名：{new_account_name}",
+      "owner": "所有者：{owner}",
+      "active": "アクティブ：{active}",
+      "posting": "ポスティング：{posting}",
+      "memo_key": "メモキー：{memo_key}",
+      "json_metadata": "JSONメタデータ：{json_metadata}"
+    },
+    "tooltip": "以前に請求したアカウントから新しいアカウントを作成します"
+  },
+  "account_update": {
+    "method": "アカウントを更新",
+    "title": "アカウント更新リクエスト",
+    "result": "アカウント更新の結果",
+    "headers": {
+      "request": "次のアカウント更新を承認しますか？",
+      "result": "次のアカウント更新が承認されました："
+    },
+    "rows": {
+      "account": "アカウント：{account}",
+      "owner": "所有者：{owner}",
+      "active": "アクティブ：{active}",
+      "posting": "ポスティング：{posting}",
+      "memo_key": "メモキー：{memo_key}",
+      "json_metadata": "JSONメタデータ：{json_metadata}"
+    },
+    "tooltip": "アカウントのキーまたはメタデータを更新します"
+  },
+  "account_update2": {
+    "method": "アカウント2を更新",
+    "title": "アカウント更新2リクエスト",
+    "result": "アカウント更新2の結果",
+    "headers": {
+      "request": "次のアカウント更新2を承認しますか？",
+      "result": "次のアカウント更新2が承認されました："
+    },
+    "rows": {
+      "account": "アカウント：{account}",
+      "owner": "所有者：{owner}",
+      "active": "アクティブ：{active}",
+      "posting": "ポスティング：{posting}",
+      "memo_key": "メモキー：{memo_key}",
+      "json_metadata": "JSONメタデータ：{json_metadata}",
+      "posting_json_metadata": "ポスティングJSONメタデータ：{posting_json_metadata}"
+    },
+    "tooltip": "アカウントのキーとメタデータを更新します"
+  },
+  "witness_update": {
+    "method": "ウィットネスを更新",
+    "title": "ウィットネス更新リクエスト",
+    "result": "ウィットネス更新の結果",
+    "headers": {
+      "request": "次のウィットネス更新を承認しますか？",
+      "result": "次のウィットネス更新が承認されました："
+    },
+    "rows": {
+      "owner": "所有者：{owner}",
+      "url": "URL：{url}",
+      "block_signing_key": "ブロック署名キー：{block_signing_key}",
+      "props": "プロパティ：{props}",
+      "fee": "手数料：{fee}"
+    },
+    "tooltip": "ウィットネス設定を更新します"
+  },
+  "witness_set_properties": {
+    "method": "ウィットネスのプロパティを設定",
+    "title": "ウィットネスのプロパティ設定リクエスト",
+    "result": "ウィットネスのプロパティの結果",
+    "headers": {
+      "request": "次のウィットネスのプロパティ更新を承認しますか？",
+      "result": "次のウィットネスのプロパティ更新が承認されました："
+    },
+    "rows": {
+      "owner": "所有者：{owner}",
+      "props": "プロパティ：{props}",
+      "extensions": "拡張：{extensions}"
+    },
+    "tooltip": "ウィットネスのプロパティを設定します"
+  },
+  "account_witness_vote": {
+    "method": "ウィットネスに投票",
+    "title": "ウィットネス投票リクエスト",
+    "result": "ウィットネス投票の結果",
+    "headers": {
+      "request": "次のウィットネス投票を承認しますか？",
+      "result": "次のウィットネス投票が承認されました："
+    },
+    "rows": {
+      "account": "アカウント：{account}",
+      "witness": "ウィットネス：{witness}",
+      "approve": "承認：{approve}"
+    },
+    "tooltip": "ウィットネスに賛成または反対の投票をします"
+  },
+  "account_witness_proxy": {
+    "method": "ウィットネス投票を委任",
+    "title": "ウィットネス投票委任リクエスト",
+    "result": "ウィットネス投票委任の結果",
+    "headers": {
+      "request": "次のウィットネスプロキシを承認しますか？",
+      "result": "次のウィットネスプロキシが承認されました："
+    },
+    "rows": {
+      "account": "アカウント：{account}",
+      "proxy": "プロキシ：{proxy}"
+    },
+    "tooltip": "ウィットネス投票のプロキシを設定します"
+  },
+  "delete_comment": {
+    "method": "コメントを削除",
+    "title": "コメント削除リクエスト",
+    "result": "コメント削除の結果",
+    "headers": {
+      "request": "次のコメント削除を承認しますか？",
+      "result": "次のコメント削除が承認されました："
+    },
+    "rows": {
+      "author": "著者：{author}",
+      "permlink": "パーマリンク：{permlink}"
+    },
+    "tooltip": "投稿またはコメントを削除します"
+  },
+  "custom_json": {
+    "method": "カスタムJSON",
+    "title": "カスタムJSONリクエスト",
+    "result": "カスタムJSONの結果",
+    "headers": {
+      "request": "次のカスタムJSON操作を承認しますか？",
+      "result": "次のカスタムJSON操作が承認されました："
+    },
+    "rows": {
+      "required_auths": "必要な認証：{required_auths}",
+      "required_posting_auths": "必要なポスティング認証：{required_posting_auths}",
+      "id": "ID：{id}",
+      "json": "JSON：{json}"
+    },
+    "tooltip": "カスタムJSON操作を送信します"
+  },
+  "comment_options": {
+    "method": "コメントオプション",
+    "title": "コメントオプションリクエスト",
+    "result": "コメントオプションの結果",
+    "headers": {
+      "request": "次のコメントオプションを承認しますか？",
+      "result": "次のコメントオプションが承認されました："
+    },
+    "rows": {
+      "author": "著者：{author}",
+      "permlink": "パーマリンク：{permlink}",
+      "max_accepted_payout": "最大受取額：{max_accepted_payout}",
+      "percent_hbd": "HBDパーセント：{percent_hbd}",
+      "allow_votes": "投票を許可：{allow_votes}",
+      "allow_curation_rewards": "キュレーション報酬を許可：{allow_curation_rewards}",
+      "extensions": "拡張：{extensions}"
+    },
+    "tooltip": "投稿またはコメントのオプションを設定します"
+  },
+  "set_withdraw_vesting_route": {
+    "method": "ベスティング引き出しルートを設定",
+    "title": "ベスティング引き出しルート設定リクエスト",
+    "result": "ベスティング引き出しルートの結果",
+    "headers": {
+      "request": "次のベスティング引き出しルートを承認しますか？",
+      "result": "次のベスティング引き出しルートが承認されました："
+    },
+    "rows": {
+      "from_account": "送金元アカウント：{from_account}",
+      "to_account": "送金先アカウント：{to_account}",
+      "percent": "パーセント：{percent}",
+      "auto_vest": "自動ベスティング：{auto_vest}"
+    },
+    "tooltip": "ベスティング引き出しルートの配分を設定します"
+  },
+  "claim_reward_balance": {
+    "method": "報酬残高を請求",
+    "title": "報酬残高請求リクエスト",
+    "result": "報酬残高の結果",
+    "headers": {
+      "request": "次の報酬請求を承認しますか？",
+      "result": "次の報酬請求が承認されました："
+    },
+    "rows": {
+      "account": "アカウント：{account}",
+      "reward_hive": "報酬HIVE：{reward_hive}",
+      "reward_hbd": "報酬HBD：{reward_hbd}",
+      "reward_vests": "報酬VESTS：{reward_vests}"
+    },
+    "tooltip": "蓄積された報酬を請求します"
+  },
+  "delegate_vesting_shares": {
+    "method": "ベスティングシェアを委任",
+    "title": "ベスティングシェア委任リクエスト",
+    "result": "ベスティング委任の結果",
+    "headers": {
+      "request": "次のベスティング委任を承認しますか？",
+      "result": "次のベスティング委任が承認されました："
+    },
+    "rows": {
+      "delegator": "委任者：{delegator}",
+      "delegatee": "委任先：{delegatee}",
+      "vesting_shares": "ベスティングシェア：{vesting_shares}"
+    },
+    "tooltip": "ベスティングシェアを別のアカウントに委任します"
+  },
+  "recover_account": {
+    "method": "アカウントを回復",
+    "title": "アカウント回復リクエスト",
+    "result": "アカウント回復の結果",
+    "headers": {
+      "request": "次のアカウント回復を承認しますか？",
+      "result": "次のアカウント回復が承認されました："
+    },
+    "rows": {
+      "account_to_recover": "回復するアカウント：{account_to_recover}",
+      "new_owner_authority": "新しいオーナー権限：{new_owner_authority}",
+      "recent_owner_authority": "最近のオーナー権限：{recent_owner_authority}",
+      "extensions": "拡張：{extensions}"
+    },
+    "tooltip": "盗まれた、または侵害されたアカウントを回復します"
+  },
+  "request_account_recovery": {
+    "method": "アカウント回復を要求",
+    "title": "アカウント回復リクエスト",
+    "result": "アカウント回復要求の結果",
+    "headers": {
+      "request": "次のアカウント回復要求を承認しますか？",
+      "result": "次のアカウント回復要求が承認されました："
+    },
+    "rows": {
+      "recovery_account": "回復アカウント：{recovery_account}",
+      "account_to_recover": "回復するアカウント：{account_to_recover}",
+      "new_owner_authority": "新しいオーナー権限：{new_owner_authority}",
+      "extensions": "拡張：{extensions}"
+    },
+    "tooltip": "回復アカウントとしてアカウントの回復を要求します"
+  },
+  "change_recovery_account": {
+    "method": "回復アカウントを変更",
+    "title": "回復アカウント変更リクエスト",
+    "result": "回復アカウント変更の結果",
+    "headers": {
+      "request": "次の回復アカウントの変更を承認しますか？",
+      "result": "次の回復アカウントの変更が承認されました："
+    },
+    "rows": {
+      "account_to_recover": "回復するアカウント：{account_to_recover}",
+      "new_recovery_account": "新しい回復アカウント：{new_recovery_account}",
+      "extensions": "拡張：{extensions}"
+    },
+    "tooltip": "アカウントの回復アカウントを変更します"
+  },
+  "transfer_to_savings": {
+    "method": "貯蓄に送金",
+    "title": "貯蓄への送金リクエスト",
+    "result": "貯蓄への送金の結果",
+    "headers": {
+      "request": "次の貯蓄への送金を承認しますか？",
+      "result": "次の貯蓄への送金が承認されました："
+    },
+    "rows": {
+      "from": "送金元：{from}",
+      "to": "送金先：{to}",
+      "amount": "金額：{amount}",
+      "memo": "メモ：{memo}"
+    },
+    "tooltip": "資産を貯蓄に送金します"
+  },
+  "transfer_from_savings": {
+    "method": "貯蓄から送金",
+    "title": "貯蓄からの送金リクエスト",
+    "result": "貯蓄からの送金の結果",
+    "headers": {
+      "request": "次の貯蓄からの送金を承認しますか？",
+      "result": "次の貯蓄からの送金が承認されました："
+    },
+    "rows": {
+      "from": "送金元：{from}",
+      "request_id": "リクエストID：{request_id}",
+      "to": "送金先：{to}",
+      "amount": "金額：{amount}",
+      "memo": "メモ：{memo}"
+    },
+    "tooltip": "貯蓄からの送金を要求します"
+  },
+  "cancel_transfer_from_savings": {
+    "method": "貯蓄からの送金をキャンセル",
+    "title": "貯蓄からの送金キャンセルリクエスト",
+    "result": "送金キャンセルの結果",
+    "headers": {
+      "request": "次の送金のキャンセルを承認しますか？",
+      "result": "次の送金のキャンセルが承認されました："
+    },
+    "rows": {
+      "from": "送金元：{from}",
+      "request_id": "リクエストID：{request_id}"
+    },
+    "tooltip": "保留中の貯蓄からの送金をキャンセルします"
+  },
+  "decline_voting_rights": {
+    "method": "投票権を放棄",
+    "title": "投票権放棄リクエスト",
+    "result": "投票権放棄の結果",
+    "headers": {
+      "request": "次の投票権の放棄を承認しますか？",
+      "result": "次の投票権の放棄が承認されました："
+    },
+    "rows": {
+      "account": "アカウント：{account}",
+      "decline": "放棄：{decline}"
+    },
+    "tooltip": "投票権を永久に放棄します"
+  },
+  "claim_account": {
+    "method": "アカウントを請求",
+    "title": "アカウント請求リクエスト",
+    "result": "アカウント請求の結果",
+    "headers": {
+      "request": "次のアカウント請求を承認しますか？",
+      "result": "次のアカウント請求が承認されました："
+    },
+    "rows": {
+      "fee": "手数料：{fee}",
+      "creator": "作成者：{creator}",
+      "extensions": "拡張：{extensions}"
+    },
+    "tooltip": "新しいアカウントの作成を請求します"
+  },
+  "escrow_transfer": {
+    "method": "エスクロー送金",
+    "title": "エスクロー送金リクエスト",
+    "result": "エスクロー送金の結果",
+    "headers": {
+      "request": "次のエスクロー送金を承認しますか？",
+      "result": "次のエスクロー送金が承認されました："
+    },
+    "rows": {
+      "from": "送金元：{from}",
+      "to": "送金先：{to}",
+      "agent": "エージェント：{agent}",
+      "escrow_id": "エスクローID：{escrow_id}",
+      "hbd_amount": "HBD金額：{hbd_amount}",
+      "hive_amount": "HIVE金額：{hive_amount}",
+      "fee": "手数料：{fee}",
+      "ratification_deadline": "批准期限：{ratification_deadline}",
+      "escrow_expiration": "エスクロー有効期限：{escrow_expiration}",
+      "json_meta": "JSONメタ：{json_meta}"
+    },
+    "tooltip": "アカウント間のエスクロー送金を設定します"
+  },
+  "escrow_dispute": {
+    "method": "エスクロー紛争",
+    "title": "エスクロー紛争リクエスト",
+    "result": "エスクロー紛争の結果",
+    "headers": {
+      "request": "次のエスクロー紛争を承認しますか？",
+      "result": "次のエスクロー紛争が承認されました："
+    },
+    "rows": {
+      "from": "送金元：{from}",
+      "to": "送金先：{to}",
+      "agent": "エージェント：{agent}",
+      "who": "誰：{who}",
+      "escrow_id": "エスクローID：{escrow_id}"
+    },
+    "tooltip": "エスクロー送金について紛争を提起します"
+  },
+  "escrow_release": {
+    "method": "エスクロー解放",
+    "title": "エスクロー解放リクエスト",
+    "result": "エスクロー解放の結果",
+    "headers": {
+      "request": "次のエスクロー解放を承認しますか？",
+      "result": "次のエスクロー解放が承認されました："
+    },
+    "rows": {
+      "from": "送金元：{from}",
+      "to": "送金先：{to}",
+      "agent": "エージェント：{agent}",
+      "who": "誰：{who}",
+      "receiver": "受取人：{receiver}",
+      "escrow_id": "エスクローID：{escrow_id}",
+      "hbd_amount": "HBD金額：{hbd_amount}",
+      "hive_amount": "HIVE金額：{hive_amount}"
+    },
+    "tooltip": "エスクロー送金から資金を解放します"
+  },
+  "escrow_approve": {
+    "method": "エスクローを承認",
+    "title": "エスクロー承認リクエスト",
+    "result": "エスクロー承認の結果",
+    "headers": {
+      "request": "次のエスクロー承認を承認しますか？",
+      "result": "次のエスクロー承認が承認されました："
+    },
+    "rows": {
+      "from": "送金元：{from}",
+      "to": "送金先：{to}",
+      "agent": "エージェント：{agent}",
+      "who": "誰：{who}",
+      "escrow_id": "エスクローID：{escrow_id}",
+      "approve": "承認：{approve}"
+    },
+    "tooltip": "エスクロー送金を承認します"
+  },
+  "create_proposal": {
+    "method": "提案を作成",
+    "title": "提案作成リクエスト",
+    "result": "提案作成の結果",
+    "headers": {
+      "request": "次の提案の作成を承認しますか？",
+      "result": "次の提案の作成が承認されました："
+    },
+    "rows": {
+      "creator": "作成者：{creator}",
+      "receiver": "受取人：{receiver}",
+      "start_date": "開始日：{start_date}",
+      "end_date": "終了日：{end_date}",
+      "daily_pay": "日次支払い：{daily_pay}",
+      "subject": "件名：{subject}",
+      "permlink": "パーマリンク：{permlink}"
+    },
+    "tooltip": "ガバナンス提案を作成します"
+  },
+  "update_proposal_votes": {
+    "method": "提案投票を更新",
+    "title": "提案投票更新リクエスト",
+    "result": "提案投票更新の結果",
+    "headers": {
+      "request": "次の提案投票の更新を承認しますか？",
+      "result": "次の提案投票の更新が承認されました："
+    },
+    "rows": {
+      "voter": "投票者：{voter}",
+      "proposal_ids": "提案ID：{proposal_ids}",
+      "approve": "承認：{approve}",
+      "extensions": "拡張：{extensions}"
+    },
+    "tooltip": "提案に賛成または反対の投票をします"
+  },
+  "remove_proposal": {
+    "method": "提案を削除",
+    "title": "提案削除リクエスト",
+    "result": "提案削除の結果",
+    "headers": {
+      "request": "次の提案の削除を承認しますか？",
+      "result": "次の提案の削除が承認されました："
+    },
+    "rows": {
+      "creator": "作成者：{creator}",
+      "proposal_ids": "提案ID：{proposal_ids}"
+    },
+    "tooltip": "1つ以上の提案を削除します"
+  },
+  "update_proposal": {
+    "method": "提案を更新",
+    "title": "提案更新リクエスト",
+    "result": "提案更新の結果",
+    "headers": {
+      "request": "次の提案の更新を承認しますか？",
+      "result": "次の提案の更新が承認されました："
+    },
+    "rows": {
+      "proposal_id": "提案ID：{proposal_id}",
+      "creator": "作成者：{creator}",
+      "daily_pay": "日次支払い：{daily_pay}",
+      "subject": "件名：{subject}",
+      "permlink": "パーマリンク：{permlink}"
+    },
+    "tooltip": "既存の提案を更新します"
+  },
+  "recurrent_transfer": {
+    "method": "定期送金",
+    "title": "定期送金リクエスト",
+    "result": "定期送金の結果",
+    "headers": {
+      "request": "次の定期送金を承認しますか？",
+      "result": "次の定期送金が承認されました："
+    },
+    "rows": {
+      "from": "送金元：{from}",
+      "to": "送金先：{to}",
+      "amount": "金額：{amount}",
+      "memo": "メモ：{memo}",
+      "recurrence": "繰り返し：{recurrence}",
+      "executions": "実行回数：{executions}",
+      "extensions": "拡張：{extensions}"
+    },
+    "tooltip": "定期送金のスケジュールを設定します"
+  },
+  "custom_binary": {
+    "method": "カスタムバイナリ",
+    "title": "カスタムバイナリリクエスト",
+    "result": "カスタムバイナリの結果",
+    "headers": {
+      "request": "次のカスタムバイナリ操作を承認しますか？",
+      "result": "次のカスタムバイナリ操作が承認されました："
+    },
+    "rows": {
+      "id": "ID：{id}",
+      "data": "データ：{data}"
+    },
+    "tooltip": "カスタムバイナリ操作を送信します"
+  },
+  "custom": {
+    "method": "カスタム",
+    "title": "カスタム操作リクエスト",
+    "result": "カスタム操作の結果",
+    "headers": {
+      "request": "次のカスタム操作を承認しますか？",
+      "result": "次のカスタム操作が承認されました："
+    },
+    "rows": {
+      "required_auths": "必要な認証：{required_auths}",
+      "id": "ID：{id}",
+      "data": "データ：{data}"
+    },
+    "tooltip": "カスタム操作を送信します"
+  },
+  "prove_authority": {
+    "method": "権限を証明",
+    "title": "権限証明リクエスト",
+    "result": "権限証明の結果",
+    "headers": {
+      "request": "次の権限の証明を承認しますか？",
+      "result": "次の権限の証明が承認されました："
+    },
+    "rows": {
+      "challenged": "異議申し立て対象：{challenged}",
+      "require_owner": "オーナーが必要：{require_owner}"
+    },
+    "tooltip": "アカウント権限の所有を証明します"
+  }
+}

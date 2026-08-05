@@ -1,11 +1,11 @@
-import { EOS_FAMILY } from "@/lib/blockchains/chainFamilies.js";
+import { VAULTA_FAMILY } from "@/lib/blockchains/chainFamilies.js";
 import { useAccountStore } from "@/stores/accountStore.js";
 
 export default {
     name: "eos",
 
     validateRequiredFields({ chain, visualizedParams }) {
-        if (EOS_FAMILY.includes(chain) && !visualizedParams) {
+        if (VAULTA_FAMILY.includes(chain) && !visualizedParams) {
             return {
                 error: true,
                 errorCode: "injectedCall.missingFields",
@@ -16,7 +16,7 @@ export default {
     },
 
     getSigningKey() {
-        return useAccountStore().getEOSKey();
+        return useAccountStore().getVaultaKey();
     },
 
     buildSignParams(request) {
@@ -24,7 +24,7 @@ export default {
             return JSON.parse(request.payload.params[1]);
         } catch (error) {
             throw new Error(
-                `EOS transaction payload is not valid JSON: ${error.message}. ` +
+                `Vaulta transaction payload is not valid JSON: ${error.message}. ` +
                 `Received: ${typeof request.payload.params[1] === 'string' ? request.payload.params[1].substring(0, 200) : JSON.stringify(request.payload.params[1])}`
             );
         }

@@ -1,6 +1,6 @@
-import EOSmainnet from "./EOSmainnet.js";
+import WAX from "./WAX.js";
 
-export default class WAXtest extends EOSmainnet {
+export default class WAXtest extends WAX {
 
     getExplorer(object, chain) {
         if (object.accountName) {

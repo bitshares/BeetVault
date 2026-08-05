@@ -1,6 +1,6 @@
-import EOSmainnet from "./EOSmainnet.js";
+import TLOS from "./TLOS.js";
 
-export default class TLOStest extends EOSmainnet {
+export default class TLOStest extends TLOS {
 
     getExplorer(object, chain) {
         if (object.accountName) {

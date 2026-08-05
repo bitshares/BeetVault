@@ -1,6 +1,6 @@
-import EOSmainnet from "./EOSmainnet.js";
+import FIO from "./FIO.js";
 
-export default class FIOtest extends EOSmainnet {
+export default class FIOtest extends FIO {
 
     getExplorer(object, chain) {
         if (object.accountName) {
