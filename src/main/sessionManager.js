@@ -341,6 +341,9 @@ function _logout() {
  * @returns {void}
  */
 export function forceLogout(getMainWindow) {
+    if (!_encryptedSeed) {
+        return;
+    }
     _logout();
 
     if (getMainWindow && getMainWindow()) {

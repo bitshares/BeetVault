@@ -155,6 +155,10 @@
         // wiped on the main side — just reset the renderer state and return
         // to the lock screen.
         window.electron?.onForceLogout?.(() => {
+            if (!walletStore.isUnlocked || router.currentRoute.value.path === '/') {
+                console.log("[POWER] Ignoring forceLogout — already logged out / on login screen");
+                return;
+            }
             console.log("[POWER] Renderer received forced logout");
             //clearLogoutTimer();
             walletStore.logout({ skipClearSeed: true });
