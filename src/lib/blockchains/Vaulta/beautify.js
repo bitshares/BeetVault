@@ -2,7 +2,7 @@ import { createBeautify } from "../Antelope/beautify.js";
 import { createAtomicBeautify } from "../Antelope/atomic-beautify.js";
 
 const baseBeautify = createBeautify("VAULTA");
-const atomicHandlers = createAtomicBeautify("VAULTA");
+const atomicHandlers = createAtomicBeautify("ATOMIC");
 
 export default async function beautify(operation) {
     if (!operation || !operation.name) return;

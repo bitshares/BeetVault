@@ -2,7 +2,7 @@ import { createBeautify } from "../Antelope/beautify.js";
 import { createAtomicBeautify } from "../Antelope/atomic-beautify.js";
 
 const baseBeautify = createBeautify("XPR");
-const atomicHandlers = createAtomicBeautify("XPR");
+const atomicHandlers = createAtomicBeautify("ATOMIC");
 
 const handlers = {
     stakexpr: (op) => ({

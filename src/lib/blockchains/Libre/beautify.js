@@ -2,7 +2,7 @@ import { createBeautify } from "../Antelope/beautify.js";
 import { createAtomicBeautify } from "../Antelope/atomic-beautify.js";
 
 const baseBeautify = createBeautify("LIBRE");
-const atomicHandlers = createAtomicBeautify("LIBRE");
+const atomicHandlers = createAtomicBeautify("ATOMIC");
 
 const handlers = {
     voteproducer: (op) => ({

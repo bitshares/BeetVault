@@ -2,7 +2,7 @@ import { createBeautify } from "../Antelope/beautify.js";
 import { createAtomicBeautify } from "../Antelope/atomic-beautify.js";
 
 const baseBeautify = createBeautify("TLOS");
-const atomicHandlers = createAtomicBeautify("TLOS");
+const atomicHandlers = createAtomicBeautify("ATOMIC");
 
 const handlers = {
     newballot: (op) => ({

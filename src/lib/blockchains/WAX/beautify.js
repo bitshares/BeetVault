@@ -2,7 +2,7 @@ import { createBeautify } from "../Antelope/beautify.js";
 import { createAtomicBeautify } from "../Antelope/atomic-beautify.js";
 
 const baseBeautify = createBeautify("WAX");
-const atomicHandlers = createAtomicBeautify("WAX");
+const atomicHandlers = createAtomicBeautify("ATOMIC");
 
 const handlers = {
     regproposer: (op) => ({

@@ -10,6 +10,7 @@ import enFio from '../translations/operations/FIO/en.json';
 import enLibre from '../translations/operations/LIBRE/en.json';
 import enXpr from '../translations/operations/XPR/en.json';
 import enHive from '../translations/operations/HIVE/en.json';
+import enAtomic from '../translations/operations/ATOMIC/en.json';
 
 import deCommon from '../translations/common/de.json';
 import deOperations from '../translations/operations/de.json';
@@ -21,6 +22,7 @@ import deFio from '../translations/operations/FIO/de.json';
 import deLibre from '../translations/operations/LIBRE/de.json';
 import deXpr from '../translations/operations/XPR/de.json';
 import deHive from '../translations/operations/HIVE/de.json';
+import deAtomic from '../translations/operations/ATOMIC/de.json';
 
 import daCommon from '../translations/common/da.json';
 import daOperations from '../translations/operations/da.json';
@@ -32,6 +34,7 @@ import daFio from '../translations/operations/FIO/da.json';
 import daLibre from '../translations/operations/LIBRE/da.json';
 import daXpr from '../translations/operations/XPR/da.json';
 import daHive from '../translations/operations/HIVE/da.json';
+import daAtomic from '../translations/operations/ATOMIC/da.json';
 
 import etCommon from '../translations/common/et.json';
 import etOperations from '../translations/operations/et.json';
@@ -43,6 +46,7 @@ import etFio from '../translations/operations/FIO/et.json';
 import etLibre from '../translations/operations/LIBRE/et.json';
 import etXpr from '../translations/operations/XPR/et.json';
 import etHive from '../translations/operations/HIVE/et.json';
+import etAtomic from '../translations/operations/ATOMIC/et.json';
 
 import esCommon from '../translations/common/es.json';
 import esOperations from '../translations/operations/es.json';
@@ -54,6 +58,7 @@ import esFio from '../translations/operations/FIO/es.json';
 import esLibre from '../translations/operations/LIBRE/es.json';
 import esXpr from '../translations/operations/XPR/es.json';
 import esHive from '../translations/operations/HIVE/es.json';
+import esAtomic from '../translations/operations/ATOMIC/es.json';
 
 import frCommon from '../translations/common/fr.json';
 import frOperations from '../translations/operations/fr.json';
@@ -65,6 +70,7 @@ import frFio from '../translations/operations/FIO/fr.json';
 import frLibre from '../translations/operations/LIBRE/fr.json';
 import frXpr from '../translations/operations/XPR/fr.json';
 import frHive from '../translations/operations/HIVE/fr.json';
+import frAtomic from '../translations/operations/ATOMIC/fr.json';
 
 import itCommon from '../translations/common/it.json';
 import itOperations from '../translations/operations/it.json';
@@ -76,6 +82,7 @@ import itFio from '../translations/operations/FIO/it.json';
 import itLibre from '../translations/operations/LIBRE/it.json';
 import itXpr from '../translations/operations/XPR/it.json';
 import itHive from '../translations/operations/HIVE/it.json';
+import itAtomic from '../translations/operations/ATOMIC/it.json';
 
 import jaCommon from '../translations/common/ja.json';
 import jaOperations from '../translations/operations/ja.json';
@@ -87,6 +94,7 @@ import jaFio from '../translations/operations/FIO/ja.json';
 import jaLibre from '../translations/operations/LIBRE/ja.json';
 import jaXpr from '../translations/operations/XPR/ja.json';
 import jaHive from '../translations/operations/HIVE/ja.json';
+import jaAtomic from '../translations/operations/ATOMIC/ja.json';
 
 import koCommon from '../translations/common/ko.json';
 import koOperations from '../translations/operations/ko.json';
@@ -98,6 +106,7 @@ import koFio from '../translations/operations/FIO/ko.json';
 import koLibre from '../translations/operations/LIBRE/ko.json';
 import koXpr from '../translations/operations/XPR/ko.json';
 import koHive from '../translations/operations/HIVE/ko.json';
+import koAtomic from '../translations/operations/ATOMIC/ko.json';
 
 import ptCommon from '../translations/common/pt.json';
 import ptOperations from '../translations/operations/pt.json';
@@ -109,6 +118,7 @@ import ptFio from '../translations/operations/FIO/pt.json';
 import ptLibre from '../translations/operations/LIBRE/pt.json';
 import ptXpr from '../translations/operations/XPR/pt.json';
 import ptHive from '../translations/operations/HIVE/pt.json';
+import ptAtomic from '../translations/operations/ATOMIC/pt.json';
 
 import thCommon from '../translations/common/th.json';
 import thOperations from '../translations/operations/th.json';
@@ -120,8 +130,9 @@ import thFio from '../translations/operations/FIO/th.json';
 import thLibre from '../translations/operations/LIBRE/th.json';
 import thXpr from '../translations/operations/XPR/th.json';
 import thHive from '../translations/operations/HIVE/th.json';
+import thAtomic from '../translations/operations/ATOMIC/th.json';
 
-function buildLocale(common, operations, vaulta, bts, wax, tlos, fio, libre, xpr, hive) {
+function buildLocale(common, operations, vaulta, bts, wax, tlos, fio, libre, xpr, hive, atomic) {
   return {
     common,
     operations: {
@@ -135,6 +146,7 @@ function buildLocale(common, operations, vaulta, bts, wax, tlos, fio, libre, xpr
         LIBRE: libre,
         XPR: xpr,
         HIVE: hive,
+        ATOMIC: atomic,
       }
     }
   };
@@ -142,17 +154,17 @@ function buildLocale(common, operations, vaulta, bts, wax, tlos, fio, libre, xpr
 
 function fetchMessages() {
   return {
-    'en': buildLocale(enCommon, enOperations, enVaulta, enBts, enWax, enTlos, enFio, enLibre, enXpr, enHive),
-    'de': buildLocale(deCommon, deOperations, deVaulta, deBts, deWax, deTlos, deFio, deLibre, deXpr, deHive),
-    'da': buildLocale(daCommon, daOperations, daVaulta, daBts, daWax, daTlos, daFio, daLibre, daXpr, daHive),
-    'et': buildLocale(etCommon, etOperations, etVaulta, etBts, etWax, etTlos, etFio, etLibre, etXpr, etHive),
-    'es': buildLocale(esCommon, esOperations, esVaulta, esBts, esWax, esTlos, esFio, esLibre, esXpr, esHive),
-    'fr': buildLocale(frCommon, frOperations, frVaulta, frBts, frWax, frTlos, frFio, frLibre, frXpr, frHive),
-    'it': buildLocale(itCommon, itOperations, itVaulta, itBts, itWax, itTlos, itFio, itLibre, itXpr, itHive),
-    'ja': buildLocale(jaCommon, jaOperations, jaVaulta, jaBts, jaWax, jaTlos, jaFio, jaLibre, jaXpr, jaHive),
-    'ko': buildLocale(koCommon, koOperations, koVaulta, koBts, koWax, koTlos, koFio, koLibre, koXpr, koHive),
-    'pt': buildLocale(ptCommon, ptOperations, ptVaulta, ptBts, ptWax, ptTlos, ptFio, ptLibre, ptXpr, ptHive),
-    'th': buildLocale(thCommon, thOperations, thVaulta, thBts, thWax, thTlos, thFio, thLibre, thXpr, thHive),
+    'en': buildLocale(enCommon, enOperations, enVaulta, enBts, enWax, enTlos, enFio, enLibre, enXpr, enHive, enAtomic),
+    'de': buildLocale(deCommon, deOperations, deVaulta, deBts, deWax, deTlos, deFio, deLibre, deXpr, deHive, deAtomic),
+    'da': buildLocale(daCommon, daOperations, daVaulta, daBts, daWax, daTlos, daFio, daLibre, daXpr, daHive, daAtomic),
+    'et': buildLocale(etCommon, etOperations, etVaulta, etBts, etWax, etTlos, etFio, etLibre, etXpr, etHive, etAtomic),
+    'es': buildLocale(esCommon, esOperations, esVaulta, esBts, esWax, esTlos, esFio, esLibre, esXpr, esHive, esAtomic),
+    'fr': buildLocale(frCommon, frOperations, frVaulta, frBts, frWax, frTlos, frFio, frLibre, frXpr, frHive, frAtomic),
+    'it': buildLocale(itCommon, itOperations, itVaulta, itBts, itWax, itTlos, itFio, itLibre, itXpr, itHive, itAtomic),
+    'ja': buildLocale(jaCommon, jaOperations, jaVaulta, jaBts, jaWax, jaTlos, jaFio, jaLibre, jaXpr, jaHive, jaAtomic),
+    'ko': buildLocale(koCommon, koOperations, koVaulta, koBts, koWax, koTlos, koFio, koLibre, koXpr, koHive, koAtomic),
+    'pt': buildLocale(ptCommon, ptOperations, ptVaulta, ptBts, ptWax, ptTlos, ptFio, ptLibre, ptXpr, ptHive, ptAtomic),
+    'th': buildLocale(thCommon, thOperations, thVaulta, thBts, thWax, thTlos, thFio, thLibre, thXpr, thHive, thAtomic),
   }
 }
 
