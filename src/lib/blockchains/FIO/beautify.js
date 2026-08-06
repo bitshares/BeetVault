@@ -1,6 +1,8 @@
 import { createBeautify } from "../Antelope/beautify.js";
+import { createAtomicBeautify } from "../Antelope/atomic-beautify.js";
 
 const baseBeautify = createBeautify("FIO");
+const atomicHandlers = createAtomicBeautify("FIO");
 
 const handlers = {
     regaddress: (op) => ({
@@ -245,6 +247,9 @@ export default async function beautify(operation) {
     const qualifiedKey = `${operation.account}::${operation.name}`;
     if (handlers[qualifiedKey]) return handlers[qualifiedKey](operation);
     if (handlers[operation.name]) return handlers[operation.name](operation);
+
+    if (atomicHandlers[qualifiedKey]) return atomicHandlers[qualifiedKey](operation);
+    if (atomicHandlers[operation.name]) return atomicHandlers[operation.name](operation);
 
     return baseBeautify(operation);
 }

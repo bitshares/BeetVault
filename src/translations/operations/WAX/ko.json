@@ -328,5 +328,881 @@
       "quantity": "수량: {quantity}"
     },
     "tooltip": "토큰 잔액으로 NFT 자산을 출금합니다"
+  },
+  "init": {
+    "method": "Initialize Contract",
+    "title": "Initialize Contract Request",
+    "result": "Initialize Contract Result",
+    "headers": {
+      "request": "Initialize the contract?",
+      "result": "The contract was initialized:"
+    },
+    "rows": {},
+    "tooltip": "Initialize the contract configuration"
+  },
+  "setversion": {
+    "method": "Set Contract Version",
+    "title": "Set Contract Version Request",
+    "result": "Set Contract Version Result",
+    "headers": {
+      "request": "Set the contract version?",
+      "result": "The contract version was set:"
+    },
+    "rows": {
+      "new_version": "New Version: {new_version}"
+    },
+    "tooltip": "Set the contract version"
+  },
+  "addconftoken": {
+    "method": "Add Config Token",
+    "title": "Add Config Token Request",
+    "result": "Add Config Token Result",
+    "headers": {
+      "request": "Add the following config token?",
+      "result": "The following config token was added:"
+    },
+    "rows": {
+      "token_symbol": "Token Symbol: {token_symbol}",
+      "token_contract": "Token Contract: {token_contract}"
+    },
+    "tooltip": "Add a token to the supported tokens list"
+  },
+  "setmarketfee": {
+    "method": "Set Market Fee",
+    "title": "Set Market Fee Request",
+    "result": "Set Market Fee Result",
+    "headers": {
+      "request": "Set the following market fee?",
+      "result": "The following market fee was set:"
+    },
+    "rows": {
+      "market_fee": "Market Fee: {market_fee}"
+    },
+    "tooltip": "Set the collection market fee"
+  },
+  "setcoldata": {
+    "method": "Set Collection Data",
+    "title": "Set Collection Data Request",
+    "result": "Set Collection Data Result",
+    "headers": {
+      "request": "Set the following collection data?",
+      "result": "The following collection data was set:"
+    },
+    "rows": {
+      "collection_name": "Collection Name: {collection_name}",
+      "data": "Data: {data}"
+    },
+    "tooltip": "Edit collection data"
+  },
+  "addcolauth": {
+    "method": "Add Collection Auth",
+    "title": "Add Collection Auth Request",
+    "result": "Add Collection Auth Result",
+    "headers": {
+      "request": "Add the following collection authorized account?",
+      "result": "The following collection authorized account was added:"
+    },
+    "rows": {
+      "collection_name": "Collection Name: {collection_name}",
+      "account_to_add": "Account: {account_to_add}"
+    },
+    "tooltip": "Add an authorized account to a collection"
+  },
+  "remcolauth": {
+    "method": "Remove Collection Auth",
+    "title": "Remove Collection Auth Request",
+    "result": "Remove Collection Auth Result",
+    "headers": {
+      "request": "Remove the following collection authorized account?",
+      "result": "The following collection authorized account was removed:"
+    },
+    "rows": {
+      "collection_name": "Collection Name: {collection_name}",
+      "account_to_remove": "Account: {account_to_remove}"
+    },
+    "tooltip": "Remove an authorized account from a collection"
+  },
+  "addnotifyacc": {
+    "method": "Add Notify Account",
+    "title": "Add Notify Account Request",
+    "result": "Add Notify Account Result",
+    "headers": {
+      "request": "Add the following notify account?",
+      "result": "The following notify account was added:"
+    },
+    "rows": {
+      "collection_name": "Collection Name: {collection_name}",
+      "account_to_add": "Account: {account_to_add}"
+    },
+    "tooltip": "Add a notification account to a collection"
+  },
+  "remnotifyacc": {
+    "method": "Remove Notify Account",
+    "title": "Remove Notify Account Request",
+    "result": "Remove Notify Account Result",
+    "headers": {
+      "request": "Remove the following notify account?",
+      "result": "The following notify account was removed:"
+    },
+    "rows": {
+      "collection_name": "Collection Name: {collection_name}",
+      "account_to_remove": "Account: {account_to_remove}"
+    },
+    "tooltip": "Remove a notification account from a collection"
+  },
+  "forbidnotify": {
+    "method": "Toggle Notify Forbidden",
+    "title": "Toggle Notify Forbidden Request",
+    "result": "Toggle Notify Forbidden Result",
+    "headers": {
+      "request": "Toggle the notify forbidden flag?",
+      "result": "The notify forbidden flag was toggled:"
+    },
+    "rows": {
+      "collection_name": "Collection Name: {collection_name}",
+      "notify_forbidden": "Notify Forbidden: {notify_forbidden}"
+    },
+    "tooltip": "Toggle the collection notification flag"
+  },
+  "admincoledit": {
+    "method": "Admin Edit Collection",
+    "title": "Admin Edit Collection Request",
+    "result": "Admin Edit Collection Result",
+    "headers": {
+      "request": "Admin edit the following collection?",
+      "result": "The following collection was admin edited:"
+    },
+    "rows": {
+      "collection_name": "Collection Name: {collection_name}",
+      "data": "Data: {data}"
+    },
+    "tooltip": "Admin edit collection data"
+  },
+  "createschema": {
+    "method": "Create Schema",
+    "title": "Create Schema Request",
+    "result": "Create Schema Result",
+    "headers": {
+      "request": "Create the following schema?",
+      "result": "The following schema was created:"
+    },
+    "rows": {
+      "collection_name": "Collection Name: {collection_name}",
+      "schema_name": "Schema Name: {schema_name}",
+      "schema_format": "Schema Format: {schema_format}"
+    },
+    "tooltip": "Create a new asset schema"
+  },
+  "extendschema": {
+    "method": "Extend Schema",
+    "title": "Extend Schema Request",
+    "result": "Extend Schema Result",
+    "headers": {
+      "request": "Extend the following schema?",
+      "result": "The following schema was extended:"
+    },
+    "rows": {
+      "collection_name": "Collection Name: {collection_name}",
+      "schema_name": "Schema Name: {schema_name}",
+      "schema_format": "Schema Format: {schema_format}"
+    },
+    "tooltip": "Extend schema attributes"
+  },
+  "createtempl": {
+    "method": "Create Template",
+    "title": "Create Template Request",
+    "result": "Create Template Result",
+    "headers": {
+      "request": "Create the following template?",
+      "result": "The following template was created:"
+    },
+    "rows": {
+      "collection_name": "Collection Name: {collection_name}",
+      "schema_name": "Schema Name: {schema_name}",
+      "template_name": "Template Name: {template_name}",
+      "transferable": "Transferable: {transferable}",
+      "burnable": "Burnable: {burnable}",
+      "max_supply": "Max Supply: {max_supply}"
+    },
+    "tooltip": "Create a new asset template"
+  },
+  "locktemplate": {
+    "method": "Lock Template",
+    "title": "Lock Template Request",
+    "result": "Lock Template Result",
+    "headers": {
+      "request": "Lock the following template?",
+      "result": "The following template was locked:"
+    },
+    "rows": {
+      "collection_name": "Collection Name: {collection_name}",
+      "template_id": "Template ID: {template_id}"
+    },
+    "tooltip": "Lock a template from further modifications"
+  },
+  "setassetdata": {
+    "method": "Set Asset Data",
+    "title": "Set Asset Data Request",
+    "result": "Set Asset Data Result",
+    "headers": {
+      "request": "Set the following asset data?",
+      "result": "The following asset data was set:"
+    },
+    "rows": {
+      "collection_name": "Collection Name: {collection_name}",
+      "asset_id": "Asset ID: {asset_id}",
+      "new_data": "New Data: {new_data}"
+    },
+    "tooltip": "Set mutable asset data"
+  },
+  "backasset": {
+    "method": "Return Asset",
+    "title": "Return Asset Request",
+    "result": "Return Asset Result",
+    "headers": {
+      "request": "Return the following asset to the collection deposit?",
+      "result": "The following asset was returned to the collection deposit:"
+    },
+    "rows": {
+      "collection_name": "Collection Name: {collection_name}",
+      "asset_id": "Asset ID: {asset_id}"
+    },
+    "tooltip": "Return an asset to the collection deposit"
+  },
+  "announcedepo": {
+    "method": "Announce Deposit",
+    "title": "Announce Deposit Request",
+    "result": "Announce Deposit Result",
+    "headers": {
+      "request": "Announce the following deposit?",
+      "result": "The following deposit was announced:"
+    },
+    "rows": {
+      "collection_name": "Collection Name: {collection_name}",
+      "asset_owner": "Asset Owner: {asset_owner}",
+      "asset_ids": "Asset IDs: {asset_ids}"
+    },
+    "tooltip": "Announce a collection deposit"
+  },
+  "canceloffer": {
+    "method": "Cancel NFT Offer",
+    "title": "Cancel NFT Offer Request",
+    "result": "Cancel NFT Offer Result",
+    "headers": {
+      "request": "Cancel the following NFT offer?",
+      "result": "The following NFT offer was cancelled:"
+    },
+    "rows": {
+      "offer_id": "Offer ID: {offer_id}"
+    },
+    "tooltip": "Cancel an NFT offer"
+  },
+  "declineoffer": {
+    "method": "Decline NFT Offer",
+    "title": "Decline NFT Offer Request",
+    "result": "Decline NFT Offer Result",
+    "headers": {
+      "request": "Decline the following NFT offer?",
+      "result": "The following NFT offer was declined:"
+    },
+    "rows": {
+      "offer_id": "Offer ID: {offer_id}"
+    },
+    "tooltip": "Decline an NFT offer"
+  },
+  "payofferram": {
+    "method": "Pay Offer RAM",
+    "title": "Pay Offer RAM Request",
+    "result": "Pay Offer RAM Result",
+    "headers": {
+      "request": "Pay RAM for the following offer?",
+      "result": "RAM was paid for the following offer:"
+    },
+    "rows": {
+      "payer": "Payer: {payer}",
+      "offer_id": "Offer ID: {offer_id}"
+    },
+    "tooltip": "Pay for the RAM of an offer"
+  },
+  "regmarket": {
+    "method": "Register Marketplace",
+    "title": "Register Marketplace Request",
+    "result": "Register Marketplace Result",
+    "headers": {
+      "request": "Register the following marketplace?",
+      "result": "The following marketplace was registered:"
+    },
+    "rows": {
+      "creator": "Creator: {creator}",
+      "marketplace_name": "Marketplace Name: {marketplace_name}"
+    },
+    "tooltip": "Register a new marketplace"
+  },
+  "setminbidinc": {
+    "method": "Set Minimum Bid Increase",
+    "title": "Set Minimum Bid Increase Request",
+    "result": "Set Minimum Bid Increase Result",
+    "headers": {
+      "request": "Set the minimum bid increase?",
+      "result": "The minimum bid increase was set:"
+    },
+    "rows": {
+      "minimum_bid_increase": "Minimum Bid Increase: {minimum_bid_increase}"
+    },
+    "tooltip": "Set the minimum auction bid increase"
+  },
+  "adddelphi": {
+    "method": "Add Delphi Pair",
+    "title": "Add Delphi Pair Request",
+    "result": "Add Delphi Pair Result",
+    "headers": {
+      "request": "Add the following Delphi pair?",
+      "result": "The following Delphi pair was added:"
+    },
+    "rows": {
+      "listing_symbol": "Listing Symbol: {listing_symbol}",
+      "settlement_symbol": "Settlement Symbol: {settlement_symbol}",
+      "delphi_pair_name": "Delphi Pair Name: {delphi_pair_name}",
+      "invert_delphi_pair": "Invert: {invert_delphi_pair}"
+    },
+    "tooltip": "Add a Delphi oracle symbol pair"
+  },
+  "addafeectr": {
+    "method": "Add Fee Counter",
+    "title": "Add Fee Counter Request",
+    "result": "Add Fee Counter Result",
+    "headers": {
+      "request": "Add the following counter to the bonus fee?",
+      "result": "The following counter was added to the bonus fee:"
+    },
+    "rows": {
+      "bonusfee_id": "Bonus Fee ID: {bonusfee_id}",
+      "counter_name_to_add": "Counter Name: {counter_name_to_add}"
+    },
+    "tooltip": "Add a counter name to a bonus fee"
+  },
+  "addbonusfee": {
+    "method": "Add Bonus Fee",
+    "title": "Add Bonus Fee Request",
+    "result": "Add Bonus Fee Result",
+    "headers": {
+      "request": "Add the following bonus fee?",
+      "result": "The following bonus fee was added:"
+    },
+    "rows": {
+      "fee": "Fee: {fee}",
+      "fee_recipient": "Fee Recipient: {fee_recipient}"
+    },
+    "tooltip": "Add a new bonus fee"
+  },
+  "delbonusfee": {
+    "method": "Delete Bonus Fee",
+    "title": "Delete Bonus Fee Request",
+    "result": "Delete Bonus Fee Result",
+    "headers": {
+      "request": "Delete the following bonus fee?",
+      "result": "The following bonus fee was deleted:"
+    },
+    "rows": {
+      "bonusfee_id": "Bonus Fee ID: {bonusfee_id}"
+    },
+    "tooltip": "Delete a bonus fee"
+  },
+  "stopbonusfee": {
+    "method": "Stop Bonus Fee",
+    "title": "Stop Bonus Fee Request",
+    "result": "Stop Bonus Fee Result",
+    "headers": {
+      "request": "Stop the following bonus fee?",
+      "result": "The following bonus fee was stopped:"
+    },
+    "rows": {
+      "bonusfee_id": "Bonus Fee ID: {bonusfee_id}"
+    },
+    "tooltip": "Stop a bonus fee from applying to new listings"
+  },
+  "convcounters": {
+    "method": "Convert Counters",
+    "title": "Convert Counters Request",
+    "result": "Convert Counters Result",
+    "headers": {
+      "request": "Convert deprecated config counters?",
+      "result": "Deprecated config counters were converted:"
+    },
+    "rows": {},
+    "tooltip": "Convert deprecated config counters to the counters table"
+  },
+  "setdefmktcr": {
+    "method": "Set Default Marketplace Creator",
+    "title": "Set Default Marketplace Creator Request",
+    "result": "Set Default Marketplace Creator Result",
+    "headers": {
+      "request": "Set the default marketplace creator?",
+      "result": "The default marketplace creator was set:"
+    },
+    "rows": {
+      "new_creator": "New Creator: {new_creator}"
+    },
+    "tooltip": "Set the creator of the default marketplace"
+  },
+  "migratebal": {
+    "method": "Migrate Balances",
+    "title": "Migrate Balances Request",
+    "result": "Migrate Balances Result",
+    "headers": {
+      "request": "Migrate accumulated balances?",
+      "result": "Accumulated balances were migrated:"
+    },
+    "rows": {
+      "from": "From: {from}",
+      "to": "To: {to}"
+    },
+    "tooltip": "Migrate accumulated balances between accounts"
+  },
+  "cancelsale": {
+    "method": "Cancel NFT Sale",
+    "title": "Cancel NFT Sale Request",
+    "result": "Cancel NFT Sale Result",
+    "headers": {
+      "request": "Cancel the following NFT sale?",
+      "result": "The following NFT sale was cancelled:"
+    },
+    "rows": {
+      "sale_id": "Sale ID: {sale_id}"
+    },
+    "tooltip": "Cancel an NFT sale listing"
+  },
+  "assertsale": {
+    "method": "Assert Sale Details",
+    "title": "Assert Sale Details Request",
+    "result": "Assert Sale Details Result",
+    "headers": {
+      "request": "Assert the following sale details?",
+      "result": "The following sale details were asserted:"
+    },
+    "rows": {
+      "sale_id": "Sale ID: {sale_id}",
+      "asset_ids_to_assert": "Asset IDs: {asset_ids_to_assert}",
+      "listing_price_to_assert": "Listing Price: {listing_price_to_assert}",
+      "settlement_symbol_to_assert": "Settlement Symbol: {settlement_symbol_to_assert}"
+    },
+    "tooltip": "Assert sale details for verification"
+  },
+  "paysaleram": {
+    "method": "Pay Sale RAM",
+    "title": "Pay Sale RAM Request",
+    "result": "Pay Sale RAM Result",
+    "headers": {
+      "request": "Pay RAM for the following sale?",
+      "result": "RAM was paid for the following sale:"
+    },
+    "rows": {
+      "payer": "Payer: {payer}",
+      "sale_id": "Sale ID: {sale_id}"
+    },
+    "tooltip": "Pay for the RAM of a sale"
+  },
+  "cancelauct": {
+    "method": "Cancel NFT Auction",
+    "title": "Cancel NFT Auction Request",
+    "result": "Cancel NFT Auction Result",
+    "headers": {
+      "request": "Cancel the following NFT auction?",
+      "result": "The following NFT auction was cancelled:"
+    },
+    "rows": {
+      "auction_id": "Auction ID: {auction_id}"
+    },
+    "tooltip": "Cancel an NFT auction"
+  },
+  "auctclaimbuy": {
+    "method": "Claim Auction as Buyer",
+    "title": "Claim Auction as Buyer Request",
+    "result": "Claim Auction as Buyer Result",
+    "headers": {
+      "request": "Claim the assets from the following auction?",
+      "result": "The assets were claimed from the following auction:"
+    },
+    "rows": {
+      "auction_id": "Auction ID: {auction_id}"
+    },
+    "tooltip": "Claim auction assets as the winning bidder"
+  },
+  "auctclaimsel": {
+    "method": "Claim Auction as Seller",
+    "title": "Claim Auction as Seller Request",
+    "result": "Claim Auction as Seller Result",
+    "headers": {
+      "request": "Claim the final bid from the following auction?",
+      "result": "The final bid was claimed from the following auction:"
+    },
+    "rows": {
+      "auction_id": "Auction ID: {auction_id}"
+    },
+    "tooltip": "Claim the final bid as the auction seller"
+  },
+  "assertauct": {
+    "method": "Assert Auction Details",
+    "title": "Assert Auction Details Request",
+    "result": "Assert Auction Details Result",
+    "headers": {
+      "request": "Assert the following auction details?",
+      "result": "The following auction details were asserted:"
+    },
+    "rows": {
+      "auction_id": "Auction ID: {auction_id}",
+      "asset_ids_to_assert": "Asset IDs: {asset_ids_to_assert}"
+    },
+    "tooltip": "Assert auction details for verification"
+  },
+  "payauctram": {
+    "method": "Pay Auction RAM",
+    "title": "Pay Auction RAM Request",
+    "result": "Pay Auction RAM Result",
+    "headers": {
+      "request": "Pay RAM for the following auction?",
+      "result": "RAM was paid for the following auction:"
+    },
+    "rows": {
+      "payer": "Payer: {payer}",
+      "auction_id": "Auction ID: {auction_id}"
+    },
+    "tooltip": "Pay for the RAM of an auction"
+  },
+  "cancelbuyo": {
+    "method": "Cancel Buy Offer",
+    "title": "Cancel Buy Offer Request",
+    "result": "Cancel Buy Offer Result",
+    "headers": {
+      "request": "Cancel the following buy offer?",
+      "result": "The following buy offer was cancelled:"
+    },
+    "rows": {
+      "buyoffer_id": "Buy Offer ID: {buyoffer_id}"
+    },
+    "tooltip": "Cancel a buy offer"
+  },
+  "acceptbuyo": {
+    "method": "Accept Buy Offer",
+    "title": "Accept Buy Offer Request",
+    "result": "Accept Buy Offer Result",
+    "headers": {
+      "request": "Accept the following buy offer?",
+      "result": "The following buy offer was accepted:"
+    },
+    "rows": {
+      "buyoffer_id": "Buy Offer ID: {buyoffer_id}",
+      "expected_asset_ids": "Expected Asset IDs: {expected_asset_ids}",
+      "expected_price": "Expected Price: {expected_price}",
+      "taker_marketplace": "Taker Marketplace: {taker_marketplace}"
+    },
+    "tooltip": "Accept a buy offer"
+  },
+  "declinebuyo": {
+    "method": "Decline Buy Offer",
+    "title": "Decline Buy Offer Request",
+    "result": "Decline Buy Offer Result",
+    "headers": {
+      "request": "Decline the following buy offer?",
+      "result": "The following buy offer was declined:"
+    },
+    "rows": {
+      "buyoffer_id": "Buy Offer ID: {buyoffer_id}",
+      "decline_memo": "Decline Memo: {decline_memo}"
+    },
+    "tooltip": "Decline a buy offer"
+  },
+  "paybuyoram": {
+    "method": "Pay Buy Offer RAM",
+    "title": "Pay Buy Offer RAM Request",
+    "result": "Pay Buy Offer RAM Result",
+    "headers": {
+      "request": "Pay RAM for the following buy offer?",
+      "result": "RAM was paid for the following buy offer:"
+    },
+    "rows": {
+      "payer": "Payer: {payer}",
+      "buyoffer_id": "Buy Offer ID: {buyoffer_id}"
+    },
+    "tooltip": "Pay for the RAM of a buy offer"
+  },
+  "createtbuyo": {
+    "method": "Create Template Buy Offer",
+    "title": "Create Template Buy Offer Request",
+    "result": "Create Template Buy Offer Result",
+    "headers": {
+      "request": "Create the following template buy offer?",
+      "result": "The following template buy offer was created:"
+    },
+    "rows": {
+      "buyer": "Buyer: {buyer}",
+      "collection_name": "Collection Name: {collection_name}",
+      "template_id": "Template ID: {template_id}",
+      "price": "Price: {price}",
+      "maker_marketplace": "Maker Marketplace: {maker_marketplace}"
+    },
+    "tooltip": "Create a buy offer for any asset of a template"
+  },
+  "canceltbuyo": {
+    "method": "Cancel Template Buy Offer",
+    "title": "Cancel Template Buy Offer Request",
+    "result": "Cancel Template Buy Offer Result",
+    "headers": {
+      "request": "Cancel the following template buy offer?",
+      "result": "The following template buy offer was cancelled:"
+    },
+    "rows": {
+      "buyoffer_id": "Buy Offer ID: {buyoffer_id}"
+    },
+    "tooltip": "Cancel a template buy offer"
+  },
+  "fulfilltbuyo": {
+    "method": "Fulfill Template Buy Offer",
+    "title": "Fulfill Template Buy Offer Request",
+    "result": "Fulfill Template Buy Offer Result",
+    "headers": {
+      "request": "Fulfill the following template buy offer?",
+      "result": "The following template buy offer was fulfilled:"
+    },
+    "rows": {
+      "buyoffer_id": "Buy Offer ID: {buyoffer_id}",
+      "asset_id": "Asset ID: {asset_id}",
+      "expected_price": "Expected Price: {expected_price}",
+      "taker_marketplace": "Taker Marketplace: {taker_marketplace}"
+    },
+    "tooltip": "Fulfill a template buy offer with an asset"
+  },
+  "setroyalconf": {
+    "method": "Set Royalty Config",
+    "title": "Set Royalty Config Request",
+    "result": "Set Royalty Config Result",
+    "headers": {
+      "request": "Set the royalty split configuration?",
+      "result": "The royalty split configuration was set:"
+    },
+    "rows": {
+      "collection_name": "Collection Name: {collection_name}",
+      "founders": "Founders: {founders}",
+      "attribute_mode": "Attribute Mode: {attribute_mode}",
+      "split_founders": "Split Founders: {split_founders}",
+      "split_templates": "Split Templates: {split_templates}",
+      "split_attributes": "Split Attributes: {split_attributes}"
+    },
+    "tooltip": "Set a collection's royalty split configuration"
+  },
+  "delroyalconf": {
+    "method": "Delete Royalty Config",
+    "title": "Delete Royalty Config Request",
+    "result": "Delete Royalty Config Result",
+    "headers": {
+      "request": "Delete the royalty split configuration?",
+      "result": "The royalty split configuration was deleted:"
+    },
+    "rows": {
+      "collection_name": "Collection Name: {collection_name}"
+    },
+    "tooltip": "Delete a collection's royalty split configuration"
+  },
+  "settemplroy": {
+    "method": "Set Template Royalty",
+    "title": "Set Template Royalty Request",
+    "result": "Set Template Royalty Result",
+    "headers": {
+      "request": "Set the template royalty recipients?",
+      "result": "The template royalty recipients were set:"
+    },
+    "rows": {
+      "collection_name": "Collection Name: {collection_name}",
+      "template_id": "Template ID: {template_id}",
+      "recipients": "Recipients: {recipients}"
+    },
+    "tooltip": "Set royalty recipients for a template"
+  },
+  "deltemplroy": {
+    "method": "Delete Template Royalty",
+    "title": "Delete Template Royalty Request",
+    "result": "Delete Template Royalty Result",
+    "headers": {
+      "request": "Delete the template royalty recipients?",
+      "result": "The template royalty recipients were deleted:"
+    },
+    "rows": {
+      "collection_name": "Collection Name: {collection_name}",
+      "template_id": "Template ID: {template_id}"
+    },
+    "tooltip": "Delete royalty recipients for a template"
+  },
+  "setattrroy": {
+    "method": "Set Attribute Royalty",
+    "title": "Set Attribute Royalty Request",
+    "result": "Set Attribute Royalty Result",
+    "headers": {
+      "request": "Set the attribute royalty rule?",
+      "result": "The attribute royalty rule was set:"
+    },
+    "rows": {
+      "collection_name": "Collection Name: {collection_name}",
+      "source": "Source: {source}",
+      "field": "Field: {field}",
+      "value": "Value: {value}",
+      "rule_weight": "Rule Weight: {rule_weight}",
+      "recipients": "Recipients: {recipients}"
+    },
+    "tooltip": "Set an attribute royalty rule"
+  },
+  "delattrroy": {
+    "method": "Delete Attribute Royalty",
+    "title": "Delete Attribute Royalty Request",
+    "result": "Delete Attribute Royalty Result",
+    "headers": {
+      "request": "Delete the attribute royalty rule?",
+      "result": "The attribute royalty rule was deleted:"
+    },
+    "rows": {
+      "collection_name": "Collection Name: {collection_name}",
+      "rule_id": "Rule ID: {rule_id}"
+    },
+    "tooltip": "Delete an attribute royalty rule"
+  },
+  "lognewsale": {
+    "method": "Log New Sale",
+    "title": "Log New Sale",
+    "result": "Log New Sale",
+    "headers": {
+      "request": "New sale logged",
+      "result": "New sale logged"
+    },
+    "rows": {
+      "sale_id": "Sale ID: {sale_id}"
+    },
+    "tooltip": "Notification: A new sale was created"
+  },
+  "logsalestart": {
+    "method": "Log Sale Start",
+    "title": "Log Sale Start",
+    "result": "Log Sale Start",
+    "headers": {
+      "request": "Sale started",
+      "result": "Sale started"
+    },
+    "rows": {
+      "sale_id": "Sale ID: {sale_id}",
+      "offer_id": "Offer ID: {offer_id}"
+    },
+    "tooltip": "Notification: A sale became active"
+  },
+  "lognewauct": {
+    "method": "Log New Auction",
+    "title": "Log New Auction",
+    "result": "Log New Auction",
+    "headers": {
+      "request": "New auction logged",
+      "result": "New auction logged"
+    },
+    "rows": {
+      "auction_id": "Auction ID: {auction_id}"
+    },
+    "tooltip": "Notification: A new auction was created"
+  },
+  "logauctstart": {
+    "method": "Log Auction Start",
+    "title": "Log Auction Start",
+    "result": "Log Auction Start",
+    "headers": {
+      "request": "Auction started",
+      "result": "Auction started"
+    },
+    "rows": {
+      "auction_id": "Auction ID: {auction_id}"
+    },
+    "tooltip": "Notification: An auction became active"
+  },
+  "lognewbuyo": {
+    "method": "Log New Buy Offer",
+    "title": "Log New Buy Offer",
+    "result": "Log New Buy Offer",
+    "headers": {
+      "request": "New buy offer logged",
+      "result": "New buy offer logged"
+    },
+    "rows": {
+      "buyoffer_id": "Buy Offer ID: {buyoffer_id}"
+    },
+    "tooltip": "Notification: A new buy offer was created"
+  },
+  "lognewtbuyo": {
+    "method": "Log New Template Buy Offer",
+    "title": "Log New Template Buy Offer",
+    "result": "Log New Template Buy Offer",
+    "headers": {
+      "request": "New template buy offer logged",
+      "result": "New template buy offer logged"
+    },
+    "rows": {
+      "buyoffer_id": "Buy Offer ID: {buyoffer_id}"
+    },
+    "tooltip": "Notification: A new template buy offer was created"
+  },
+  "logroyfound": {
+    "method": "Log Founders Royalty",
+    "title": "Log Founders Royalty",
+    "result": "Log Founders Royalty",
+    "headers": {
+      "request": "Founders royalty distributed",
+      "result": "Founders royalty distributed"
+    },
+    "rows": {
+      "collection_name": "Collection: {collection_name}",
+      "asset_id": "Asset ID: {asset_id}",
+      "payouts": "Payouts: {payouts}"
+    },
+    "tooltip": "Notification: Founders royalty was distributed"
+  },
+  "logroytempl": {
+    "method": "Log Template Royalty",
+    "title": "Log Template Royalty",
+    "result": "Log Template Royalty",
+    "headers": {
+      "request": "Template royalty distributed",
+      "result": "Template royalty distributed"
+    },
+    "rows": {
+      "collection_name": "Collection: {collection_name}",
+      "asset_id": "Asset ID: {asset_id}",
+      "template_id": "Template ID: {template_id}",
+      "payouts": "Payouts: {payouts}"
+    },
+    "tooltip": "Notification: Template royalty was distributed"
+  },
+  "logroyattr": {
+    "method": "Log Attribute Royalty",
+    "title": "Log Attribute Royalty",
+    "result": "Log Attribute Royalty",
+    "headers": {
+      "request": "Attribute royalty distributed",
+      "result": "Attribute royalty distributed"
+    },
+    "rows": {
+      "collection_name": "Collection: {collection_name}",
+      "asset_id": "Asset ID: {asset_id}",
+      "rule_id": "Rule ID: {rule_id}",
+      "payouts": "Payouts: {payouts}"
+    },
+    "tooltip": "Notification: Attribute royalty was distributed"
+  },
+  "logroydust": {
+    "method": "Log Royalty Dust",
+    "title": "Log Royalty Dust",
+    "result": "Log Royalty Dust",
+    "headers": {
+      "request": "Royalty dust fell through to author",
+      "result": "Royalty dust fell through to author"
+    },
+    "rows": {
+      "collection_name": "Collection: {collection_name}",
+      "collection_author": "Author: {collection_author}",
+      "amount": "Amount: {amount}"
+    },
+    "tooltip": "Notification: Royalty dust was sent to the collection author"
   }
 }

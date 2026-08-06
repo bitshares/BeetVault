@@ -1,4 +1,8 @@
-import Antelope, { BASE_EOSIO_OPERATIONS } from "./Antelope.js";
+import Antelope, {
+    BASE_EOSIO_OPERATIONS,
+    ATOMIC_ASSETS_OPERATIONS,
+    ATOMIC_MARKET_OPERATIONS,
+} from "./Antelope.js";
 import * as Actions from "../Actions.js";
 import beautify from "./TLOS/beautify.js";
 
@@ -31,6 +35,8 @@ export default class TLOS extends Antelope {
         return [
             Actions.INJECTED_CALL,
             ...baseWithoutBidding,
+            ...ATOMIC_ASSETS_OPERATIONS,
+            ...ATOMIC_MARKET_OPERATIONS,
             ...telosSystemOperations,
             ...telosDecideOperations,
             ...telosEvmOperations,

@@ -1,4 +1,8 @@
-import Antelope, { BASE_EOSIO_OPERATIONS } from "./Antelope.js";
+import Antelope, {
+    BASE_EOSIO_OPERATIONS,
+    ATOMIC_ASSETS_OPERATIONS,
+    ATOMIC_MARKET_OPERATIONS,
+} from "./Antelope.js";
 import * as Actions from "../Actions.js";
 import beautify from "./XPR/beautify.js";
 
@@ -30,6 +34,8 @@ export default class XPR extends Antelope {
         return [
             Actions.INJECTED_CALL,
             ...BASE_EOSIO_OPERATIONS,
+            ...ATOMIC_ASSETS_OPERATIONS,
+            ...ATOMIC_MARKET_OPERATIONS,
             ...xprSystemOperations,
             ...protonAccountOperations,
             ...cfundOperations,

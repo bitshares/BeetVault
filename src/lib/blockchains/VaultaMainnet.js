@@ -1,4 +1,8 @@
-import Antelope, { BASE_EOSIO_OPERATIONS } from "./Antelope.js";
+import Antelope, {
+    BASE_EOSIO_OPERATIONS,
+    ATOMIC_ASSETS_OPERATIONS,
+    ATOMIC_MARKET_OPERATIONS,
+} from "./Antelope.js";
 import * as Actions from "../Actions.js";
 import beautify from "./Vaulta/beautify.js";
 
@@ -18,7 +22,13 @@ const vaultaSystemOperations = [
 
 export default class VaultaMainnet extends Antelope {
     get operations() {
-        return [Actions.INJECTED_CALL, ...BASE_EOSIO_OPERATIONS, ...vaultaSystemOperations];
+        return [
+            Actions.INJECTED_CALL,
+            ...BASE_EOSIO_OPERATIONS,
+            ...ATOMIC_ASSETS_OPERATIONS,
+            ...ATOMIC_MARKET_OPERATIONS,
+            ...vaultaSystemOperations,
+        ];
     }
 
     get beautifyModule() {

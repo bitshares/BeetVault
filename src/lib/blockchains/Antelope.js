@@ -33,9 +33,42 @@ export const BASE_EOSIO_OPERATIONS = [
     "canceldelay", "onerror", "setabi", "setcode",
 ];
 
+export const ATOMIC_ASSETS_OPERATIONS = [
+    "init", "setversion", "addconftoken", "setmarketfee",
+    "createcol", "setcoldata", "addcolauth", "remcolauth",
+    "addnotifyacc", "remnotifyacc", "forbidnotify", "admincoledit",
+    "createschema", "extendschema",
+    "createtempl", "locktemplate",
+    "mintasset", "burnasset", "setassetdata", "transfer", "backasset", "announcedepo",
+    "createoffer", "acceptoffer", "canceloffer", "declineoffer", "payofferram",
+    "withdraw",
+];
+
+export const ATOMIC_MARKET_OPERATIONS = [
+    "init", "setversion", "regmarket", "setmarketfee", "setminbidinc",
+    "addconftoken", "adddelphi", "addafeectr", "addbonusfee", "delbonusfee",
+    "stopbonusfee", "convcounters",
+    "setdefmktcr", "migratebal",
+    "announcesale", "cancelsale", "purchasesale", "assertsale", "paysaleram", "withdraw",
+    "announceauct", "cancelauct", "auctionbid", "auctclaimbuy", "auctclaimsel",
+    "assertauct", "payauctram",
+    "createbuyo", "cancelbuyo", "acceptbuyo", "declinebuyo", "paybuyoram",
+    "createtbuyo", "canceltbuyo", "fulfilltbuyo",
+    "setroyalconf", "delroyalconf", "settemplroy", "deltemplroy",
+    "setattrroy", "delattrroy",
+    "lognewsale", "logsalestart", "lognewauct", "logauctstart",
+    "lognewbuyo", "lognewtbuyo",
+    "logroyfound", "logroytempl", "logroyattr", "logroydust",
+];
+
 export default class Antelope extends BlockchainAPI {
     get operations() {
-        return [Actions.INJECTED_CALL, ...BASE_EOSIO_OPERATIONS];
+        return [
+            Actions.INJECTED_CALL,
+            ...BASE_EOSIO_OPERATIONS,
+            ...ATOMIC_ASSETS_OPERATIONS,
+            ...ATOMIC_MARKET_OPERATIONS,
+        ];
     }
 
     getTokenContract() {

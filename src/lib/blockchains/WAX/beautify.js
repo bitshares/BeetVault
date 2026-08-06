@@ -1,6 +1,8 @@
 import { createBeautify } from "../Antelope/beautify.js";
+import { createAtomicBeautify } from "../Antelope/atomic-beautify.js";
 
 const baseBeautify = createBeautify("WAX");
+const atomicHandlers = createAtomicBeautify("WAX");
 
 const handlers = {
     regproposer: (op) => ({
@@ -68,130 +70,6 @@ const handlers = {
             { key: "receiver", params: { receiver: op.data.receiver } },
         ],
     }),
-    "atomicassets::transfer": (op) => ({
-        title: "operations.injected.WAX.transfer.title",
-        opType: "transfer", method: "transfer", op, operation: op,
-        rows: [
-            { key: "from", params: { from: op.data.from } },
-            { key: "to", params: { to: op.data.to } },
-            { key: "asset_ids", params: { asset_ids: JSON.stringify(op.data.asset_ids) } },
-            { key: "memo", params: { memo: op.data.memo ?? "" } },
-        ],
-    }),
-    createcol: (op) => ({
-        title: "operations.injected.WAX.createcol.title",
-        opType: "createcol", method: "createcol", op, operation: op,
-        rows: [
-            { key: "author", params: { author: op.data.author } },
-            { key: "collection_name", params: { collection_name: op.data.collection_name } },
-            { key: "allow_notify", params: { allow_notify: op.data.allow_notify } },
-            { key: "market_fee", params: { market_fee: op.data.market_fee } },
-        ],
-    }),
-    mintasset: (op) => ({
-        title: "operations.injected.WAX.mintasset.title",
-        opType: "mintasset", method: "mintasset", op, operation: op,
-        rows: [
-            { key: "authorized_minter", params: { authorized_minter: op.data.authorized_minter } },
-            { key: "collection_name", params: { collection_name: op.data.collection_name } },
-            { key: "schema_name", params: { schema_name: op.data.schema_name } },
-            { key: "template_id", params: { template_id: op.data.template_id } },
-            { key: "new_asset_owner", params: { new_asset_owner: op.data.new_asset_owner } },
-        ],
-    }),
-    burnasset: (op) => ({
-        title: "operations.injected.WAX.burnasset.title",
-        opType: "burnasset", method: "burnasset", op, operation: op,
-        rows: [
-            { key: "asset_owner", params: { asset_owner: op.data.asset_owner } },
-            { key: "asset_id", params: { asset_id: op.data.asset_id } },
-        ],
-    }),
-    createoffer: (op) => ({
-        title: "operations.injected.WAX.createoffer.title",
-        opType: "createoffer", method: "createoffer", op, operation: op,
-        rows: [
-            { key: "sender", params: { sender: op.data.sender } },
-            { key: "recipient", params: { recipient: op.data.recipient } },
-            { key: "sender_asset_ids", params: { sender_asset_ids: JSON.stringify(op.data.sender_asset_ids) } },
-            { key: "recipient_asset_ids", params: { recipient_asset_ids: JSON.stringify(op.data.recipient_asset_ids) } },
-            { key: "memo", params: { memo: op.data.memo ?? "" } },
-        ],
-    }),
-    acceptoffer: (op) => ({
-        title: "operations.injected.WAX.acceptoffer.title",
-        opType: "acceptoffer", method: "acceptoffer", op, operation: op,
-        rows: [
-            { key: "offer_id", params: { offer_id: op.data.offer_id } },
-        ],
-    }),
-    announcesale: (op) => ({
-        title: "operations.injected.WAX.announcesale.title",
-        opType: "announcesale", method: "announcesale", op, operation: op,
-        rows: [
-            { key: "seller", params: { seller: op.data.seller } },
-            { key: "asset_ids", params: { asset_ids: JSON.stringify(op.data.asset_ids) } },
-            { key: "listing_price", params: { listing_price: op.data.listing_price } },
-            { key: "settlement_symbol", params: { settlement_symbol: op.data.settlement_symbol } },
-        ],
-    }),
-    purchasesale: (op) => ({
-        title: "operations.injected.WAX.purchasesale.title",
-        opType: "purchasesale", method: "purchasesale", op, operation: op,
-        rows: [
-            { key: "buyer", params: { buyer: op.data.buyer } },
-            { key: "sale_id", params: { sale_id: op.data.sale_id } },
-            { key: "taker_marketplace", params: { taker_marketplace: op.data.taker_marketplace } },
-        ],
-    }),
-    announceauct: (op) => ({
-        title: "operations.injected.WAX.announceauct.title",
-        opType: "announceauct", method: "announceauct", op, operation: op,
-        rows: [
-            { key: "seller", params: { seller: op.data.seller } },
-            { key: "asset_ids", params: { asset_ids: JSON.stringify(op.data.asset_ids) } },
-            { key: "starting_bid", params: { starting_bid: op.data.starting_bid } },
-            { key: "duration", params: { duration: op.data.duration } },
-        ],
-    }),
-    auctionbid: (op) => ({
-        title: "operations.injected.WAX.auctionbid.title",
-        opType: "auctionbid", method: "auctionbid", op, operation: op,
-        rows: [
-            { key: "bidder", params: { bidder: op.data.bidder } },
-            { key: "auction_id", params: { auction_id: op.data.auction_id } },
-            { key: "bid", params: { bid: op.data.bid } },
-        ],
-    }),
-    createbuyo: (op) => ({
-        title: "operations.injected.WAX.createbuyo.title",
-        opType: "createbuyo", method: "createbuyo", op, operation: op,
-        rows: [
-            { key: "buyer", params: { buyer: op.data.buyer } },
-            { key: "recipient", params: { recipient: op.data.recipient } },
-            { key: "asset_ids", params: { asset_ids: JSON.stringify(op.data.asset_ids) } },
-            { key: "price", params: { price: op.data.price } },
-            { key: "memo", params: { memo: op.data.memo ?? "" } },
-        ],
-    }),
-    "atomicassets::withdraw": (op) => ({
-        title: "operations.injected.WAX.withdraw.title",
-        opType: "withdraw", method: "withdraw", op, operation: op,
-        rows: [
-            { key: "owner", params: { owner: op.data.owner } },
-            { key: "token_to_receive", params: { token_to_receive: op.data.token_to_receive } },
-            { key: "quantity", params: { quantity: op.data.quantity } },
-        ],
-    }),
-    "atomicmarket::withdraw": (op) => ({
-        title: "operations.injected.WAX.withdraw.title",
-        opType: "withdraw", method: "withdraw", op, operation: op,
-        rows: [
-            { key: "owner", params: { owner: op.data.owner } },
-            { key: "token_to_receive", params: { token_to_receive: op.data.token_to_receive } },
-            { key: "quantity", params: { quantity: op.data.quantity } },
-        ],
-    }),
 };
 
 export default async function beautify(operation) {
@@ -200,6 +78,9 @@ export default async function beautify(operation) {
     const qualifiedKey = `${operation.account}::${operation.name}`;
     if (handlers[qualifiedKey]) return handlers[qualifiedKey](operation);
     if (handlers[operation.name]) return handlers[operation.name](operation);
+
+    if (atomicHandlers[qualifiedKey]) return atomicHandlers[qualifiedKey](operation);
+    if (atomicHandlers[operation.name]) return atomicHandlers[operation.name](operation);
 
     return baseBeautify(operation);
 }

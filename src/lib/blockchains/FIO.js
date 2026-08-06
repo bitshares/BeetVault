@@ -1,4 +1,7 @@
-import Antelope from "./Antelope.js";
+import Antelope, {
+    ATOMIC_ASSETS_OPERATIONS,
+    ATOMIC_MARKET_OPERATIONS,
+} from "./Antelope.js";
 import beautify from "./FIO/beautify.js";
 
 const fioAddressOperations = [
@@ -71,6 +74,8 @@ export default class FIO extends Antelope {
             ...fioTpidOperations,
             ...fioEscrowOperations,
             ...fioOracleOperations,
+            ...ATOMIC_ASSETS_OPERATIONS,
+            ...ATOMIC_MARKET_OPERATIONS,
         ];
     }
 

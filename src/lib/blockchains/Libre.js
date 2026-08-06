@@ -1,4 +1,7 @@
-import Antelope from "./Antelope.js";
+import Antelope, {
+    ATOMIC_ASSETS_OPERATIONS,
+    ATOMIC_MARKET_OPERATIONS,
+} from "./Antelope.js";
 import * as Actions from "../Actions.js";
 import beautify from "./Libre/beautify.js";
 
@@ -34,6 +37,8 @@ export default class Libre extends Antelope {
             ...stakeLibreOperations,
             ...libreRewardOperations,
             ...libreFarmingOperations,
+            ...ATOMIC_ASSETS_OPERATIONS,
+            ...ATOMIC_MARKET_OPERATIONS,
         ];
     }
 
