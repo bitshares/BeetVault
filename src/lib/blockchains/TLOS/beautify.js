@@ -105,6 +105,15 @@ const handlers = {
             { key: "memo", params: { memo: op.data.memo ?? "" } },
         ],
     }),
+    reclaim: (op) => ({
+        title: "operations.injected.TLOS.reclaim.title",
+        opType: "reclaim", method: "reclaim", op, operation: op,
+        rows: [
+            { key: "voter", params: { voter: op.data.voter } },
+            { key: "quantity", params: { quantity: op.data.quantity } },
+            { key: "memo", params: { memo: op.data.memo ?? "" } },
+        ],
+    }),
     claimpayment: (op) => ({
         title: "operations.injected.TLOS.claimpayment.title",
         opType: "claimpayment", method: "claimpayment", op, operation: op,

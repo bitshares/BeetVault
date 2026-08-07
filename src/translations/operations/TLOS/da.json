@@ -268,5 +268,20 @@
       "quantity": "Quantity: {quantity}"
     },
     "tooltip": "Withdraw from Telos EVM to native chain"
+  },
+  "reclaim": {
+    "method": "Reclaim Treasury Tokens",
+    "title": "Reclaim Treasury Tokens Request",
+    "result": "Reclaim Treasury Tokens Result",
+    "headers": {
+      "request": "Reclaim the following treasury tokens?",
+      "result": "The following treasury tokens were reclaimed:"
+    },
+    "rows": {
+      "voter": "Voter: {voter}",
+      "quantity": "Quantity: {quantity}",
+      "memo": "Memo: {memo}"
+    },
+    "tooltip": "Reclaim treasury tokens from a voter back to the manager"
   }
 }
