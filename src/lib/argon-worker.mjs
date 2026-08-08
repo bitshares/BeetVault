@@ -2,7 +2,7 @@
  * @file Argon2id key derivation worker thread.
  *
  * Runs Argon2id (RFC 9106) in a dedicated worker thread so the Electron main
- * process never blocks during the memory-hard derivation (64-512 MiB, <1-8s).
+ * process never blocks during the memory-hard derivation (64-512 MiB, <1-40s).
  *
  * The worker receives its input via workerData, derives the key synchronously,
  * posts the result back as a transferable ArrayBuffer, then exits cleanly.
@@ -21,16 +21,29 @@ import { utf8ToBytes } from "@noble/ciphers/utils.js";
 
 const { password, salt, params } = workerData;
 
-const passwordBytes = typeof password === "string"
-    ? utf8ToBytes(password)
-    : new Uint8Array(password);
+try {
+    const passwordBytes = typeof password === "string"
+        ? utf8ToBytes(password)
+        : new Uint8Array(password);
 
-const saltBytes = new Uint8Array(salt);
+    const saltBytes = new Uint8Array(salt);
 
-const key = argon2id(passwordBytes, saltBytes, params);
+    const key = argon2id(passwordBytes, saltBytes, params);
 
-const keyBuffer = new Uint8Array(key);
-parentPort.postMessage(keyBuffer.buffer, [keyBuffer.buffer]);
+    if (!key || key.length !== 32) {
+        throw new Error(`Argon2id produced invalid key: length=${key?.length}`);
+    }
 
-passwordBytes.fill(0);
-parentPort.close();
+    const keyBuffer = new Uint8Array(key);
+    parentPort.postMessage(
+        { success: true, buffer: keyBuffer.buffer },
+        [keyBuffer.buffer]
+    );
+
+    passwordBytes.fill(0);
+    parentPort.close();
+} catch (error) {
+    console.error(`[ARGON_WORKER] Error: ${error.message}`);
+    parentPort.postMessage({ success: false, error: error.message });
+    parentPort.close();
+}

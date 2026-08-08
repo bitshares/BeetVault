@@ -80,18 +80,24 @@ function sign(curve, hash, d, nonce) {
   // { prehash: false }. We request the canonical 64-byte compact format (r||s);
   // the recovery id is recomputed separately by calcPubKeyRecoveryParam, so the
   // 65-byte "recovered" format (which uses a different r/s encoding) is not used.
+  //
+  // extraEntropy perturbs RFC6979 k-generation so the caller's grind loop
+  // (signature.js signBufferSha256) can find a signature where both r and s
+  // are exactly 32 bytes in DER encoding (low-R and low-S). nonce === 0
+  // preserves the original deterministic behavior for the common case.
   const sigBytes = secp256k1.sign(
     hash,
     Buffer.from(d.toString(16).padStart(64, "0"), "hex"),
-    { prehash: false, format: "compact" }
+    {
+      prehash: false,
+      format: "compact",
+      extraEntropy: nonce > 0 ? Buffer.alloc(32).fill(nonce) : undefined
+    }
   );
 
   const r = BigInt("0x" + Buffer.from(sigBytes.slice(0, 32)).toString("hex"));
   const s = BigInt("0x" + Buffer.from(sigBytes.slice(32, 64)).toString("hex"));
 
-  // Maintain the original loop contract: keep retrying (with nonce) until a
-  // canonically valid compact signature is produced. noble already returns
-  // low-S; the length-32 r/s constraint is inherently satisfied.
   return new ECSignature(r, s);
 }
 

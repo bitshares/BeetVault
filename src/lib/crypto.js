@@ -79,9 +79,15 @@ function deriveKey(password, salt, params) {
                 maxOldGenerationSizeMb: WORKER_MAX_OLD_SPACE_MB
             }
         });
-        worker.on("message", (keyBuffer) => {
+        worker.on("message", (message) => {
             settled = true;
-            resolve(new Uint8Array(keyBuffer));
+            if (message && message.success === false) {
+                reject(new Error("Argon2id worker failed: " + (message.error || "unknown error")));
+            } else if (message && message.buffer) {
+                resolve(new Uint8Array(message.buffer));
+            } else {
+                reject(new Error("Worker posted unexpected message format"));
+            }
         });
         worker.on("error", (err) => {
             settled = true;
@@ -240,6 +246,10 @@ export async function decrypt(ciphertextBase64, passphrase) {
 
     const MK = await deriveKey(passphrase, salt, { t, m, p, dkLen: 32 });
 
+    if (!MK || MK.length !== 32) {
+        throw new Error(`Argon2id derivation produced invalid key: length=${MK?.length}`);
+    }
+
     const KEK = hkdf(sha256, MK, undefined, utf8ToBytes("beet:v4:kek"), 32);
     const COMMIT_KEY = hkdf(sha256, MK, undefined, utf8ToBytes("beet:v4:commit"), 32);
 
@@ -261,7 +271,11 @@ export async function decrypt(ciphertextBase64, passphrase) {
     MK.fill(0);
     DEK.fill(0);
 
-    return textDecoder.decode(plainTextBytes);
+    const result = textDecoder.decode(plainTextBytes);
+
+    console.log(`[CRYPTO_DEBUG] decrypt: t=${t} m=${m} p=${p} ptLen=${result.length} ptPrefix=${result.substring(0, 10)}`);
+
+    return result;
 }
 
 /**
@@ -450,12 +464,16 @@ export async function decryptWithCache(ciphertextBase64, passphrase, cache) {
     let header = raw.subarray(0, HEADER_LENGTH + SALT_LENGTH + NONCE_LENGTH + NONCE_LENGTH);
 
     const cached = cache ? cache.get(salt, params) : null;
+    const cacheHit = !!cached;
 
     if (cached) {
         KEK = cached.KEK;
         COMMIT_KEY = cached.COMMIT_KEY;
     } else {
         const MK = await deriveKey(passphrase, salt, params);
+        if (!MK || MK.length !== 32) {
+            throw new Error(`Argon2id derivation produced invalid key: length=${MK?.length}`);
+        }
         const derived = deriveKeysFromMaster(MK);
         KEK = derived.KEK;
         COMMIT_KEY = derived.COMMIT_KEY;
@@ -481,7 +499,11 @@ export async function decryptWithCache(ciphertextBase64, passphrase, cache) {
 
     DEK.fill(0);
 
-    return textDecoder.decode(plainTextBytes);
+    const result = textDecoder.decode(plainTextBytes);
+
+    console.log(`[CRYPTO_DEBUG] decryptWithCache: t=${t} m=${m} p=${p} cacheHit=${cacheHit} ptLen=${result.length} ptPrefix=${result.substring(0, 10)}`);
+
+    return result;
 }
 
 export { deriveKey, TIERS, DEFAULT_TIER, randomBytes };

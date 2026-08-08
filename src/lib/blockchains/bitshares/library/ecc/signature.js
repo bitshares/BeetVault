@@ -71,24 +71,30 @@ class Signature {
    * @param {PrivateKey} private_key
    * @return {Signature}
    */
-  static signBufferSha256(buf_sha256, private_key) {
-    if (buf_sha256.length !== 32 || !Buffer.isBuffer(buf_sha256))
-      throw new Error("buf_sha256: 32 byte buffer requred");
-    let der, e, ecsignature, i, nonce;
-    i = null;
-    nonce = 0;
-    e = BigInt("0x" + buf_sha256.toString("hex"));
-    while (true) {
-      ecsignature = sign(secp256k1, buf_sha256, private_key.d, nonce++);
-      der = ecsignature.toDER();
-      // noble produces canonical low-S 32-byte r/s; length constraint satisfied
-      i = calcPubKeyRecoveryParam(secp256k1, e, ecsignature, private_key.toPublicKey().Q);
-      i += 4; // compressed
-      i += 27; // compact  //  24 or 27 :( forcing odd-y 2nd key candidate
-      break;
+    static signBufferSha256(buf_sha256, private_key) {
+        if (buf_sha256.length !== 32 || !Buffer.isBuffer(buf_sha256))
+            throw new Error("buf_sha256: 32 byte buffer requred");
+        let der, e, ecsignature, i, nonce;
+        i = null;
+        nonce = 0;
+        e = BigInt("0x" + buf_sha256.toString("hex"));
+        while (nonce < 100) {
+            ecsignature = sign(secp256k1, buf_sha256, private_key.d, nonce++);
+            der = ecsignature.toDER();
+            const lenR = der[3];
+            const lenS = der[5 + lenR];
+            if (lenR === 32 && lenS === 32) {
+                i = calcPubKeyRecoveryParam(secp256k1, e, ecsignature, private_key.toPublicKey().Q);
+                i += 4; // compressed
+                i += 27; // compact
+                break;
+            }
+        }
+        if (nonce >= 100 || i === null) {
+            throw new Error("Failed to produce canonical signature after 100 attempts");
+        }
+        return new Signature(ecsignature.r, ecsignature.s, i);
     }
-    return new Signature(ecsignature.r, ecsignature.s, i);
-  }
 
   static sign(string, private_key) {
     return Signature.signBuffer(Buffer.from(string), private_key);
