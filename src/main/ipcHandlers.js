@@ -12,11 +12,13 @@ import {
     createModal,
     createReceipt,
     createError,
+    createDoc,
     onNotify,
     handleOpenURL,
     handleClickAllow,
     handleClickDeny,
 } from './windows.js';
+import { readDocFile, readManifest } from './docs.js';
 import {
     handleBlockchainRequest,
     readFileSecure,
@@ -200,6 +202,37 @@ export function registerIPCHandlers({
     });
 
     /**
+     * Creates or focuses the documentation BrowserWindow.
+     * @see createDoc
+     */
+    ipcMain.on('createDoc', (event, arg) => {
+        if (!validateSender(event.senderFrame)) return;
+        try {
+            createDoc(arg);
+        } catch (error) {
+            console.log(error);
+        }
+    });
+
+    /**
+     * Reads a documentation markdown file for the requested locale.
+     * Falls back to English if the locale-specific file is missing.
+     */
+    ipcMain.handle('readDoc', async (event, arg) => {
+        if (!validateSender(event.senderFrame)) throw new Error('Unauthorized');
+        const { locale, path: docPath } = arg;
+        return readDocFile(__dirname, locale, docPath);
+    });
+
+    /**
+     * Reads and returns the documentation navigation manifest.
+     */
+    ipcMain.handle('readManifest', async (event) => {
+        if (!validateSender(event.senderFrame)) throw new Error('Unauthorized');
+        return readManifest(__dirname);
+    });
+
+    /**
      * Logs renderer-forwarded uncaught errors for crash reporting.
      */
     ipcMain.on('sendError', async (event, arg) => {
@@ -269,7 +302,7 @@ export function registerIPCHandlers({
     });
 
     /**
-     * Encrypts arbitrary data with Argon2id + AES-256-GCM.
+     * Encrypts arbitrary data with Argon2id + HKDF + XChaCha20-Poly1305.
      * @see sessionManager.encryptAndStore
      */
     ipcMain.handle('encryptAndStore', async (event, arg) => {

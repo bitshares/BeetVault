@@ -50,9 +50,9 @@
     }
   },
   "scripts": {
-    "start": "node build/copy-argon-worker.js && node build/start.js",
+    "start": "node build/copy-argon-worker.js && node build/copy-docs.js && node build/start.js",
     "compile": "webpack --config=build/webpack.main.config.js --config=build/webpack.renderer.config.js --config=build/webpack.preload.config.js --env=production",
-    "postcompile": "node build/copy-argon-worker.js",
+    "postcompile": "node build/copy-argon-worker.js && node build/copy-docs.js",
     "build": "npm run compile && electron-builder --publish never",
     "release": "npm run compile && electron-builder --publish never",
     "dist:macos-latest": "npm run-script compile && electron-builder -m --publish never",
@@ -80,6 +80,7 @@
     "embla-carousel-vue": "^8.6.0",
     "hive-tx": "^7.2.0",
     "lzma": "^2.3.2",
+    "markdown-to-jsx": "^9.10.2",
     "mitt": "^3.0.1",
     "pinia": "^4.0.2",
     "query-string": "^9.4.1",

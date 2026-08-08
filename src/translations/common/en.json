@@ -152,17 +152,49 @@
     },
     "actionBar": {
         "Home": "Home",
-        "New": "New",
-        "TOTP": "TOTP",
-        "Local": "Local",
-        "RAW": "Raw Link",
-        "QR": "QR",
-        "SignMsg": "Sign Msg",
-        "VerifyMsg": "Verify Msg",
+        "AddAccount": "Add Account",
+        "TOTPDeeplink": "TOTP Deeplink",
+        "JSONDeeplink": "JSON Deeplink",
+        "RawDeeplink": "Raw Deeplink",
+        "QRCodes": "QR Codes",
+        "SignMessage": "Sign Message",
+        "VerifyMessage": "Verify Message",
         "Settings": "Settings",
         "changeNodes": "Change node",
-        "Backup": "Backup",
+        "BackupWallet": "Backup Wallet",
+        "Documentation": "Documentation",
         "Logout": "Logout"
+    },
+    "docs": {
+        "title": "Documentation",
+        "loading": "Loading...",
+        "error": "Failed to load page",
+        "nav": {
+            "home": "Home",
+            "features": "Features",
+            "security": "Security",
+            "troubleshooting": "Troubleshooting",
+            "faq": "FAQ",
+            "totpDeeplink": "TOTP Deeplink",
+            "rawDeeplink": "Raw Deeplink",
+            "qrCode": "QR Code Deeplink",
+            "jsonFileDeeplink": "JSON File Deeplink",
+            "signMessage": "Sign Message",
+            "verifyMessage": "Verify Message",
+            "developerGuide": "Developer Guide",
+            "blockchains": "Blockchains",
+            "chainBitshares": "BitShares",
+            "chainVaulta": "Vaulta",
+            "chainWax": "WAX",
+            "chainTelos": "Telos",
+            "chainFio": "FIO",
+            "chainLibre": "Libre",
+            "chainXprNetwork": "XPR Network",
+            "chainBeos": "BEOS",
+            "chainHive": "Hive",
+            "chainOverview": "Overview",
+            "chainOperations": "Operations"
+        }
     },
     "popup": {
         "keywords": {
@@ -301,9 +333,10 @@
     "security_tier_cta": "Select encryption security level:",
     "tooltip_security_tier": "Higher security uses more memory during wallet creation, making brute-force attacks harder. Medium is recommended for most users.",
     "select_tier": "Select security level",
-    "tier_low": "Low - Quick, standard protection",
+    "tier_low": "Low - Fast unlock, standard protection",
     "tier_medium": "Medium - Recommended balance",
-    "tier_high": "High - Maximum protection",
+    "tier_high": "High - Strong protection",
+    "tier_max": "Maximum - Highest protection, slowest unlock",
     "account_details_lbl": "Account Details",
     "account_details_chaim_lbl": "Blockchain",
     "account_details_name_lbl": "Account Name",
@@ -351,5 +384,12 @@
         "title": "No OS Keyring Detected",
         "text": "Your system has no OS-level keychain (backend: {backend}). Your wallet is still encrypted with your password, but the unlock material is held in app memory only. Lock the wallet when you step away.",
         "learnMore": "Learn more"
+    },
+    "externalLink": {
+        "leaveApp": "You are leaving BeetVault",
+        "navigateToExternal": "You are about to open an external website in your default browser.",
+        "proceedToURL": "Proceed to URL:",
+        "checkingLeave": "Please verify this before continuing.",
+        "openLink": "Open link"
     }
 }

@@ -44,6 +44,14 @@ let receiptWindows = {};
 let errorWindow = null;
 
 /**
+ * The documentation window singleton. Only one doc window can be open at a time.
+ * Persists across logouts — users may need docs while logged out.
+ * @type {Electron.BrowserWindow|null}
+ * @private
+ */
+let docWindow = null;
+
+/**
  * System tray icon instance.
  * @type {Electron.Tray|null}
  * @private
@@ -115,6 +123,15 @@ export function getReceiptWindows() {
  */
 export function getErrorWindow() {
     return errorWindow;
+}
+
+/**
+ * Returns the current documentation window, if any.
+ *
+ * @returns {Electron.BrowserWindow|null} The documentation window, or null.
+ */
+export function getDocWindow() {
+    return docWindow;
 }
 
 /**
@@ -467,7 +484,7 @@ export function createReceipt(arg, modalEvent) {
             nodeIntegration: false,
             contextIsolation: true,
             sandbox: true,
-            preload: path.join(_allowedDir, 'preloadModal.js'),
+            preload: path.join(_allowedDir, 'preloadReceipt.js'),
         },
         icon: _allowedDir + '/img/beet-taskbar.png',
     });
@@ -584,7 +601,7 @@ export function createError(arg, errorEvent) {
             nodeIntegration: false,
             contextIsolation: true,
             sandbox: true,
-            preload: path.join(_allowedDir, 'preloadModal.js'),
+            preload: path.join(_allowedDir, 'preloadError.js'),
         },
         icon: _allowedDir + '/img/beet-taskbar.png',
     });
@@ -600,6 +617,67 @@ export function createError(arg, errorEvent) {
     errorWindow.on('closed', () => {
         ipcMain.removeAllListeners(`get:error:${id}`);
         errorWindow = null;
+    });
+}
+
+/**
+ * Creates or focuses the documentation BrowserWindow.
+ *
+ * The documentation window is a singleton that persists across logouts.
+ * If the window already exists, it focuses it and optionally navigates
+ * to a different page. It uses a dedicated preload script (preloadDoc.js)
+ * that only exposes the APIs needed for reading documentation files.
+ *
+ * @param {object} [arg={}] - The documentation window arguments.
+ * @param {string} [arg.page='index'] - The documentation section ID to open initially.
+ * @param {string} [arg.locale] - The locale code for documentation content.
+ * @returns {void}
+ * @throws {string} If the main window is missing.
+ */
+export function createDoc(arg = {}) {
+    if (!mainWindow) {
+        throw 'No main window';
+    }
+
+    if (docWindow && !docWindow.isDestroyed()) {
+        docWindow.focus();
+        if (arg.page) {
+            docWindow.webContents.send('navigate:doc', { page: arg.page });
+        }
+        return;
+    }
+
+    const { page = 'index' } = arg;
+
+    docWindow = new BrowserWindow({
+        parent: mainWindow,
+        title: 'BeetVault Documentation',
+        width: 1000,
+        height: 700,
+        minWidth: 800,
+        minHeight: 600,
+        useContentSize: true,
+        webPreferences: {
+            nodeIntegration: false,
+            contextIsolation: true,
+            sandbox: true,
+            preload: path.join(_allowedDir, 'preloadDoc.js'),
+        },
+        icon: _allowedDir + '/img/beet-taskbar.png',
+    });
+
+    applyWindowSecurityGuards(docWindow);
+
+    const targetURL = `file://${_allowedDir}/doc.html?page=${encodeURIComponent(page)}`;
+
+    docWindow.loadURL(targetURL);
+
+    docWindow.once('ready-to-show', () => {
+        docWindow.show();
+    });
+
+    docWindow.on('closed', () => {
+        docWindow = null;
     });
 }
 

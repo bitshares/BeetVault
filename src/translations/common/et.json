@@ -129,17 +129,18 @@
     },
     "actionBar": {
         "Home": "Kodu",
-        "New": "Uus",
-        "TOTP": "TOTP",
-        "Local": "Kohalik",
-        "RAW": "Toores link",
-        "QR": "QR",
-        "SignMsg": "Allkirjasta sõnum",
-        "VerifyMsg": "Kinnita sõnum",
+        "AddAccount": "Lisa konto",
+        "TOTPDeeplink": "TOTP süvalink",
+        "JSONDeeplink": "JSON süvalink",
+        "RawDeeplink": "Toores süvalink",
+        "QRCodes": "QR-koodid",
+        "SignMessage": "Allkirjasta sõnum",
+        "VerifyMessage": "Kinnita sõnum",
         "Settings": "Seaded",
         "changeNodes": "Muuda sõlme",
-        "Backup": "Varundamine",
-        "Logout": "Logi välja"
+        "BackupWallet": "Varunda rahakott",
+        "Logout": "Logi välja",
+        "Documentation": "Documentation"
     },
     "popup": {
         "keywords": {
@@ -279,7 +280,8 @@
     "select_tier": "Vali turvatase",
     "tier_low": "Madal - Kiire, standardne kaitse",
     "tier_medium": "Keskmine - Soovitatav tasakaal",
-    "tier_high": "Kõrge - Maksimaalne kaitse",
+    "tier_high": "Kõrge - Tugev kaitse",
+    "tier_max": "Maksimaalne - Kõrgeim kaitse, aeglasem avamine",
     "account_details_lbl": "Konto üksikasjad",
     "account_details_chaim_lbl": "Plokiahel",
     "account_details_name_lbl": "Kasutaja nimi",
@@ -327,5 +329,43 @@
         "title": "Operatsioonisüsteemi võtmerakku tuvastati",
         "text": "Teie süsteemil ei ole tasemelist võtmerakku (backend: {backend}). Teie rahakott on endiselt krüpteeritud teie parooliga, kuid avamismaterjal hoitakse ainult rakenduse mälus. Lukustage rahakott, kui eemale lähete.",
         "learnMore": "Loe edasi"
+    },
+    "docs": {
+        "title": "Documentation",
+        "loading": "Loading...",
+        "error": "Failed to load page",
+        "nav": {
+            "home": "Home",
+            "features": "Features",
+            "security": "Security",
+            "troubleshooting": "Troubleshooting",
+            "faq": "FAQ",
+            "totpDeeplink": "TOTP Deeplink",
+            "rawDeeplink": "Raw Deeplink",
+            "qrCode": "QR Code Deeplink",
+            "jsonFileDeeplink": "JSON File Deeplink",
+            "signMessage": "Sign Message",
+            "verifyMessage": "Verify Message",
+            "developerGuide": "Developer Guide",
+            "blockchains": "Blockchains",
+            "chainBitshares": "BitShares",
+            "chainVaulta": "Vaulta",
+            "chainWax": "WAX",
+            "chainTelos": "Telos",
+            "chainFio": "FIO",
+            "chainLibre": "Libre",
+            "chainXprNetwork": "XPR Network",
+            "chainBeos": "BEOS",
+            "chainHive": "Hive",
+            "chainOverview": "Overview",
+            "chainOperations": "Operations"
+        }
+    },
+    "externalLink": {
+        "leaveApp": "Lahkud BeetVaultist",
+        "navigateToExternal": "Oled avamas veebisirvija välist veebilehte oma vaikimisi brauseris.",
+        "proceedToURL": "Jätka URL-ile:",
+        "checkingLeave": "Palun kontrolli õiguse enne jätkamist.",
+        "openLink": "Ava link"
     }
 }

@@ -129,17 +129,18 @@
     },
     "actionBar": {
         "Home": "บ้าน",
-        "New": "ใหม่",
-        "TOTP": "ทีโอพี",
-        "Local": "ท้องถิ่น",
-        "RAW": "ลิงค์ดิบ",
-        "QR": "คิวอาร์",
-        "SignMsg": "ลงชื่อข้อความ",
-        "VerifyMsg": "ตรวจสอบข้อความ",
+        "AddAccount": "เพิ่มบัญชี",
+        "TOTPDeeplink": "Deep Link TOTP",
+        "JSONDeeplink": "Deep Link JSON",
+        "RawDeeplink": "Deep Link ดิบ",
+        "QRCodes": "รหัส QR",
+        "SignMessage": "ลงชื่อข้อความ",
+        "VerifyMessage": "ตรวจสอบข้อความ",
         "Settings": "การตั้งค่า",
         "changeNodes": "เปลี่ยนโหนด",
-        "Backup": "การสำรองข้อมูล",
-        "Logout": "ออกจากระบบ"
+        "BackupWallet": "สำรองกระเป๋าเงิน",
+        "Logout": "ออกจากระบบ",
+        "Documentation": "Documentation"
     },
     "popup": {
         "preview": "พรีวิวพร้อมท์",
@@ -272,7 +273,8 @@
     "select_tier": "เลือกระดับความปลอดภัย",
     "tier_low": "ต่ำ - เร็ว มาตรฐานการป้องกัน",
     "tier_medium": "ปานกลาง - สมดุลที่แนะนำ",
-    "tier_high": "สูง - การป้องกันสูงสุด",
+    "tier_high": "สูง - การป้องกันที่แข็งแกร่ง",
+    "tier_max": "สูงสุด - การป้องกันที่สูงที่สุด ปลดล็อกช้าที่สุด",
     "account_details_lbl": "รายละเอียดบัญชี",
     "account_details_chaim_lbl": "บล็อกเชน",
     "account_details_name_lbl": "ชื่อบัญชี",
@@ -320,5 +322,43 @@
         "title": "ไม่พบระบบจัดเก็บคีย์ของระบบปฏิบัติการ",
         "text": "ระบบของคุณไม่มีระบบจัดเก็บคีย์ในระดับระบบปฏิบัติการ (แบ็กเอนด์: {backend}) กระเป๋าเงินของคุณยังคงเข้ารหัสด้วยรหัสผ่าน แต่วัสดุสำหรับปลดล็อกจะถูกเก็บไว้ในหน่วยความจำของแอปเท่านั้น ล็อกกระเป๋าเงินเมื่อคุณออกห่าง",
         "learnMore": "เรียนรู้เพิ่มเติม"
+    },
+    "docs": {
+        "title": "Documentation",
+        "loading": "Loading...",
+        "error": "Failed to load page",
+        "nav": {
+            "home": "Home",
+            "features": "Features",
+            "security": "Security",
+            "troubleshooting": "Troubleshooting",
+            "faq": "FAQ",
+            "totpDeeplink": "TOTP Deeplink",
+            "rawDeeplink": "Raw Deeplink",
+            "qrCode": "QR Code Deeplink",
+            "jsonFileDeeplink": "JSON File Deeplink",
+            "signMessage": "Sign Message",
+            "verifyMessage": "Verify Message",
+            "developerGuide": "Developer Guide",
+            "blockchains": "Blockchains",
+            "chainBitshares": "BitShares",
+            "chainVaulta": "Vaulta",
+            "chainWax": "WAX",
+            "chainTelos": "Telos",
+            "chainFio": "FIO",
+            "chainLibre": "Libre",
+            "chainXprNetwork": "XPR Network",
+            "chainBeos": "BEOS",
+            "chainHive": "Hive",
+            "chainOverview": "Overview",
+            "chainOperations": "Operations"
+        }
+    },
+    "externalLink": {
+        "leaveApp": "คุณกำลังออกจาก BeetVault",
+        "navigateToExternal": "คุณกำลังจะเปิดเว็บไซต์ภายนอกในเบราว์เซอร์เริ่มต้นของคุณ",
+        "proceedToURL": "ไปที่ URL:",
+        "checkingLeave": "โปรดตรวจสอบว่าถูกต้องก่อนดำเนินการต่อ",
+        "openLink": "เปิดลิงก์"
     }
 }

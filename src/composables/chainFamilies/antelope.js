@@ -2,7 +2,7 @@ import { VAULTA_FAMILY } from "@/lib/blockchains/chainFamilies.js";
 import { useAccountStore } from "@/stores/accountStore.js";
 
 export default {
-    name: "eos",
+    name: "antelope",
 
     validateRequiredFields({ chain, visualizedParams }) {
         if (VAULTA_FAMILY.includes(chain) && !visualizedParams) {
@@ -24,7 +24,7 @@ export default {
             return JSON.parse(request.payload.params[1]);
         } catch (error) {
             throw new Error(
-                `Vaulta transaction payload is not valid JSON: ${error.message}. ` +
+                `Antelope transaction payload is not valid JSON: ${error.message}. ` +
                 `Received: ${typeof request.payload.params[1] === 'string' ? request.payload.params[1].substring(0, 200) : JSON.stringify(request.payload.params[1])}`
             );
         }

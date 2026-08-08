@@ -36,4 +36,14 @@ export const SAFE_DOMAINS = [
     'hiveblocks.com',
     // Project
     'github.com',
+    // Official blockchain project websites (linked from documentation)
+    'bitshares.org',
+    'vaulta.com',
+    'wax.io',
+    'telos.net',
+    'fio.net',
+    'libre.org',
+    'www.libre.org',
+    'xprnetwork.org',
+    'hive.io',
 ];

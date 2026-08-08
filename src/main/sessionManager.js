@@ -1,5 +1,22 @@
 import { safeStorage, ipcMain } from 'electron';
-import { encrypt, decrypt } from '../lib/crypto.js';
+import {
+    encrypt,
+    decrypt,
+    decryptWithCache,
+    encryptBatch,
+    deriveKey,
+    deriveKeysFromMaster,
+    wrapKey,
+    unwrapKey,
+    encryptWithKey,
+    decryptWithKey,
+    randomBytes,
+    TIERS
+} from '../lib/crypto.js';
+import { hkdf } from '@noble/hashes/hkdf.js';
+import { sha256 } from '@noble/hashes/sha2.js';
+import { hmac } from '@noble/hashes/hmac.js';
+import { utf8ToBytes } from '@noble/ciphers/utils.js';
 import { v4 as uuidv4 } from 'uuid';
 import { validateMainSender, requireValidMainSender } from './securityGuards.js';
 import { setAppDir } from '../lib/senderValidation.js';
@@ -122,6 +139,78 @@ const _pendingKeys = new Map();
  * @private
  */
 const PENDING_KEY_TTL_MS = 5 * 60 * 1000;
+
+/**
+ * Cached derived keys for the current session.
+ *
+ * After the first successful decryption, the derived KEK and COMMIT_KEY
+ * are cached to avoid re-running Argon2id on every subsequent decrypt
+ * operation within the same session. This dramatically improves signing
+ * performance for wallets with multiple transactions.
+ *
+ * Cleared on logout via {@link _clearKeyCache}.
+ *
+ * @type {{ KEK: Uint8Array, COMMIT_KEY: Uint8Array, salt: Uint8Array, params: object }|null}
+ * @private
+ */
+let _cachedKeys = null;
+
+/**
+ * Clears the cached KEK/COMMIT_KEY.
+ *
+ * Called on logout to ensure derived key material does not persist
+ * beyond the session.
+ *
+ * @returns {void}
+ * @private
+ */
+function _clearKeyCache() {
+    if (_cachedKeys) {
+        _cachedKeys.KEK.fill(0);
+        _cachedKeys.COMMIT_KEY.fill(0);
+        _cachedKeys = null;
+    }
+}
+
+/**
+ * Retrieves cached keys if the salt and params match, or null if cache miss.
+ *
+ * @param {Uint8Array} salt - 32-byte salt from the ciphertext header.
+ * @param {object} params - Argon2id parameters (t, m, p).
+ * @returns {{ KEK: Uint8Array, COMMIT_KEY: Uint8Array }|null} Cached keys or null.
+ * @private
+ */
+function _getCachedKeys(salt, params) {
+    if (!_cachedKeys) return null;
+    if (_cachedKeys.params.t !== params.t || _cachedKeys.params.m !== params.m || _cachedKeys.params.p !== params.p) {
+        return null;
+    }
+    if (_cachedKeys.salt.length !== salt.length) return null;
+    for (let i = 0; i < salt.length; i++) {
+        if (_cachedKeys.salt[i] !== salt[i]) return null;
+    }
+    return { KEK: _cachedKeys.KEK, COMMIT_KEY: _cachedKeys.COMMIT_KEY };
+}
+
+/**
+ * Stores derived keys in the session cache.
+ *
+ * @param {Uint8Array} salt - 32-byte salt.
+ * @param {object} params - Argon2id parameters.
+ * @param {Uint8Array} KEK - Derived key encryption key.
+ * @param {Uint8Array} COMMIT_KEY - Derived commitment key.
+ * @returns {void}
+ * @private
+ */
+function _setCachedKeys(salt, params, KEK, COMMIT_KEY) {
+    _clearKeyCache();
+    _cachedKeys = {
+        KEK: new Uint8Array(KEK),
+        COMMIT_KEY: new Uint8Array(COMMIT_KEY),
+        salt: new Uint8Array(salt),
+        params: { ...params }
+    };
+}
 
 /**
  * Removes expired entries from the pending keys map.
@@ -317,6 +406,7 @@ function _logout() {
 
     _encryptedSeed = null;
     _pendingKeys.clear();
+    _clearKeyCache();
 
     disconnect();
 
@@ -358,17 +448,17 @@ export function forceLogout(getMainWindow) {
  * Encrypts pending vault-stored keys and returns the encrypted map.
  *
  * During wallet creation, private keys are temporarily stored in the
- * `_pendingKeys` Map keyed by a UUID token. This handler encrypts each
- * key with Argon2id + AES-256-GCM, deletes the pending entry, and
- * returns the encrypted map.
+ * `_pendingKeys` Map keyed by a UUID token. This handler encrypts all
+ * keys with a single Argon2id + HKDF derivation, then wraps each key
+ * with its own random DEK and nonce using XChaCha20-Poly1305.
  *
  * @param {Electron.IpcMainInvokeEvent} event - The IPC event.
  * @param {{ token: string, password: string, tier?: string }} arg
  *   - `token` — UUID identifying the pending keys entry.
  *   - `password` — Pre-hashed password (SHA-512 hex) for encryption.
- *   - `tier` — Optional security tier ("low", "medium", "high"). Defaults to "medium".
+ *   - `tier` — Optional security tier ("low", "medium", "high", "max"). Defaults to "medium".
  * @returns {Promise<Object<string, string>>} Map of key types to Base64-encoded
- *   encrypted keys in v3 wire format.
+ *   encrypted keys in v4 wire format.
  * @throws {Error} If the sender is unauthorized, token is invalid/expired,
  *   or encryption fails.
  */
@@ -377,16 +467,20 @@ export async function encryptPendingKeys(event, arg) {
     const { token, password, tier } = arg;
     const pending = retrievePendingKey(token);
 
-    const encrypted = {};
-    for (const [keytype, value] of Object.entries(pending.keys)) {
-        try {
-            encrypted[keytype] = await encrypt(value, password, tier || 'medium');
-        } catch (error) {
-            console.log({ error });
-            throw new Error('Encryption failure');
-        }
+    const items = Object.entries(pending.keys)
+        .filter(([keytype]) => keytype !== '_vaultToken')
+        .map(([keytype, value]) => ({ keytype, plaintext: value }));
+
+    if (items.length === 0) {
+        return {};
     }
-    return encrypted;
+
+    try {
+        return await encryptBatch(items, password, tier || 'medium');
+    } catch (error) {
+        console.log({ error });
+        throw new Error('Encryption failure');
+    }
 }
 
 /**
@@ -398,7 +492,7 @@ export async function encryptPendingKeys(event, arg) {
  *
  * @param {Electron.IpcMainInvokeEvent} event - The IPC event.
  * @param {{ encryptedKey: string, chain: string, operation: object }} arg
- *   - `encryptedKey` — Base64-encoded v3 encrypted private key.
+ *   - `encryptedKey` — Base64-encoded v4 encrypted private key.
  *   - `chain` — Blockchain identifier (e.g., "eos", "bitshares").
  *   - `operation` — The blockchain operation object to sign.
  * @param {Object<string, string>} chainNodes - Map of chain identifiers
@@ -418,7 +512,10 @@ export async function decryptAndSign(event, arg, chainNodes) {
 
     let signingKey;
     try {
-        signingKey = await decrypt(encryptedKey, seed);
+        signingKey = await decryptWithCache(encryptedKey, seed, {
+            get: _getCachedKeys,
+            set: _setCachedKeys
+        });
     } catch (error) {
         console.log({ error, location: 'decryptAndSign.decrypt' });
         throw new Error('Key decryption failed');
@@ -483,7 +580,7 @@ export async function decryptAndSign(event, arg, chainNodes) {
  *
  * @param {Electron.IpcMainInvokeEvent} event - The IPC event.
  * @param {{ encryptedKey: string, chain: string, from: string, to: string, nonce: string, message: string }} arg
- *   - `encryptedKey` — Base64-encoded v3 encrypted memo key.
+ *   - `encryptedKey` — Base64-encoded v4 encrypted memo key.
  *   - `chain` — Blockchain identifier.
  *   - `from` — Sender account name.
  *   - `to` — Recipient account name.
@@ -506,7 +603,10 @@ export async function decryptAndCreateMemo(event, arg, chainNodes) {
 
     let memoKey;
     try {
-        memoKey = await decrypt(encryptedKey, seed);
+        memoKey = await decryptWithCache(encryptedKey, seed, {
+            get: _getCachedKeys,
+            set: _setCachedKeys
+        });
     } catch (error) {
         console.log({ error, location: 'decryptAndCreateMemo.decrypt' });
         throw new Error('Key decryption failed');
@@ -539,7 +639,7 @@ export async function decryptAndCreateMemo(event, arg, chainNodes) {
  *
  * @param {Electron.IpcMainInvokeEvent} event - The IPC event.
  * @param {{ encryptedKey: string, chain: string, accountName: string, messageText: string }} arg
- *   - `encryptedKey` — Base64-encoded v3 encrypted private key.
+ *   - `encryptedKey` — Base64-encoded v4 encrypted private key.
  *   - `chain` — Blockchain identifier.
  *   - `accountName` — Account name that owns the signing key.
  *   - `messageText` — The text message to sign.
@@ -560,7 +660,10 @@ export async function decryptAndSignMessage(event, arg, chainNodes) {
 
     let signingKey;
     try {
-        signingKey = await decrypt(encryptedKey, seed);
+        signingKey = await decryptWithCache(encryptedKey, seed, {
+            get: _getCachedKeys,
+            set: _setCachedKeys
+        });
     } catch (error) {
         console.log({ error, location: 'decryptAndSignMessage.decrypt' });
         throw new Error('Key decryption failed');
@@ -607,7 +710,10 @@ export async function unlockWallet(event, arg) {
 
     let decryptedWallet;
     try {
-        decryptedWallet = await decrypt(encryptedData, password);
+        decryptedWallet = await decryptWithCache(encryptedData, password, {
+            get: _getCachedKeys,
+            set: _setCachedKeys
+        });
     } catch (error) {
         console.log({ error, location: 'unlockWallet.decrypt' });
         throw new Error('Wallet decryption failed');
@@ -617,8 +723,8 @@ export async function unlockWallet(event, arg) {
 }
 
 /**
- * Encrypts arbitrary data with Argon2id + AES-256-GCM and returns
- * the Base64-encoded v3 wire format string.
+ * Encrypts arbitrary data with Argon2id + HKDF + XChaCha20-Poly1305 and returns
+ * the Base64-encoded v4 wire format string.
  *
  * Used by the renderer to encrypt wallet blobs, individual keys, and
  * other sensitive data before storing in IndexedDB.
@@ -627,9 +733,9 @@ export async function unlockWallet(event, arg) {
  * @param {{ data: string, password: string, tier?: string }} arg
  *   - `data` — Plaintext string to encrypt.
  *   - `password` — Pre-hashed password (SHA-512 hex) for key derivation.
- *   - `tier` — Optional security tier ("low", "medium", "high") or raw
+ *   - `tier` — Optional security tier ("low", "medium", "high", "max") or raw
  *     `{ t, m, p }` parameters. Defaults to "medium".
- * @returns {Promise<string>} Base64-encoded ciphertext in v3 wire format.
+ * @returns {Promise<string>} Base64-encoded ciphertext in v4 wire format.
  * @throws {Error} If the sender is unauthorized or encryption fails.
  */
 export async function encryptAndStore(event, arg) {
@@ -656,7 +762,7 @@ export async function encryptAndStore(event, arg) {
  *
  * @param {Electron.IpcMainInvokeEvent} event - The IPC event.
  * @param {{ data: string }} arg
- *   - `data` — Base64-encoded v3 encrypted wallet data.
+ *   - `data` — Base64-encoded v4 encrypted wallet data.
  * @returns {Promise<string>} Decrypted plaintext (usually JSON).
  * @throws {Error} If the sender is unauthorized, wallet is not unlocked,
  *   or decryption fails.
@@ -672,7 +778,10 @@ export async function decryptWallet(event, arg) {
 
     let decrypted;
     try {
-        decrypted = await decrypt(data, seed);
+        decrypted = await decryptWithCache(data, seed, {
+            get: _getCachedKeys,
+            set: _setCachedKeys
+        });
     } catch (error) {
         console.log({ error, location: 'decryptWallet.decrypt' });
         throw new Error('Decryption failed');

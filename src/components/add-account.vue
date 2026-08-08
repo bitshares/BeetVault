@@ -397,6 +397,7 @@
                             type="password"
                             class="mb-3"
                             :placeholder="t('common.password_placeholder')"
+                            :disabled="saving"
                             required
                         />
 
@@ -410,6 +411,7 @@
                                 type="password"
                                 class="mb-3"
                                 :placeholder="t('common.confirm_placeholder')"
+                                :disabled="saving"
                                 required
                             />
                         </template>
@@ -418,7 +420,7 @@
                             <p class="mb-2 font-semibold text-sm">
                                 {{ t('common.security_tier_cta') }}
                             </p>
-                            <Select v-model="securityTier">
+                            <Select v-model="securityTier" :disabled="saving">
                                 <SelectTrigger class="w-full mb-3">
                                     <SelectValue :placeholder="t('common.select_tier')" />
                                 </SelectTrigger>
@@ -431,6 +433,9 @@
                                     </SelectItem>
                                     <SelectItem value="high">
                                         {{ t('common.tier_high') }}
+                                    </SelectItem>
+                                    <SelectItem value="max">
+                                        {{ t('common.tier_max') }}
                                     </SelectItem>
                                 </SelectContent>
                             </Select>

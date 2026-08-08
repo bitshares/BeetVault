@@ -62,6 +62,22 @@ class Hive extends BlockchainAPI {
     this.name = "Hive";
   }
 
+  supportsTOTP() {
+    return true;
+  }
+
+  supportsQR() {
+    return true;
+  }
+
+  supportsLocal() {
+    return true;
+  }
+
+  supportsWeb() {
+    return true;
+  }
+
   _connect = async (node, account) => {
     const url = `https://${node}/`;
     this.chainNode = url;

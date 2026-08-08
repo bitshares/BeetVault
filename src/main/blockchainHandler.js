@@ -6,6 +6,7 @@ import * as Actions from '../lib/Actions.js';
 import { SAFE_DOMAINS } from './constants.js';
 import { inject } from '../lib/inject.js';
 import { decrypt } from '../lib/crypto.js';
+import { decryptTOTP } from '../lib/totp-crypto.js';
 import { v4 as uuidv4 } from 'uuid';
 import { bytesToHex } from '@noble/hashes/utils.js';
 import { sha512 } from '@noble/hashes/sha2.js';
@@ -87,6 +88,10 @@ export async function readFileSecure(filePath) {
  *   6. Checks the method is authorized by the user's settings
  *   7. For INJECTED_CALL methods, validates individual operations
  *
+ * TOTP-type requests are decrypted using {@link module:totp-crypto.decryptTOTP}
+ * (XChaCha20-Poly1305 with a SHA-256 derived key), not the wallet's
+ * Argon2id-based engine. See `src/lib/totp-crypto.js` for the wire format.
+ *
  * @param {string} requestContent - The raw request content (base64, URL-encoded,
  *   or JSON string depending on type).
  * @param {string} type - The request format: `'totp'` (encrypted), `'raw'`
@@ -129,9 +134,9 @@ export async function parseDeeplink(requestContent, type, chain, blockchain, blo
 
         let decryptedData;
         try {
-            decryptedData = await decrypt(parsedRequest, currentCode);
+            decryptedData = decryptTOTP(parsedRequest, currentCode);
         } catch (error) {
-            console.log(error);
+            console.log({ msg: 'TOTP decryption failed', error: error.message });
             return;
         }
 

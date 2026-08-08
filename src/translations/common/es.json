@@ -129,17 +129,18 @@
     },
     "actionBar": {
         "Home": "Hogar",
-        "New": "Nuevo",
-        "TOTP": "TOTP",
-        "Local": "Local",
-        "RAW": "Enlace sin procesar",
-        "QR": "código QR",
-        "SignMsg": "Firmar Msg",
-        "VerifyMsg": "Verificar Msg",
+        "AddAccount": "Añadir cuenta",
+        "TOTPDeeplink": "Enlace profundo TOTP",
+        "JSONDeeplink": "Enlace profundo JSON",
+        "RawDeeplink": "Enlace profundo sin procesar",
+        "QRCodes": "Códigos QR",
+        "SignMessage": "Firmar mensaje",
+        "VerifyMessage": "Verificar mensaje",
         "Settings": "Ajustes",
         "changeNodes": "Cambiar nodo",
-        "Backup": "Respaldo",
-        "Logout": "Cerrar sesión"
+        "BackupWallet": "Respaldar billetera",
+        "Logout": "Cerrar sesión",
+        "Documentation": "Documentation"
     },
     "popup": {
         "keywords": {
@@ -279,7 +280,8 @@
     "select_tier": "Seleccionar nivel de seguridad",
     "tier_low": "Bajo - Rápido, protección estándar",
     "tier_medium": "Medio - Equilibrio recomendado",
-    "tier_high": "Alto - Protección máxima",
+    "tier_high": "Alto - Protección fuerte",
+    "tier_max": "Máximo - Mayor protección, desbloqueo más lento",
     "account_details_lbl": "detalles de la cuenta",
     "account_details_chaim_lbl": "cadena de bloques",
     "account_details_name_lbl": "Nombre de la cuenta",
@@ -327,5 +329,43 @@
         "title": "No se detectó llavero del sistema operativo",
         "text": "Su sistema no tiene un llavero a nivel de SO (backend: {backend}). Su billetera sigue encriptada con su contraseña, pero el material de desbloqueo se almacena solo en la memoria de la aplicación. Bloquee la billetera cuando se aleje.",
         "learnMore": "Más información"
+    },
+    "docs": {
+        "title": "Documentation",
+        "loading": "Loading...",
+        "error": "Failed to load page",
+        "nav": {
+            "home": "Home",
+            "features": "Features",
+            "security": "Security",
+            "troubleshooting": "Troubleshooting",
+            "faq": "FAQ",
+            "totpDeeplink": "TOTP Deeplink",
+            "rawDeeplink": "Raw Deeplink",
+            "qrCode": "QR Code Deeplink",
+            "jsonFileDeeplink": "JSON File Deeplink",
+            "signMessage": "Sign Message",
+            "verifyMessage": "Verify Message",
+            "developerGuide": "Developer Guide",
+            "blockchains": "Blockchains",
+            "chainBitshares": "BitShares",
+            "chainVaulta": "Vaulta",
+            "chainWax": "WAX",
+            "chainTelos": "Telos",
+            "chainFio": "FIO",
+            "chainLibre": "Libre",
+            "chainXprNetwork": "XPR Network",
+            "chainBeos": "BEOS",
+            "chainHive": "Hive",
+            "chainOverview": "Overview",
+            "chainOperations": "Operations"
+        }
+    },
+    "externalLink": {
+        "leaveApp": "Estás saliendo de BeetVault",
+        "navigateToExternal": "Estás a punto de abrir un sitio web externo en tu navegador predeterminado.",
+        "proceedToURL": "Continuar a la URL:",
+        "checkingLeave": "Por favor verifica que esto es correcto antes de continuar.",
+        "openLink": "Abrir enlace"
     }
 }

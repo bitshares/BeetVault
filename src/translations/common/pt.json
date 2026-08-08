@@ -129,17 +129,18 @@
     },
     "actionBar": {
         "Home": "Lar",
-        "New": "Novo",
-        "TOTP": "TOTP",
-        "Local": "Local",
-        "RAW": "Link Bruto",
-        "QR": "QR",
-        "SignMsg": "Assinar Msg",
-        "VerifyMsg": "Verificar Msg",
+        "AddAccount": "Adicionar conta",
+        "TOTPDeeplink": "Link profundo TOTP",
+        "JSONDeeplink": "Link profundo JSON",
+        "RawDeeplink": "Link profundo bruto",
+        "QRCodes": "Códigos QR",
+        "SignMessage": "Assinar mensagem",
+        "VerifyMessage": "Verificar mensagem",
         "Settings": "Configurações",
         "changeNodes": "Alterar nó",
-        "Backup": "Cópia de segurança",
-        "Logout": "Sair"
+        "BackupWallet": "Backup da carteira",
+        "Logout": "Sair",
+        "Documentation": "Documentation"
     },
     "popup": {
         "keywords": {
@@ -279,7 +280,8 @@
     "select_tier": "Selecionar nível de segurança",
     "tier_low": "Baixo - Rápido, proteção padrão",
     "tier_medium": "Médio - Equilíbrio recomendado",
-    "tier_high": "Alto - Proteção máxima",
+    "tier_high": "Alto - Proteção forte",
+    "tier_max": "Máximo - Proteção mais alta, desbloqueio mais lento",
     "account_details_lbl": "Detalhes da conta",
     "account_details_chaim_lbl": "Blockchain",
     "account_details_name_lbl": "Nome da conta",
@@ -327,5 +329,43 @@
         "title": "Nenhum chaveiro do sistema operacional detectado",
         "text": "Seu sistema não possui um chaveiro no nível do SO (backend: {backend}). Sua carteira continua criptografada com sua senha, mas o material de desbloqueio é armazenado apenas na memória do aplicativo. Trave a carteira quando se afastar.",
         "learnMore": "Saiba mais"
+    },
+    "docs": {
+        "title": "Documentation",
+        "loading": "Loading...",
+        "error": "Failed to load page",
+        "nav": {
+            "home": "Home",
+            "features": "Features",
+            "security": "Security",
+            "troubleshooting": "Troubleshooting",
+            "faq": "FAQ",
+            "totpDeeplink": "TOTP Deeplink",
+            "rawDeeplink": "Raw Deeplink",
+            "qrCode": "QR Code Deeplink",
+            "jsonFileDeeplink": "JSON File Deeplink",
+            "signMessage": "Sign Message",
+            "verifyMessage": "Verify Message",
+            "developerGuide": "Developer Guide",
+            "blockchains": "Blockchains",
+            "chainBitshares": "BitShares",
+            "chainVaulta": "Vaulta",
+            "chainWax": "WAX",
+            "chainTelos": "Telos",
+            "chainFio": "FIO",
+            "chainLibre": "Libre",
+            "chainXprNetwork": "XPR Network",
+            "chainBeos": "BEOS",
+            "chainHive": "Hive",
+            "chainOverview": "Overview",
+            "chainOperations": "Operations"
+        }
+    },
+    "externalLink": {
+        "leaveApp": "Está a sair do BeetVault",
+        "navigateToExternal": "Está prestes a abrir um site externo no seu navegador predefinido.",
+        "proceedToURL": "Continuar para o URL:",
+        "checkingLeave": "Por favor verifique se está correto antes de continuar.",
+        "openLink": "Abrir ligação"
     }
 }

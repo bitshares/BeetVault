@@ -6,7 +6,7 @@
  * IPC communication from compromised renderers or iframes.
  */
 
-const VALID_SENDER_PAGES = ['index.html', 'modal.html', 'receipt.html', 'error.html'];
+const VALID_SENDER_PAGES = ['index.html', 'modal.html', 'receipt.html', 'error.html', 'doc.html'];
 
 /**
  * The directory containing the app's HTML pages.

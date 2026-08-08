@@ -2,8 +2,8 @@
     import { computed } from 'vue';
     import {formatChain} from "../lib/formatter.js";
     import { useI18n } from 'vue-i18n';
-    import { Button } from '@/components/ui/ui/button';
     import { Card } from '@/components/ui/ui/card';
+    import ExternalLink from '@/components/common/ExternalLink.vue';
     const { t } = useI18n({ useScope: 'global' });
 
     const props = defineProps({
@@ -39,10 +39,6 @@
             : t('common.account_details_address_lbl');
     });
 
-    function openExplorer() {
-        window.electron.openURL(props.explorer);
-    }
-
 </script>
 
 <template>
@@ -51,14 +47,13 @@
             <span class="font-medium">
                 {{ t('common.account_details_lbl') }}
             </span>
-            <Button
+            <ExternalLink
                 v-if="explorer"
+                :hyperlink="explorer"
+                :text="t('common.account_details_explorer_lbl')"
                 variant="outline"
                 size="sm"
-                @click="openExplorer()"
-            >
-                {{ t('common.account_details_explorer_lbl') }}
-            </Button>
+            />
         </div>
         <Card
             class="shadow-sm border"

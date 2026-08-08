@@ -129,17 +129,18 @@
     },
     "actionBar": {
         "Home": "Heim",
-        "New": "Neu",
-        "TOTP": "TOTP",
-        "Local": "Lokal",
-        "RAW": "Roher Link",
-        "QR": "QR",
-        "SignMsg": "Nachricht signieren",
-        "VerifyMsg": "Nachricht verifizieren",
+        "AddAccount": "Konto hinzufügen",
+        "TOTPDeeplink": "TOTP-Deeplink",
+        "JSONDeeplink": "JSON-Deeplink",
+        "RawDeeplink": "Roher Deeplink",
+        "QRCodes": "QR-Codes",
+        "SignMessage": "Nachricht signieren",
+        "VerifyMessage": "Nachricht verifizieren",
         "Settings": "Einstellungen",
         "changeNodes": "Knoten ändern",
-        "Backup": "Sicherung",
-        "Logout": "Ausloggen"
+        "BackupWallet": "Wallet sichern",
+        "Logout": "Ausloggen",
+        "Documentation": "Documentation"
     },
     "popup": {
         "keywords": {
@@ -279,7 +280,8 @@
     "select_tier": "Sicherheitsstufe wählen",
     "tier_low": "Niedrig - Schnell, Standardschutz",
     "tier_medium": "Mittel - Empfohlenes Gleichgewicht",
-    "tier_high": "Hoch - Maximaler Schutz",
+    "tier_high": "Hoch - Starker Schutz",
+    "tier_max": "Maximal - Höchster Schutz, langsamste Entsperrung",
     "account_details_lbl": "Kontodetails",
     "account_details_chaim_lbl": "Blockchain",
     "account_details_name_lbl": "Kontobezeichnung",
@@ -327,5 +329,43 @@
         "title": "Kein OS-Schlüsselbund erkannt",
         "text": "Ihr System hat keinen OS-Schlüsselbund (Backend: {backend}). Ihre Geldbörse ist weiterhin mit Ihrem Passwort verschlüsselt, aber das Entsperrmaterial wird nur im App-Speicher gehalten. Sperren Sie die Geldbörse, wenn Sie sich entfernen.",
         "learnMore": "Mehr erfahren"
+    },
+    "docs": {
+        "title": "Documentation",
+        "loading": "Loading...",
+        "error": "Failed to load page",
+        "nav": {
+            "home": "Home",
+            "features": "Features",
+            "security": "Security",
+            "troubleshooting": "Troubleshooting",
+            "faq": "FAQ",
+            "totpDeeplink": "TOTP Deeplink",
+            "rawDeeplink": "Raw Deeplink",
+            "qrCode": "QR Code Deeplink",
+            "jsonFileDeeplink": "JSON File Deeplink",
+            "signMessage": "Sign Message",
+            "verifyMessage": "Verify Message",
+            "developerGuide": "Developer Guide",
+            "blockchains": "Blockchains",
+            "chainBitshares": "BitShares",
+            "chainVaulta": "Vaulta",
+            "chainWax": "WAX",
+            "chainTelos": "Telos",
+            "chainFio": "FIO",
+            "chainLibre": "Libre",
+            "chainXprNetwork": "XPR Network",
+            "chainBeos": "BEOS",
+            "chainHive": "Hive",
+            "chainOverview": "Overview",
+            "chainOperations": "Operations"
+        }
+    },
+    "externalLink": {
+        "leaveApp": "Sie verlassen BeetVault",
+        "navigateToExternal": "Sie sind dabei, eine externe Website in Ihrem Standardbrowser zu öffnen.",
+        "proceedToURL": "Weiter zur URL:",
+        "checkingLeave": "Bitte überprüfen Sie dies, bevor Sie fortfahren.",
+        "openLink": "Link öffnen"
     }
 }

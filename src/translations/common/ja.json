@@ -129,17 +129,18 @@
     },
     "actionBar": {
         "Home": "家",
-        "New": "新しい",
-        "TOTP": "TOTP",
-        "Local": "地元",
-        "RAW": "生のリンク",
-        "QR": "QR",
-        "SignMsg": "メッセージ署名",
-        "VerifyMsg": "メッセージ検証",
+        "AddAccount": "アカウントを追加",
+        "TOTPDeeplink": "TOTPディープリンク",
+        "JSONDeeplink": "JSONディープリンク",
+        "RawDeeplink": "未加工のディープリンク",
+        "QRCodes": "QRコード",
+        "SignMessage": "メッセージ署名",
+        "VerifyMessage": "メッセージ検証",
         "Settings": "設定",
         "changeNodes": "ノードを変更",
-        "Backup": "バックアップ",
-        "Logout": "ログアウト"
+        "BackupWallet": "ウォレットをバックアップ",
+        "Logout": "ログアウト",
+        "Documentation": "Documentation"
     },
     "popup": {
         "keywords": {
@@ -279,7 +280,8 @@
     "select_tier": "セキュリティレベルを選択",
     "tier_low": "低 - 高速、標準の保護",
     "tier_medium": "中 - 推奨バランス",
-    "tier_high": "高 - 最大の保護",
+    "tier_high": "高 - 強力な保護",
+    "tier_max": "最高 - 最も高い保護、最も遅いロック解除",
     "account_details_lbl": "アカウント詳細",
     "account_details_chaim_lbl": "ブロックチェーン",
     "account_details_name_lbl": "アカウント名",
@@ -327,5 +329,43 @@
         "title": "OSキーチェーンが検出されませんでした",
         "text": "システムにOSレベルのキーチェーンがありません（バックエンド：{backend}）。ウォレットはパスワードで暗号化されていますが、ロック解除用のデータはアプリメモリのみに保持されます。離れるときはウォレットをロックしてください。",
         "learnMore": "詳しく見る"
+    },
+    "docs": {
+        "title": "Documentation",
+        "loading": "Loading...",
+        "error": "Failed to load page",
+        "nav": {
+            "home": "Home",
+            "features": "Features",
+            "security": "Security",
+            "troubleshooting": "Troubleshooting",
+            "faq": "FAQ",
+            "totpDeeplink": "TOTP Deeplink",
+            "rawDeeplink": "Raw Deeplink",
+            "qrCode": "QR Code Deeplink",
+            "jsonFileDeeplink": "JSON File Deeplink",
+            "signMessage": "Sign Message",
+            "verifyMessage": "Verify Message",
+            "developerGuide": "Developer Guide",
+            "blockchains": "Blockchains",
+            "chainBitshares": "BitShares",
+            "chainVaulta": "Vaulta",
+            "chainWax": "WAX",
+            "chainTelos": "Telos",
+            "chainFio": "FIO",
+            "chainLibre": "Libre",
+            "chainXprNetwork": "XPR Network",
+            "chainBeos": "BEOS",
+            "chainHive": "Hive",
+            "chainOverview": "Overview",
+            "chainOperations": "Operations"
+        }
+    },
+    "externalLink": {
+        "leaveApp": "BeetVaultを離れようとしています",
+        "navigateToExternal": "デフォルトのブラウザで外部ウェブサイトを開こうとしています。",
+        "proceedToURL": "URLに進む：",
+        "checkingLeave": "続行する前にこれが正しいことを確認してください。",
+        "openLink": "リンクを開く"
     }
 }

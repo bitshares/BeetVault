@@ -129,17 +129,18 @@
     },
     "actionBar": {
         "Home": "집",
-        "New": "새로운",
-        "TOTP": "TOTP",
-        "Local": "현지의",
-        "RAW": "원시 링크",
-        "QR": "QR",
-        "SignMsg": "메시지 서명",
-        "VerifyMsg": "메시지 검증",
+        "AddAccount": "계정 추가",
+        "TOTPDeeplink": "TOTP 딥링크",
+        "JSONDeeplink": "JSON 딥링크",
+        "RawDeeplink": "원시 딥링크",
+        "QRCodes": "QR 코드",
+        "SignMessage": "메시지 서명",
+        "VerifyMessage": "메시지 검증",
         "Settings": "설정",
         "changeNodes": "노드 변경",
-        "Backup": "지원",
-        "Logout": "로그 아웃"
+        "BackupWallet": "지갑 백업",
+        "Logout": "로그 아웃",
+        "Documentation": "Documentation"
     },
     "popup": {
         "keywords": {
@@ -279,7 +280,8 @@
     "select_tier": "보안 수준 선택",
     "tier_low": "낮음 - 빠름, 기본 보호",
     "tier_medium": "보통 - 권장 균형",
-    "tier_high": "높음 - 최대 보호",
+    "tier_high": "높음 - 강력한 보호",
+    "tier_max": "최대 - 가장 높은 보호, 가장 느린 잠금 해제",
     "account_details_lbl": "계정 세부정보",
     "account_details_chaim_lbl": "블록체인",
     "account_details_name_lbl": "계정 이름",
@@ -327,5 +329,43 @@
         "title": "OS 키체인이 감지되지 않았습니다",
         "text": "시스템에 OS 수준의 키체인이 없습니다 (백엔드: {backend}). 지갑은 비밀번호로 암호화되어 있지만, 잠금 해제 자료는 앱 메모리에만 보관됩니다. 자리를 비울 때는 지갑을 잠그세요.",
         "learnMore": "자세히 보기"
+    },
+    "docs": {
+        "title": "Documentation",
+        "loading": "Loading...",
+        "error": "Failed to load page",
+        "nav": {
+            "home": "Home",
+            "features": "Features",
+            "security": "Security",
+            "troubleshooting": "Troubleshooting",
+            "faq": "FAQ",
+            "totpDeeplink": "TOTP Deeplink",
+            "rawDeeplink": "Raw Deeplink",
+            "qrCode": "QR Code Deeplink",
+            "jsonFileDeeplink": "JSON File Deeplink",
+            "signMessage": "Sign Message",
+            "verifyMessage": "Verify Message",
+            "developerGuide": "Developer Guide",
+            "blockchains": "Blockchains",
+            "chainBitshares": "BitShares",
+            "chainVaulta": "Vaulta",
+            "chainWax": "WAX",
+            "chainTelos": "Telos",
+            "chainFio": "FIO",
+            "chainLibre": "Libre",
+            "chainXprNetwork": "XPR Network",
+            "chainBeos": "BEOS",
+            "chainHive": "Hive",
+            "chainOverview": "Overview",
+            "chainOperations": "Operations"
+        }
+    },
+    "externalLink": {
+        "leaveApp": "BeetVault를 떠나려고 합니다",
+        "navigateToExternal": "기본 브라우저에서 외부 웹사이트를 열려고 합니다.",
+        "proceedToURL": "URL로 이동:",
+        "checkingLeave": "계속하기 전에 이것이 올바른지 확인하십시오.",
+        "openLink": "링크 열기"
     }
 }

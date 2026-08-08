@@ -72,8 +72,8 @@
             let blockchainResponse;
             try {
                 blockchainResponse = await blockchainRequest(
-                    { 
-                        methods: ['supportsTOTP', 'getOperationTypes'],
+                    {
+                        methods: ['getOperationTypes'],
                         chain: chain.value
                     }
                 );
@@ -82,12 +82,10 @@
             }
 
             if (blockchainResponse) {
-                const { supportsTOTP, getOperationTypes } = blockchainResponse;
-                if (supportsTOTP) {
-                    compatibleChain.value = supportsTOTP;
-                }
+                const { getOperationTypes } = blockchainResponse;
                 if (getOperationTypes) {
                     operationTypes.value = getOperationTypes;
+                    compatibleChain.value = true;
                 }
             }
         }

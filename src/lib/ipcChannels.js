@@ -19,6 +19,7 @@ export const SEND_CHANNELS = Object.freeze([
     'createPopup',
     'createReceipt',
     'createError',
+    'createDoc',
     'sendError',
     'injectedCallResponse',
     'injectedCallError',
@@ -44,6 +45,8 @@ export const INVOKE_CHANNELS = Object.freeze([
     'id',
     'getSignature',
     'verifyCrypto',
+    'readDoc',
+    'readManifest',
     'restore',
 ]);
 

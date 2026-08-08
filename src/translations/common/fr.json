@@ -129,17 +129,18 @@
     },
     "actionBar": {
         "Home": "Maison",
-        "New": "Nouveau",
-        "TOTP": "TOTP",
-        "Local": "Local",
-        "RAW": "Lien brut",
-        "QR": "QR",
-        "SignMsg": "Signer Msg",
-        "VerifyMsg": "Vérifier Msg",
+        "AddAccount": "Ajouter un compte",
+        "TOTPDeeplink": "Lien profond TOTP",
+        "JSONDeeplink": "Lien profond JSON",
+        "RawDeeplink": "Lien profond brut",
+        "QRCodes": "Codes QR",
+        "SignMessage": "Signer le message",
+        "VerifyMessage": "Vérifier le message",
         "Settings": "Paramètres",
         "changeNodes": "Changer de nœud",
-        "Backup": "Sauvegarde",
-        "Logout": "Se déconnecter"
+        "BackupWallet": "Sauvegarder le portefeuille",
+        "Logout": "Se déconnecter",
+        "Documentation": "Documentation"
     },
     "popup": {
         "keywords": {
@@ -279,7 +280,8 @@
     "select_tier": "Sélectionnez le niveau de sécurité",
     "tier_low": "Faible - Rapide, protection standard",
     "tier_medium": "Moyen - Équilibre recommandé",
-    "tier_high": "Élevé - Protection maximale",
+    "tier_high": "Élevé - Protection forte",
+    "tier_max": "Maximum - Protection la plus élevée, déverrouillage le plus lent",
     "account_details_lbl": "Détails du compte",
     "account_details_chaim_lbl": "Chaîne de blocs",
     "account_details_name_lbl": "Nom du compte",
@@ -327,5 +329,43 @@
         "title": "Aucun trousseau clé OS détecté",
         "text": "Votre système n'a pas de trousseau clé au niveau du système d'exploitation (backend: {backend}). Votre portefeuille est toujours chiffré avec votre mot de passe, mais le matériel de déverrouillage est stocké uniquement en mémoire de l'application. Vérrouillez le portefeuille quand vous vous éloignez.",
         "learnMore": "En savoir plus"
+    },
+    "docs": {
+        "title": "Documentation",
+        "loading": "Loading...",
+        "error": "Failed to load page",
+        "nav": {
+            "home": "Home",
+            "features": "Features",
+            "security": "Security",
+            "troubleshooting": "Troubleshooting",
+            "faq": "FAQ",
+            "totpDeeplink": "TOTP Deeplink",
+            "rawDeeplink": "Raw Deeplink",
+            "qrCode": "QR Code Deeplink",
+            "jsonFileDeeplink": "JSON File Deeplink",
+            "signMessage": "Sign Message",
+            "verifyMessage": "Verify Message",
+            "developerGuide": "Developer Guide",
+            "blockchains": "Blockchains",
+            "chainBitshares": "BitShares",
+            "chainVaulta": "Vaulta",
+            "chainWax": "WAX",
+            "chainTelos": "Telos",
+            "chainFio": "FIO",
+            "chainLibre": "Libre",
+            "chainXprNetwork": "XPR Network",
+            "chainBeos": "BEOS",
+            "chainHive": "Hive",
+            "chainOverview": "Overview",
+            "chainOperations": "Operations"
+        }
+    },
+    "externalLink": {
+        "leaveApp": "Vous quittez BeetVault",
+        "navigateToExternal": "Vous êtes sur le point d'ouvrir un site web externe dans votre navigateur par défaut.",
+        "proceedToURL": "Continuer vers l'URL :",
+        "checkingLeave": "Veuillez vérifier que c'est correct avant de continuer.",
+        "openLink": "Ouvrir le lien"
     }
 }

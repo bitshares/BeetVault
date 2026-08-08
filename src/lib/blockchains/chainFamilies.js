@@ -6,7 +6,7 @@ export const ALL_VAULTA_AND_HIVE = [...VAULTA_FAMILY, ...HIVE_FAMILY];
 
 export function getChainFamily(chain) {
     if (BTS_FAMILY.includes(chain)) return "bts";
-    if (VAULTA_FAMILY.includes(chain)) return "eos";
+    if (VAULTA_FAMILY.includes(chain)) return "antelope";
     if (HIVE_FAMILY.includes(chain)) return "hive";
     return null;
 }

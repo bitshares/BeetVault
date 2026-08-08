@@ -10,6 +10,7 @@ module.exports = function(env) {
             modal: "./src/modal.js",
             receipt: "./src/receipt.js",
             error: "./src/error.js",
+            doc: "./src/doc.js",
             app: "./src/app.js",
         },
         output: {

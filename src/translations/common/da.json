@@ -129,17 +129,18 @@
     },
     "actionBar": {
         "Home": "Hjem",
-        "New": "Ny",
-        "TOTP": "TOTP",
-        "Local": "Lokal",
-        "RAW": "Rå link",
-        "QR": "QR",
-        "SignMsg": "Signér Msg",
-        "VerifyMsg": "Verificer Msg",
+        "AddAccount": "Tilføj konto",
+        "TOTPDeeplink": "TOTP-deeplink",
+        "JSONDeeplink": "JSON-deeplink",
+        "RawDeeplink": "Rå deeplink",
+        "QRCodes": "QR-koder",
+        "SignMessage": "Signér besked",
+        "VerifyMessage": "Verificer besked",
         "Settings": "Indstillinger",
         "changeNodes": "Skift node",
-        "Backup": "Backup",
-        "Logout": "Log ud"
+        "BackupWallet": "Backup tegnebog",
+        "Logout": "Log ud",
+        "Documentation": "Documentation"
     },
     "popup": {
         "keywords": {
@@ -279,7 +280,8 @@
     "select_tier": "Vælg sikkerhedsniveau",
     "tier_low": "Lav - Hurtig, standardbeskyttelse",
     "tier_medium": "Medium - Anbefalet balance",
-    "tier_high": "Høj - Maksimal beskyttelse",
+    "tier_high": "Høj - Stærk beskyttelse",
+    "tier_max": "Maksimal - Højeste beskyttelse, langsomste oplåsning",
     "account_details_lbl": "konto detaljer",
     "account_details_chaim_lbl": "Blockchain",
     "account_details_name_lbl": "Kontonavn",
@@ -327,5 +329,43 @@
         "title": "Intet OS-nøglebund fundet",
         "text": "Dit system har ingen OS-nøglebund (backend: {backend}). Din pung er stadig krypteret med din adgangskode, men låsematerialet opbevares kun i app-hukommelsen. Lås pungen, når du går væk.",
         "learnMore": "Læs mere"
+    },
+    "docs": {
+        "title": "Documentation",
+        "loading": "Loading...",
+        "error": "Failed to load page",
+        "nav": {
+            "home": "Home",
+            "features": "Features",
+            "security": "Security",
+            "troubleshooting": "Troubleshooting",
+            "faq": "FAQ",
+            "totpDeeplink": "TOTP Deeplink",
+            "rawDeeplink": "Raw Deeplink",
+            "qrCode": "QR Code Deeplink",
+            "jsonFileDeeplink": "JSON File Deeplink",
+            "signMessage": "Sign Message",
+            "verifyMessage": "Verify Message",
+            "developerGuide": "Developer Guide",
+            "blockchains": "Blockchains",
+            "chainBitshares": "BitShares",
+            "chainVaulta": "Vaulta",
+            "chainWax": "WAX",
+            "chainTelos": "Telos",
+            "chainFio": "FIO",
+            "chainLibre": "Libre",
+            "chainXprNetwork": "XPR Network",
+            "chainBeos": "BEOS",
+            "chainHive": "Hive",
+            "chainOverview": "Overview",
+            "chainOperations": "Operations"
+        }
+    },
+    "externalLink": {
+        "leaveApp": "Du forlader BeetVault",
+        "navigateToExternal": "Du er ved at åbne en ekstern hjemmeside i din standardbrowser.",
+        "proceedToURL": "Fortsæt til URL:",
+        "checkingLeave": "Bekræft at dette er korrekt, før du fortsætter.",
+        "openLink": "Åbn link"
     }
 }

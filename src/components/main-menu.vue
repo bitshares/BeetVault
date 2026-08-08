@@ -10,7 +10,7 @@
     import { Button } from '@/components/ui/ui/button';
     import { Spinner } from '@/components/ui/ui/spinner';
     import { DropdownMenu, DropdownMenuContent, DropdownMenuItem, DropdownMenuTrigger } from '@/components/ui/ui/dropdown-menu';
-    import { Menu, Home, Plus, KeyRound, Upload, Code, QrCode, PenLine, ShieldCheck, Download, Settings, Network, LogOut } from 'lucide-vue-next';
+    import { Menu, Home, Plus, KeyRound, Upload, Code, QrCode, PenLine, ShieldCheck, Download, BookOpen, Settings, Network, LogOut } from 'lucide-vue-next';
     import { useInjectedCall } from "@/composables/useInjectedCall.js";
     import { useProcessing } from "@/composables/useProcessing.js";
 
@@ -34,6 +34,7 @@
         download: Download,
         settings: Settings,
         lan: Network,
+        book_open: BookOpen,
         logout: LogOut,
     };
 
@@ -61,68 +62,74 @@
                 url: "/dashboard"
             },
             {
-                text: t("common.actionBar.New"),
+                text: t("common.actionBar.AddAccount"),
                 index: 1,
                 icon: "add",
                 url: "/add-account"
             },
             {
-                text: t("common.actionBar.TOTP"),
+                text: t("common.actionBar.TOTPDeeplink"),
                 index: 2,
                 icon: "generating_tokens",
                 url: "/totp"
             },
             {
-                text: t("common.actionBar.Local"),
+                text: t("common.actionBar.JSONDeeplink"),
                 index: 3,
                 icon: "upload",
                 url: "/local"
             },
             {
-                text: t("common.actionBar.RAW"),
+                text: t("common.actionBar.RawDeeplink"),
                 index: 4,
                 icon: "raw_on",
                 url: "/raw-link"
             },
             {
-                text: t("common.actionBar.QR"),
+                text: t("common.actionBar.QRCodes"),
                 index: 5,
                 icon: "qr_code_2",
                 url: "/qr"
             },
             {
-                text: t("common.actionBar.SignMsg"),
+                text: t("common.actionBar.SignMessage"),
                 index: 6,
                 icon: "pen_line",
                 url: "/sign-message"
             },
             {
-                text: t("common.actionBar.VerifyMsg"),
+                text: t("common.actionBar.VerifyMessage"),
                 index: 7,
                 icon: "shield_check",
                 url: "/verify-message"
             },
             {
-                text: t("common.actionBar.Backup"),
+                text: t("common.actionBar.BackupWallet"),
                 index: 8,
                 icon: "download",
                 url: "/backup"
             },
             {
-                text: t("common.actionBar.Settings"),
+                text: t("common.actionBar.Documentation"),
                 index: 9,
+                icon: "book_open",
+                url: null
+            },
+            {
+                text: t("common.actionBar.Settings"),
+                index: 10,
                 icon: "settings",
                 url: "/settings"
             },
             {
                 text: t("common.actionBar.changeNodes"),
-                index: 10,
+                index: 11,
                 icon: "lan",
                 url: "/nodes"
             },
             {
                 text: t("common.actionBar.Logout"),
-                index: 11,
+                index: 12,
                 icon: "logout",
                 url: "/"
             }
@@ -132,13 +139,20 @@
     function onChange(data) {
         lastIndex.value = data.index;
 
-        if (data.index === 11) {
+        if (data.index === 9) {
+            window.electron.createDoc({ page: 'index' });
+            return;
+        }
+
+        if (data.index === 12) {
             console.log("User logged out.");
             walletStore.logout();
             router.replace("/");
         }
 
-        router.replace(items.value[data.index].url);
+        if (items.value[data.index].url) {
+            router.replace(items.value[data.index].url);
+        }
     }
 
     let logoutTimer = null;
