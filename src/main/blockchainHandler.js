@@ -204,11 +204,6 @@ export async function parseDeeplink(requestContent, type, chain, blockchain, blo
         return;
     }
 
-    if (settingsRows && !settingsRows.includes(request.payload.method)) {
-        console.log('Unauthorized beet operation');
-        return;
-    }
-
     if (request.payload.method === Actions.INJECTED_CALL) {
         let authorizedUse = false;
         if (BTS_FAMILY.includes(chain)) {

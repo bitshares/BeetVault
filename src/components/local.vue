@@ -89,7 +89,9 @@ function setScope(newValue) {
     window.electron.resetTimer();
     chosenScope.value = newValue;
     if (newValue === "AllowAll") {
-        const _ids = operationTypes.value.map((type) => type.id);
+        const _ids = operationTypes.value
+            .map((type) => type.id)
+            .filter(id => id !== 'injectedCall');
         selectedRows.value = _ids;
         settingsStore.setChainPermissions({
             chain: chain.value,

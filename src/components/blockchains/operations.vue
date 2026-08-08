@@ -1,11 +1,12 @@
 <script setup>
-    import { onMounted, watchEffect, ref } from 'vue';
+    import { onMounted, watchEffect, ref, computed } from 'vue';
     import { Button } from '@/components/ui/ui/button';
     import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from '@/components/ui/ui/table';
     import { Checkbox } from '@/components/ui/ui/checkbox';
     import { ScrollArea } from '@/components/ui/ui/scroll-area';
     import { useI18n } from 'vue-i18n';
     import { useSettingsStore } from '@/stores/settingsStore.js';
+    import { INJECTED_CALL } from '@/lib/Actions.js';
 
     const { t } = useI18n({ useScope: 'global' });
     const settingsStore = useSettingsStore();
@@ -28,6 +29,11 @@
     const emit = defineEmits(['selected', 'exit']);
 
     let selected = ref([]);
+
+    const filteredOps = computed(() => {
+        return props.ops.filter(op => op.id !== INJECTED_CALL);
+    });
+
     onMounted(() => {
         let rememberedRows = settingsStore.getChainPermissions(props.chain);
         if (!rememberedRows || !rememberedRows.length) {
@@ -35,7 +41,7 @@
             return;
         }
 
-        selected.value = rememberedRows;
+        selected.value = rememberedRows.filter(row => row !== INJECTED_CALL);
     })
 
     function saveRows() {
@@ -81,7 +87,7 @@
                     </TableRow>
                 </TableHeader>
                 <TableBody>
-                    <TableRow v-for="(item, idx) in props.ops" :key="item.id">
+                    <TableRow v-for="(item, idx) in filteredOps" :key="item.id">
                         <TableCell>
                             <Checkbox
                                 :checked="selected.includes(item.id)"
