@@ -204,15 +204,16 @@ Types.string = {
 Types.bytes = function (size) {
   return {
     fromByteBuffer(b) {
+      let b_copy;
       if (size === undefined) {
-        let b_copy;
         const len = b.readVarint32();
-        (b_copy = b.copy(b.offset, b.offset + len)), b.skip(len);
-        return Buffer.from(b_copy.toBinary(), "binary");
+        b_copy = b.copy(b.offset, b.offset + len);
+        b.skip(len);
       } else {
-        (b_copy = b.copy(b.offset, b.offset + size)), b.skip(size);
-        return Buffer.from(b_copy.toBinary(), "binary");
+        b_copy = b.copy(b.offset, b.offset + size);
+        b.skip(size);
       }
+      return Buffer.from(b_copy.toBinary(), "binary");
     },
     appendByteBuffer(b, object) {
       v.required(object);
@@ -606,7 +607,7 @@ Types.vote_id = {
   },
   appendByteBuffer(b, object) {
     v.required(object);
-    if (object === "string") object = Types.vote_id.fromObject(object);
+    if (typeof object === "string") object = Types.vote_id.fromObject(object);
 
     const value = (object.id << 8) | object.type;
     b.writeUint32(value);

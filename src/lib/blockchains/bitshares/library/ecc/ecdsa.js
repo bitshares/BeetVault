@@ -91,7 +91,7 @@ function sign(curve, hash, d, nonce) {
     {
       prehash: false,
       format: "compact",
-      extraEntropy: nonce > 0 ? Buffer.alloc(32).fill(nonce) : undefined
+      extraEntropy: nonce > 0 ? Buffer.from(nonce.toString(16).padStart(64, "0"), "hex") : undefined
     }
   );
 

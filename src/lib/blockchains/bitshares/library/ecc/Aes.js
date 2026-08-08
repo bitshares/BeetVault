@@ -23,9 +23,12 @@ class Aes {
     this.key = key;
   }
 
-  /** This is an excellent way to ensure that all references to Aes can not operate anymore (example: a wallet becomes locked).  An application should ensure there is only one Aes object instance for a given secret `seed`. */
+  /** Zeroizes key material and renders this instance inoperable (e.g. when a wallet becomes locked). */
   clear() {
-    return (this.iv = this.key = undefined);
+    if (this.key) this.key.fill(0);
+    if (this.iv) this.iv.fill(0);
+    this.key = undefined;
+    this.iv = undefined;
   }
 
   /** @arg {string} seed - secret seed may be used to encrypt or decrypt. */

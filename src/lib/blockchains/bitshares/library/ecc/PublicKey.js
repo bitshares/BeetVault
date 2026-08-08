@@ -44,6 +44,9 @@ class PublicKey {
   }
 
   toUncompressed() {
+    if (this.Q === null) {
+      throw new Error("Cannot convert null public key to uncompressed form");
+    }
     const buf = this.Q.toBytes(false);
     const point = secp256k1.Point.fromHex(Buffer.from(buf).toString("hex"));
     return PublicKey.fromPoint(point);

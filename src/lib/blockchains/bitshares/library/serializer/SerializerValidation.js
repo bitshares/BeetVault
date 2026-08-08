@@ -160,7 +160,7 @@ const _my = {
   },
 
   require_object_id: function (value, field_name) {
-    return require_match(/^([0-9]+)\.([0-9]+)\.([0-9]+)$/, value, field_name);
+    return this.require_match(/^([0-9]+)\.([0-9]+)\.([0-9]+)$/, value, field_name);
   },
 
   // Does not support over 53 bits
@@ -169,7 +169,7 @@ const _my = {
       return value;
     }
     const number = this.to_number(value);
-    if (value < min || value > max) {
+    if (number < min || number > max) {
       throw new Error(`out of range ${value} ${field_name} ${value}`);
     }
     return value;

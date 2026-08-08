@@ -383,8 +383,9 @@ class TransactionBuilder {
       }
       if (!isDuplicate) {
         operations.push(opObject);
-        if (feeAssets.indexOf(operations[i][1].fee.asset_id) === -1) {
-          feeAssets.push(operations[i][1].fee.asset_id);
+        const lastOp = operations[operations.length - 1];
+        if (lastOp && lastOp[1] && feeAssets.indexOf(lastOp[1].fee.asset_id) === -1) {
+          feeAssets.push(lastOp[1].fee.asset_id);
         }
       }
     }
@@ -600,6 +601,7 @@ class TransactionBuilder {
   }
 
   async get_potential_signatures(apiInstance) {
+    if (!apiInstance) apiInstance = Apis.instance();
     const tr_object = ops.signed_transaction.toObject(this);
     const [pubkeys, addys] = await Promise.all([
       apiInstance.db_api().exec("get_potential_signatures", [tr_object]),
@@ -609,6 +611,7 @@ class TransactionBuilder {
   }
 
   async get_required_signatures(available_keys, apiInstance) {
+    if (!apiInstance) apiInstance = Apis.instance();
     if (!available_keys.length) {
       return [];
     }

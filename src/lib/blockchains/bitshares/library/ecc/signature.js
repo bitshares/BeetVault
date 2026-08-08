@@ -78,7 +78,8 @@ class Signature {
         i = null;
         nonce = 0;
         e = BigInt("0x" + buf_sha256.toString("hex"));
-        while (nonce < 100) {
+        let attempts = 0;
+        while (attempts < 100) {
             ecsignature = sign(secp256k1, buf_sha256, private_key.d, nonce++);
             der = ecsignature.toDER();
             const lenR = der[3];
@@ -89,9 +90,10 @@ class Signature {
                 i += 27; // compact
                 break;
             }
+            attempts++;
         }
-        if (nonce >= 100 || i === null) {
-            throw new Error("Failed to produce canonical signature after 100 attempts");
+        if (i === null) {
+            throw new Error("Failed to produce canonical signature after " + attempts + " attempts");
         }
         return new Signature(ecsignature.r, ecsignature.s, i);
     }

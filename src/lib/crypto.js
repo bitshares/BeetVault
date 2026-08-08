@@ -271,11 +271,7 @@ export async function decrypt(ciphertextBase64, passphrase) {
     MK.fill(0);
     DEK.fill(0);
 
-    const result = textDecoder.decode(plainTextBytes);
-
-    console.log(`[CRYPTO_DEBUG] decrypt: t=${t} m=${m} p=${p} ptLen=${result.length} ptPrefix=${result.substring(0, 10)}`);
-
-    return result;
+    return textDecoder.decode(plainTextBytes);
 }
 
 /**
@@ -464,7 +460,6 @@ export async function decryptWithCache(ciphertextBase64, passphrase, cache) {
     let header = raw.subarray(0, HEADER_LENGTH + SALT_LENGTH + NONCE_LENGTH + NONCE_LENGTH);
 
     const cached = cache ? cache.get(salt, params) : null;
-    const cacheHit = !!cached;
 
     if (cached) {
         KEK = cached.KEK;
@@ -499,11 +494,7 @@ export async function decryptWithCache(ciphertextBase64, passphrase, cache) {
 
     DEK.fill(0);
 
-    const result = textDecoder.decode(plainTextBytes);
-
-    console.log(`[CRYPTO_DEBUG] decryptWithCache: t=${t} m=${m} p=${p} cacheHit=${cacheHit} ptLen=${result.length} ptPrefix=${result.substring(0, 10)}`);
-
-    return result;
+    return textDecoder.decode(plainTextBytes);
 }
 
 export { deriveKey, TIERS, DEFAULT_TIER, randomBytes };
