@@ -1,24 +1,4 @@
 {
-  "getAccount": {
-    "method": "getAccount",
-    "title": "Konto üksikasjade taotlus",
-    "result": "Konto üksikasjade tulemus",
-    "headers": {
-      "request": "Kas soovite oma konto andmeid jagada?",
-      "result": "Teie konto üksikasju jagati."
-    },
-    "tooltip": "Küsib teie rahakotilt plokiahela konto üksikasju"
-  },
-  "requestSignature": {
-    "method": "requestSignature",
-    "title": "Allkirjataotlus",
-    "result": "Allkirja tulemus",
-    "headers": {
-      "request": "Kas soovite oma allkirja jagada?",
-      "result": "Teie allkirja jagati:"
-    },
-    "tooltip": "Küsib teie rahakotilt plokiahela allkirju"
-  },
   "injectedCall": {
     "method": "süstitud Helista",
     "title": "Süstitud kõne taotlus",

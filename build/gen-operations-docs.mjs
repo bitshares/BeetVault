@@ -11,7 +11,11 @@
 import fs from 'fs';
 import path from 'path';
 
-const CORE = ['getAccount', 'requestSignature', 'injectedCall', 'signMessage', 'verifyMessage', 'voteFor', 'signNFT'];
+/**
+ * `injectedCall` is the transport method every request uses, not an operation
+ * a user would scope, so it is excluded from the generated tables.
+ */
+const TRANSPORT_METHOD = 'injectedCall';
 
 const CHAINS = [
     { slug: 'bitshares',   src: 'BTS',    name: 'BitShares' },
@@ -38,39 +42,28 @@ function table(entries) {
 }
 
 function buildPage({ slug, src, name, extra }) {
-    const ops = read(src);
-    const entries = Object.entries(ops);
-
-    const core = entries.filter(([k]) => CORE.includes(k));
-    const chainSpecific = entries.filter(([k]) => !CORE.includes(k));
+    const entries = Object.entries(read(src)).filter(
+        ([key]) => key !== TRANSPORT_METHOD
+    );
 
     const parts = [
         `# ${name} Operations`,
         '',
-        `This page lists the operations BeetVault can process for ${name}. Each corresponds to an action a third-party application may request, and every request must be approved before it is broadcast.`,
+        `Third-party applications request transactions using a single method: \`injectedCall\`. The transaction it carries may contain one or more of the ${name} operations listed below.`,
         '',
-        `Operation names shown here are the identifiers that appear in permission scope selection and in the approval prompt.`,
+        'When a request arrives, BeetVault checks each operation in the transaction against the scope you configured. If none are permitted, the request is rejected without prompting. Otherwise the transaction is shown for approval.',
+        '',
+        'The identifiers below are what appear in the scope selection list and in the approval prompt.',
         '',
     ];
 
-    if (core.length) {
+    if (entries.length) {
         parts.push(
-            '## Wallet Requests',
-            '',
-            'Requests handled by the wallet itself rather than broadcast to the chain.',
-            '',
-            table(core),
-            ''
-        );
-    }
-
-    if (chainSpecific.length) {
-        parts.push(
-            '## Chain Operations',
+            '## Operations',
             '',
             `Operations broadcast to the ${name} network.`,
             '',
-            table(chainSpecific),
+            table(entries),
             ''
         );
     }
@@ -90,14 +83,21 @@ function buildPage({ slug, src, name, extra }) {
     parts.push(
         '## Permission Scope',
         '',
-        'Before an input method can authorise anything, you choose which of these operations it may request. Anything outside that selection is rejected without prompting.',
+        'Each input method asks you to choose which operations it may authorise before it will process anything. You can permit everything, or select individual operations.',
         '',
-        'Scope is configured per input method on its respective page, and is remembered per chain.',
+        'Your selection is remembered per chain, and applies to every transaction that input method receives.',
+        '',
+        '> **Not an exhaustive list.** The operations above are those with descriptions available. The complete set your chain accepts is shown when configuring scope in the wallet.',
         ''
     );
 
     return parts.join('\n');
 }
+
+const countFor = (chain) =>
+    Object.entries(read(chain.src)).filter(
+        ([k]) => k !== TRANSPORT_METHOD
+    ).length + (chain.extra ? Object.keys(read(chain.extra)).length : 0);
 
 let total = 0;
 for (const chain of CHAINS) {
@@ -105,8 +105,7 @@ for (const chain of CHAINS) {
     fs.mkdirSync(dir, { recursive: true });
     const out = path.join(dir, 'operations.md');
     fs.writeFileSync(out, buildPage(chain));
-    const count = Object.keys(read(chain.src)).length +
-        (chain.extra ? Object.keys(read(chain.extra)).length : 0);
+    const count = countFor(chain);
     total += count;
     console.log(`${out.padEnd(46)} ${count} operations`);
 }

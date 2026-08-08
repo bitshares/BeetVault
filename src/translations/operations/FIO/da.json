@@ -1,24 +1,4 @@
 {
-  "getAccount": {
-    "method": "getAccount",
-    "title": "Account Details Request",
-    "result": "Account details result",
-    "headers": {
-      "request": "Do you want to share your account details?",
-      "result": "Your account details were shared."
-    },
-    "tooltip": "Asks your wallet for blockchain account details"
-  },
-  "requestSignature": {
-    "method": "requestSignature",
-    "title": "Signature Request",
-    "result": "Signature result",
-    "headers": {
-      "request": "Do you want to share your signature?",
-      "result": "Your signature was shared:"
-    },
-    "tooltip": "Asks your wallet for blockchain signatures"
-  },
   "injectedCall": {
     "method": "injectedCall",
     "title": "Injected Call Request",

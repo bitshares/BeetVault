@@ -1,24 +1,4 @@
 {
-  "getAccount": {
-    "method": "getAccount",
-    "title": "Kontodetails-Anfrage",
-    "result": "Kontodetails-Ergebnis",
-    "headers": {
-      "request": "Möchten Sie Ihre Kontodetails freigeben?",
-      "result": "Ihre Kontodetails wurden freigegeben."
-    },
-    "tooltip": "Fragt Ihr Wallet nach Blockchain-Kontodetails"
-  },
-  "requestSignature": {
-    "method": "requestSignature",
-    "title": "Signaturanfrage",
-    "result": "Signatur-Ergebnis",
-    "headers": {
-      "request": "Möchten Sie Ihre Signatur freigeben?",
-      "result": "Ihre Signatur wurde freigegeben:"
-    },
-    "tooltip": "Fragt Ihr Wallet nach Blockchain-Signaturen"
-  },
   "injectedCall": {
     "method": "injectedCall",
     "title": "Injizierter Aufruf Request",

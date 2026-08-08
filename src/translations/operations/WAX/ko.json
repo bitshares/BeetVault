@@ -1,24 +1,4 @@
 {
-  "getAccount": {
-    "method": "계정 가져오기",
-    "title": "계정 세부정보 요청",
-    "result": "계정 세부정보 결과",
-    "headers": {
-      "request": "계정 세부정보를 공유하시겠습니까?",
-      "result": "귀하의 계정 세부정보가 공유되었습니다."
-    },
-    "tooltip": "지갑에 블록체인 계정 세부정보를 요청합니다."
-  },
-  "requestSignature": {
-    "method": "요청서명",
-    "title": "서명 요청",
-    "result": "서명 결과",
-    "headers": {
-      "request": "서명을 공유하시겠습니까?",
-      "result": "귀하의 서명이 공유되었습니다:"
-    },
-    "tooltip": "지갑에 블록체인 서명을 요청합니다."
-  },
   "injectedCall": {
     "method": "주입전화",
     "title": "삽입된 통화 요청",

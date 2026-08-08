@@ -1,24 +1,4 @@
 {
-  "getAccount": {
-    "method": "getAccount",
-    "title": "Kontotäpsuste taotlus",
-    "result": "Kontotäpsuste tulemus",
-    "headers": {
-      "request": "Kas soovite oma kontotäpsusi jagada?",
-      "result": "Teie kontotäpsused jagati."
-    },
-    "tooltip": "Küsib teie rahakotist ahela kontotäpsusi"
-  },
-  "requestSignature": {
-    "method": "requestSignature",
-    "title": "Allkirjataotlus",
-    "result": "Allkirja tulemus",
-    "headers": {
-      "request": "Kas soovite oma allkirja jagada?",
-      "result": "Teie allkiri jagati:"
-    },
-    "tooltip": "Küsib teie rahakotist ahela allkirju"
-  },
   "injectedCall": {
     "method": "injectedCall",
     "title": "Süstitud väljakutse taotlus",

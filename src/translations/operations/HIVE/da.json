@@ -1,24 +1,4 @@
 {
-  "getAccount": {
-    "method": "getAccount",
-    "title": "Anmodning om kontodetaljer",
-    "result": "Resultat af kontodetaljer",
-    "headers": {
-      "request": "Vil du dele dine kontodetaljer?",
-      "result": "Dine kontodetaljer blev delt."
-    },
-    "tooltip": "Spørger din tegnebog om blockchain-kontodetaljer"
-  },
-  "requestSignature": {
-    "method": "requestSignature",
-    "title": "Anmodning om underskrift",
-    "result": "Resultat af underskrift",
-    "headers": {
-      "request": "Vil du dele din underskrift?",
-      "result": "Din underskrift blev delt:"
-    },
-    "tooltip": "Spørger din tegnebog om blockchain-underskrifter"
-  },
   "injectedCall": {
     "method": "injectedCall",
     "title": "Anmodning om injiceret kald",

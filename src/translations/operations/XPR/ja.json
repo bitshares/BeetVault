@@ -1,24 +1,4 @@
 {
-  "getAccount": {
-    "method": "getAccount",
-    "title": "アカウント詳細リクエスト",
-    "result": "アカウント詳細結果",
-    "headers": {
-      "request": "アカウントの詳細を共有しますか?",
-      "result": "アカウントの詳細が共有されました。"
-    },
-    "tooltip": "ウォレットにブロックチェーンアカウントの詳細を要求します"
-  },
-  "requestSignature": {
-    "method": "要求署名",
-    "title": "署名リクエスト",
-    "result": "署名結果",
-    "headers": {
-      "request": "あなたの署名を共有したいですか?",
-      "result": "あなたの署名が共有されました:"
-    },
-    "tooltip": "ウォレットにブロックチェーン署名を要求します"
-  },
   "injectedCall": {
     "method": "注入されたコール",
     "title": "挿入された通話リクエスト",

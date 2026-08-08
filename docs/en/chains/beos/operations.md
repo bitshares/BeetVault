@@ -1,28 +1,22 @@
 # BEOS Operations
 
-BEOS uses the standard Antelope operation set without chain-specific additions. The operations available are the same as those documented for [Vaulta](../vaulta/operations.md), since both run the base Antelope system contracts.
+Third-party applications request transactions using a single method: `injectedCall`. The transaction it carries may contain one or more BEOS operations.
 
-This covers account management, resource allocation (CPU, NET, RAM), staking, producer voting, and the AtomicAssets NFT standards.
+When a request arrives, BeetVault checks each operation in the transaction against the scope you configured. If none are permitted, the request is rejected without prompting. Otherwise the transaction is shown for approval.
 
-## Wallet Requests
+## Operations
 
-Requests handled by the wallet itself rather than broadcast to the chain.
+BEOS uses the standard Antelope operation set without chain-specific additions, so the operations available are the same as those documented for [Vaulta](../vaulta/operations.md).
 
-| Action | Name | Description |
-|--------|------|-------------|
-| `getAccount` | Account Details Request | Asks your wallet for blockchain account details |
-| `requestSignature` | Signature Request | Asks your wallet for blockchain signatures |
-| `injectedCall` | Injected Call Request | Asks your wallet to sign and broadcast a transaction |
-
-## Chain Operations
-
-BEOS accepts the base Antelope system operations. See the [Vaulta operations page](../vaulta/operations.md) for the full list with descriptions — resource management, REX, staking, producer registration and voting, RAM trading, and account limits all apply identically.
+This covers account management, resource allocation (CPU, NET, RAM), REX, staking, producer registration and voting, and the AtomicAssets NFT standards.
 
 ## Permission Scope
 
-Before an input method can authorise anything, you choose which of these operations it may request. Anything outside that selection is rejected without prompting.
+Each input method asks you to choose which operations it may authorise before it will process anything. You can permit everything, or select individual operations.
 
-Scope is configured per input method on its respective page, and is remembered per chain.
+Your selection is remembered per chain, and applies to every transaction that input method receives.
+
+> **Not an exhaustive list.** The Vaulta page documents the operations with descriptions available. The complete set BEOS accepts is shown when configuring scope in the wallet.
 
 ## Notes
 

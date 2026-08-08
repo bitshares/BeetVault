@@ -1,24 +1,4 @@
 {
-  "getAccount": {
-    "method": "getAccount",
-    "title": "Solicitud de detalles de cuenta",
-    "result": "Resultado de los detalles de la cuenta",
-    "headers": {
-      "request": "¿Quieres compartir los detalles de tu cuenta?",
-      "result": "Los detalles de su cuenta fueron compartidos."
-    },
-    "tooltip": "Solicita a tu cartera los detalles de la cuenta de la cadena de bloques"
-  },
-  "requestSignature": {
-    "method": "requestSignature",
-    "title": "Solicitud de firma",
-    "result": "Resultado de la firma",
-    "headers": {
-      "request": "¿Quieres compartir tu firma?",
-      "result": "Su firma fue compartida:"
-    },
-    "tooltip": "Solicita a tu cartera firmas de la cadena de bloques"
-  },
   "injectedCall": {
     "method": "injectedCall",
     "title": "Solicitud de llamada inyectada",

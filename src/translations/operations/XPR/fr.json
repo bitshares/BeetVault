@@ -1,24 +1,4 @@
 {
-  "getAccount": {
-    "method": "getAccount",
-    "title": "Demande de détails du compte",
-    "result": "Résultat des détails du compte",
-    "headers": {
-      "request": "Voulez-vous partager les détails de votre compte?",
-      "result": "Les détails de votre compte ont été partagés."
-    },
-    "tooltip": "Demande à votre portefeuille les détails du compte blockchain"
-  },
-  "requestSignature": {
-    "method": "demandeSignature",
-    "title": "Demande de signature",
-    "result": "Résultat de la signature",
-    "headers": {
-      "request": "Voulez-vous partager votre signature?",
-      "result": "Votre signature a été partagée :"
-    },
-    "tooltip": "Demande à votre portefeuille les signatures blockchain"
-  },
   "injectedCall": {
     "method": "Appel injecté",
     "title": "Demande d'appel injecté",
