@@ -58,22 +58,22 @@ jobs:
     - name: Upload .${{ matrix.release_format }} file
       uses: actions/upload-artifact@v4
       with:
-        name: BeetEOSSetup.${{ matrix.release_format }}
-        path: dist/BeetEOSSetup.${{ matrix.release_format }}
+        name: BeetVaultSetup.${{ matrix.release_format }}
+        path: dist/BeetVaultSetup.${{ matrix.release_format }}
 
     - name: Upload linux appimage
       if: matrix.os == 'ubuntu-latest'
       uses: actions/upload-artifact@v4
       with:
-        name: BeetEOSSetup.AppImage
-        path: dist/BeetEOSSetup.AppImage
+        name: BeetVaultSetup.AppImage
+        path: dist/BeetVaultSetup.AppImage
 
     - name: Upload .exe.blockmap
       if: matrix.release_format == 'exe'
       uses: actions/upload-artifact@v4
       with:
-        name: BeetEOSSetup.exe.blockmap
-        path: dist/BeetEOSSetup.exe.blockmap
+        name: BeetVaultSetup.exe.blockmap
+        path: dist/BeetVaultSetup.exe.blockmap
 
     - name: Upload latest.yml file
       if: matrix.release_format == 'exe'
@@ -92,12 +92,12 @@ jobs:
     - name: Download exe
       uses: actions/download-artifact@v4
       with:
-        name: BeetEOSSetup.exe
+        name: BeetVaultSetup.exe
         path: ~/
     - name: Download exe blockmap
       uses: actions/download-artifact@v4
       with:
-        name: BeetEOSSetup.exe.blockmap
+        name: BeetVaultSetup.exe.blockmap
         path: ~/
     - name: Download latest yml
       uses: actions/download-artifact@v4
@@ -107,36 +107,36 @@ jobs:
     - name: Download dmg
       uses: actions/download-artifact@v4
       with:
-        name: BeetEOSSetup.dmg
+        name: BeetVaultSetup.dmg
         path: ~/
     - name: Download deb
       uses: actions/download-artifact@v4
       with:
-        name: BeetEOSSetup.deb
+        name: BeetVaultSetup.deb
         path: ~/
     - name: Download AppImage
       uses: actions/download-artifact@v4
       with:
-        name: BeetEOSSetup.AppImage
+        name: BeetVaultSetup.AppImage
         path: ~/
     - name: Calculate hashes
       id: calc_hash
       run: |
-          echo "::set-output name=blockmaphash::$(sha256sum /home/runner/BeetEOSSetup.exe.blockmap|cut -c-64)"
+          echo "::set-output name=blockmaphash::$(sha256sum /home/runner/BeetVaultSetup.exe.blockmap|cut -c-64)"
           echo "::set-output name=ymlhash::$(sha256sum /home/runner/latest.yml|cut -c-64)"
-          echo "::set-output name=exehash::$(sha256sum /home/runner/BeetEOSSetup.exe|cut -c-64)"
-          echo "::set-output name=dmghash::$(sha256sum /home/runner/BeetEOSSetup.dmg|cut -c-64)"
-          echo "::set-output name=debhash::$(sha256sum /home/runner/BeetEOSSetup.deb|cut -c-64)"
-          echo "::set-output name=apphash::$(sha256sum /home/runner/BeetEOSSetup.AppImage|cut -c-64)"
+          echo "::set-output name=exehash::$(sha256sum /home/runner/BeetVaultSetup.exe|cut -c-64)"
+          echo "::set-output name=dmghash::$(sha256sum /home/runner/BeetVaultSetup.dmg|cut -c-64)"
+          echo "::set-output name=debhash::$(sha256sum /home/runner/BeetVaultSetup.deb|cut -c-64)"
+          echo "::set-output name=apphash::$(sha256sum /home/runner/BeetVaultSetup.AppImage|cut -c-64)"
     - name: Perform release
       uses: BTS-CM/action-gh-release@cd28b0f5ee8571b76cfdaa62a30d51d752317477
       with:
         files: |
-            /home/runner/BeetEOSSetup.exe
-            /home/runner/BeetEOSSetup.dmg
-            /home/runner/BeetEOSSetup.deb
-            /home/runner/BeetEOSSetup.AppImage
-            /home/runner/BeetEOSSetup.exe.blockmap
+            /home/runner/BeetVaultSetup.exe
+            /home/runner/BeetVaultSetup.dmg
+            /home/runner/BeetVaultSetup.deb
+            /home/runner/BeetVaultSetup.AppImage
+            /home/runner/BeetVaultSetup.exe.blockmap
             /home/runner/latest.yml
         tag_name: ${{ needs.create_release.outputs.tag-name }}
         body: |
@@ -146,11 +146,11 @@ jobs:
                 --------
                 | Platform | SHA256 Checksum |
                 |---|---|
-                |[Microsoft Windows](https://github.com/beetapp/beeteos/releases/download/${{ github.ref_name }}/BeetEOSSetup.exe)|`${{steps.calc_hash.outputs.exehash}}`|
-                |[MacOS](https://github.com/beetapp/beeteos/releases/download/${{ github.ref_name }}/BeetEOSSetup.dmg)|`${{steps.calc_hash.outputs.dmghash}}`|
-                |[Linux Deb](https://github.com/beetapp/beeteos/releases/download/${{ github.ref_name }}/BeetEOSSetup.deb)|`${{steps.calc_hash.outputs.debhash}}`|
-                |[Linux AppImage](https://github.com/beetapp/beeteos/releases/download/${{ github.ref_name }}/BeetEOSSetup.AppImage)|`${{steps.calc_hash.outputs.apphash}}`|
-                |[EXE blockmap](https://github.com/beetapp/beeteos/releases/download/${{ github.ref_name }}/BeetEOSSetup.exe.blockmap)|`${{steps.calc_hash.outputs.blockmaphash}}`|
-                |[Latest.yml](https://github.com/beetapp/beeteos/releases/download/${{ github.ref_name }}/latest.yml)|`${{steps.calc_hash.outputs.ymlhash}}`|
+                |[Microsoft Windows](https://github.com/beetapp/BeetVault/releases/download/${{ github.ref_name }}/BeetVaultSetup.exe)|`${{steps.calc_hash.outputs.exehash}}`|
+                |[MacOS](https://github.com/beetapp/BeetVault/releases/download/${{ github.ref_name }}/BeetVaultSetup.dmg)|`${{steps.calc_hash.outputs.dmghash}}`|
+                |[Linux Deb](https://github.com/beetapp/BeetVault/releases/download/${{ github.ref_name }}/BeetVaultSetup.deb)|`${{steps.calc_hash.outputs.debhash}}`|
+                |[Linux AppImage](https://github.com/beetapp/BeetVault/releases/download/${{ github.ref_name }}/BeetVaultSetup.AppImage)|`${{steps.calc_hash.outputs.apphash}}`|
+                |[EXE blockmap](https://github.com/beetapp/BeetVault/releases/download/${{ github.ref_name }}/BeetVaultSetup.exe.blockmap)|`${{steps.calc_hash.outputs.blockmaphash}}`|
+                |[Latest.yml](https://github.com/beetapp/BeetVault/releases/download/${{ github.ref_name }}/latest.yml)|`${{steps.calc_hash.outputs.ymlhash}}`|
       env:
         GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
