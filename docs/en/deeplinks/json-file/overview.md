@@ -1,6 +1,6 @@
 # JSON File Deeplink
 
-The JSON Deeplink page lets you load transaction payloads from files and submit them to the wallet for processing. This is useful for workflows where dApps export transaction requests as files.
+The JSON Deeplink method lets you load transaction payloads from files and submit them to the wallet for processing. This is useful for workflows where dApps export transaction requests as files.
 
 > **No size limit.** Unlike deeplinks and QR codes, file uploads are not constrained by URL or scanning limits. This is the recommended method for large transactions.
 
@@ -60,7 +60,7 @@ The file contains the **same request envelope as a raw deeplink**, stored as pla
 | `payload.browser` | No | Origin browser, shown in the prompt |
 | `payload.origin` | No | Requesting domain, shown in the prompt |
 
-See [Raw Deeplink](./raw-deeplink.md) for full field documentation and a transaction-building example.
+See [Raw Deeplink](../raw/overview.md) for full field documentation.
 
 ## Generating a File
 
@@ -115,6 +115,12 @@ Transactions containing hundreds or thousands of operations should always use fi
 
 ## Chain Compatibility
 
-JSON file processing is supported on all chains **except Hive**. If a Hive account is selected, the upload feature is unavailable.
+JSON file processing is supported on **all chains**, including Hive.
 
-See the [Hive](./chains/hive/overview.md) page for details.
+## Code Examples by Chain Family
+
+For complete, chain-specific code examples showing how to build transactions and generate JSON files:
+
+- [BTS / Graphene](./bts.md) — BitShares and other Graphene-based chains
+- [Antelope](./antelope.md) — Vaulta, WAX, Telos, FIO, Libre, XPR Network, BEOS
+- [Hive](./hive.md) — Hive mainnet

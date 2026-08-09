@@ -20,14 +20,18 @@ export default {
     },
 
     buildSignParams(request) {
-        try {
-            return JSON.parse(request.payload.params[1]);
-        } catch (error) {
-            throw new Error(
-                `Antelope transaction payload is not valid JSON: ${error.message}. ` +
-                `Received: ${typeof request.payload.params[1] === 'string' ? request.payload.params[1].substring(0, 200) : JSON.stringify(request.payload.params[1])}`
-            );
+        const params = request.payload.params[1];
+        if (typeof params === 'string') {
+            try {
+                return JSON.parse(params);
+            } catch (error) {
+                throw new Error(
+                    `Antelope transaction payload is not valid JSON: ${error.message}. ` +
+                    `Received: ${params.substring(0, 200)}`
+                );
+            }
         }
+        return params;
     },
 
     async preProcess(request, _chain) {

@@ -1,6 +1,6 @@
 # QR Code Deeplink
 
-The QR Code page lets you interact with dApps by scanning, dragging, or uploading QR codes containing transaction payloads. This is useful for air-gapped workflows or dApps that present transaction requests as QR codes.
+The QR Code method lets you interact with dApps by scanning, dragging, or uploading QR codes containing transaction payloads. This is useful for air-gapped workflows or dApps that present transaction requests as QR codes.
 
 ## How It Works
 
@@ -48,85 +48,16 @@ After selecting your input method:
 
 > **Important:** QR codes do **not** use the `{type, id, payload}` request envelope that deeplinks and JSON files use. A QR code contains a **bare transaction object**. The wallet builds the envelope itself after scanning.
 
-The exact shape depends on the chain family.
+The exact shape depends on the chain family:
 
-### Graphene chains (BitShares)
+- **Graphene chains** — an object with an `operations` array of `[opTypeId, opPayload]` pairs
+- **Antelope and Hive chains** — an object with an `actions` array where each action has a `name`
 
-The QR contains the output of `TransactionBuilder.toObject()` — an object with an `operations` array, where each operation is an `[opTypeId, opPayload]` pair:
-
-```json
-{
-  "ref_block_num": 12345,
-  "ref_block_prefix": 987654321,
-  "expiration": "2026-01-01T00:00:00",
-  "operations": [
-    [0, {
-      "fee": { "amount": 100, "asset_id": "1.3.0" },
-      "from": "1.2.100",
-      "to": "1.2.200",
-      "amount": { "amount": 100000, "asset_id": "1.3.0" }
-    }]
-  ],
-  "extensions": [],
-  "signatures": []
-}
-```
-
-The wallet checks authorization by reading the numeric operation type from each entry and matching it against your configured permission scope.
-
-### Antelope and Hive chains
-
-The QR contains an object with an `actions` array, where each action carries a `name`:
-
-```json
-{
-  "actions": [
-    {
-      "account": "eosio.token",
-      "name": "transfer",
-      "authorization": [{ "actor": "alice", "permission": "active" }],
-      "data": {
-        "from": "alice",
-        "to": "bob",
-        "quantity": "1.0000 EOS",
-        "memo": ""
-      }
-    }
-  ]
-}
-```
-
-Here the wallet matches each action's `name` field against your permission scope.
+See the chain-specific pages below for concrete examples.
 
 ## Generating QR Contents
 
-The Graphene example below produces an object ready to encode. Note it **does not** call `finalize()` — unlike deeplink generation, the transaction is left unfinalized:
-
-```js
-import TransactionBuilder from "./bts/chain/TransactionBuilder";
-
-async function generateQRContents(opTypes, operations) {
-  const tr = new TransactionBuilder();
-
-  for (let i = 0; i < operations.length; i++) {
-    const op = { ...operations[i] };
-
-    if (op.memo && typeof op.memo.message === "string") {
-      op.memo.message = Buffer.from(op.memo.message, "utf-8");
-    }
-
-    tr.add_type_operation(opTypes[i], op);
-  }
-
-  await tr.set_required_fees();
-  await tr.update_head_block();
-  await tr.set_expire_seconds(4000);
-
-  return tr.toObject();
-}
-```
-
-Render it with any QR library — for example `react-qrcode-logo`:
+Produce the bare transaction object for your chain family (without calling `finalize()`), then encode it as a QR code:
 
 ```jsx
 import { QRCode } from "react-qrcode-logo";
@@ -181,10 +112,16 @@ Lower-version codes with medium error correction scan quickly and reliably acros
 
 ### Exceeding the limit
 
-If your transaction cannot fit — for example, a batch containing hundreds or thousands of operations — use the [JSON File](./json-file-deeplink.md) method instead. File uploads have no size restriction.
+If your transaction cannot fit — for example, a batch containing hundreds or thousands of operations — use the [JSON File](../json-file/overview.md) method instead. File uploads have no size restriction.
 
 ## Chain Compatibility
 
-QR code processing is supported on all chains **except Hive**. If a Hive account is selected, this page displays an unsupported-chain message.
+QR code processing is supported on **all chains**, including Hive.
 
-See the [Hive](./chains/hive/overview.md) page for details.
+## Code Examples by Chain Family
+
+For complete, chain-specific code examples showing how to generate QR contents for each chain family:
+
+- [BTS / Graphene](./bts.md) — BitShares and other Graphene-based chains
+- [Antelope](./antelope.md) — Vaulta, WAX, Telos, FIO, Libre, XPR Network, BEOS
+- [Hive](./hive.md) — Hive mainnet

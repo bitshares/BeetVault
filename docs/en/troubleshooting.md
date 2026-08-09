@@ -47,7 +47,7 @@ Common issues and their solutions.
 
 **Solutions:**
 - **Check the URL length.** Chromium-based browsers (Chrome, Edge, Brave, Opera) silently drop URLs longer than roughly 2,048 characters. Large transactions frequently exceed this.
-- Ask the dApp to use the [JSON File](./json-file-deeplink.md) method instead — file uploads have no size limit
+- Ask the dApp to use the [JSON File](./deeplinks/json-file/overview.md) method instead — file uploads have no size limit
 - Confirm BeetVault is registered as the protocol handler for `beetvault://` on your system
 - Try the link in a different browser to rule out a browser-specific issue
 
@@ -60,7 +60,7 @@ Common issues and their solutions.
 - The code may be too dense — large payloads produce high-version QR codes with fine module patterns that cameras struggle to resolve
 - Improve lighting, reduce screen glare, and hold the camera steady at the right distance
 - Display the code larger on the source screen, if possible
-- Ask the dApp to use the [JSON File](./json-file-deeplink.md) method for large transactions
+- Ask the dApp to use the [JSON File](./deeplinks/json-file/overview.md) method for large transactions
 
 ## Backup/Restore Failures
 

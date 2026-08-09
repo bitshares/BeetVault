@@ -8,10 +8,10 @@ BeetVault accepts transaction requests through four channels. Pick based on tran
 
 | Method | Capacity | Best for |
 |--------|----------|----------|
-| [Raw Deeplink](./raw-deeplink.md) | ~5–6 simple operations | One-click browser handoff |
-| [TOTP Deeplink](./totp-deeplink.md) | ~5–6 simple operations | Same, with encryption in transit |
-| [QR Code](./qr-code.md) | ~1,000 bytes recommended | Air-gapped or cross-device signing |
-| [JSON File](./json-file-deeplink.md) | Unlimited | Large batches, offline workflows |
+| [Raw Deeplink](./deeplinks/raw/overview.md) | ~5–6 simple operations | One-click browser handoff |
+| [TOTP Deeplink](./deeplinks/totp/overview.md) | ~5–6 simple operations | Same, with encryption in transit |
+| [QR Code](./deeplinks/qr/overview.md) | ~1,000 bytes recommended | Air-gapped or cross-device signing |
+| [JSON File](./deeplinks/json-file/overview.md) | Unlimited | Large batches, offline workflows |
 
 Offering more than one gives users a fallback when a transaction outgrows a URL.
 
@@ -45,7 +45,7 @@ Raw deeplinks, TOTP deeplinks, and JSON files all wrap the transaction in the sa
 | `payload.browser` | No | Shown in the approval prompt |
 | `payload.origin` | No | Shown in the approval prompt |
 
-**QR codes are the exception** — they carry a bare transaction object with no envelope. The wallet constructs the envelope itself after scanning. See [QR Code](./qr-code.md) for the per-chain shapes.
+**QR codes are the exception** — they carry a bare transaction object with no envelope. The wallet constructs the envelope itself after scanning. See [QR Code](./deeplinks/qr/overview.md) for the per-chain shapes.
 
 ## Encoding Pipelines
 
@@ -134,7 +134,7 @@ const totpUrl =
 const qrValue = JSON.stringify(tr.toObject());
 ```
 
-See [TOTP Deeplink](./totp-deeplink.md) for the `encryptForBeetVault` implementation.
+See [TOTP Deeplink](./deeplinks/totp/overview.md) for the `encryptForBeetVault` implementation.
 
 ## Chain Differences
 

@@ -1,6 +1,6 @@
 # TOTP Deeplink
 
-The TOTP Deeplink page generates time-limited authentication codes for secure dApp interactions. It also processes incoming encrypted deeplinks in real time.
+The TOTP Deeplink method generates time-limited authentication codes for secure dApp interactions. A dApp encrypts the transaction request using the code as a passphrase and sends it to BeetVault via the `beetvault://api/` protocol.
 
 ## How It Works
 
@@ -134,7 +134,7 @@ Once decrypted, the payload must be the same request envelope used by raw deepli
 }
 ```
 
-See [Raw Deeplink](./raw-deeplink.md) for a full description of each envelope field.
+See [Raw Deeplink](../raw/overview.md) for a full description of each envelope field.
 
 ## Generating a TOTP Deeplink
 
@@ -229,7 +229,7 @@ Roughly **5–6 simple operations** is the practical ceiling — comparable to r
 
 ### Exceeding the limit
 
-If your transaction cannot fit — for example, a batch containing hundreds or thousands of operations — use the [JSON File](./json-file-deeplink.md) method instead. File uploads have no size restriction.
+If your transaction cannot fit — for example, a batch containing hundreds or thousands of operations — use the [JSON File](../json-file/overview.md) method instead. File uploads have no size restriction.
 
 ## Supported Protocols
 
@@ -244,6 +244,12 @@ Both formats are functionally identical. The `beetvault://api/` scheme is recomm
 
 ## Chain Compatibility
 
-TOTP deeplinks are supported on all chains **except Hive**. If a Hive account is selected, this page displays an unsupported-chain message.
+TOTP deeplinks are supported on **all chains**, including Hive.
 
-See the [Hive](./chains/hive/overview.md) page for details.
+## Code Examples by Chain Family
+
+For complete, chain-specific code examples showing how to build transactions and generate TOTP deeplinks:
+
+- [BTS / Graphene](./bts.md) — BitShares and other Graphene-based chains
+- [Antelope](./antelope.md) — Vaulta, WAX, Telos, FIO, Libre, XPR Network, BEOS
+- [Hive](./hive.md) — Hive mainnet

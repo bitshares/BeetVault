@@ -31,9 +31,9 @@ Web applications can request transaction signing through BeetVault's injected pr
 ### Raw Transactions
 Manually construct and sign raw transaction JSON through the Local and Raw Deeplink screens.
 
-> **Note for dApp developers:** Deeplinks are subject to a ~2,048 character browser URL limit, and QR codes are constrained by image data capacity and scan reliability. For large transactions, use the [JSON File](./json-file-deeplink.md) method, which has no size restriction.
+> **Note for dApp developers:** Deeplinks are subject to a ~2,048 character browser URL limit, and QR codes are constrained by image data capacity and scan reliability. For large transactions, use the [JSON File](./deeplinks/json-file/overview.md) method, which has no size restriction.
 
-> **Chain support:** All four input methods work on every supported chain **except Hive**, which supports balance viewing and message signing only. See [Blockchains](./blockchains.md).
+> **Chain support:** All four input methods work on every supported chain, including Hive. See [Blockchains](./blockchains.md).
 
 ## Security Features
 

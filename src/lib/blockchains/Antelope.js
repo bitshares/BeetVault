@@ -61,6 +61,19 @@ export const ATOMIC_MARKET_OPERATIONS = [
     "logroyfound", "logroytempl", "logroyattr", "logroydust",
 ];
 
+function prepareActionsForWharfkit(actions) {
+    return actions.map((action) => {
+        if (action.data && typeof action.data === 'string') {
+            try {
+                return { ...action, data: Bytes.from(action.data, 'hex') };
+            } catch (e) {
+                return action;
+            }
+        }
+        return action;
+    });
+}
+
 export default class Antelope extends BlockchainAPI {
     get operations() {
         return [
@@ -503,9 +516,11 @@ export default class Antelope extends BlockchainAPI {
                 abi: abiResponses[index]?.abi
             })).filter(item => item.abi);
 
+            const preparedActions = prepareActionsForWharfkit(transaction.actions);
+
             const tx = Transaction.from({
                 ...header,
-                actions: transaction.actions
+                actions: preparedActions
             }, abis);
 
             const signature = transaction.privateKey.signDigest(
@@ -582,10 +597,42 @@ export default class Antelope extends BlockchainAPI {
      */
     async visualize(trx) {
         const _trx = typeof trx[1] === "string" ? JSON.parse(trx[1]) : trx[1];
-        console.log({ trx, _trx, actions: _trx.actions[0] });
+
+        if (!this.client) {
+            this.client = new APIClient({
+                provider: new FetchProvider(this.getNodes()[0].url, { fetch })
+            });
+        }
+
+        const contractNames = [...new Set(_trx.actions.map((a) => a.account))];
+        const abiResponses = await Promise.all(
+            contractNames.map((c) => this.client.v1.chain.get_abi(c))
+        );
+        const abis = contractNames
+            .map((c, i) => ({ contract: c, abi: abiResponses[i]?.abi }))
+            .filter((a) => a.abi);
+
+        const preparedActions = prepareActionsForWharfkit(_trx.actions);
+
+        const decodedActions = preparedActions.map((action) => {
+            const contractAbi = abis.find((a) => a.contract === action.account);
+            if (contractAbi && action.data) {
+                try {
+                    const decoded = Transaction.from(
+                        { actions: [action] },
+                        [contractAbi]
+                    ).actions[0].decoded;
+                    return { ...action, data: decoded.data };
+                } catch (e) {
+                    // If decoding fails, pass through raw data
+                }
+            }
+            return action;
+        });
+
         let beautifiedOpPromises = [];
-        for (let i = 0; i < _trx.actions.length; i++) {
-            let operation = _trx.actions[i];
+        for (let i = 0; i < decodedActions.length; i++) {
+            let operation = decodedActions[i];
             beautifiedOpPromises.push(this.beautifyModule(operation));
         }
 

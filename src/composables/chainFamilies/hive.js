@@ -26,7 +26,7 @@ function validateKeyAuthority(request, visualizedParams) {
     const parsedParams = typeof visualizedParams === "string"
         ? JSON.parse(visualizedParams)
         : visualizedParams;
-    const actions = parsedParams.actions || [];
+    const ops = parsedParams.operations || parsedParams.actions || [];
 
     const hiveKeyInfo = useAccountStore().getHiveKey(request);
     if (!hiveKeyInfo || !hiveKeyInfo.keyType) {
@@ -41,8 +41,8 @@ function validateKeyAuthority(request, visualizedParams) {
     const userLevel = KEY_HIERARCHY[userKeyType] || 0;
     const deniedOps = [];
 
-    for (const action of actions) {
-        const opName = action.op;
+    for (const op of ops) {
+        const opName = Array.isArray(op) ? op[0] : op.name;
         if (!opName) continue;
 
         const requiredKeyType = getRequiredKeyType(opName);
@@ -94,14 +94,18 @@ export default {
     },
 
     buildSignParams(request) {
-        try {
-            return JSON.parse(request.payload.params[1]);
-        } catch (error) {
-            throw new Error(
-                `Hive transaction payload is not valid JSON: ${error.message}. ` +
-                `Received: ${typeof request.payload.params[1] === 'string' ? request.payload.params[1].substring(0, 200) : JSON.stringify(request.payload.params[1])}`
-            );
+        const params = request.payload.params[1];
+        if (typeof params === 'string') {
+            try {
+                return JSON.parse(params);
+            } catch (error) {
+                throw new Error(
+                    `Hive transaction payload is not valid JSON: ${error.message}. ` +
+                    `Received: ${params.substring(0, 200)}`
+                );
+            }
         }
+        return params;
     },
 
     async preProcess(request, _chain) {

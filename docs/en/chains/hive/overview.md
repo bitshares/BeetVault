@@ -29,16 +29,12 @@ See [Operations](./operations.md) for the full list of actions BeetVault can bro
 
 ## Input Method Support
 
-> **Hive does not support the deeplink input methods.**
-
 | Method | Supported |
 |--------|-----------|
-| TOTP Deeplink | **No** |
-| Raw Deeplink | **No** |
-| QR Code | **No** |
-| JSON File | **No** |
-
-Unlike every other chain BeetVault supports, the Hive implementation does not provide handlers for deeplink, QR, or file-based transaction requests. Selecting a Hive account and opening one of those pages will display an unsupported-chain message.
+| TOTP Deeplink | Yes |
+| Raw Deeplink | Yes |
+| QR Code | Yes |
+| JSON File | Yes |
 
 ### What Hive accounts can do
 
@@ -47,7 +43,7 @@ Unlike every other chain BeetVault supports, the Hive implementation does not pr
 | View account balances | Yes |
 | [Sign messages](../../sign-message.md) | Yes |
 | [Verify messages](../../verify-message.md) | Yes |
-| Deeplink / QR / file transactions | No |
+| Deeplink / QR / file transactions | Yes |
 
 ## Block Explorer
 

@@ -147,7 +147,7 @@ class Hive extends BlockchainAPI {
   };
 
   getOperationTypes = async () => {
-    return [
+    const opNames = [
       "vote",
       "transfer",
       "comment",
@@ -171,6 +171,7 @@ class Hive extends BlockchainAPI {
       "recover_account",
       "change_recovery_account"
     ];
+    return opNames.map((op) => ({ id: op, method: op }));
   };
 
   getOperation = async (operationType, data) => {
@@ -417,14 +418,9 @@ class Hive extends BlockchainAPI {
       }
 
       const pk = new PrivateKey(privateKey);
-      const tx = new Transaction(transaction);
+      const tx = new Transaction({ transaction });
       const signResult = await tx.sign(pk);
-      const pub = pk.createPublic().toString();
-
-      return {
-        signature: signResult.signature,
-        publicKey: pub
-      };
+      return signResult;
     } catch (e) {
       console.log({ error: e, location: "sign" });
       throw e;
@@ -437,7 +433,7 @@ class Hive extends BlockchainAPI {
         throw new Error("No transaction to broadcast");
       }
 
-      const tx = new Transaction(signedTransaction);
+      const tx = new Transaction({ transaction: signedTransaction });
       const result = await tx.broadcast();
       return result;
     } catch (e) {
@@ -456,9 +452,12 @@ class Hive extends BlockchainAPI {
 
   visualize = async (trx) => {
     const _trx = typeof trx[1] === "string" ? JSON.parse(trx[1]) : trx[1];
+    const ops = _trx.operations || _trx.actions || [];
     let beautifiedOpPromises = [];
-    for (let i = 0; i < _trx.actions.length; i++) {
-        let operation = _trx.actions[i];
+    for (let i = 0; i < ops.length; i++) {
+        const operation = Array.isArray(ops[i])
+          ? { name: ops[i][0], data: ops[i][1] }
+          : ops[i];
         beautifiedOpPromises.push(beautify(operation));
     }
 

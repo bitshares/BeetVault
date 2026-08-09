@@ -169,28 +169,124 @@
       ]
     },
     {
-      "id": "totp-deeplink",
-      "titleKey": "docs.nav.totpDeeplink",
-      "path": "totp-deeplink.md",
-      "icon": "Clock"
-    },
-    {
-      "id": "raw-deeplink",
-      "titleKey": "docs.nav.rawDeeplink",
-      "path": "raw-deeplink.md",
-      "icon": "Code"
-    },
-    {
-      "id": "qr-code",
-      "titleKey": "docs.nav.qrCode",
-      "path": "qr-code.md",
-      "icon": "ScanLine"
-    },
-    {
-      "id": "json-file-deeplink",
-      "titleKey": "docs.nav.jsonFileDeeplink",
-      "path": "json-file-deeplink.md",
-      "icon": "FileJson"
+      "id": "deeplinks",
+      "titleKey": "docs.nav.deeplinks",
+      "path": "deeplinks/totp/overview.md",
+      "icon": "Link",
+      "items": [
+        {
+          "id": "deeplinks-totp",
+          "titleKey": "docs.nav.deeplinksTotp",
+          "path": "deeplinks/totp/overview.md",
+          "icon": "Clock",
+          "items": [
+            {
+              "id": "deeplinks-totp-overview",
+              "titleKey": "docs.nav.deeplinksOverview",
+              "path": "deeplinks/totp/overview.md"
+            },
+            {
+              "id": "deeplinks-totp-bts",
+              "titleKey": "docs.nav.deeplinksBts",
+              "path": "deeplinks/totp/bts.md"
+            },
+            {
+              "id": "deeplinks-totp-antelope",
+              "titleKey": "docs.nav.deeplinksAntelope",
+              "path": "deeplinks/totp/antelope.md"
+            },
+            {
+              "id": "deeplinks-totp-hive",
+              "titleKey": "docs.nav.deeplinksHive",
+              "path": "deeplinks/totp/hive.md"
+            }
+          ]
+        },
+        {
+          "id": "deeplinks-raw",
+          "titleKey": "docs.nav.deeplinksRaw",
+          "path": "deeplinks/raw/overview.md",
+          "icon": "Code",
+          "items": [
+            {
+              "id": "deeplinks-raw-overview",
+              "titleKey": "docs.nav.deeplinksOverview",
+              "path": "deeplinks/raw/overview.md"
+            },
+            {
+              "id": "deeplinks-raw-bts",
+              "titleKey": "docs.nav.deeplinksBts",
+              "path": "deeplinks/raw/bts.md"
+            },
+            {
+              "id": "deeplinks-raw-antelope",
+              "titleKey": "docs.nav.deeplinksAntelope",
+              "path": "deeplinks/raw/antelope.md"
+            },
+            {
+              "id": "deeplinks-raw-hive",
+              "titleKey": "docs.nav.deeplinksHive",
+              "path": "deeplinks/raw/hive.md"
+            }
+          ]
+        },
+        {
+          "id": "deeplinks-qr",
+          "titleKey": "docs.nav.deeplinksQr",
+          "path": "deeplinks/qr/overview.md",
+          "icon": "ScanLine",
+          "items": [
+            {
+              "id": "deeplinks-qr-overview",
+              "titleKey": "docs.nav.deeplinksOverview",
+              "path": "deeplinks/qr/overview.md"
+            },
+            {
+              "id": "deeplinks-qr-bts",
+              "titleKey": "docs.nav.deeplinksBts",
+              "path": "deeplinks/qr/bts.md"
+            },
+            {
+              "id": "deeplinks-qr-antelope",
+              "titleKey": "docs.nav.deeplinksAntelope",
+              "path": "deeplinks/qr/antelope.md"
+            },
+            {
+              "id": "deeplinks-qr-hive",
+              "titleKey": "docs.nav.deeplinksHive",
+              "path": "deeplinks/qr/hive.md"
+            }
+          ]
+        },
+        {
+          "id": "deeplinks-json-file",
+          "titleKey": "docs.nav.deeplinksJsonFile",
+          "path": "deeplinks/json-file/overview.md",
+          "icon": "FileJson",
+          "items": [
+            {
+              "id": "deeplinks-json-file-overview",
+              "titleKey": "docs.nav.deeplinksOverview",
+              "path": "deeplinks/json-file/overview.md"
+            },
+            {
+              "id": "deeplinks-json-file-bts",
+              "titleKey": "docs.nav.deeplinksBts",
+              "path": "deeplinks/json-file/bts.md"
+            },
+            {
+              "id": "deeplinks-json-file-antelope",
+              "titleKey": "docs.nav.deeplinksAntelope",
+              "path": "deeplinks/json-file/antelope.md"
+            },
+            {
+              "id": "deeplinks-json-file-hive",
+              "titleKey": "docs.nav.deeplinksHive",
+              "path": "deeplinks/json-file/hive.md"
+            }
+          ]
+        }
+      ]
     },
     {
       "id": "sign-message",

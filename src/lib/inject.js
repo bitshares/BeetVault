@@ -106,12 +106,12 @@ export async function inject(blockchain, request, webContents) {
         visualizedAccount = _actions[0].authorization[0].actor;
     } else if (HIVE_FAMILY.includes(blockchain._config.identifier)) {
         const params = request.payload.params[1];
-        const _actions =
-            typeof params === "string"
-                ? JSON.parse(params).actions
-                : params.actions;
-
-        visualizedAccount = _actions[0].authorization[0].actor;
+        const parsed =
+            typeof params === "string" ? JSON.parse(params) : params;
+        const ops = parsed.operations || parsed.actions || [];
+        const firstOp = ops[0];
+        const firstOpData = Array.isArray(firstOp) ? firstOp[1] : firstOp?.data;
+        visualizedAccount = firstOpData?.from || "";
     }
 
     const _injectedCall = (

@@ -249,21 +249,21 @@ export async function parseDeeplink(requestContent, type, chain, blockchain, blo
             }
         } else if (HIVE_FAMILY.includes(chain)) {
             if (request.payload.params && request.payload.params.length > 1) {
-                let actions;
+                let operations;
                 try {
-                    actions = JSON.parse(request.payload.params[1]).actions;
+                    const parsed = JSON.parse(request.payload.params[1]);
+                    operations = parsed.operations || parsed.actions;
                 } catch (error) {
                     console.log({ error, location: '_parseDeeplink.HIVE.parse' });
                     return;
                 }
 
-                if (actions) {
-                    for (let i = 0; i < actions.length; i++) {
-                        let operation = actions[i];
-                        if (
-                            settingsRows &&
-                            settingsRows.includes(operation.name)
-                        ) {
+                if (operations) {
+                    for (let i = 0; i < operations.length; i++) {
+                        const opName = Array.isArray(operations[i])
+                            ? operations[i][0]
+                            : operations[i].name;
+                        if (settingsRows && settingsRows.includes(opName)) {
                             authorizedUse = true;
                             break;
                         }
@@ -666,13 +666,10 @@ export async function handleBlockchainRequest(event, arg) {
                 }
             }
         } else if (HIVE_FAMILY.includes(chain)) {
-            const ops = parsedData.actions;
+            const ops = parsedData.operations || parsedData.actions;
             for (let i = 0; i < ops.length; i++) {
-                let operation = ops[i];
-                if (
-                    allowedOperations &&
-                    allowedOperations.includes(operation.name)
-                ) {
+                const opName = Array.isArray(ops[i]) ? ops[i][0] : ops[i].name;
+                if (allowedOperations && allowedOperations.includes(opName)) {
                     authorizedUse = true;
                     break;
                 }

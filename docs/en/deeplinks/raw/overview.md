@@ -1,6 +1,6 @@
 # Raw Deeplink
 
-The Raw Deeplink page processes incoming `rawbeetvault://api/` protocol requests from dApps. Unlike TOTP deeplinks, raw deeplinks send unencrypted transaction payloads directly to the wallet for signing.
+The Raw Deeplink method processes incoming `rawbeetvault://api/` protocol requests from dApps. Unlike TOTP deeplinks, raw deeplinks send unencrypted transaction payloads directly to the wallet for signing.
 
 ## How It Works
 
@@ -79,37 +79,18 @@ The `request` parameter contains a URL-encoded JSON object with this structure:
 
 ## Generating a Raw Deeplink
 
-The example below builds a BitShares transaction and produces a launchable deeplink:
+The envelope is identical across all chains — only the transaction construction inside `params` differs. Build the transaction using your chain's own tooling, stringify it into `payload.params`, and set `payload.chain` to the matching identifier.
 
 ```js
 import { v4 as uuidv4 } from "uuid";
-import TransactionBuilder from "./bts/chain/TransactionBuilder";
 
-async function buildRawDeeplink(chain, opTypes, operations) {
-  const tr = new TransactionBuilder();
-
-  for (let i = 0; i < operations.length; i++) {
-    const op = { ...operations[i] };
-
-    // Memo messages must be encoded to bytes before being added
-    if (op.memo && typeof op.memo.message === "string") {
-      op.memo.message = Buffer.from(op.memo.message, "utf-8");
-    }
-
-    tr.add_type_operation(opTypes[i], op);
-  }
-
-  await tr.update_head_block();
-  await tr.set_required_fees();
-  tr.set_expire_seconds(7200);
-  tr.finalize();
-
+function buildRawDeeplink(chain, transactionObject) {
   const request = {
     type: "api",
     id: uuidv4(),
     payload: {
       method: "injectedCall",
-      params: ["signAndBroadcast", JSON.stringify(tr.toObject()), []],
+      params: ["signAndBroadcast", JSON.stringify(transactionObject), []],
       appName: "My dApp",
       chain: chain,
       browser: "web browser",
@@ -127,10 +108,6 @@ Render the result as a normal link — the OS hands it to BeetVault:
 ```html
 <a href="rawbeetvault://api/?chain=BTS&request=...">Broadcast with BeetVault</a>
 ```
-
-### Antelope and Hive chains
-
-The envelope is identical; only the transaction construction differs. Build the transaction using your chain's own tooling (for example `@wharfkit/antelope` for Vaulta/WAX/Telos), then stringify it into `payload.params` exactly as above and set `payload.chain` to the matching identifier.
 
 ## URL Length Limit
 
@@ -157,7 +134,7 @@ Roughly **5–6 simple operations** is the practical ceiling. Operations carryin
 
 ### Exceeding the limit
 
-If your transaction cannot fit — for example, a batch containing hundreds or thousands of operations — use the [JSON File](./json-file-deeplink.md) method instead. File uploads have no size restriction.
+If your transaction cannot fit — for example, a batch containing hundreds or thousands of operations — use the [JSON File](../json-file/overview.md) method instead. File uploads have no size restriction.
 
 ## Supported Protocols
 
@@ -191,6 +168,12 @@ All four schemes are functionally identical within their type. The `beetvault` v
 
 ## Chain Compatibility
 
-Raw deeplinks are supported on all chains **except Hive**. If a Hive account is selected, this page displays an unsupported-chain message.
+Raw deeplinks are supported on **all chains**, including Hive.
 
-See the [Hive](./chains/hive/overview.md) page for details.
+## Code Examples by Chain Family
+
+For complete, chain-specific code examples showing how to build transactions and generate raw deeplinks:
+
+- [BTS / Graphene](./bts.md) — BitShares and other Graphene-based chains
+- [Antelope](./antelope.md) — Vaulta, WAX, Telos, FIO, Libre, XPR Network, BEOS
+- [Hive](./hive.md) — Hive mainnet

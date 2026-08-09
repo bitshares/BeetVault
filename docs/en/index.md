@@ -31,10 +31,10 @@ See [Blockchains](./blockchains.md) for protocol family details and testnet avai
 
 ## Wallet Operations
 
-- **TOTP Deeplink** — Generate time-limited authentication codes for dApp interactions
-- **Raw Deeplink** — Process unencrypted transaction payloads from dApps
-- **QR Code** — Scan, drag, or upload QR codes containing transaction data
-- **JSON File** — Upload JSON files with transaction payloads
+- [TOTP Deeplink](./deeplinks/totp/overview.md) — Generate time-limited authentication codes for dApp interactions
+- [Raw Deeplink](./deeplinks/raw/overview.md) — Process unencrypted transaction payloads from dApps
+- [QR Code](./deeplinks/qr/overview.md) — Scan, drag, or upload QR codes containing transaction data
+- [JSON File](./deeplinks/json-file/overview.md) — Upload JSON files with transaction payloads
 - **Sign Message** — Sign arbitrary messages to prove account ownership
 - **Verify Message** — Verify a signed message against a public key
 

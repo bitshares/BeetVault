@@ -4,7 +4,7 @@ import { useI18n } from 'vue-i18n';
 import queryString from 'query-string';
 import {
     BookOpen, Clock, Code, Code2, ScanLine, FileJson, PenLine, ShieldCheck,
-    Zap, Shield, Wrench, HelpCircle, Blocks,
+    Zap, Shield, Wrench, HelpCircle, Blocks, Link,
     ChevronRight, Loader2
 } from 'lucide-vue-next';
 import { Button } from '@/components/ui/ui/button';
@@ -24,7 +24,6 @@ import {
 } from '@/components/ui/ui/sidebar';
 
 import MarkdownRenderer from './markdown-renderer.vue';
-import { selectLocales } from '../config/i18n.js';
 
 const { t } = useI18n({ useScope: 'global' });
 const emitter = inject('emitter');
@@ -51,6 +50,7 @@ const iconMap = {
     Wrench,
     HelpCircle,
     Blocks,
+    Link,
 };
 
 /**
@@ -150,11 +150,6 @@ function isGroupActive(section) {
     return (section.items || []).some(isGroupActive);
 }
 
-function onLocaleChange(localeValue) {
-    currentLocale.value = localeValue;
-    loadPage(currentPage.value, localeValue);
-}
-
 onMounted(async () => {
     await loadManifest();
     await loadPage(currentPage.value, currentLocale.value);
@@ -167,25 +162,6 @@ onMounted(async () => {
             <!-- Sidebar -->
             <Sidebar class="border-r border-border w-64 shrink-0">
                 <SidebarHeader class="p-4 border-b border-border">
-                    <!-- Language Selector -->
-                    <div class="space-y-1">
-                        <label class="text-xs text-muted-foreground font-medium">
-                            {{ t('common.popup.language') }}
-                        </label>
-                        <select
-                            :value="currentLocale"
-                            @change="onLocaleChange(($event.target).value)"
-                            class="w-full text-sm bg-background border border-border rounded-md px-2 py-1.5 focus:outline-none focus:ring-2 focus:ring-primary"
-                        >
-                            <option
-                                v-for="locale in selectLocales"
-                                :key="locale.value"
-                                :value="locale.value"
-                            >
-                                {{ locale.label }}
-                            </option>
-                        </select>
-                    </div>
                 </SidebarHeader>
 
                 <SidebarContent class="p-2">
