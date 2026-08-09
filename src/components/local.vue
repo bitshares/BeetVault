@@ -1,14 +1,27 @@
 <script setup>
 import { ref, computed, onMounted, watch, toRaw } from "vue";
 import { useI18n } from "vue-i18n";
+import { Button } from '@/components/ui/ui/button';
+import { Card, CardContent } from '@/components/ui/ui/card';
+import { Loader2 } from 'lucide-vue-next';
 
 import AccountSelect from "./account-select";
 import Operations from "./blockchains/operations";
 
-import store from "../store/index.js";
+    import { useWalletStore } from "@/stores/walletStore.js";
+    import { useAccountStore } from "@/stores/accountStore.js";
+    import { useSettingsStore } from "@/stores/settingsStore.js";
+    import { usePopupStore } from "@/stores/popupStore.js";
+    import { blockchainRequest } from '@/lib/blockchainRequestHelper.js';
 import router from "../router/index.js";
 
-const { t } = useI18n({ useScope: "global" });
+    const { t } = useI18n({ useScope: "global" });
+    const walletStore = useWalletStore();
+    const accountStore = useAccountStore();
+    const settingsStore = useSettingsStore();
+    const popupStore = usePopupStore();
+
+    let hasActivePopup = computed(() => popupStore.hasActivePopup);
 
 let chosenScope = ref();
 let selectedRows = ref();
@@ -21,14 +34,14 @@ function goBack() {
 }
 
 let chain = computed(() => {
-    return store.getters["AccountStore/getChain"];
+        return accountStore.getChain;
 });
 
 let selectedAccount = computed(() => {
-    if (!store.state.WalletStore.isUnlocked) {
-        return;
-    }
-    return store.getters["AccountStore/getCurrentSafeAccount"]();
+        if (!walletStore.isUnlocked) {
+            return;
+        }
+        return accountStore.getCurrentSafeAccount();
 });
 
 watch(
@@ -47,7 +60,7 @@ onMounted(async () => {
     async function initialize() {
         let blockchainResponse;
         try {
-            blockchainResponse = await window.electron.blockchainRequest({
+            blockchainResponse = await blockchainRequest({
                 methods: ["supportsLocal", "getOperationTypes"],
                 chain: chain.value,
                 location: "local",
@@ -57,24 +70,6 @@ onMounted(async () => {
             inProgress.value = false;
             window.electron.notify(t("common.local.promptFailure"));
             console.log("BlockchainRequest failure");
-            return;
-        }
-
-        /*
-        console.log({
-            blockchainResponse,
-            input: {
-                methods: ["supportsLocal", "getOperationTypes"],
-                chain: chain.value,
-                location: "local",
-            },
-        });
-        */
-
-        if (!blockchainResponse) {
-            console.log("No blockchain response");
-            inProgress.value = false;
-            window.electron.notify(t("common.local.promptFailure"));
             return;
         }
 
@@ -94,9 +89,11 @@ function setScope(newValue) {
     window.electron.resetTimer();
     chosenScope.value = newValue;
     if (newValue === "AllowAll") {
-        const _ids = operationTypes.value.map((type) => type.id);
+        const _ids = operationTypes.value
+            .map((type) => type.id)
+            .filter(id => id !== 'injectedCall');
         selectedRows.value = _ids;
-        store.dispatch("SettingsStore/setChainPermissions", {
+        settingsStore.setChainPermissions({
             chain: chain.value,
             rows: _ids,
         });
@@ -107,19 +104,35 @@ async function onFileUpload(a) {
     window.electron.resetTimer();
     inProgress.value = true;
 
-    let account = store.getters["AccountStore/getCurrentSafeAccount"]();
+    const files = a.target?.files;
+    if (!files || !files.length) {
+        inProgress.value = false;
+        return;
+    }
+
+    let account = accountStore.getCurrentSafeAccount();
     if (!account) {
         console.log("No account selected");
         inProgress.value = false;
         return;
     }
 
+    let fileContent;
+    try {
+        fileContent = await files[0].text();
+    } catch (error) {
+        console.log({ error });
+        inProgress.value = false;
+        window.electron.notify(t("common.local.promptFailure"));
+        return;
+    }
+
     let blockchainResponse;
     try {
-        blockchainResponse = await window.electron.blockchainRequest({
+        blockchainResponse = await blockchainRequest({
             methods: ["localFileUpload"],
             chain: chain.value,
-            filePath: a[0].sourceFile.path,
+            fileData: fileContent,
             allowedOperations: toRaw(selectedRows.value),
         });
     } catch (error) {
@@ -133,12 +146,6 @@ async function onFileUpload(a) {
         console.log({
             msg: "No blockchain response",
             blockchainResponse,
-            request: {
-                methods: ["localFileUpload"],
-                chain: chain.value,
-                filePath: a[0].sourceFile.path,
-                allowedOperations: toRaw(selectedRows.value),
-            },
         });
         inProgress.value = false;
         window.electron.notify(t("common.local.promptFailure"));
@@ -150,9 +157,9 @@ async function onFileUpload(a) {
 }
 
 onMounted(() => {
-    if (!store.state.WalletStore.isUnlocked) {
-        console.log("logging user out...");
-        store.dispatch("WalletStore/logout");
+        if (!walletStore.isUnlocked) {
+            console.log("logging user out...");
+            walletStore.logout();
         router.replace("/");
         return;
     }
@@ -161,94 +168,78 @@ onMounted(() => {
 
 <template>
     <div class="bottom p-0">
-        <span v-if="supportsLocal">
-            <span>
-                <AccountSelect />
-                <p v-if="!chosenScope" style="marginbottom: 0px">
-                    {{ t("common.local.label") }}
-                </p>
-                <p v-if="!chosenScope" style="marginbottom: 0px">
-                    {{ t("common.local.desc") }}
-                </p>
+        <div v-if="supportsLocal" class="px-4 py-3 space-y-4">
+            <AccountSelect :disabled="hasActivePopup" />
 
-                <ui-card
-                    v-if="!selectedRows"
-                    v-shadow="3"
-                    outlined
-                    style="margintop: 5px"
-                >
-                    <span v-if="!chosenScope">
-                        <p>
-                            {{ t("common.chosenScope.title.local") }}
-                        </p>
-                        <ui-button
-                            raised
-                            style="margin-right: 5px; margin-bottom: 5px"
-                            @click="setScope('Configure')"
-                        >
-                            {{ t("common.chosenScope.yes") }}
-                        </ui-button>
-                        <ui-button
-                            raised
-                            style="margin-right: 5px; margin-bottom: 5px"
-                            @click="setScope('AllowAll')"
-                        >
-                            {{ t("common.chosenScope.no") }}
-                        </ui-button>
-                    </span>
-                    <span
-                        v-else-if="chosenScope == 'Configure' && !selectedRows"
-                    >
-                        <Operations
-                            :ops="operationTypes"
-                            :chain="chain"
-                            @selected="(ops) => (selectedRows = ops)"
-                            @exit="
-                                () => {
-                                    chosenScope = null;
-                                    selectedRows = null;
-                                }
-                            "
-                        />
-                    </span>
-                </ui-card>
-            </span>
+            <div v-if="!chosenScope" class="space-y-3">
+                <p class="mb-0">{{ t("common.local.label") }}</p>
+                <p class="mb-0">{{ t("common.local.desc") }}</p>
 
-            <span v-if="chosenScope && selectedRows">
-                <span v-if="!inProgress">
+                <Card class="w-full shadow-sm border">
+                    <CardContent class="space-y-4 p-4">
+                        <div v-if="!selectedRows">
+                            <p class="mb-3">{{ t("common.chosenScope.title.local") }}</p>
+                            <div class="flex flex-wrap gap-2">
+                                <Button @click="setScope('Configure')">
+                                    {{ t("common.chosenScope.yes") }}
+                                </Button>
+                                <Button variant="outline" @click="setScope('AllowAll')">
+                                    {{ t("common.chosenScope.no") }}
+                                </Button>
+                            </div>
+                        </div>
+
+                        <div v-else-if="chosenScope == 'Configure' && !selectedRows">
+                            <Operations
+                                :ops="operationTypes"
+                                :chain="chain"
+                                @selected="(ops) => (selectedRows = ops)"
+                                @exit="
+                                    () => {
+                                        chosenScope = null;
+                                        selectedRows = null;
+                                    }
+                                "
+                            />
+                        </div>
+                    </CardContent>
+                </Card>
+            </div>
+
+            <div v-if="chosenScope && selectedRows" class="space-y-4">
+                <div v-if="!inProgress" class="space-y-3">
                     <p>{{ t("common.local.label") }}</p>
-
                     <p>{{ t("common.local.desc") }}</p>
-
-                    <h4>{{ t("common.local.upload") }}</h4>
-                    <ui-file
+                    <h4 class="text-lg font-bold">{{ t("common.local.upload") }}</h4>
+                    <input
+                        type="file"
                         accept="application/json"
                         @change="onFileUpload($event)"
+                        :disabled="hasActivePopup"
+                        class="flex h-9 w-full rounded-md border border-input bg-transparent px-3 py-1 text-sm shadow-sm transition-colors file:border-0 file:bg-transparent file:text-sm file:font-medium placeholder:text-muted-foreground focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-ring disabled:cursor-not-allowed disabled:opacity-50"
                     />
-                </span>
-                <span v-else>
-                    <ui-spinner active />
-                    <h3>{{ t("common.local.progress") }}</h3>
-                </span>
-            </span>
+                </div>
 
-            <br />
-            <ui-button
-                v-if="chosenScope && selectedRows"
-                style="margin-right: 5px"
-                icon="arrow_back_ios"
-                @click="goBack"
-            >
-                {{ t("common.local.back") }}
-            </ui-button>
-            <router-link :to="'/dashboard'" replace>
-                <ui-button outlined class="step_btn">
-                    {{ t("common.local.exit") }}
-                </ui-button>
-            </router-link>
-        </span>
-        <span v-else>
+                <div v-else class="flex flex-col items-center gap-2 py-4">
+                    <Loader2 class="h-6 w-6 animate-spin" />
+                    <p class="text-lg font-bold">{{ t("common.local.progress") }}</p>
+                </div>
+             </div>
+
+        </div>
+
+        <div v-else class="px-4 py-3">
             {{ t("common.local.unsupported") }}
-        </span>
+        </div>
+
+        <div class="flex justify-between items-center px-4 pt-2 pb-4">
+            <Button v-if="chosenScope && selectedRows" variant="outline" @click="goBack" :disabled="hasActivePopup">
+                {{ t("common.local.back") }}
+            </Button>
+            <div v-else></div>
+            <Button variant="outline" @click="router.replace('/dashboard')" :disabled="hasActivePopup">
+                {{ t("common.local.exit") }}
+            </Button>
+        </div>
     </div>
 </template>

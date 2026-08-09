@@ -5,7 +5,10 @@ module.exports = function(env) {
     return {
         entry: {
             preload: "./src/preload.js",
-            preloadModal: "./src/preloadmodal.js",
+            preloadModal: "./src/preloadModal.js",
+            preloadReceipt: "./src/preloadReceipt.js",
+            preloadError: "./src/preloadError.js",
+            preloadDoc: "./src/preloadDoc.js",
         },
         output: {
             filename: "[name].js",
@@ -30,7 +33,7 @@ module.exports = function(env) {
             }
         },
 
-        devtool: "source-map",
+        devtool: env === "production" ? false : "source-map",
     
         plugins: [
             new FriendlyErrorsWebpackPlugin({

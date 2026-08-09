@@ -31,6 +31,7 @@
     "import_bin": "Using a backup .bin file",
     "btspass_cta": "Please enter your cloud account password.",
     "btspass_placeholder": "Cloud account password",
+    "legacy_key_mode": "Use legacy key mode",
     "tooltip_chain_cta": "You can add additional accounts from other blockchains later on as well, select the blockchain of the account you want to import now",
     "walletname_placeholder": "Wallet Name",
     "chain_placeholder": "Chain Name",

@@ -1,27 +1,40 @@
 import * as secp from "@noble/secp256k1";
-import sha256 from "crypto-js/sha256.js";
+import { sha256 } from "@noble/hashes/sha2.js";
+import { hexToBytes, bytesToHex } from "@noble/hashes/utils.js";
+import { hmac } from "@noble/hashes/hmac.js";
 
+secp.hashes.sha256 = sha256;
+secp.hashes.hmacSha256 = (key, msg) => hmac(sha256, key, msg);
+
+/**
+ * Prover class for generating secp256k1 signatures.
+ *
+ * Used for secure remote signing operations. Generates a random key pair
+ * on instantiation and provides methods for signing arbitrary data.
+ */
 class proover {
     constructor() {
         this.regen();
     }
 
-    async regen() {
-        this.key = secp.utils.randomPrivateKey();
-        let pubk;
-        try {
-          pubk = await secp.getPublicKey(this.key);
-        } catch (error) {
-          console.error(error);
-          return;
-        }
-        this.pubk = pubk;
+    /**
+     * Generates a new random secp256k1 key pair.
+     */
+    regen() {
+        this.key = secp.utils.randomSecretKey();
+        this.pubk = secp.getPublicKey(this.key);
     }
 
-    async sign(data) {
+    /**
+     * Signs arbitrary data using secp256k1 with SHA-256 hashing.
+     *
+     * @param {string} data - The data to sign.
+     * @returns {{ signedMessage: string, msgHash: string, pubk: Uint8Array } | undefined} The signature, message hash, and public key, or undefined on error.
+     */
+    sign(data) {
         let msgHash;
         try {
-          msgHash = await sha256(data).toString();
+          msgHash = bytesToHex(sha256(new TextEncoder().encode(data)));
         } catch (error) {
           console.log(error);
           return;
@@ -29,11 +42,11 @@ class proover {
 
         let signedMessage;
         try {
-          signedMessage = await secp.sign(
-            msgHash,
+          signedMessage = bytesToHex(secp.sign(
+            hexToBytes(msgHash),
             this.key,
-            {der: true, extraEntropy: true}
-          )
+            {extraEntropy: true, prehash: false}
+          ));
         } catch (error) {
           console.log(error);
           return;
@@ -49,10 +62,16 @@ class proover {
 
 const proof = new proover();
 
+/**
+ * Generates a secp256k1 signature for the given data.
+ *
+ * @param {string} data - The data to sign.
+ * @returns {Promise<{ signedMessage: string, msgHash: string, pubk: Uint8Array } | undefined>} A promise resolving to the signature object, or undefined on error.
+ */
 export const getSignature = async (data) => {
   let signature;
   try {
-    signature = await proof.sign(data);
+    signature = proof.sign(data);
   } catch (error) {
     console.log(error);
     return;

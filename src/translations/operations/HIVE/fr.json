@@ -1,0 +1,764 @@
+{
+  "injectedCall": {
+    "method": "injectedCall",
+    "title": "Demande d'appel injecté",
+    "result": "Résultat de l'appel injecté",
+    "headers": {
+      "request": "Approuver l'appel injecté suivant ?",
+      "result": "L'appel injecté suivant a été approuvé :"
+    },
+    "tooltip": "Demande à votre portefeuille de gérer une opération blockchain injectée"
+  },
+  "vote": {
+    "method": "Voter",
+    "title": "Demande de vote",
+    "result": "Résultat du vote",
+    "headers": {
+      "request": "Voulez-vous approuver le vote suivant ?",
+      "result": "Le vote suivant a été approuvé :"
+    },
+    "rows": {
+      "voter": "Votant : {voter}",
+      "author": "Auteur : {author}",
+      "permlink": "Permalink : {permlink}",
+      "weight": "Poids : {weight}"
+    },
+    "tooltip": "Voter sur une publication ou un commentaire"
+  },
+  "vote2": {
+    "method": "Voter 2",
+    "title": "Demande de vote 2",
+    "result": "Résultat du vote 2",
+    "headers": {
+      "request": "Voulez-vous approuver le vote 2 suivant ?",
+      "result": "Le vote 2 suivant a été approuvé :"
+    },
+    "rows": {
+      "voter": "Votant : {voter}",
+      "author": "Auteur : {author}",
+      "permlink": "Permalink : {permlink}",
+      "rshares": "Rshares : {rshares}",
+      "extensions": "Extensions : {extensions}"
+    },
+    "tooltip": "Voter 2 sur une publication ou un commentaire"
+  },
+  "comment": {
+    "method": "Commenter",
+    "title": "Demande de commentaire",
+    "result": "Résultat du commentaire",
+    "headers": {
+      "request": "Voulez-vous approuver le commentaire suivant ?",
+      "result": "Le commentaire suivant a été approuvé :"
+    },
+    "rows": {
+      "parent_author": "Auteur parent : {parent_author}",
+      "parent_permlink": "Permalink parent : {parent_permlink}",
+      "author": "Auteur : {author}",
+      "permlink": "Permalink : {permlink}",
+      "title": "Titre : {title}",
+      "body": "Contenu : {body}",
+      "json_metadata": "Métadonnées JSON : {json_metadata}"
+    },
+    "tooltip": "Créer une publication ou un commentaire"
+  },
+  "transfer": {
+    "method": "Transfert",
+    "title": "Demande de transfert",
+    "result": "Résultat du transfert",
+    "headers": {
+      "request": "Voulez-vous approuver le transfert suivant ?",
+      "result": "Le transfert suivant a été approuvé :"
+    },
+    "rows": {
+      "from": "De : {from}",
+      "to": "À : {to}",
+      "amount": "Montant : {amount}",
+      "memo": "Mémo : {memo}"
+    },
+    "tooltip": "Envoyer des actifs d'un compte à un autre"
+  },
+  "transfer_to_vesting": {
+    "method": "Transférer en vesting",
+    "title": "Demande de transfert en vesting",
+    "result": "Résultat du transfert en vesting",
+    "headers": {
+      "request": "Voulez-vous approuver le transfert en vesting suivant ?",
+      "result": "Le transfert en vesting suivant a été approuvé :"
+    },
+    "rows": {
+      "from": "De : {from}",
+      "to": "À : {to}",
+      "amount": "Montant : {amount}"
+    },
+    "tooltip": "Transférer des actifs vers des fonds de vesting"
+  },
+  "withdraw_vesting": {
+    "method": "Retirer du vesting",
+    "title": "Demande de retrait de vesting",
+    "result": "Résultat du retrait de vesting",
+    "headers": {
+      "request": "Voulez-vous approuver le retrait de vesting suivant ?",
+      "result": "Le retrait de vesting suivant a été approuvé :"
+    },
+    "rows": {
+      "account": "Compte : {account}",
+      "vesting_shares": "Parts de vesting : {vesting_shares}"
+    },
+    "tooltip": "Configurer un calendrier de retrait de vesting"
+  },
+  "limit_order_create": {
+    "method": "Créer un ordre limité",
+    "title": "Demande de création d'ordre limité",
+    "result": "Résultat de l'ordre limité",
+    "headers": {
+      "request": "Voulez-vous approuver l'ordre limité suivant ?",
+      "result": "L'ordre limité suivant a été approuvé :"
+    },
+    "rows": {
+      "owner": "Propriétaire : {owner}",
+      "orderid": "ID de l'ordre : {orderid}",
+      "amount_to_sell": "Montant à vendre : {amount_to_sell}",
+      "min_to_receive": "Minimum à recevoir : {min_to_receive}",
+      "fill_or_kill": "Fill ou Kill : {fill_or_kill}",
+      "expiration": "Expiration : {expiration}"
+    },
+    "tooltip": "Créer un ordre limité sur le marché"
+  },
+  "limit_order_create2": {
+    "method": "Créer un ordre limité 2",
+    "title": "Demande de création d'ordre limité 2",
+    "result": "Résultat de l'ordre limité 2",
+    "headers": {
+      "request": "Voulez-vous approuver l'ordre limité 2 suivant ?",
+      "result": "L'ordre limité 2 suivant a été approuvé :"
+    },
+    "rows": {
+      "owner": "Propriétaire : {owner}",
+      "orderid": "ID de l'ordre : {orderid}",
+      "amount_to_sell": "Montant à vendre : {amount_to_sell}",
+      "exchange_rate": "Taux de change : {exchange_rate}",
+      "fill_or_kill": "Fill ou Kill : {fill_or_kill}",
+      "expiration": "Expiration : {expiration}"
+    },
+    "tooltip": "Créer un ordre limité avec taux de change sur le marché"
+  },
+  "limit_order_cancel": {
+    "method": "Annuler un ordre limité",
+    "title": "Demande d'annulation d'ordre limité",
+    "result": "Résultat de l'annulation de l'ordre limité",
+    "headers": {
+      "request": "Voulez-vous approuver l'annulation d'ordre limité suivante ?",
+      "result": "L'annulation d'ordre limité suivante a été approuvée :"
+    },
+    "rows": {
+      "owner": "Propriétaire : {owner}",
+      "orderid": "ID de l'ordre : {orderid}"
+    },
+    "tooltip": "Annuler un ordre limité existant"
+  },
+  "feed_publish": {
+    "method": "Publier le feed",
+    "title": "Demande de publication du feed",
+    "result": "Résultat de la publication du feed",
+    "headers": {
+      "request": "Voulez-vous approuver la publication du feed suivante ?",
+      "result": "La publication du feed suivante a été approuvée :"
+    },
+    "rows": {
+      "publisher": "Éditeur : {publisher}",
+      "exchange_rate": "Taux de change : {exchange_rate}"
+    },
+    "tooltip": "Publier un feed de prix en tant que témoin"
+  },
+  "convert": {
+    "method": "Convertir",
+    "title": "Demande de conversion",
+    "result": "Résultat de la conversion",
+    "headers": {
+      "request": "Voulez-vous approuver la conversion suivante ?",
+      "result": "La conversion suivante a été approuvée :"
+    },
+    "rows": {
+      "owner": "Propriétaire : {owner}",
+      "requestid": "ID de demande : {requestid}",
+      "amount": "Montant : {amount}"
+    },
+    "tooltip": "Convertir du HIVE en HBD ou vice versa"
+  },
+  "collateralized_convert": {
+    "method": "Conversion collateralisée",
+    "title": "Demande de conversion collateralisée",
+    "result": "Résultat de la conversion collateralisée",
+    "headers": {
+      "request": "Voulez-vous approuver la conversion collateralisée suivante ?",
+      "result": "La conversion collateralisée suivante a été approuvée :"
+    },
+    "rows": {
+      "owner": "Propriétaire : {owner}",
+      "requestid": "ID de demande : {requestid}",
+      "amount": "Montant : {amount}"
+    },
+    "tooltip": "Convertir du HIVE en HBD avec collatéral"
+  },
+  "account_create": {
+    "method": "Créer un compte",
+    "title": "Demande de création de compte",
+    "result": "Résultat de la création de compte",
+    "headers": {
+      "request": "Voulez-vous approuver la création de compte suivante ?",
+      "result": "La création de compte suivante a été approuvée :"
+    },
+    "rows": {
+      "fee": "Frais : {fee}",
+      "creator": "Créateur : {creator}",
+      "new_account_name": "Nouveau nom de compte : {new_account_name}",
+      "owner": "Propriétaire : {owner}",
+      "active": "Actif : {active}",
+      "posting": "Posting : {posting}",
+      "memo_key": "Clé mémo : {memo_key}",
+      "json_metadata": "Métadonnées JSON : {json_metadata}"
+    },
+    "tooltip": "Créer un nouveau compte blockchain"
+  },
+  "create_claimed_account": {
+    "method": "Créer un compte réclamé",
+    "title": "Demande de création d'un compte réclamé",
+    "result": "Résultat du compte réclamé",
+    "headers": {
+      "request": "Voulez-vous approuver la création du compte réclamé suivant ?",
+      "result": "La création du compte réclamé suivant a été approuvée :"
+    },
+    "rows": {
+      "creator": "Créateur : {creator}",
+      "new_account_name": "Nouveau nom de compte : {new_account_name}",
+      "owner": "Propriétaire : {owner}",
+      "active": "Actif : {active}",
+      "posting": "Posting : {posting}",
+      "memo_key": "Clé mémo : {memo_key}",
+      "json_metadata": "Métadonnées JSON : {json_metadata}"
+    },
+    "tooltip": "Créer un nouveau compte à partir d'un compte précédemment réclamé"
+  },
+  "account_update": {
+    "method": "Mettre à jour le compte",
+    "title": "Demande de mise à jour du compte",
+    "result": "Résultat de la mise à jour du compte",
+    "headers": {
+      "request": "Voulez-vous approuver la mise à jour du compte suivante ?",
+      "result": "La mise à jour du compte suivante a été approuvée :"
+    },
+    "rows": {
+      "account": "Compte : {account}",
+      "owner": "Propriétaire : {owner}",
+      "active": "Actif : {active}",
+      "posting": "Posting : {posting}",
+      "memo_key": "Clé mémo : {memo_key}",
+      "json_metadata": "Métadonnées JSON : {json_metadata}"
+    },
+    "tooltip": "Mettre à jour les clés ou les métadonnées du compte"
+  },
+  "account_update2": {
+    "method": "Mettre à jour le compte 2",
+    "title": "Demande de mise à jour du compte 2",
+    "result": "Résultat de la mise à jour du compte 2",
+    "headers": {
+      "request": "Voulez-vous approuver la mise à jour du compte 2 suivante ?",
+      "result": "La mise à jour du compte 2 suivante a été approuvée :"
+    },
+    "rows": {
+      "account": "Compte : {account}",
+      "owner": "Propriétaire : {owner}",
+      "active": "Actif : {active}",
+      "posting": "Posting : {posting}",
+      "memo_key": "Clé mémo : {memo_key}",
+      "json_metadata": "Métadonnées JSON : {json_metadata}",
+      "posting_json_metadata": "Métadonnées JSON de posting : {posting_json_metadata}"
+    },
+    "tooltip": "Mettre à jour les clés et les métadonnées du compte"
+  },
+  "witness_update": {
+    "method": "Mettre à jour le témoin",
+    "title": "Demande de mise à jour du témoin",
+    "result": "Résultat de la mise à jour du témoin",
+    "headers": {
+      "request": "Voulez-vous approuver la mise à jour du témoin suivante ?",
+      "result": "La mise à jour du témoin suivante a été approuvée :"
+    },
+    "rows": {
+      "owner": "Propriétaire : {owner}",
+      "url": "URL : {url}",
+      "block_signing_key": "Clé de signature de bloc : {block_signing_key}",
+      "props": "Propriétés : {props}",
+      "fee": "Frais : {fee}"
+    },
+    "tooltip": "Mettre à jour la configuration du témoin"
+  },
+  "witness_set_properties": {
+    "method": "Définir les propriétés du témoin",
+    "title": "Demande de définition des propriétés du témoin",
+    "result": "Résultat des propriétés du témoin",
+    "headers": {
+      "request": "Voulez-vous approuver la mise à jour des propriétés du témoin suivante ?",
+      "result": "La mise à jour des propriétés du témoin suivante a été approuvée :"
+    },
+    "rows": {
+      "owner": "Propriétaire : {owner}",
+      "props": "Propriétés : {props}",
+      "extensions": "Extensions : {extensions}"
+    },
+    "tooltip": "Définir les propriétés du témoin"
+  },
+  "account_witness_vote": {
+    "method": "Voter pour un témoin",
+    "title": "Demande de vote pour un témoin",
+    "result": "Résultat du vote pour le témoin",
+    "headers": {
+      "request": "Voulez-vous approuver le vote pour le témoin suivant ?",
+      "result": "Le vote pour le témoin suivant a été approuvé :"
+    },
+    "rows": {
+      "account": "Compte : {account}",
+      "witness": "Témoin : {witness}",
+      "approve": "Approuver : {approve}"
+    },
+    "tooltip": "Voter pour ou contre un témoin"
+  },
+  "account_witness_proxy": {
+    "method": "Déléguer le vote du témoin",
+    "title": "Demande de délégation du vote du témoin",
+    "result": "Résultat de la délégation du vote du témoin",
+    "headers": {
+      "request": "Voulez-vous approuver le proxy de témoin suivant ?",
+      "result": "Le proxy de témoin suivant a été approuvé :"
+    },
+    "rows": {
+      "account": "Compte : {account}",
+      "proxy": "Proxy : {proxy}"
+    },
+    "tooltip": "Définir un proxy pour vos votes de témoin"
+  },
+  "delete_comment": {
+    "method": "Supprimer le commentaire",
+    "title": "Demande de suppression de commentaire",
+    "result": "Résultat de la suppression du commentaire",
+    "headers": {
+      "request": "Voulez-vous approuver la suppression de commentaire suivante ?",
+      "result": "La suppression de commentaire suivante a été approuvée :"
+    },
+    "rows": {
+      "author": "Auteur : {author}",
+      "permlink": "Permalink : {permlink}"
+    },
+    "tooltip": "Supprimer une publication ou un commentaire"
+  },
+  "custom_json": {
+    "method": "JSON personnalisé",
+    "title": "Demande de JSON personnalisé",
+    "result": "Résultat du JSON personnalisé",
+    "headers": {
+      "request": "Voulez-vous approuver l'opération JSON personnalisée suivante ?",
+      "result": "L'opération JSON personnalisée suivante a été approuvée :"
+    },
+    "rows": {
+      "required_auths": "Autorisations requises : {required_auths}",
+      "required_posting_auths": "Autorisations de posting requises : {required_posting_auths}",
+      "id": "ID : {id}",
+      "json": "JSON : {json}"
+    },
+    "tooltip": "Soumettre une opération JSON personnalisée"
+  },
+  "comment_options": {
+    "method": "Options de commentaire",
+    "title": "Demande d'options de commentaire",
+    "result": "Résultat des options de commentaire",
+    "headers": {
+      "request": "Voulez-vous approuver les options de commentaire suivantes ?",
+      "result": "Les options de commentaire suivantes ont été approuvées :"
+    },
+    "rows": {
+      "author": "Auteur : {author}",
+      "permlink": "Permalink : {permlink}",
+      "max_accepted_payout": "Paiement maximal accepté : {max_accepted_payout}",
+      "percent_hbd": "Pourcentage HBD : {percent_hbd}",
+      "allow_votes": "Autoriser les votes : {allow_votes}",
+      "allow_curation_rewards": "Autoriser les récompenses de curation : {allow_curation_rewards}",
+      "extensions": "Extensions : {extensions}"
+    },
+    "tooltip": "Définir les options d'une publication ou d'un commentaire"
+  },
+  "set_withdraw_vesting_route": {
+    "method": "Définir la route de retrait de vesting",
+    "title": "Demande de définition de la route de retrait de vesting",
+    "result": "Résultat de la route de retrait de vesting",
+    "headers": {
+      "request": "Voulez-vous approuver la route de retrait de vesting suivante ?",
+      "result": "La route de retrait de vesting suivante a été approuvée :"
+    },
+    "rows": {
+      "from_account": "Compte d'origine : {from_account}",
+      "to_account": "Compte de destination : {to_account}",
+      "percent": "Pourcentage : {percent}",
+      "auto_vest": "Auto-vesting : {auto_vest}"
+    },
+    "tooltip": "Configurer l'allocation d'une route de retrait de vesting"
+  },
+  "claim_reward_balance": {
+    "method": "Réclamer le solde de récompenses",
+    "title": "Demande de réclamation du solde de récompenses",
+    "result": "Résultat du solde de récompenses",
+    "headers": {
+      "request": "Voulez-vous approuver la réclamation de récompenses suivante ?",
+      "result": "La réclamation de récompenses suivante a été approuvée :"
+    },
+    "rows": {
+      "account": "Compte : {account}",
+      "reward_hive": "Récompense HIVE : {reward_hive}",
+      "reward_hbd": "Récompense HBD : {reward_hbd}",
+      "reward_vests": "Récompense VESTS : {reward_vests}"
+    },
+    "tooltip": "Réclamer les récompenses accumulées"
+  },
+  "delegate_vesting_shares": {
+    "method": "Déléguer des parts de vesting",
+    "title": "Demande de délégation de parts de vesting",
+    "result": "Résultat de la délégation de vesting",
+    "headers": {
+      "request": "Voulez-vous approuver la délégation de vesting suivante ?",
+      "result": "La délégation de vesting suivante a été approuvée :"
+    },
+    "rows": {
+      "delegator": "Délégateur : {delegator}",
+      "delegatee": "Délégataire : {delegatee}",
+      "vesting_shares": "Parts de vesting : {vesting_shares}"
+    },
+    "tooltip": "Déléguer des parts de vesting à un autre compte"
+  },
+  "recover_account": {
+    "method": "Récupérer le compte",
+    "title": "Demande de récupération de compte",
+    "result": "Résultat de la récupération du compte",
+    "headers": {
+      "request": "Voulez-vous approuver la récupération de compte suivante ?",
+      "result": "La récupération de compte suivante a été approuvée :"
+    },
+    "rows": {
+      "account_to_recover": "Compte à récupérer : {account_to_recover}",
+      "new_owner_authority": "Nouvelle autorité propriétaire : {new_owner_authority}",
+      "recent_owner_authority": "Autorité propriétaire récente : {recent_owner_authority}",
+      "extensions": "Extensions : {extensions}"
+    },
+    "tooltip": "Récupérer un compte volé ou compromis"
+  },
+  "request_account_recovery": {
+    "method": "Demander la récupération du compte",
+    "title": "Demande de récupération de compte",
+    "result": "Résultat de la demande de récupération de compte",
+    "headers": {
+      "request": "Voulez-vous approuver la demande de récupération de compte suivante ?",
+      "result": "La demande de récupération de compte suivante a été approuvée :"
+    },
+    "rows": {
+      "recovery_account": "Compte de récupération : {recovery_account}",
+      "account_to_recover": "Compte à récupérer : {account_to_recover}",
+      "new_owner_authority": "Nouvelle autorité propriétaire : {new_owner_authority}",
+      "extensions": "Extensions : {extensions}"
+    },
+    "tooltip": "Demander la récupération d'un compte en tant que compte de récupération"
+  },
+  "change_recovery_account": {
+    "method": "Changer le compte de récupération",
+    "title": "Demande de changement du compte de récupération",
+    "result": "Résultat du changement de compte de récupération",
+    "headers": {
+      "request": "Voulez-vous approuver le changement de compte de récupération suivant ?",
+      "result": "Le changement de compte de récupération suivant a été approuvé :"
+    },
+    "rows": {
+      "account_to_recover": "Compte à récupérer : {account_to_recover}",
+      "new_recovery_account": "Nouveau compte de récupération : {new_recovery_account}",
+      "extensions": "Extensions : {extensions}"
+    },
+    "tooltip": "Changer le compte de récupération d'un compte"
+  },
+  "transfer_to_savings": {
+    "method": "Transférer en épargne",
+    "title": "Demande de transfert en épargne",
+    "result": "Résultat du transfert en épargne",
+    "headers": {
+      "request": "Voulez-vous approuver le transfert en épargne suivant ?",
+      "result": "Le transfert en épargne suivant a été approuvé :"
+    },
+    "rows": {
+      "from": "De : {from}",
+      "to": "À : {to}",
+      "amount": "Montant : {amount}",
+      "memo": "Mémo : {memo}"
+    },
+    "tooltip": "Transférer des actifs en épargne"
+  },
+  "transfer_from_savings": {
+    "method": "Transférer depuis l'épargne",
+    "title": "Demande de transfert depuis l'épargne",
+    "result": "Résultat du transfert depuis l'épargne",
+    "headers": {
+      "request": "Voulez-vous approuver le transfert depuis l'épargne suivant ?",
+      "result": "Le transfert depuis l'épargne suivant a été approuvé :"
+    },
+    "rows": {
+      "from": "De : {from}",
+      "request_id": "ID de demande : {request_id}",
+      "to": "À : {to}",
+      "amount": "Montant : {amount}",
+      "memo": "Mémo : {memo}"
+    },
+    "tooltip": "Demander un transfert depuis l'épargne"
+  },
+  "cancel_transfer_from_savings": {
+    "method": "Annuler le transfert depuis l'épargne",
+    "title": "Demande d'annulation du transfert depuis l'épargne",
+    "result": "Résultat de l'annulation du transfert",
+    "headers": {
+      "request": "Voulez-vous approuver l'annulation du transfert suivante ?",
+      "result": "L'annulation du transfert suivante a été approuvée :"
+    },
+    "rows": {
+      "from": "De : {from}",
+      "request_id": "ID de demande : {request_id}"
+    },
+    "tooltip": "Annuler un transfert en attente depuis l'épargne"
+  },
+  "decline_voting_rights": {
+    "method": "Renoncer aux droits de vote",
+    "title": "Demande de renonciation aux droits de vote",
+    "result": "Résultat de la renonciation aux droits de vote",
+    "headers": {
+      "request": "Voulez-vous approuver la renonciation aux droits de vote suivante ?",
+      "result": "La renonciation aux droits de vote suivante a été approuvée :"
+    },
+    "rows": {
+      "account": "Compte : {account}",
+      "decline": "Renoncer : {decline}"
+    },
+    "tooltip": "Renoncer définitivement aux droits de vote"
+  },
+  "claim_account": {
+    "method": "Réclamer un compte",
+    "title": "Demande de réclamation de compte",
+    "result": "Résultat de la réclamation de compte",
+    "headers": {
+      "request": "Voulez-vous approuver la réclamation de compte suivante ?",
+      "result": "La réclamation de compte suivante a été approuvée :"
+    },
+    "rows": {
+      "fee": "Frais : {fee}",
+      "creator": "Créateur : {creator}",
+      "extensions": "Extensions : {extensions}"
+    },
+    "tooltip": "Réclamer la création d'un nouveau compte"
+  },
+  "escrow_transfer": {
+    "method": "Transfert sous séquestre",
+    "title": "Demande de transfert sous séquestre",
+    "result": "Résultat du transfert sous séquestre",
+    "headers": {
+      "request": "Voulez-vous approuver le transfert sous séquestre suivant ?",
+      "result": "Le transfert sous séquestre suivant a été approuvé :"
+    },
+    "rows": {
+      "from": "De : {from}",
+      "to": "À : {to}",
+      "agent": "Agent : {agent}",
+      "escrow_id": "ID du séquestre : {escrow_id}",
+      "hbd_amount": "Montant HBD : {hbd_amount}",
+      "hive_amount": "Montant HIVE : {hive_amount}",
+      "fee": "Frais : {fee}",
+      "ratification_deadline": "Date limite de ratification : {ratification_deadline}",
+      "escrow_expiration": "Expiration du séquestre : {escrow_expiration}",
+      "json_meta": "Métadonnées JSON : {json_meta}"
+    },
+    "tooltip": "Configurer un transfert sous séquestre entre comptes"
+  },
+  "escrow_dispute": {
+    "method": "Litige de séquestre",
+    "title": "Demande de litige de séquestre",
+    "result": "Résultat du litige de séquestre",
+    "headers": {
+      "request": "Voulez-vous approuver le litige de séquestre suivant ?",
+      "result": "Le litige de séquestre suivant a été approuvé :"
+    },
+    "rows": {
+      "from": "De : {from}",
+      "to": "À : {to}",
+      "agent": "Agent : {agent}",
+      "who": "Qui : {who}",
+      "escrow_id": "ID du séquestre : {escrow_id}"
+    },
+    "tooltip": "Soulever un litige sur un transfert sous séquestre"
+  },
+  "escrow_release": {
+    "method": "Libération du séquestre",
+    "title": "Demande de libération du séquestre",
+    "result": "Résultat de la libération du séquestre",
+    "headers": {
+      "request": "Voulez-vous approuver la libération du séquestre suivante ?",
+      "result": "La libération du séquestre suivante a été approuvée :"
+    },
+    "rows": {
+      "from": "De : {from}",
+      "to": "À : {to}",
+      "agent": "Agent : {agent}",
+      "who": "Qui : {who}",
+      "receiver": "Destinataire : {receiver}",
+      "escrow_id": "ID du séquestre : {escrow_id}",
+      "hbd_amount": "Montant HBD : {hbd_amount}",
+      "hive_amount": "Montant HIVE : {hive_amount}"
+    },
+    "tooltip": "Libérer des fonds d'un transfert sous séquestre"
+  },
+  "escrow_approve": {
+    "method": "Approuver le séquestre",
+    "title": "Demande d'approbation du séquestre",
+    "result": "Résultat de l'approbation du séquestre",
+    "headers": {
+      "request": "Voulez-vous approuver l'approbation de séquestre suivante ?",
+      "result": "L'approbation de séquestre suivante a été approuvée :"
+    },
+    "rows": {
+      "from": "De : {from}",
+      "to": "À : {to}",
+      "agent": "Agent : {agent}",
+      "who": "Qui : {who}",
+      "escrow_id": "ID du séquestre : {escrow_id}",
+      "approve": "Approuver : {approve}"
+    },
+    "tooltip": "Approuver un transfert sous séquestre"
+  },
+  "create_proposal": {
+    "method": "Créer une proposition",
+    "title": "Demande de création de proposition",
+    "result": "Résultat de la création de proposition",
+    "headers": {
+      "request": "Voulez-vous approuver la création de proposition suivante ?",
+      "result": "La création de proposition suivante a été approuvée :"
+    },
+    "rows": {
+      "creator": "Créateur : {creator}",
+      "receiver": "Destinataire : {receiver}",
+      "start_date": "Date de début : {start_date}",
+      "end_date": "Date de fin : {end_date}",
+      "daily_pay": "Paiement quotidien : {daily_pay}",
+      "subject": "Objet : {subject}",
+      "permlink": "Permalink : {permlink}"
+    },
+    "tooltip": "Créer une proposition de gouvernance"
+  },
+  "update_proposal_votes": {
+    "method": "Mettre à jour les votes de proposition",
+    "title": "Demande de mise à jour des votes de proposition",
+    "result": "Résultat de la mise à jour des votes de proposition",
+    "headers": {
+      "request": "Voulez-vous approuver la mise à jour des votes de proposition suivante ?",
+      "result": "La mise à jour des votes de proposition suivante a été approuvée :"
+    },
+    "rows": {
+      "voter": "Votant : {voter}",
+      "proposal_ids": "IDs des propositions : {proposal_ids}",
+      "approve": "Approuver : {approve}",
+      "extensions": "Extensions : {extensions}"
+    },
+    "tooltip": "Voter pour ou contre des propositions"
+  },
+  "remove_proposal": {
+    "method": "Supprimer une proposition",
+    "title": "Demande de suppression de proposition",
+    "result": "Résultat de la suppression de proposition",
+    "headers": {
+      "request": "Voulez-vous approuver la suppression de proposition suivante ?",
+      "result": "La suppression de proposition suivante a été approuvée :"
+    },
+    "rows": {
+      "creator": "Créateur : {creator}",
+      "proposal_ids": "IDs des propositions : {proposal_ids}"
+    },
+    "tooltip": "Supprimer une ou plusieurs propositions"
+  },
+  "update_proposal": {
+    "method": "Mettre à jour une proposition",
+    "title": "Demande de mise à jour de proposition",
+    "result": "Résultat de la mise à jour de proposition",
+    "headers": {
+      "request": "Voulez-vous approuver la mise à jour de proposition suivante ?",
+      "result": "La mise à jour de proposition suivante a été approuvée :"
+    },
+    "rows": {
+      "proposal_id": "ID de la proposition : {proposal_id}",
+      "creator": "Créateur : {creator}",
+      "daily_pay": "Paiement quotidien : {daily_pay}",
+      "subject": "Objet : {subject}",
+      "permlink": "Permalink : {permlink}"
+    },
+    "tooltip": "Mettre à jour une proposition existante"
+  },
+  "recurrent_transfer": {
+    "method": "Transfert récurrent",
+    "title": "Demande de transfert récurrent",
+    "result": "Résultat du transfert récurrent",
+    "headers": {
+      "request": "Voulez-vous approuver le transfert récurrent suivant ?",
+      "result": "Le transfert récurrent suivant a été approuvé :"
+    },
+    "rows": {
+      "from": "De : {from}",
+      "to": "À : {to}",
+      "amount": "Montant : {amount}",
+      "memo": "Mémo : {memo}",
+      "recurrence": "Récurrence : {recurrence}",
+      "executions": "Exécutions : {executions}",
+      "extensions": "Extensions : {extensions}"
+    },
+    "tooltip": "Configurer un calendrier de transferts récurrents"
+  },
+  "custom_binary": {
+    "method": "Binaire personnalisé",
+    "title": "Demande de binaire personnalisé",
+    "result": "Résultat du binaire personnalisé",
+    "headers": {
+      "request": "Voulez-vous approuver l'opération binaire personnalisée suivante ?",
+      "result": "L'opération binaire personnalisée suivante a été approuvée :"
+    },
+    "rows": {
+      "id": "ID : {id}",
+      "data": "Données : {data}"
+    },
+    "tooltip": "Soumettre une opération binaire personnalisée"
+  },
+  "custom": {
+    "method": "Personnalisé",
+    "title": "Demande d'opération personnalisée",
+    "result": "Résultat de l'opération personnalisée",
+    "headers": {
+      "request": "Voulez-vous approuver l'opération personnalisée suivante ?",
+      "result": "L'opération personnalisée suivante a été approuvée :"
+    },
+    "rows": {
+      "required_auths": "Autorisations requises : {required_auths}",
+      "id": "ID : {id}",
+      "data": "Données : {data}"
+    },
+    "tooltip": "Soumettre une opération personnalisée"
+  },
+  "prove_authority": {
+    "method": "Prouver l'autorité",
+    "title": "Demande de preuve d'autorité",
+    "result": "Résultat de la preuve d'autorité",
+    "headers": {
+      "request": "Voulez-vous approuver la preuve d'autorité suivante ?",
+      "result": "La preuve d'autorité suivante a été approuvée :"
+    },
+    "rows": {
+      "challenged": "Contesté : {challenged}",
+      "require_owner": "Exiger le propriétaire : {require_owner}"
+    },
+    "tooltip": "Prouver la possession d'une autorité de compte"
+  }
+}

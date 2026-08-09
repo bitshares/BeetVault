@@ -1,0 +1,624 @@
+{
+  "injectedCall": {
+    "method": "주입전화",
+    "title": "삽입된 통화 요청",
+    "result": "삽입된 통화 결과",
+    "headers": {
+      "request": "다음 삽입된 통화를 승인하시겠습니까?",
+      "result": "다음 삽입된 호출이 승인되었습니다."
+    },
+    "tooltip": "주입된 블록체인 작업을 처리하도록 지갑에 요청"
+  },
+  "setalimits": {
+    "method": "계정 한도 설정",
+    "title": "계정 한도 설정 요청",
+    "result": "계정 한도 결과 설정",
+    "headers": {
+      "request": "다음 계정 한도를 설정하시겠습니까?",
+      "result": "다음 계정 한도가 설정되었습니다."
+    },
+    "rows": {
+      "account": "계정: {account}",
+      "ram_bytes": "RAM 제한(바이트): {ram_bytes}",
+      "net_weight": "순중량: {net_weight}",
+      "cpu_weight": "CPU 무게: {cpu_weight}"
+    },
+    "tooltip": "계정 자원 제한 작업 설정"
+  },
+  "setacctram": {
+    "method": "계정 RAM 한도 설정",
+    "title": "계정 RAM 제한 요청 설정",
+    "result": "계정 RAM 한도 결과 설정",
+    "headers": {
+      "request": "다음 계정 RAM 한도를 설정하시겠습니까?",
+      "result": "다음 계정 RAM 제한이 설정되었습니다."
+    },
+    "rows": {
+      "account": "계정: {account}",
+      "ram_bytes": "RAM 제한(바이트): {ram_bytes}"
+    },
+    "tooltip": "계정 RAM 제한 작업 설정"
+  },
+  "setacctnet": {
+    "method": "계정 NET 한도 설정",
+    "title": "계정 NET 한도 요청 설정",
+    "result": "계정 NET 한도 결과 설정",
+    "headers": {
+      "request": "다음 계정 NET 한도를 설정하시겠습니까?",
+      "result": "다음 계정 NET 한도가 설정되었습니다."
+    },
+    "rows": {
+      "account": "계정: {account}",
+      "net_weight": "순중량: {net_weight}"
+    },
+    "tooltip": "계정 NET 한도 작업 설정"
+  },
+  "setacctcpu": {
+    "method": "계정 CPU 한도 설정",
+    "title": "계정 CPU 한도 요청 설정",
+    "result": "계정 CPU 한도 결과 설정",
+    "headers": {
+      "request": "다음 계정 CPU 한도를 설정하시겠습니까?",
+      "result": "다음 계정 CPU 한도가 설정되었습니다."
+    },
+    "rows": {
+      "account": "계정: {account}",
+      "cpu_weight": "CPU 무게: {cpu_weight}"
+    },
+    "tooltip": "계정 CPU 제한 작업 설정"
+  },
+  "activate": {
+    "method": "프로토콜 기능 활성화",
+    "title": "프로토콜 기능 요청 활성화",
+    "result": "프로토콜 기능 결과 활성화",
+    "headers": {
+      "request": "다음 프로토콜 기능을 활성화하시겠습니까?",
+      "result": "다음 프로토콜 기능이 활성화되었습니다:"
+    },
+    "rows": {
+      "feature_digest": "기능 다이제스트: {feature_digest}"
+    },
+    "tooltip": "프로토콜 기능 작동 활성화"
+  },
+  "delegatebw": {
+    "method": "대역폭 위임",
+    "title": "대역폭 요청 위임",
+    "result": "대역폭 결과 위임",
+    "headers": {
+      "request": "다음 대역폭을 위임하시겠습니까?",
+      "result": "다음 대역폭이 위임되었습니다:"
+    },
+    "rows": {
+      "from": "보낸 사람: {from}",
+      "receiver": "수신자: {receiver}",
+      "stake_net_quantity": "스테이크 NET 수량: {stake_net_quantity}",
+      "stake_cpu_quantity": "스테이크 CPU 수량: {stake_cpu_quantity}",
+      "transfer": "환승: {transfer}"
+    },
+    "tooltip": "대역폭 작업 위임"
+  },
+  "setrex": {
+    "method": "REX 잔액 설정",
+    "title": "REX 잔액 요청 설정",
+    "result": "REX 잔액 결과 설정",
+    "headers": {
+      "request": "다음 REX 잔액을 설정하시겠습니까?",
+      "result": "다음 REX 잔액이 설정되었습니다."
+    },
+    "rows": {
+      "balance": "잔액: {balance}"
+    },
+    "tooltip": "REX 밸런스 동작 설정"
+  },
+  "deposit": {
+    "method": "REX 펀드에 입금",
+    "title": "REX 펀드 요청에 따라 입금",
+    "result": "REX 펀드 결과에 입금",
+    "headers": {
+      "request": "다음을 REX 펀드에 입금하시겠습니까?",
+      "result": "다음은 REX 펀드에 입금되었습니다:"
+    },
+    "rows": {
+      "owner": "소유자: {owner}",
+      "amount": "금액: {amount}"
+    },
+    "tooltip": "REX 펀드 운용에 입금"
+  },
+  "buyrex": {
+    "method": "REX 구매",
+    "title": "REX 요청 구매",
+    "result": "REX 결과 구매",
+    "headers": {
+      "request": "다음 REX를 구매하시겠습니까?",
+      "result": "다음 REX를 구입했습니다:"
+    },
+    "rows": {
+      "from": "보낸 사람: {from}",
+      "amount": "금액: {amount}"
+    },
+    "tooltip": "REX 운영 구매"
+  },
+  "unstaketorex": {
+    "method": "REX로 언스테이킹",
+    "title": "REX 요청에 대한 언스테이킹",
+    "result": "REX 결과에 대한 언스테이크",
+    "headers": {
+      "request": "다음을 REX에 언스테이크하시겠습니까?",
+      "result": "다음은 REX에 언스테이킹되었습니다:"
+    },
+    "rows": {
+      "owner": "소유자: {owner}",
+      "receiver": "수신자: {receiver}",
+      "from_net": "NET에서: {from_net}",
+      "from_cpu": "CPU에서: {from_cpu}"
+    },
+    "tooltip": "REX 작업에 대한 언스테이킹"
+  },
+  "sellrex": {
+    "method": "REX 판매",
+    "title": "REX 요청 판매",
+    "result": "REX 결과 판매",
+    "headers": {
+      "request": "다음 REX를 판매하시겠습니까?",
+      "result": "다음 REX가 판매되었습니다:"
+    },
+    "rows": {
+      "from": "보낸 사람: {from}",
+      "rex": "렉스: {rex}"
+    },
+    "tooltip": "REX 운영 판매"
+  },
+  "cnclrexorder": {
+    "method": "REX 주문 취소",
+    "title": "REX 주문 요청 취소",
+    "result": "REX 주문 결과 취소",
+    "headers": {
+      "request": "다음 REX 주문을 취소하시겠습니까?",
+      "result": "다음 REX 주문이 취소되었습니다:"
+    },
+    "rows": {
+      "owner": "소유자: {owner}"
+    },
+    "tooltip": "REX 주문 취소"
+  },
+  "rentcpu": {
+    "method": "CPU 임대",
+    "title": "CPU 임대 요청",
+    "result": "CPU 임대 결과",
+    "headers": {
+      "request": "다음 CPU를 임대하시겠습니까?",
+      "result": "다음 CPU를 임대했습니다."
+    },
+    "rows": {
+      "from": "보낸 사람: {from}",
+      "receiver": "수신자: {receiver}",
+      "loan_payment": "대출금 지불: {loan_payment}",
+      "loan_fund": "대출 자금: {loan_fund}"
+    },
+    "tooltip": "CPU 작업 임대"
+  },
+  "rentnet": {
+    "method": "NET 임대",
+    "title": "NET 임대 요청",
+    "result": "임대 NET 결과",
+    "headers": {
+      "request": "다음 NET을 임대하시겠습니까?",
+      "result": "다음 NET이 임대되었습니다."
+    },
+    "rows": {
+      "from": "보낸 사람: {from}",
+      "receiver": "수신자: {receiver}",
+      "loan_payment": "대출금 지불: {loan_payment}",
+      "loan_fund": "대출 자금: {loan_fund}"
+    },
+    "tooltip": "NET 운영 임대"
+  },
+  "fundcpuloan": {
+    "method": "자금 CPU 대출",
+    "title": "자금 CPU 대출 요청",
+    "result": "펀드 CPU 대출 결과",
+    "headers": {
+      "request": "다음 CPU 대출에 자금을 지원하시겠습니까?",
+      "result": "다음 CPU 대출이 지원되었습니다:"
+    },
+    "rows": {
+      "from": "보낸 사람: {from}",
+      "loan_num": "대출 번호: {loan_num}",
+      "payment": "결제: {payment}"
+    },
+    "tooltip": "펀딩 CPU 대출 업무"
+  },
+  "fundnetloan": {
+    "method": "펀드넷대출",
+    "title": "펀드NET대출 신청",
+    "result": "펀드NET대출 결과",
+    "headers": {
+      "request": "다음 NET 대출에 자금을 지원하시겠습니까?",
+      "result": "다음 NET Loan에 자금이 지원되었습니다."
+    },
+    "rows": {
+      "from": "보낸 사람: {from}",
+      "loan_num": "대출 번호: {loan_num}",
+      "payment": "결제: {payment}"
+    },
+    "tooltip": "펀딩 NET 대출 운영"
+  },
+  "defcpuloan": {
+    "method": "CPU 대출 디펀딩",
+    "title": "CPU 대출 디펀딩 요청",
+    "result": "CPU 대출 디펀딩 결과",
+    "headers": {
+      "request": "다음 CPU 대출을 환불하시겠습니까?",
+      "result": "다음 CPU 대출이 취소되었습니다."
+    },
+    "rows": {
+      "from": "보낸 사람: {from}",
+      "loan_num": "대출 번호: {loan_num}",
+      "amount": "금액: {amount}"
+    },
+    "tooltip": "CPU 대출 디펀딩 작업"
+  },
+  "defnetloan": {
+    "method": "NET대출 디펀딩",
+    "title": "NET Loan 요청 디펀딩",
+    "result": "NET Loan 디펀드 결과",
+    "headers": {
+      "request": "다음 NET 대출을 환불하시겠습니까?",
+      "result": "다음 NET 대출이 취소되었습니다."
+    },
+    "rows": {
+      "from": "보낸 사람: {from}",
+      "loan_num": "대출 번호: {loan_num}",
+      "amount": "금액: {amount}"
+    },
+    "tooltip": "NET Loan 디펀딩 업무"
+  },
+  "updaterex": {
+    "method": "REX 업데이트",
+    "title": "REX 요청 업데이트",
+    "result": "REX 결과 업데이트",
+    "headers": {
+      "request": "다음 REX를 업데이트하시겠습니까?",
+      "result": "다음 REX가 업데이트되었습니다."
+    },
+    "rows": {
+      "owner": "소유자: {owner}"
+    },
+    "tooltip": "REX 연산 업데이트 중"
+  },
+  "rexexec": {
+    "method": "REX 실행",
+    "title": "REX 요청 실행",
+    "result": "REX 결과 실행",
+    "headers": {
+      "request": "다음 REX를 실행하시겠습니까?",
+      "result": "다음 REX가 실행되었습니다."
+    },
+    "rows": {
+      "user": "사용자: {user}",
+      "max": "최대: {max}"
+    },
+    "tooltip": "REX 연산 실행"
+  },
+  "consolidate": {
+    "method": "REX 통합",
+    "title": "REX 요청 통합",
+    "result": "REX 결과 통합",
+    "headers": {
+      "request": "다음 REX를 통합하시겠습니까?",
+      "result": "다음 REX가 통합되었습니다."
+    },
+    "rows": {
+      "owner": "소유자: {owner}"
+    },
+    "tooltip": "REX 운영 통합"
+  },
+  "mvtosavings": {
+    "method": "REX를 저축으로 전환",
+    "title": "REX를 저축 요청으로 이동",
+    "result": "REX를 저축 결과로 이동",
+    "headers": {
+      "request": "다음 금액의 REX를 저축 통으로 옮기시겠습니까?",
+      "result": "다음 금액의 REX가 저축 버킷으로 이동되었습니다."
+    },
+    "rows": {
+      "owner": "소유자: {owner}",
+      "rex": "렉스: {rex}"
+    },
+    "tooltip": "REX를 저축영업으로 전환"
+  },
+  "mvfrsavings": {
+    "method": "저축에서 REX 이동",
+    "title": "저축 요청에서 REX 이동",
+    "result": "저축 결과에서 REX 이동",
+    "headers": {
+      "request": "저축 버킷에서 다음 금액의 REX를 이동하시겠습니까?",
+      "result": "다음 금액의 REX가 저축 버킷에서 이동되었습니다."
+    },
+    "rows": {
+      "owner": "소유자: {owner}",
+      "rex": "렉스: {rex}"
+    },
+    "tooltip": "저축운영에서 REX 이동"
+  },
+  "closerex": {
+    "method": "REX 닫기",
+    "title": "REX 요청 종료",
+    "result": "REX 결과 닫기",
+    "headers": {
+      "request": "REX 테이블에서 소유자 레코드를 삭제하고 다음 소유자의 사용된 RAM을 확보하시겠습니까?",
+      "result": "REX 테이블의 소유자 레코드가 삭제되었으며 다음 소유자에 대해 RAM이 해제되었습니다."
+    },
+    "rows": {
+      "owner": "소유자: {owner}"
+    },
+    "tooltip": "REX 작업 종료"
+  },
+  "undelegatebw": {
+    "method": "대역폭 위임 취소",
+    "title": "대역폭 요청 위임 취소",
+    "result": "대역폭 위임 취소 결과",
+    "headers": {
+      "request": "위임된 총 토큰 수를 줄이거나 다음에 대한 메모리를 확보하시겠습니까?",
+      "result": "위임된 총 토큰이 줄어들거나 다음에 대한 메모리가 해제되었습니다."
+    },
+    "rows": {
+      "from": "보낸 사람: {from}",
+      "receiver": "수신자: {receiver}",
+      "unstake_net_quantity": "NET 언스테이크 수량: {unstake_net_quantity}",
+      "unstake_cpu_quantity": "CPU 언스테이크 수량: {unstake_cpu_quantity}"
+    },
+    "tooltip": "대역폭 작업 위임 취소"
+  },
+  "buyram": {
+    "method": "RAM 구매",
+    "title": "RAM 요청 구매",
+    "result": "RAM 구매 결과",
+    "headers": {
+      "request": "다음 수신기의 RAM 할당량을 늘리시겠습니까?",
+      "result": "다음 수신기에 대한 RAM 할당량이 늘어났습니다."
+    },
+    "rows": {
+      "payer": "지불인: {payer}",
+      "receiver": "수신자: {receiver}",
+      "quant": "수량: {quant}"
+    },
+    "tooltip": "RAM 작업 구매"
+  },
+  "buyrambytes": {
+    "method": "RAM 바이트 구매",
+    "title": "RAM 바이트 요청 구매",
+    "result": "RAM 바이트 결과 구매",
+    "headers": {
+      "request": "다음 수신기의 RAM을 지정된 바이트만큼 늘리시겠습니까?",
+      "result": "다음 수신기의 RAM이 증가되었습니다."
+    },
+    "rows": {
+      "payer": "지불인: {payer}",
+      "receiver": "수신자: {receiver}",
+      "bytes": "바이트: {bytes}"
+    },
+    "tooltip": "RAM 바이트 작업 구매"
+  },
+  "sellram": {
+    "method": "RAM 판매",
+    "title": "RAM 판매 요청",
+    "result": "RAM 판매 결과",
+    "headers": {
+      "request": "RAM 할당량을 줄이고 토큰을 수신자에게 전송하시겠습니까?",
+      "result": "RAM 할당량이 줄어들고 토큰이 전송되었습니다."
+    },
+    "rows": {
+      "account": "계정: {account}",
+      "bytes": "바이트: {bytes}"
+    },
+    "tooltip": "RAM 작업 판매"
+  },
+  "refund": {
+    "method": "환불하다",
+    "title": "환불 요청",
+    "result": "환불 결과",
+    "headers": {
+      "request": "다음 소유자에 대해 보류 중인 모든 언스테이킹 토큰을 청구하시겠습니까?",
+      "result": "보류 중인 모든 언스테이킹 토큰은 다음 소유자에게 청구되었습니다:"
+    },
+    "rows": {
+      "owner": "소유자: {owner}"
+    },
+    "tooltip": "환불 작업"
+  },
+  "regproducer": {
+    "method": "생산자 등록",
+    "title": "생산자 요청 등록",
+    "result": "생산자 결과 등록",
+    "headers": {
+      "request": "다음 계정을 프로듀서 후보로 등록하시겠습니까?",
+      "result": "다음 계정이 프로듀서 후보로 등록되었습니다."
+    },
+    "rows": {
+      "producer": "프로듀서: {producer}",
+      "producer_key": "생산자 키: {producer_key}",
+      "url": "URL: {url}",
+      "location": "위치: {location}"
+    },
+    "tooltip": "Producer 작업 등록"
+  },
+  "unregprod": {
+    "method": "프로듀서 등록 취소",
+    "title": "생산자 등록 취소 요청",
+    "result": "등록 취소 생산자 결과",
+    "headers": {
+      "request": "다음 블록 생산자 계정을 비활성화하시겠습니까?",
+      "result": "다음 블록 생산자 계정이 비활성화되었습니다:"
+    },
+    "rows": {
+      "producer": "프로듀서: {producer}"
+    },
+    "tooltip": "생산자 등록 취소 작업"
+  },
+  "setram": {
+    "method": "RAM 설정",
+    "title": "RAM 요청 설정",
+    "result": "RAM 결과 설정",
+    "headers": {
+      "request": "RAM 공급량을 다음과 같이 설정하시겠습니까?",
+      "result": "RAM 공급량은 다음과 같이 설정되었습니다."
+    },
+    "rows": {
+      "max_ram_size": "최대 RAM 크기: {max_ram_size}"
+    },
+    "tooltip": "RAM 작동 설정"
+  },
+  "setramrate": {
+    "method": "RAM 속도 설정",
+    "title": "RAM 속도 요청 설정",
+    "result": "RAM 속도 결과 설정",
+    "headers": {
+      "request": "블록당 바이트 단위로 RAM 증가율을 설정하시겠습니까?",
+      "result": "RAM 증가율은 다음과 같이 설정되었습니다."
+    },
+    "rows": {
+      "bytes_per_block": "블록당 바이트: {bytes_per_block}"
+    },
+    "tooltip": "RAM 속도 작동 설정"
+  },
+  "voteproducer": {
+    "method": "투표 생산자",
+    "title": "투표 제작자 요청",
+    "result": "투표 생산자 결과",
+    "headers": {
+      "request": "일련의 생산자에게 투표하시겠습니까, 아니면 대리인에게 투표하시겠습니까?",
+      "result": "다음 생산자 또는 프록시 세트에 투표했습니다."
+    },
+    "rows": {
+      "voter": "유권자: {voter}",
+      "proxy": "프록시: {proxy}",
+      "producers": "제작자:\n"
+    },
+    "tooltip": "투표 생산자 운영"
+  },
+  "regproxy": {
+    "method": "프록시 등록",
+    "title": "프록시 요청 등록",
+    "result": "프록시 결과 등록",
+    "headers": {
+      "request": "다음 계정을 유권자 대리인으로 등록하시겠습니까?",
+      "result": "다음 계정이 유권자 대리인으로 등록되었습니다:"
+    },
+    "rows": {
+      "proxy": "프록시: {proxy}",
+      "isproxy": "프록시임: {isproxy}"
+    },
+    "tooltip": "프록시 작업 등록"
+  },
+  "setparams": {
+    "method": "매개변수 설정",
+    "title": "매개변수 설정 요청",
+    "result": "매개변수 설정 결과",
+    "headers": {
+      "request": "블록체인 매개변수를 설정하시겠습니까?",
+      "result": "블록체인 매개변수가 설정되었습니다:"
+    },
+    "rows": {
+      "params": "매개변수:\n"
+    },
+    "tooltip": "매개변수 작동 설정"
+  },
+  "claimrewards": {
+    "method": "보상 청구",
+    "title": "보상 요청 요청",
+    "result": "보상 결과 청구",
+    "headers": {
+      "request": "다음 생산자 계정에 대한 블록 생성 및 투표 보상을 요청하시겠습니까?",
+      "result": "블록 생성 및 투표 보상은 다음 생산자 계정에 대해 청구되었습니다."
+    },
+    "rows": {
+      "owner": "소유자: {owner}"
+    },
+    "tooltip": "보상 청구 작업"
+  },
+  "setpriv": {
+    "method": "권한 설정",
+    "title": "권한 요청 설정",
+    "result": "권한 결과 설정",
+    "headers": {
+      "request": "다음 계정의 권한 상태를 설정하시겠습니까?",
+      "result": "다음 계정에 대한 권한 상태가 설정되었습니다."
+    },
+    "rows": {
+      "account": "계정: {account}",
+      "is_priv": "권한이 있음: {is_priv}"
+    },
+    "tooltip": "권한 동작 설정"
+  },
+  "rmvproducer": {
+    "method": "생산자 제거",
+    "title": "생산자 요청 삭제",
+    "result": "생산자 결과 제거",
+    "headers": {
+      "request": "다음 제작자를 이름으로 비활성화하시겠습니까?",
+      "result": "다음 생산자가 비활성화되었습니다."
+    },
+    "rows": {
+      "producer": "프로듀서: {producer}"
+    },
+    "tooltip": "생산자 작업 제거"
+  },
+  "updtrevision": {
+    "method": "개정판 업데이트",
+    "title": "업데이트 개정 요청",
+    "result": "개정 결과 업데이트",
+    "headers": {
+      "request": "현재 버전을 업데이트하시겠습니까?",
+      "result": "현재 개정판이 업데이트되었습니다:"
+    },
+    "rows": {
+      "revision": "개정: {revision}"
+    },
+    "tooltip": "개정 작업 업데이트 중"
+  },
+  "bidname": {
+    "method": "입찰 이름",
+    "title": "입찰 이름 요청",
+    "result": "입찰명 결과",
+    "headers": {
+      "request": "이름에 입찰하시겠습니까?",
+      "result": "다음 이름으로 입찰이 이루어졌습니다."
+    },
+    "rows": {
+      "bidder": "입찰자: {bidder}",
+      "newname": "새 이름: {newname}",
+      "bid": "입찰: {bid}"
+    },
+    "tooltip": "입찰 이름 작업"
+  },
+  "bidrefund": {
+    "method": "입찰 환불",
+    "title": "입찰 환불 요청",
+    "result": "입찰 환불 결과",
+    "headers": {
+      "request": "이름에 대한 입찰을 환불하시겠습니까?",
+      "result": "다음 이름에 대한 입찰이 환불되었습니다."
+    },
+    "rows": {
+      "bidder": "입찰자: {bidder}",
+      "newname": "새 이름: {newname}"
+    },
+    "tooltip": "입찰 환불 작업"
+  },
+  "ramtransfer": {
+    "method": "RAM 전송",
+    "title": "RAM 전송 요청",
+    "result": "RAM 전송 결과",
+    "headers": {
+      "request": "한 계정에서 다른 계정으로 RAM을 이전하시겠습니까?",
+      "result": "RAM이 한 계정에서 다른 계정으로 이전되었습니다."
+    },
+    "rows": {
+      "from": "보낸 사람: {from}",
+      "to": "받는 사람: {to}",
+      "bytes": "바이트: {bytes}"
+    },
+    "tooltip": "RAM 작업 전송 중"
+  }
+}

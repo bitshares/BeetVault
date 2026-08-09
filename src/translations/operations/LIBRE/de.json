@@ -1,0 +1,131 @@
+{
+  "injectedCall": {
+    "method": "injectedCall",
+    "title": "Injizierter Aufruf Request",
+    "result": "Injizierter Aufruf Ergebnis",
+    "headers": {
+      "request": "Folgenden injizierten Aufruf genehmigen?",
+      "result": "Folgender injizierter Aufruf wurde genehmigt:"
+    },
+    "tooltip": "Bittet Ihr Wallet, einen injizierten Blockchain-Vorgang zu verarbeiten"
+  },
+  "voteproducer": {
+    "method": "Libre-Blockproduzenten wählen",
+    "title": "Libre-Blockproduzentenwahl Anfrage",
+    "result": "Libre-Blockproduzentenwahl Ergebnis",
+    "headers": {
+      "request": "Für folgende Libre-Blockproduzenten stimmen?",
+      "result": "Stimmen wurden für folgende Libre-Blockproduzenten abgegeben:"
+    },
+    "rows": {
+      "voter": "Wähler: {voter}",
+      "producers": "Produzenten: {producers}"
+    },
+    "tooltip": "Für Libre-Blockproduzenten stimmen"
+  },
+  "regproducer": {
+    "method": "Libre-Blockproduzent registrieren",
+    "title": "Libre-Blockproduzentenregistrierung Anfrage",
+    "result": "Libre-Blockproduzentenregistrierung Ergebnis",
+    "headers": {
+      "request": "Folgendes als Libre-Blockproduzent registrieren?",
+      "result": "Folgendes wurde als Libre-Blockproduzent registriert:"
+    },
+    "rows": {
+      "producer": "Produzent: {producer}",
+      "producer_key": "Produzentenschlüssel: {producer_key}",
+      "url": "URL: {url}",
+      "location": "Standort: {location}"
+    },
+    "tooltip": "Als Libre-Blockproduzent registrieren"
+  },
+  "claimrewards": {
+    "method": "Libre-Belohnungen beanspruchen",
+    "title": "Libre-Belohnungs-Beanspruchung Anfrage",
+    "result": "Libre-Belohnungs-Beanspruchung Ergebnis",
+    "headers": {
+      "request": "Blockproduzentenbelohnungen beanspruchen?",
+      "result": "Blockproduzentenbelohnungen wurden beansprucht:"
+    },
+    "rows": {
+      "owner": "Besitzer: {owner}"
+    },
+    "tooltip": "Libre-Blockproduzentenbelohnungen beanspruchen"
+  },
+  "setalimits": {
+    "method": "Kontolimits festlegen",
+    "title": "Kontolimits-Festlegung Anfrage",
+    "result": "Kontolimits-Festlegung Ergebnis",
+    "headers": {
+      "request": "Folgende Konto-Ressourcenlimits festlegen?",
+      "result": "Folgende Konto-Ressourcenlimits wurden festgelegt:"
+    },
+    "rows": {
+      "account": "Konto: {account}",
+      "ram_bytes": "RAM-Limit: {ram_bytes}",
+      "net_weight": "Netzgewicht: {net_weight}",
+      "cpu_weight": "CPU-Gewicht: {cpu_weight}"
+    },
+    "tooltip": "Konto-Ressourcenlimits auf Libre festlegen"
+  },
+  "stake": {
+    "method": "Libre-Token staken",
+    "title": "Libre-Token-Staking Anfrage",
+    "result": "Libre-Token-Staking Ergebnis",
+    "headers": {
+      "request": "Folgende Libre-Token staken?",
+      "result": "Folgende Libre-Token wurden gestakt:"
+    },
+    "rows": {
+      "from": "Von: {from}",
+      "to": "An: {to}",
+      "quantity": "Menge: {quantity}",
+      "memo": "Nachricht: {memo}"
+    },
+    "tooltip": "Libre-Token über den Staking-Vertrag staken"
+  },
+  "unstake": {
+    "method": "Libre-Token unstaken",
+    "title": "Libre-Token-Unstaking Anfrage",
+    "result": "Libre-Token-Unstaking Ergebnis",
+    "headers": {
+      "request": "Folgende Libre-Token unstaken?",
+      "result": "Folgende Libre-Token wurden ungestakt:"
+    },
+    "rows": {
+      "account": "Konto: {account}",
+      "index": "Index: {index}"
+    },
+    "tooltip": "Libre-Token unstaken"
+  },
+  "claim": {
+    "method": "Libre-Staking-Belohnungen beanspruchen",
+    "title": "Libre-Staking-Belohnungs-Beanspruchung Anfrage",
+    "result": "Libre-Staking-Belohnungs-Beanspruchung Ergebnis",
+    "headers": {
+      "request": "Libre-Staking-Belohnungen beanspruchen?",
+      "result": "Libre-Staking-Belohnungen wurden beansprucht:"
+    },
+    "rows": {
+      "account": "Konto: {account}",
+      "index": "Index: {index}"
+    },
+    "tooltip": "Libre-Staking-Belohnungen beanspruchen"
+  },
+  "transfer": {
+    "method": "Transfer Tokens",
+    "title": "Transfer Tokens Request",
+    "result": "Transfer Tokens Result",
+    "headers": {
+      "request": "Transfer the following tokens?",
+      "result": "The following tokens were transferred:"
+    },
+    "rows": {
+      "from": "From: {from}",
+      "to": "To: {to}",
+      "quantity": "Quantity: {quantity}",
+      "memo": "Memo: {memo}"
+    },
+    "tooltip": "Transfer tokens between accounts"
+  }
+}

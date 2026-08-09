@@ -1,24 +1,48 @@
 <script setup>
     import { watchEffect, ref, computed, onMounted, watch, toRaw } from 'vue';
     import { useI18n } from 'vue-i18n';
+    import { Button } from '@/components/ui/ui/button';
+    import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/ui/card';
+    import { Input } from '@/components/ui/ui/input';
+    import { Alert, AlertDescription } from '@/components/ui/ui/alert';
+    import { Badge } from '@/components/ui/ui/badge';
+    import { Shield, Clock, Loader2, Copy, X } from 'lucide-vue-next';
+    import { useClipboard } from '@vueuse/core';
+
 
     import AccountSelect from "./account-select";
     import Operations from "./blockchains/operations";
 
-    import store from '../store/index.js';
+    import { useWalletStore } from "@/stores/walletStore.js";
+    import { useAccountStore } from "@/stores/accountStore.js";
+    import { useSettingsStore } from "@/stores/settingsStore.js";
+    import { usePopupStore } from "@/stores/popupStore.js";
+    import { blockchainRequest } from '@/lib/blockchainRequestHelper.js';
     import router from '../router/index.js';
 
-    const { t } = useI18n({ useScope: 'global' });
+    const { copy } = useClipboard();
+
+    let hasActivePopup = computed(() => popupStore.hasActivePopup);
+
+    function copyToClipboard() {
+        copy(currentCode.value);
+    }
+
+    const { t } = useI18n({ useScope: "global" });
+    const walletStore = useWalletStore();
+    const accountStore = useAccountStore();
+    const settingsStore = useSettingsStore();
+    const popupStore = usePopupStore();
 
     let chain = computed(() => {
-        return store.getters['AccountStore/getChain'];
+        return accountStore.getChain;
     });
 
     let selectedAccount = computed(() => {
-        if (!store.state.WalletStore.isUnlocked) {
+        if (!walletStore.isUnlocked) {
             return;
         }
-        return store.getters["AccountStore/getCurrentSafeAccount"]()
+        return accountStore.getCurrentSafeAccount()
     })
 
     watch(selectedAccount, async (newVal, oldVal) => {
@@ -33,7 +57,7 @@
         async function initialize() {
             let blockchainResponse;
             try {
-                blockchainResponse = await window.electron.blockchainRequest({
+                blockchainResponse = await blockchainRequest({
                     methods: ["supportsTOTP", "getOperationTypes"],
                     chain: chain.value
                 });
@@ -67,10 +91,11 @@
         window.electron.resetTimer();
         chosenScope.value = newValue;
         if (newValue === 'AllowAll') {
-            const _ids = operationTypes.value.map(type => type.id);
+            const _ids = operationTypes.value
+                .map(type => type.id)
+                .filter(id => id !== 'injectedCall');
             selectedRows.value = _ids;
-            store.dispatch(
-                "SettingsStore/setChainPermissions",
+            settingsStore.setChainPermissions(
                 {
                     chain: chain.value,
                     rows: _ids
@@ -83,11 +108,11 @@
         window.electron.resetTimer();
         chosenScope.value = null;
         selectedRows.value = null;
-        //
         timestamp.value = null;
         newCodeRequested.value = null;
         timeLimit.value = null;
         progress.value = 0;
+        showWarning.value = false;
     }
 
     let timestamp = ref();
@@ -97,7 +122,7 @@
         newCodeRequested.value = true;
         timestamp.value = new Date();
     }
- 
+  
     let timeLimit = ref();
     function setTime(time) {
         timeLimit.value = time;
@@ -124,13 +149,14 @@
     });
 
     let currentCode = ref();
+    let showWarning = ref(false);
     let copyContents = ref();
     watchEffect(() => {
         async function getNewCode() {
             window.electron.resetTimer();
             let blockchainResponse;
             try {
-                blockchainResponse = await window.electron.blockchainRequest({
+                blockchainResponse = await blockchainRequest({
                     methods: ["totpCode"],
                     chain: chain.value,
                     timestamp: timestamp.value
@@ -147,6 +173,7 @@
 
             const { code } = blockchainResponse;
             currentCode.value = code;
+            showWarning.value = true;
             copyContents.value = {text: code, success: () => {console.log('copied code')}};
         }
 
@@ -157,13 +184,13 @@
 
     let deepLinkInProgress = ref(false);
     window.electron.onDeepLink(async (args) => {
-        if (!store.state.WalletStore.isUnlocked || router.currentRoute.value.path != "/totp") {
+        if (!walletStore.isUnlocked || router.currentRoute.value.path != "/totp") {
             console.log("Wallet must be unlocked for deeplinks to work.");
             window.electron.notify(t("common.totp.promptFailure"));
             return;
         }
 
-        let account = store.getters['AccountStore/getCurrentSafeAccount']();
+        let account = accountStore.getCurrentSafeAccount();
         if (!account || !currentCode.value) {
             console.log('Insufficient state to proceed')
             window.electron.notify(t("common.totp.promptFailure"));
@@ -174,7 +201,7 @@
         deepLinkInProgress.value = true;
         let blockchainResponse;
         try {
-            blockchainResponse = await window.electron.blockchainRequest({
+            blockchainResponse = await blockchainRequest({
                 methods: ["totpDeeplink"],
                 chain: chain.value,
                 currentCode: currentCode.value,
@@ -201,9 +228,9 @@
     });
 
     onMounted(() => {
-        if (!store.state.WalletStore.isUnlocked) {
+        if (!walletStore.isUnlocked) {
             console.log("logging user out...");
-            store.dispatch("WalletStore/logout");
+            walletStore.logout();
             router.replace("/");
             return;
         }
@@ -212,165 +239,114 @@
 
 <template>
     <div class="bottom p-0">
-        <span v-if="compatible">
-            <AccountSelect />
-            <span v-if="deepLinkInProgress">
-                <p style="marginBottom:0px;">
-                    {{ t('common.totp.inProgress') }}
-                </p>
-                <ui-card
-                    v-shadow="3"
-                    outlined
-                    style="marginTop: 5px;"
-                >
-                    <br>
-                    <ui-progress indeterminate />
-                    <br>
-                </ui-card>
-            </span>
-            <span v-else>
-                <p style="marginBottom:0px;">
-                    {{ t('common.totp.label') }}
-                </p>
-                <p style="marginBottom:0px;">
-                    {{ t('common.totp.desc') }}
-                </p>
-                <ui-card
-                    v-shadow="3"
-                    outlined
-                    style="marginTop: 5px;"
-                >
-                    <span v-if="!chosenScope">
-                        <p>
-                            {{ t('common.chosenScope.title.totp') }}
-                        </p>
-                        <ui-button
-                            raised
-                            style="margin-right:5px; margin-bottom: 5px;"
-                            @click="setScope('Configure')"
-                        >
-                            {{ t('common.chosenScope.yes') }}
-                        </ui-button>
-                        <ui-button
-                            raised
-                            style="margin-right:5px; margin-bottom: 5px;"
-                            @click="setScope('AllowAll')"
-                        >
-                            {{ t('common.chosenScope.no') }}
-                        </ui-button>
-                    </span>
-                    <span v-else-if="chosenScope == 'Configure' && !selectedRows">
-                        <Operations
-                            :ops="operationTypes"
-                            :chain="chain"
-                            @selected="(ops) => selectedRows = ops"
-                            @exit="() => {
-                                chosenScope = null;
-                                selectedRows = null;
-                            }"
-                        />
-                    </span>
+        <div v-if="compatible" class="px-4 py-3 space-y-4">
+            <AccountSelect :disabled="hasActivePopup" />
 
-                    <span v-if="chosenScope && selectedRows">
-                        <ui-chips
-                            id="input-chip-set"
-                            type="input"
-                        >
-                            <ui-chip
-                                icon="security"
-                                style="margin-left:30px;"
-                            >
-                                {{ selectedRows ? selectedRows.length : 0 }} {{ t('common.totp.chosen') }}
-                            </ui-chip>
-                            <ui-chip
-                                v-if="selectedRows && selectedRows.length && newCodeRequested"
-                                icon="access_time"
-                            >
-                                {{ t('common.totp.time') }}: {{ timeLimit - progress.toFixed(0) }}s
-                            </ui-chip>
-                        </ui-chips>
-                        <span
-                            v-if="!newCodeRequested && selectedRows && selectedRows.length > 0 && !timeLimit"
-                            style="padding-left: 20px;"
-                        >
-                            <ui-button
-                                raised
-                                style="margin-right:10px; margin-bottom: 10px;"
-                                @click="setTime(60)"
-                            >
-                                60s
-                            </ui-button>
-                            <ui-button
-                                raised
-                                style="margin-right:10px; margin-bottom: 10px;"
-                                @click="setTime(180)"
-                            >
-                                3m
-                            </ui-button>
-                            <ui-button
-                                raised
-                                style="margin-bottom: 10px;"
-                                @click="setTime(600)"
-                            >
-                                10m
-                            </ui-button>
-                        </span>
-                        <span>
-                            <ui-button
-                                v-if="!newCodeRequested && selectedRows && selectedRows.length > 0 && timeLimit"
-                                icon="generating_tokens"
-                                raised
-                                style="margin-left: 30px; margin-right:5px; margin-bottom: 10px;"
-                                @click="requestCode"
-                            >
-                                {{ t('common.totp.request') }}
-                            </ui-button>
-                        </span>
-                        <ui-textfield
-                            v-if="currentCode && newCodeRequested"
-                            v-model="currentCode"
-                            style="margin:5px;"
-                            outlined
-                            :attrs="{ readonly: true }"
-                        >
-                            <template #after>
-                                <ui-textfield-icon v-copy="copyContents">content_copy</ui-textfield-icon>
-                            </template>
-                        </ui-textfield>
-                        <ui-alert
-                            v-if="currentCode && newCodeRequested"
-                            style="margin:10px;"
-                            state="warning"
-                            closable
-                        >
-                            {{ t('common.totp.warning') }}
-                        </ui-alert>
-                    </span>
-                </ui-card>
-            </span>
+            <div v-if="deepLinkInProgress" class="flex flex-col items-center gap-2">
+                <p class="mb-0">{{ t('common.totp.inProgress') }}</p>
+                <Card class="w-full max-w-sm shadow-sm border">
+                    <CardContent class="flex flex-col items-center py-4">
+                        <Loader2 class="h-6 w-6 animate-spin" />
+                    </CardContent>
+                </Card>
+            </div>
 
-            <ui-button
-                v-if="chosenScope && selectedRows"
-                style="margin-right:5px"
-                icon="arrow_back_ios"
-                @click="goBack"
-            >
-                {{ t('common.qr.back') }}
-            </ui-button>
-            <router-link
-                :to="'/dashboard'"
-                replace
-            >
-                <ui-button
-                    outlined
-                    class="step_btn"
-                >
-                    {{ t('common.totp.exit') }}
-                </ui-button>
-            </router-link>
-        </span>
-        <span v-else>
+            <div v-else class="space-y-4">
+                <p class="mb-0">{{ t('common.totp.label') }}</p>
+                <p class="mb-0">{{ t('common.totp.desc') }}</p>
+
+                <Card class="w-full shadow-sm border">
+                    <CardContent class="space-y-4 p-4">
+                        <div v-if="!chosenScope">
+                            <p class="mb-3">{{ t('common.chosenScope.title.totp') }}</p>
+                            <div class="flex flex-wrap gap-2">
+                                <Button @click="setScope('Configure')">
+                                    {{ t('common.chosenScope.yes') }}
+                                </Button>
+                                <Button variant="outline" @click="setScope('AllowAll')">
+                                    {{ t('common.chosenScope.no') }}
+                                </Button>
+                            </div>
+                        </div>
+
+                        <div v-else-if="chosenScope == 'Configure' && !selectedRows">
+                            <Operations
+                                :ops="operationTypes"
+                                :chain="chain"
+                                @selected="(ops) => selectedRows = ops"
+                                @exit="() => {
+                                    chosenScope = null;
+                                    selectedRows = null;
+                                }"
+                            />
+                        </div>
+
+                        <div v-if="chosenScope && selectedRows" class="space-y-3">
+                            <div class="flex flex-wrap gap-2">
+                                <Badge variant="secondary" class="flex items-center gap-1">
+                                    <Shield class="h-3 w-3" />
+                                    {{ selectedRows ? selectedRows.length : 0 }} {{ t('common.totp.chosen') }}
+                                </Badge>
+                                <Badge
+                                    v-if="selectedRows && selectedRows.length && newCodeRequested"
+                                    variant="secondary"
+                                    class="flex items-center gap-1"
+                                >
+                                    <Clock class="h-3 w-3" />
+                                    {{ t('common.totp.time') }}: {{ timeLimit - progress.toFixed(0) }}s
+                                </Badge>
+                            </div>
+
+                            <div v-if="!newCodeRequested && selectedRows && selectedRows.length > 0 && !timeLimit" class="flex flex-wrap gap-2">
+                                <Button variant="outline" @click="setTime(60)">60s</Button>
+                                <Button variant="outline" @click="setTime(180)">3m</Button>
+                                <Button variant="outline" @click="setTime(600)">10m</Button>
+                            </div>
+
+                            <div v-if="!newCodeRequested && selectedRows && selectedRows.length > 0 && timeLimit">
+                                <Button @click="requestCode">
+                                    {{ t('common.totp.request') }}
+                                </Button>
+                            </div>
+
+                            <div v-if="currentCode && newCodeRequested" class="flex items-center gap-2">
+                                <Input
+                                    v-model="currentCode"
+                                    readonly
+                                    class="flex-1"
+                                />
+                                <Button variant="outline" size="icon" @click="copyToClipboard" :aria-label="t('common.copy')">
+                                    <Copy class="h-4 w-4" />
+                                </Button>
+                            </div>
+
+                            <Alert v-if="currentCode && newCodeRequested && showWarning" variant="secondary" class="border-yellow-500 bg-yellow-50">
+                                <AlertDescription class="flex items-center justify-between">
+                                    {{ t('common.totp.warning') }}
+                                    <Button variant="ghost" size="icon" class="h-5 w-5" @click="showWarning = false" :aria-label="t('common.close')">
+                                        <X class="h-4 w-4" />
+                                    </Button>
+                                </AlertDescription>
+                            </Alert>
+                        </div>
+                    </CardContent>
+                </Card>
+            </div>
+
+        </div>
+
+        <div v-else class="px-4 py-3">
             {{ t('common.totp.unsupported') }}
-        </span>
+        </div>
+
+        <div class="flex justify-between items-center px-4 pt-2 pb-4">
+            <Button v-if="chosenScope && selectedRows" variant="outline" @click="goBack" :disabled="hasActivePopup">
+                {{ t('common.qr.back') }}
+            </Button>
+            <div v-else></div>
+            <Button variant="outline" @click="router.replace('/dashboard')" :disabled="hasActivePopup">
+                {{ t('common.totp.exit') }}
+            </Button>
+        </div>
     </div>
 </template>

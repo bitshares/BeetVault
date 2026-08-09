@@ -9,10 +9,10 @@ export default class Action {
         return new Action();
     }
     static fromJson(json) {
-        return Object.assign(this.placeholder(), json);
+        return Object.assign(Action.placeholder(), json);
     }
 
-    error(payload) {
+    static error(payload) {
         return new Action('error', payload);
     }
 }

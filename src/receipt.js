@@ -1,9 +1,8 @@
-import { createApp } from 'vue';
+import { createApp, h } from 'vue';
+import { createPinia } from 'pinia';
 import mitt from 'mitt';
 
-import BalmUI from 'balm-gui';
-import BalmUIPlus from 'balm-ui-plus';
-import 'balm-ui-css';
+import './styles/globals.css';
 
 import 'typeface-roboto';
 import 'typeface-rajdhani';
@@ -19,28 +18,32 @@ window.onerror = function (msg, url, lineNo, columnNo, error) {
   return false;
 };
 
+const pinia = createPinia();
 const emitter = mitt();
-const app = createApp({});
+const app = createApp({
+  render() {
+    return h('div', { class: 'main' }, [
+      h(Receipt),
+    ]);
+  },
+});
+app.use(pinia);
 app.provide('emitter', emitter);
 
 app.config.errorHandler = function (err, vm, info) {
   console.log("error:" + err);
 };
 
+// Forward uncaught renderer promise rejections to the main process so they
+// are captured in crash reporting regardless of where they originate.
+window.addEventListener("unhandledrejection", (e) => {
+  window.electron?.sendError?.(e.reason?.stack || e.reason);
+  e.preventDefault();
+});
+
 app.component('Receipt', Receipt);
 app.use(i18n);
 
-window.t = (key, params) => {
-    return i18n.global.t(key, params)
-}
-
-app.use(BalmUI, {
-    $theme: {
-        primary: '#C7088E'
-    }
-});
-
-app.use(BalmUIPlus);
 app.mount('#receipt');
 
 emitter.on('i18n', (data) => {

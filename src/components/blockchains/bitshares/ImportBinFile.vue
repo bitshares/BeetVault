@@ -1,8 +1,19 @@
 <script setup>
-    import {ref, onMounted} from "vue";
-    import { useI18n } from 'vue-i18n';
+import {ref, onMounted, watch} from "vue";
+import { useI18n } from 'vue-i18n';
+import { Button } from '@/components/ui/ui/button';
+import { Input } from '@/components/ui/ui/input';
+import { Spinner } from '@/components/ui/ui/spinner';
+    import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from '@/components/ui/ui/table';
+    import { ScrollArea } from '@/components/ui/ui/scroll-area';
+    import { X } from 'lucide-vue-next';
+    import { useWalletStore } from '@/stores/walletStore.js';
+    import { useAccountStore } from '@/stores/accountStore.js';
+    import { blockchainRequest } from '@/lib/blockchainRequestHelper.js';
 
     const { t } = useI18n({ useScope: 'global' });
+    const walletStore = useWalletStore();
+    const accountStore = useAccountStore();
 
     const props = defineProps({
         chain: {
@@ -12,7 +23,7 @@
         }
     });
 
-    const emit = defineEmits(['back', 'continue', 'imported']);
+    const emit = defineEmits(['back', 'continue', 'imported', 'processing']);
 
     onMounted(() => {
         if (!["BTS", "BTS_TEST"].includes(props.chain)) {
@@ -27,7 +38,8 @@
     let bin_file_password = ref(null);
     let accounts = ref([]);
 
-    // function to remove account from accounts given an account id
+    watch(inProgress, (val) => emit('processing', val));
+
     function removeAccount(id) {
         accounts.value = accounts.value.filter(x => x.id !== id);
     }
@@ -38,20 +50,37 @@
 
     function _getPickedAccounts() {
         let pickedAccounts = [];
+        let skipped = 0;
+
         for (let i in accounts.value) {
             let account = accounts.value[i];
+
+            // Duplicate check: skip if account already exists in wallet
+            if (walletStore.isUnlocked) {
+                let chain = props.chain;
+                let accountName = account.name;
+                let duplicate = accountStore.accountlist.find(
+                    x => x.chain === chain &&
+                    (x.accountID === accountName || x.accountName === accountName)
+                );
+                if (duplicate) {
+                    skipped++;
+                    continue;
+                }
+            }
+
             pickedAccounts.push({
                 account: {
                     accountName: account.name,
                     accountID: account.id,
                     chain: props.chain,
-                    keys: {
-                        active: account.active.key,
-                        owner: account.owner.key,
-                        memo: account.memo.key
-                    }
+                    keys: { _vaultToken: account._vaultToken }
                 }
             });
+        }
+
+        if (skipped > 0) {
+            window.electron.notify(t("common.account_already_added"));
         }
         
         if (pickedAccounts && pickedAccounts.length) {
@@ -66,7 +95,7 @@
             let blockchainResponse;
             try {
                 inProgress.value = true;
-                blockchainResponse = await window.electron.blockchainRequest({
+                blockchainResponse = await blockchainRequest({
                     methods: ["decryptBackup"],
                     location: 'importBinFile',
                     chain: props.chain,
@@ -76,6 +105,7 @@
             } catch (error) {
                 console.log({error});
                 inProgress.value = false;
+                bin_file_password.value = "";
                 window.electron.notify(t("common.error_text"));
                 return;
             }
@@ -86,6 +116,7 @@
                 substep2.value = true;
             }
 
+            bin_file_password.value = "";
             inProgress.value = false;
         } else {
             _getPickedAccounts();
@@ -94,178 +125,102 @@
 </script>
 
 <template>
-    <div id="step2">
+    <div id="step2" class="space-y-3">
         <template v-if="substep1 && inProgress">
-            <ui-progress indeterminate />
-            <br>
-            <figcaption>
-                {{ t('common.import_bin_progress') }}
-            </figcaption>
+            <Button disabled class="w-full">
+                <Spinner class="mr-2" />
+                {{ t('common.processing') }}
+            </Button>
         </template>
-        <template v-else-if="substep1">
-            <p class="mb-2 font-weight-bold">
-                {{ t('common.import_bin_file') }}
-            </p>
-            <input
-                type="file"
-                class="form-control mb-3 small"
-                @change="handleWalletSelect"
-            >
-            <p class="mb-2 font-weight-bold">
-                {{ t('common.import_bin_pass') }}
-            </p>
-            <input
-                v-model="bin_file_password"
-                type="password"
-                class="form-control mb-3 small"
-            >
-            <br>
-            <ui-button
-                v-if="wallet_file && bin_file_password"
-                outlined
-                class="step_btn"
-                @click="next"
-            >
-                {{ t('common.next_btn') }}
-            </ui-button>
-            <br>
-            <ui-button
-                outlined
-                class="step_btn"
-                @click="emit('back')"
-            >
-                {{ t('common.back_btn') }}
-            </ui-button>
+        <template v-else-if="substep1" class="space-y-3">
+            <div>
+                <p class="mb-1 font-semibold text-sm">{{ t('common.import_bin_file') }}</p>
+                <Input
+                    type="file"
+                    class="w-full"
+                    @change="handleWalletSelect"
+                />
+            </div>
+
+            <div>
+                <p class="mb-1 font-semibold text-sm">{{ t('common.import_bin_pass') }}</p>
+                <Input
+                    v-model="bin_file_password"
+                    type="password"
+                    class="w-full"
+                />
+            </div>
+
+            <div class="flex flex-wrap gap-2 pt-2">
+                <Button variant="outline" @click="emit('back')">
+                    {{ t('common.back_btn') }}
+                </Button>
+                <Button v-if="wallet_file && bin_file_password" @click="next">
+                    {{ t('common.next_btn') }}
+                </Button>
+            </div>
         </template>
-        <template v-if="substep2">
-            <div class="import-accounts mt-3">
-                <table class="table small table-striped table-sm">
-                    <thead>
-                        <tr>
-                            <th
-                                rowspan="2"
-                                class="align-middle"
-                            >
-                                Account Name
-                            </th>
-                            <th
-                                rowspan="2"
-                                class="align-middle"
-                            >
-                                Active Authority
-                            </th>
-                            <th
-                                rowspan="2"
-                                class="align-middle"
-                            >
-                                Owner Authority
-                            </th>
-                            <th
-                                rowspan="2"
-                                class="align-middle"
-                            >
-                                Memo
-                            </th>
-                            <th
-                                rowspan="2"
-                                class="align-middle"
-                            >
-                                Import?
-                            </th>
-                        </tr>
-                        <tr>
-                            <th class="align-middle">
-                                Propose
-                            </th>
-                            <th class="align-middle">
-                                Remove?
-                            </th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        <tr
+
+        <template v-if="substep2" class="space-y-3">
+            <ScrollArea class="max-h-56 w-full rounded-md border">
+                <Table>
+                    <TableHeader>
+                        <TableRow>
+                        <TableHead>{{ t('common.table.name') }}</TableHead>
+                        <TableHead>{{ t('common.table.active') }}</TableHead>
+                        <TableHead>{{ t('common.table.owner') }}</TableHead>
+                        <TableHead>{{ t('common.table.memoKey') }}</TableHead>
+                            <TableHead></TableHead>
+                        </TableRow>
+                    </TableHeader>
+                    <TableBody>
+                        <TableRow
                             v-for="account in accounts"
                             :key="account.id"
-                            :class="{ disabledImport : !account.importable}"
                         >
-                            <td class="text-center align-middle">
-                                {{ account.name }}<br>({{ account.id }})
-                            </td>
-                            <td class="text-center align-middle">
-                                {{ account.active.canPropose ? 'Y' : 'N' }}
-                            </td>
-                            <td class="text-center align-middle">
-                                {{ account.active.canTransact ? 'Y' : 'N' }}
-                            </td>
-                            <td class="text-center align-middle">
-                                {{ account.owner.canPropose ? 'Y' : 'N' }}
-                            </td>
-                            <td class="text-center align-middle">
-                                {{ account.owner.canTransact ? 'Y' : 'N' }}
-                            </td>
-                            <td class="text-center align-middle">
-                                {{ account.memo.canSend ? 'Y' : 'N' }}
-                            </td>
-                            <td class="text-center align-middle">
-                                <ui-icon-button
+                            <TableCell class="text-sm">{{ account.name }}</TableCell>
+                            <TableCell class="text-sm">{{ account.active.canTransact ? t('common.yes') : t('common.no') }}</TableCell>
+                            <TableCell class="text-sm">{{ account.owner.canTransact ? t('common.yes') : t('common.no') }}</TableCell>
+                            <TableCell class="text-sm">{{ account.memo.canSend ? t('common.yes') : t('common.no') }}</TableCell>
+                            <TableCell>
+                                <Button
                                     v-if="account.importable"
-                                    icon="clear"
-                                    outlined
-                                    class="step_btn"
+                                    variant="ghost"
+                                    size="icon"
+                                    class="h-8 w-8"
                                     @click="removeAccount(account.id)"
-                                />
-                            </td>
-                        </tr>
-                    </tbody>
-                </table>
+                                >
+                                    <X class="h-4 w-4" />
+                                </Button>
+                            </TableCell>
+                        </TableRow>
+                    </TableBody>
+                </Table>
+            </ScrollArea>
 
-                <ui-grid>
-                    <ui-grid-cell columns="12">
-                        <ui-button
-                            outlined
-                            class="step_btn"
-                            @click="back"
-                        >
-                            {{ t('common.back_btn') }}
-                        </ui-button>
-
-                        <ui-button
-                            v-if="substep1 && (!wallet_file || !bin_file_password)"
-                            disabled
-                            class="step_btn"
-                            type="submit"
-                        >
-                            {{ t('common.next_btn') }}
-                        </ui-button>
-                        
-                        <ui-button
-                            v-if="accounts && accounts.length || (substep1 && wallet_file && bin_file_password)"
-                            raised
-                            class="step_btn"
-                            type="submit"
-                            @click="next"
-                        >
-                            {{ t('common.next_btn') }}
-                        </ui-button>
-
-                        <ui-button
-                            v-if="substep2 && (!accounts || !accounts.length)"
-                            disabled
-                            class="step_btn"
-                            type="submit"
-                        >
-                            {{ t('common.next_btn') }}
-                        </ui-button>
-                    </ui-grid-cell>
-                </ui-grid>
+            <div class="flex flex-wrap gap-2 pt-2">
+                <Button variant="outline" @click="emit('back')">
+                    {{ t('common.back_btn') }}
+                </Button>
+                <Button
+                    v-if="substep1 && (!wallet_file || !bin_file_password)"
+                    disabled
+                >
+                    {{ t('common.next_btn') }}
+                </Button>
+                <Button
+                    v-if="accounts && accounts.length || (substep1 && wallet_file && bin_file_password)"
+                    @click="next"
+                >
+                    {{ t('common.next_btn') }}
+                </Button>
+                <Button
+                    v-if="substep2 && (!accounts || !accounts.length)"
+                    disabled
+                >
+                    {{ t('common.next_btn') }}
+                </Button>
             </div>
-            <!--<button-->
-            <!--v-if="picked.length>10"-->
-            <!--class="btn btn-lg btn-primary btn-block mt-3"-->
-            <!--@click="simpleStep3"-->
-            <!--&gt;-->
-            <!--{{ t('common.import_btn') }}-->
-            <!--</button>-->
         </template>
     </div>
 </template>

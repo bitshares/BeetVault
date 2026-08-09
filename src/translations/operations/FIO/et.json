@@ -1,0 +1,384 @@
+{
+  "injectedCall": {
+    "method": "süstitud Helista",
+    "title": "Süstitud kõne taotlus",
+    "result": "Süstitud kõne tulemus",
+    "headers": {
+      "request": "Kas kinnitada järgmine süstitud kõne?",
+      "result": "Järgmine süstitud kõne kiideti heaks:"
+    },
+    "tooltip": "Palub teie rahakotil süstitud plokiahela operatsiooniga hakkama saada"
+  },
+  "regaddress": {
+    "method": "Registreeri FIO aadress",
+    "title": "Registreeri FIO aadressi taotlus",
+    "result": "Registreeri FIO aadressi tulemus",
+    "headers": {
+      "request": "Registreeri järgmine FIO aadress?",
+      "result": "Järgmine FIO aadress registreeriti:"
+    },
+    "rows": {
+      "fio_address": "FIO aadress: {fio_address}",
+      "owner_fio_public_key": "Omaniku FIO avalik võti: {owner_fio_public_key}",
+      "max_fee": "Maksimaalne tasu: {max_fee}",
+      "tpid": "TPID: {tpid}"
+    },
+    "tooltip": "Registreeri uus FIO aadress"
+  },
+  "renewaddress": {
+    "method": "Uuenda FIO aadressi",
+    "title": "Uuenda FIO aadressi taotlus",
+    "result": "Uuenda FIO aadressi tulemus",
+    "headers": {
+      "request": "Uuenda järgmine FIO aadress?",
+      "result": "Järgmine FIO aadress uuendati:"
+    },
+    "rows": {
+      "fio_address": "FIO aadress: {fio_address}",
+      "max_fee": "Maksimaalne tasu: {max_fee}",
+      "tpid": "TPID: {tpid}"
+    },
+    "tooltip": "Uuenda olemasolevat FIO aadressi"
+  },
+  "regdomain": {
+    "method": "Registreeri FIO domeen",
+    "title": "Registreeri FIO domeeni taotlus",
+    "result": "Registreeri FIO domeeni tulemus",
+    "headers": {
+      "request": "Registreeri järgmine FIO domeen?",
+      "result": "Järgmine FIO domeen registreeriti:"
+    },
+    "rows": {
+      "fio_domain": "FIO domeen: {fio_domain}",
+      "owner_fio_public_key": "Omaniku FIO avalik võti: {owner_fio_public_key}",
+      "max_fee": "Maksimaalne tasu: {max_fee}",
+      "tpid": "TPID: {tpid}"
+    },
+    "tooltip": "Registreeri uus FIO domeen"
+  },
+  "renewdomain": {
+    "method": "Uuenda FIO domeeni",
+    "title": "Uuenda FIO domeeni taotlus",
+    "result": "Uuenda FIO domeeni tulemus",
+    "headers": {
+      "request": "Uuenda järgmine FIO domeen?",
+      "result": "Järgmine FIO domeen uuendati:"
+    },
+    "rows": {
+      "fio_domain": "FIO domeen: {fio_domain}",
+      "max_fee": "Maksimaalne tasu: {max_fee}",
+      "tpid": "TPID: {tpid}"
+    },
+    "tooltip": "Uuenda olemasolevat FIO domeeni"
+  },
+  "addaddress": {
+    "method": "Lisa FIO aadressi link",
+    "title": "Lisa FIO aadressi lingi taotlus",
+    "result": "Lisa FIO aadressi lingi tulemus",
+    "headers": {
+      "request": "Lisa järgmine FIO aadressi link?",
+      "result": "Järgmine FIO aadressi link lisati:"
+    },
+    "rows": {
+      "fio_address": "FIO aadress: {fio_address}",
+      "chain_code": "Ahela kood: {chain_code}",
+      "token_code": "Märgise kood: {token_code}",
+      "public_address": "Avalik aadress: {public_address}",
+      "max_fee": "Maksimaalne tasu: {max_fee}",
+      "tpid": "TPID: {tpid}"
+    },
+    "tooltip": "Linkida ahela aadress FIO aadressiga"
+  },
+  "remaddress": {
+    "method": "Eemalda FIO aadressi link",
+    "title": "Eemalda FIO aadressi lingi taotlus",
+    "result": "Eemalda FIO aadressi lingi tulemus",
+    "headers": {
+      "request": "Eemalda järgmine FIO aadressi link?",
+      "result": "Järgmine FIO aadressi link eemaldati:"
+    },
+    "rows": {
+      "fio_address": "FIO aadress: {fio_address}",
+      "chain_code": "Ahela kood: {chain_code}",
+      "token_code": "Märgise kood: {token_code}",
+      "token_public_address": "Märgise avalik aadress: {token_public_address}",
+      "max_fee": "Maksimaalne tasu: {max_fee}",
+      "tpid": "TPID: {tpid}"
+    },
+    "tooltip": "Eemalda ahela aadressi link FIO aadressilt"
+  },
+  "xferdomain": {
+    "method": "Teisalda FIO domeen",
+    "title": "Teisalda FIO domeeni taotlus",
+    "result": "Teisalda FIO domeeni tulemus",
+    "headers": {
+      "request": "Teisalda järgmine FIO domeen?",
+      "result": "Järgmine FIO domeen teisaldati:"
+    },
+    "rows": {
+      "fio_domain": "FIO domeen: {fio_domain}",
+      "new_owner_key": "Uue omaniku võti: {new_owner_key}",
+      "max_fee": "Maksimaalne tasu: {max_fee}",
+      "tpid": "TPID: {tpid}"
+    },
+    "tooltip": "Teisalda FIO domeen uuele omanikule"
+  },
+  "xferaddress": {
+    "method": "Teisalda FIO aadress",
+    "title": "Teisalda FIO aadressi taotlus",
+    "result": "Teisalda FIO aadressi tulemus",
+    "headers": {
+      "request": "Teisalda järgmine FIO aadress?",
+      "result": "Järgmine FIO aadress teisaldati:"
+    },
+    "rows": {
+      "fio_address": "FIO aadress: {fio_address}",
+      "new_owner_key": "Uue omaniku võti: {new_owner_key}",
+      "max_fee": "Maksimaalne tasu: {max_fee}",
+      "tpid": "TPID: {tpid}"
+    },
+    "tooltip": "Teisalda FIO aadress uuele omanikule"
+  },
+  "burnexpired": {
+    "method": "Põleta aegunud FIO",
+    "title": "Põleta aegunud FIO taotlus",
+    "result": "Põleta aegunud FIO tulemus",
+    "headers": {
+      "request": "Põleta järgmine aegunud FIO aadress?",
+      "result": "Järgmine aegunud FIO aadress põletati:"
+    },
+    "rows": {
+      "fio_address": "FIO aadress: {fio_address}",
+      "max_fee": "Maksimaalne tasu: {max_fee}",
+      "tpid": "TPID: {tpid}"
+    },
+    "tooltip": "Põleta aegunud FIO aadress või domeen"
+  },
+  "trnsfiopubky": {
+    "method": "Teisalda FIO märgid",
+    "title": "Teisalda FIO märkide taotlus",
+    "result": "Teisalda FIO märkide tulemus",
+    "headers": {
+      "request": "Teisalda FIO märgid järgmisele avalikule võtmele?",
+      "result": "FIO märgid teisaldati järgmisele avalikule võtmele:"
+    },
+    "rows": {
+      "payee_fio_public_key": "Saaja FIO avalik võti: {payee_fio_public_key}",
+      "amount": "Summa: {amount}",
+      "max_fee": "Maksimaalne tasu: {max_fee}",
+      "tpid": "TPID: {tpid}"
+    },
+    "tooltip": "Teisalda FIO märgid avalikule võtmele"
+  },
+  "recordobt": {
+    "method": "Salvesta OBT andmed",
+    "title": "Salvesta OBT andmete taotlus",
+    "result": "Salvesta OBT andmete tulemus",
+    "headers": {
+      "request": "Salvesta järgmised OBT andmed?",
+      "result": "Järgmised OBT andmed salvestati:"
+    },
+    "rows": {
+      "payer_fio_address": "Maksja FIO aadress: {payer_fio_address}",
+      "payee_fio_address": "Saaja FIO aadress: {payee_fio_address}",
+      "amount": "Summa: {amount}",
+      "chain_code": "Ahela kood: {chain_code}",
+      "token_code": "Märgise kood: {token_code}",
+      "obt_id": "OBT ID: {obt_id}",
+      "memo": "Memo: {memo}",
+      "max_fee": "Maksimaalne tasu: {max_fee}",
+      "tpid": "TPID: {tpid}"
+    },
+    "tooltip": "Salvesta ahelavälised tehingute andmed FIO ahelasse"
+  },
+  "newfundsreq": {
+    "method": "Nõua FIO vahendeid",
+    "title": "Nõua FIO vahendite taotlus",
+    "result": "Nõua FIO vahendite tulemus",
+    "headers": {
+      "request": "Loo järgmine FIO vahendite taotlus?",
+      "result": "Järgmine FIO vahendite taotlus loodi:"
+    },
+    "rows": {
+      "payer_fio_address": "Maksja FIO aadress: {payer_fio_address}",
+      "payee_fio_address": "Saaja FIO aadress: {payee_fio_address}",
+      "amount": "Summa: {amount}",
+      "chain_code": "Ahela kood: {chain_code}",
+      "token_code": "Märgise kood: {token_code}",
+      "memo": "Memo: {memo}",
+      "max_fee": "Maksimaalne tasu: {max_fee}",
+      "tpid": "TPID: {tpid}"
+    },
+    "tooltip": "Nõu vahendeid FIO protokolli kaudu"
+  },
+  "stakefio": {
+    "method": "Panusta FIO",
+    "title": "Panusta FIO taotlus",
+    "result": "Panusta FIO tulemus",
+    "headers": {
+      "request": "Panusta järgmine FIO summa?",
+      "result": "Järgmine FIO summa pandi:"
+    },
+    "rows": {
+      "amount": "Summa: {amount}",
+      "fio_public_key": "FIO avalik võti: {fio_public_key}",
+      "max_fee": "Maksimaalne tasu: {max_fee}",
+      "tpid": "TPID: {tpid}"
+    },
+    "tooltip": "Panusta FIO märgid"
+  },
+  "unstakefio": {
+    "method": "Võta FIO välja",
+    "title": "Võta FIO välja taotlus",
+    "result": "Võta FIO välja tulemus",
+    "headers": {
+      "request": "Võta järgmine FIO summa välja?",
+      "result": "Järgmine FIO summa võeti välja:"
+    },
+    "rows": {
+      "amount": "Summa: {amount}",
+      "fio_public_key": "FIO avalik võti: {fio_public_key}",
+      "max_fee": "Maksimaalne tasu: {max_fee}",
+      "tpid": "TPID: {tpid}"
+    },
+    "tooltip": "Võta FIO märgid välja"
+  },
+  "newfioacc": {
+    "method": "Loo FIO konto",
+    "title": "Loo FIO konto taotlus",
+    "result": "Loo FIO konto tulemus",
+    "headers": {
+      "request": "Loo uus FIO konto?",
+      "result": "Järgmine FIO konto loodi:"
+    },
+    "rows": {
+      "owner_fio_public_key": "Omaniku FIO avalik võti: {owner_fio_public_key}",
+      "max_fee": "Maksimaalne tasu: {max_fee}",
+      "tpid": "TPID: {tpid}"
+    },
+    "tooltip": "Loo uus FIO konto"
+  },
+  "regproducer": {
+    "method": "Registreeri FIO tootja",
+    "title": "Registreeri FIO tootja taotlus",
+    "result": "Registreeri FIO tootja tulemus",
+    "headers": {
+      "request": "Registreeri järgmine FIO plokitootjana?",
+      "result": "Järgmine registreeriti FIO plokitootjana:"
+    },
+    "rows": {
+      "fio_address": "FIO aadress: {fio_address}",
+      "fio_pub_key": "FIO avalik võti: {fio_pub_key}",
+      "url": "URL: {url}",
+      "location": "Asukoht: {location}"
+    },
+    "tooltip": "Registreeri FIO plokitootjana"
+  },
+  "voteproducer": {
+    "method": "Hääleta FIO tootjate poolt",
+    "title": "Hääleta FIO tootjate taotlus",
+    "result": "Hääleta FIO tootjate tulemus",
+    "headers": {
+      "request": "Hääleta järgmise FIO tootja poolt?",
+      "result": "Hääled anti järgmise FIO tootja poolt:"
+    },
+    "rows": {
+      "fio_address": "FIO aadress: {fio_address}",
+      "producers": "Tootjad: {producers}"
+    },
+    "tooltip": "Hääleta FIO plokitootjate poolt"
+  },
+  "listdomain": {
+    "method": "Loetle FIO domeen müügiks",
+    "title": "Loetle FIO domeeni müügi taotlus",
+    "result": "Loetle FIO domeeni müügi tulemus",
+    "headers": {
+      "request": "Loetle järgmine FIO domeen müügiks?",
+      "result": "Järgmine FIO domeen loetleti müügiks:"
+    },
+    "rows": {
+      "fio_domain": "FIO domeen: {fio_domain}",
+      "sale_price": "Müügihind: {sale_price}",
+      "max_fee": "Maksimaalne tasu: {max_fee}",
+      "tpid": "TPID: {tpid}"
+    },
+    "tooltip": "Loetle FIO domeen turul müügiks"
+  },
+  "buydomain": {
+    "method": "Osta FIO domeen",
+    "title": "Osta FIO domeeni taotlus",
+    "result": "Osta FIO domeeni tulemus",
+    "headers": {
+      "request": "Osta järgmine FIO domeen?",
+      "result": "Järgmine FIO domeen osteti:"
+    },
+    "rows": {
+      "fio_domain": "FIO domeen: {fio_domain}",
+      "buyer_key": "Ostja võti: {buyer_key}",
+      "max_fee": "Maksimaalne tasu: {max_fee}",
+      "tpid": "TPID: {tpid}"
+    },
+    "tooltip": "Osta FIO domeen turult"
+  },
+  "wraptokens": {
+    "method": "Märgi märgid FIO-sse",
+    "title": "Märgi märgid FIO-sse taotlus",
+    "result": "Märgi märgid FIO-sse tulemus",
+    "headers": {
+      "request": "Märgi järgmised märgid FIO-sse?",
+      "result": "Järgmised märgid märgiti FIO-sse:"
+    },
+    "rows": {
+      "chain_code": "Ahela kood: {chain_code}",
+      "public_address": "Avalik aadress: {public_address}",
+      "amount": "Summa: {amount}",
+      "max_fee": "Maksimaalne tasu: {max_fee}",
+      "tpid": "TPID: {tpid}"
+    },
+    "tooltip": "Märgi märgid teiselt ahelalt FIO ahelasse"
+  },
+  "bpclaim": {
+    "method": "Nõua plokitootja preemiat",
+    "title": "Nõua plokitootja preemia taotlus",
+    "result": "Nõua plokitootja preemia tulemus",
+    "headers": {
+      "request": "Nõua plokitootja preemiaid?",
+      "result": "Plokitootja preemiad nõuti:"
+    },
+    "rows": {
+      "fio_address": "FIO aadress: {fio_address}",
+      "tpid": "TPID: {tpid}"
+    },
+    "tooltip": "Nõu FIO plokitootja preemiaid"
+  },
+  "setfeevote": {
+    "method": "Määra tasu hääl",
+    "title": "Määra tasu hääle taotlus",
+    "result": "Määra tasu hääle tulemus",
+    "headers": {
+      "request": "Määra järgmine tasu hääl?",
+      "result": "Järgmine tasu hääl määramati:"
+    },
+    "rows": {
+      "max_fee": "Maksimaalne tasu: {max_fee}",
+      "tpid": "TPID: {tpid}"
+    },
+    "tooltip": "Hääleta FIO tasu väärtuste üle"
+  },
+  "transfer": {
+    "method": "Transfer FIO Tokens",
+    "title": "Transfer FIO Tokens Request",
+    "result": "Transfer FIO Tokens Result",
+    "headers": {
+      "request": "Transfer the following FIO tokens?",
+      "result": "The following FIO tokens were transferred:"
+    },
+    "rows": {
+      "from": "From: {from}",
+      "to": "To: {to}",
+      "quantity": "Quantity: {quantity}",
+      "memo": "Memo: {memo}"
+    },
+    "tooltip": "Transfer FIO tokens between accounts"
+  }
+}

@@ -1,0 +1,237 @@
+{
+  "injectedCall": {
+    "method": "주입전화",
+    "title": "삽입된 통화 요청",
+    "result": "삽입된 통화 결과",
+    "headers": {
+      "request": "다음 삽입된 통화를 승인하시겠습니까?",
+      "result": "다음 삽입된 호출이 승인되었습니다."
+    },
+    "tooltip": "주입된 블록체인 작업을 처리하도록 지갑에 요청"
+  },
+  "stakexpr": {
+    "method": "XPR 스테이크",
+    "title": "XPR 스테이크 요청",
+    "result": "XPR 스테이크 결과",
+    "headers": {
+      "request": "다음 XPR 수량을 스테이크하시겠습니까?",
+      "result": "다음 XPR 수량이 스테이크되었습니다:"
+    },
+    "rows": {
+      "account": "계정: {account}",
+      "quantity": "수량: {quantity}"
+    },
+    "tooltip": "XPR 토큰을 스테이크합니다"
+  },
+  "unstakexpr": {
+    "method": "XPR 언스테이크",
+    "title": "XPR 언스테이크 요청",
+    "result": "XPR 언스테이크 결과",
+    "headers": {
+      "request": "다음 XPR 수량을 언스테이크하시겠습니까?",
+      "result": "다음 XPR 수량이 언스테이크되었습니다:"
+    },
+    "rows": {
+      "account": "계정: {account}",
+      "quantity": "수량: {quantity}"
+    },
+    "tooltip": "XPR 토큰을 언스테이크합니다"
+  },
+  "updstakexpr": {
+    "method": "XPR 스테이크 업데이트",
+    "title": "XPR 스테이크 업데이트 요청",
+    "result": "XPR 스테이크 업데이트 결과",
+    "headers": {
+      "request": "다음 XPR 스테이크를 업데이트하시겠습니까?",
+      "result": "다음 XPR 스테이크가 업데이트되었습니다:"
+    },
+    "rows": {
+      "account": "계정: {account}",
+      "quantity": "수량: {quantity}"
+    },
+    "tooltip": "XPR 스테이크 수량을 업데이트합니다"
+  },
+  "refundxpr": {
+    "method": "XPR 스테이크 환불",
+    "title": "XPR 스테이크 환불 요청",
+    "result": "XPR 스테이크 환불 결과",
+    "headers": {
+      "request": "다음 XPR 스테이크를 환불하시겠습니까?",
+      "result": "다음 XPR 스테이크가 환불되었습니다:"
+    },
+    "rows": {
+      "account": "계정: {account}"
+    },
+    "tooltip": "XPR 스테이크 토큰을 환불합니다"
+  },
+  "voterclaim": {
+    "method": "XPR 유권자 보상 청구",
+    "title": "XPR 유권자 보상 청구 요청",
+    "result": "XPR 유권자 보상 청구 결과",
+    "headers": {
+      "request": "XPR 유권자 보상을 청구하시겠습니까?",
+      "result": "XPR 유권자 보상이 청구되었습니다:"
+    },
+    "rows": {
+      "owner": "소유자: {owner}"
+    },
+    "tooltip": "XPR 유권자 보상을 청구합니다"
+  },
+  "voterclaimst": {
+    "method": "XPR 유권자 스테이크 보상 청구",
+    "title": "XPR 유권자 스테이크 보상 청구 요청",
+    "result": "XPR 유권자 스테이크 보상 청구 결과",
+    "headers": {
+      "request": "XPR 유권자 스테이크 보상을 청구하시겠습니까?",
+      "result": "XPR 유권자 스테이크 보상이 청구되었습니다:"
+    },
+    "rows": {
+      "owner": "소유자: {owner}",
+      "amount": "금액: {amount}"
+    },
+    "tooltip": "XPR 유권자 스테이크 보상을 청구합니다"
+  },
+  "setperm": {
+    "method": "계정 권한 설정",
+    "title": "계정 권한 설정 요청",
+    "result": "계정 권한 설정 결과",
+    "headers": {
+      "request": "다음 계정 권한을 설정하시겠습니까?",
+      "result": "다음 계정 권한이 설정되었습니다:"
+    },
+    "rows": {
+      "account": "계정: {account}",
+      "permission": "권한: {permission}",
+      "allowed_actions": "허용 작업: {allowed_actions}"
+    },
+    "tooltip": "Proton/XPR에서 계정 권한을 설정합니다"
+  },
+  "setusername": {
+    "method": "Proton 사용자 이름 설정",
+    "title": "Proton 사용자 이름 설정 요청",
+    "result": "Proton 사용자 이름 설정 결과",
+    "headers": {
+      "request": "다음 Proton 사용자 이름을 설정하시겠습니까?",
+      "result": "다음 Proton 사용자 이름이 설정되었습니다:"
+    },
+    "rows": {
+      "account": "계정: {account}",
+      "username": "사용자 이름: {username}"
+    },
+    "tooltip": "Proton/XPR 사용자 이름을 설정합니다"
+  },
+  "userverify": {
+    "method": "Proton 사용자 확인",
+    "title": "Proton 사용자 확인 요청",
+    "result": "Proton 사용자 확인 결과",
+    "headers": {
+      "request": "다음 Proton 사용자를 확인하시겠습니까?",
+      "result": "다음 Proton 사용자가 확인되었습니다:"
+    },
+    "rows": {
+      "account": "계정: {account}",
+      "is_verified": "확인됨: {is_verified}"
+    },
+    "tooltip": "Proton/XPR 사용자를 확인합니다"
+  },
+  "addkyc": {
+    "method": "KYC 추가",
+    "title": "KYC 추가 요청",
+    "result": "KYC 추가 결과",
+    "headers": {
+      "request": "다음 KYC 정보를 추가하시겠습니까?",
+      "result": "다음 KYC 정보가 추가되었습니다:"
+    },
+    "rows": {
+      "account": "계정: {account}",
+      "kyc_provider": "KYC 제공자: {kyc_provider}",
+      "kyc_app_id": "KYC 앱 ID: {kyc_app_id}",
+      "kyc_status": "KYC 상태: {kyc_status}"
+    },
+    "tooltip": "계정에 KYC 정보를 추가합니다"
+  },
+  "updatekyc": {
+    "method": "KYC 업데이트",
+    "title": "KYC 업데이트 요청",
+    "result": "KYC 업데이트 결과",
+    "headers": {
+      "request": "다음 KYC 정보를 업데이트하시겠습니까?",
+      "result": "다음 KYC 정보가 업데이트되었습니다:"
+    },
+    "rows": {
+      "account": "계정: {account}",
+      "kyc_provider": "KYC 제공자: {kyc_provider}",
+      "kyc_app_id": "KYC 앱 ID: {kyc_app_id}",
+      "kyc_status": "KYC 상태: {kyc_status}"
+    },
+    "tooltip": "계정의 KYC 정보를 업데이트합니다"
+  },
+  "removekyc": {
+    "method": "KYC 제거",
+    "title": "KYC 제거 요청",
+    "result": "KYC 제거 결과",
+    "headers": {
+      "request": "다음 KYC 정보를 제거하시겠습니까?",
+      "result": "다음 KYC 정보가 제거되었습니다:"
+    },
+    "rows": {
+      "account": "계정: {account}"
+    },
+    "tooltip": "계정에서 KYC 정보를 제거합니다"
+  },
+  "reg": {
+    "method": "Proton 기금 등록",
+    "title": "Proton 기금 등록 요청",
+    "result": "Proton 기금 등록 결과",
+    "headers": {
+      "request": "다음 Proton 커뮤니티 기금에 등록하시겠습니까?",
+      "result": "다음 Proton 커뮤니티 기금에 대한 등록이 완료되었습니다:"
+    },
+    "rows": {
+      "account": "계정: {account}"
+    },
+    "tooltip": "Proton 커뮤니티 기금에 등록합니다"
+  },
+  "claimreward": {
+    "method": "Proton 기금 보상 청구",
+    "title": "Proton 기금 보상 청구 요청",
+    "result": "Proton 기금 보상 청구 결과",
+    "headers": {
+      "request": "Proton 커뮤니티 기금 보상을 청구하시겠습니까?",
+      "result": "Proton 커뮤니티 기금 보상이 청구되었습니다:"
+    },
+    "rows": {
+      "account": "계정: {account}"
+    },
+    "tooltip": "Proton 커뮤니티 기금에서 보상을 청구합니다"
+  },
+  "process": {
+    "method": "Proton 기금 처리",
+    "title": "Proton 기금 처리 요청",
+    "result": "Proton 기금 처리 결과",
+    "headers": {
+      "request": "다음 Proton 커뮤니티 기금을 처리하시겠습니까?",
+      "result": "다음 Proton 커뮤니티 기금이 처리되었습니다:"
+    },
+    "rows": {
+      "account": "계정: {account}"
+    },
+    "tooltip": "Proton 커뮤니티 기금을 처리합니다"
+  },
+  "transfer": {
+    "method": "Transfer Tokens",
+    "title": "Transfer Tokens Request",
+    "result": "Transfer Tokens Result",
+    "headers": {
+      "request": "Transfer the following tokens?",
+      "result": "The following tokens were transferred:"
+    },
+    "rows": {
+      "from": "From: {from}",
+      "to": "To: {to}",
+      "quantity": "Quantity: {quantity}",
+      "memo": "Memo: {memo}"
+    },
+    "tooltip": "Transfer tokens between accounts"
+  }
+}

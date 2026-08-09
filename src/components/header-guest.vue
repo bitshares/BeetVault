@@ -6,25 +6,28 @@
 
 <template>
     <div class="top">
-        <ui-grid class="container-fluid">
-            <ui-grid-cell
-                class="largeHeader"
-                columns="12"
+        <div class="grid grid-cols-12 container-fluid">
+            <div
+                class="col-span-12 largeHeader"
             >
-                <langSelect location="guest" />
-                <img
-                    src="img/beet.png"
-                    alt
-                    width="150"
-                    height="150"
-                >
-                <div class="beet-typo">
-                    BeetEOS
+                <div class="absolute top-3 right-3">
+                    <langSelect location="guest" />
                 </div>
-                <h3 class="h3">
-                    {{ t("common.welcome" ) }}
-                </h3>
-            </ui-grid-cell>
-        </ui-grid>
+                <div class="flex flex-col items-center">
+                    <img
+                        src="img/beet.png"
+                        alt
+                        width="150"
+                        height="150"
+                    >
+                    <div class="beet-typo">
+                        BeetVault
+                    </div>
+                    <h3 class="h3">
+                        {{ t("common.welcome" ) }}
+                    </h3>
+                </div>
+            </div>
+        </div>
     </div>
 </template>

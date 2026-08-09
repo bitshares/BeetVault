@@ -1,0 +1,267 @@
+{
+  "injectedCall": {
+    "method": "injectedCall",
+    "title": "Injizierter Aufruf Request",
+    "result": "Injizierter Aufruf Ergebnis",
+    "headers": {
+      "request": "Folgenden injizierten Aufruf genehmigen?",
+      "result": "Folgender injizierter Aufruf wurde genehmigt:"
+    },
+    "tooltip": "Bittet Ihr Wallet, einen injizierten Blockchain-Vorgang zu verarbeiten"
+  },
+  "newballot": {
+    "method": "Decide-Abstimmung erstellen",
+    "title": "Decide-Abstimmungserstellung Anfrage",
+    "result": "Decide-Abstimmungserstellung Ergebnis",
+    "headers": {
+      "request": "Folgende Decide-Abstimmung erstellen?",
+      "result": "Folgende Decide-Abstimmung wurde erstellt:"
+    },
+    "rows": {
+      "title": "Titel: {title}",
+      "description": "Beschreibung: {description}",
+      "treasury_symbol": "Kassensymbol: {treasury_symbol}",
+      "category": "Kategorie: {category}",
+      "voting_method": "Abstimmungsmethode: {voting_method}",
+      "quorum": "Quorum: {quorum}",
+      "duration": "Dauer: {duration}"
+    },
+    "tooltip": "Eine neue Telos Decide-Abstimmung erstellen"
+  },
+  "castvote": {
+    "method": "Decide-Stimme abgeben",
+    "title": "Decide-Stimmabgabe Anfrage",
+    "result": "Decide-Stimmabgabe Ergebnis",
+    "headers": {
+      "request": "Folgende Decide-Stimme abgeben?",
+      "result": "Folgende Decide-Stimme wurde abgegeben:"
+    },
+    "rows": {
+      "voter": "Wähler: {voter}",
+      "ballot_name": "Abstimmungsname: {ballot_name}",
+      "votes": "Stimmen: {votes}"
+    },
+    "tooltip": "Auf eine Telos Decide-Abstimmung abstimmen"
+  },
+  "openvoting": {
+    "method": "Decide-Abstimmung öffnen",
+    "title": "Decide-Abstimmungseröffnung Anfrage",
+    "result": "Decide-Abstimmungseröffnung Ergebnis",
+    "headers": {
+      "request": "Abstimmung für folgende Decide-Abstimmung öffnen?",
+      "result": "Abstimmung wurde für folgende Decide-Abstimmung geöffnet:"
+    },
+    "rows": {
+      "ballot_name": "Abstimmungsname: {ballot_name}"
+    },
+    "tooltip": "Abstimmung auf eine Telos Decide-Abstimmung öffnen"
+  },
+  "closevoting": {
+    "method": "Decide-Abstimmung schließen",
+    "title": "Decide-Abstimmungsabschluss Anfrage",
+    "result": "Decide-Abstimmungsabschluss Ergebnis",
+    "headers": {
+      "request": "Abstimmung für folgende Decide-Abstimmung schließen?",
+      "result": "Abstimmung wurde für folgende Decide-Abstimmung geschlossen:"
+    },
+    "rows": {
+      "ballot_name": "Abstimmungsname: {ballot_name}"
+    },
+    "tooltip": "Abstimmung auf eine Telos Decide-Abstimmung schließen"
+  },
+  "cancelballot": {
+    "method": "Decide-Abstimmung abbrechen",
+    "title": "Decide-Abstimmungsabbruch Anfrage",
+    "result": "Decide-Abstimmungsabbruch Ergebnis",
+    "headers": {
+      "request": "Folgende Decide-Abstimmung abbrechen?",
+      "result": "Folgende Decide-Abstimmung wurde abgebrochen:"
+    },
+    "rows": {
+      "ballot_name": "Abstimmungsname: {ballot_name}"
+    },
+    "tooltip": "Eine Telos Decide-Abstimmung abbrechen"
+  },
+  "deleteballot": {
+    "method": "Decide-Abstimmung löschen",
+    "title": "Decide-Abstimmungslöschung Anfrage",
+    "result": "Decide-Abstimmungslöschung Ergebnis",
+    "headers": {
+      "request": "Folgende Decide-Abstimmung löschen?",
+      "result": "Folgende Decide-Abstimmung wurde gelöscht:"
+    },
+    "rows": {
+      "ballot_name": "Abstimmungsname: {ballot_name}"
+    },
+    "tooltip": "Eine Telos Decide-Abstimmung löschen"
+  },
+  "regvoter": {
+    "method": "Decide-Wähler registrieren",
+    "title": "Decide-Wählerregistrierung Anfrage",
+    "result": "Decide-Wählerregistrierung Ergebnis",
+    "headers": {
+      "request": "Folgendes Konto als Decide-Wähler registrieren?",
+      "result": "Folgendes Konto wurde als Decide-Wähler registriert:"
+    },
+    "rows": {
+      "voter": "Wähler: {voter}",
+      "treasury_symbol": "Kassensymbol: {treasury_symbol}"
+    },
+    "tooltip": "Einen Telos Decide-Wähler registrieren"
+  },
+  "stake": {
+    "method": "TLOS staken",
+    "title": "TLOS-Staking Anfrage",
+    "result": "TLOS-Staking Ergebnis",
+    "headers": {
+      "request": "Folgenden TLOS-Betrag staken?",
+      "result": "Folgender TLOS-Betrag wurde gestakt:"
+    },
+    "rows": {
+      "voter": "Wähler: {voter}",
+      "quantity": "Menge: {quantity}"
+    },
+    "tooltip": "TLOS-Token staken"
+  },
+  "unstake": {
+    "method": "TLOS unstaken",
+    "title": "TLOS-Unstaking Anfrage",
+    "result": "TLOS-Unstaking Ergebnis",
+    "headers": {
+      "request": "Folgenden TLOS-Betrag unstaken?",
+      "result": "Folgender TLOS-Betrag wurde ungestakt:"
+    },
+    "rows": {
+      "voter": "Wähler: {voter}",
+      "quantity": "Menge: {quantity}"
+    },
+    "tooltip": "TLOS-Token unstaken"
+  },
+  "newtreasury": {
+    "method": "Decide-Kasse erstellen",
+    "title": "Decide-Kassenerstellung Anfrage",
+    "result": "Decide-Kassenerstellung Ergebnis",
+    "headers": {
+      "request": "Folgende Decide-Kasse erstellen?",
+      "result": "Folgende Decide-Kasse wurde erstellt:"
+    },
+    "rows": {
+      "manager": "Manager: {manager}",
+      "max_supply": "Maximales Angebot: {max_supply}",
+      "access_type": "Zugangstyp: {access_type}"
+    },
+    "tooltip": "Eine neue Telos Decide-Kasse erstellen"
+  },
+  "mint": {
+    "method": "Decide-Token prägen",
+    "title": "Decide-Token-Prägung Anfrage",
+    "result": "Decide-Token-Prägung Ergebnis",
+    "headers": {
+      "request": "Folgende Decide-Token prägen?",
+      "result": "Folgende Decide-Token wurden geprägt:"
+    },
+    "rows": {
+      "to": "An: {to}",
+      "quantity": "Menge: {quantity}",
+      "memo": "Nachricht: {memo}"
+    },
+    "tooltip": "Telos Decide-Token prägen"
+  },
+  "burn": {
+    "method": "Decide-Token verbrennen",
+    "title": "Decide-Token-Verbrennung Anfrage",
+    "result": "Decide-Token-Verbrennung Ergebnis",
+    "headers": {
+      "request": "Folgende Decide-Token verbrennen?",
+      "result": "Folgende Decide-Token wurden verbrannt:"
+    },
+    "rows": {
+      "quantity": "Menge: {quantity}",
+      "memo": "Nachricht: {memo}"
+    },
+    "tooltip": "Telos Decide-Token verbrennen"
+  },
+  "claimpayment": {
+    "method": "Decide-Zahlung beanspruchen",
+    "title": "Decide-Zahlungs-Beanspruchung Anfrage",
+    "result": "Decide-Zahlungs-Beanspruchung Ergebnis",
+    "headers": {
+      "request": "Folgende Decide-Zahlung beanspruchen?",
+      "result": "Folgende Decide-Zahlung wurde beansprucht:"
+    },
+    "rows": {
+      "worker": "Mitarbeiter: {worker}"
+    },
+    "tooltip": "Telos Decide-Mitarbeiterzahlung beanspruchen"
+  },
+  "regcommittee": {
+    "method": "Decide-Komitee registrieren",
+    "title": "Decide-Komitee-Registrierung Anfrage",
+    "result": "Decide-Komitee-Registrierung Ergebnis",
+    "headers": {
+      "request": "Folgendes Decide-Komitee registrieren?",
+      "result": "Folgendes Decide-Komitee wurde registriert:"
+    },
+    "rows": {
+      "committee_name": "Komiteename: {committee_name}",
+      "account": "Konto: {account}"
+    },
+    "tooltip": "Ein Telos Decide-Komitee registrieren"
+  },
+  "raw": {
+    "method": "Raw-EVM-Transaktion",
+    "title": "Raw-EVM-Transaktionsanfrage",
+    "result": "Raw-EVM-Transaktionsergebnis",
+    "headers": {
+      "request": "Folgende Raw-EVM-Transaktion einreichen?",
+      "result": "Folgende Raw-EVM-Transaktion wurde eingereicht:"
+    },
+    "rows": {
+      "tx_hex": "Transaktionshex: {tx_hex}"
+    },
+    "tooltip": "Eine Raw-EVM-Transaktion auf Telos einreichen"
+  },
+  "create": {
+    "method": "EVM-Konto erstellen",
+    "title": "EVM-Kontoerstellung Anfrage",
+    "result": "EVM-Kontoerstellung Ergebnis",
+    "headers": {
+      "request": "Ein Telos-EVM-Konto erstellen?",
+      "result": "Folgendes Telos-EVM-Konto wurde erstellt:"
+    },
+    "rows": {
+      "account": "Konto: {account}",
+      "data": "Daten: {data}"
+    },
+    "tooltip": "Ein neues Telos-EVM-Konto erstellen"
+  },
+  "withdraw": {
+    "method": "Withdraw from EVM",
+    "title": "Withdraw from EVM Request",
+    "result": "Withdraw from EVM Result",
+    "headers": {
+      "request": "Withdraw from Telos EVM?",
+      "result": "Withdrew from Telos EVM:"
+    },
+    "rows": {
+      "to": "To: {to}",
+      "quantity": "Quantity: {quantity}"
+    },
+    "tooltip": "Withdraw from Telos EVM to native chain"
+  },
+  "reclaim": {
+    "method": "Reclaim Treasury Tokens",
+    "title": "Reclaim Treasury Tokens Request",
+    "result": "Reclaim Treasury Tokens Result",
+    "headers": {
+      "request": "Reclaim the following treasury tokens?",
+      "result": "The following treasury tokens were reclaimed:"
+    },
+    "rows": {
+      "voter": "Voter: {voter}",
+      "quantity": "Quantity: {quantity}",
+      "memo": "Memo: {memo}"
+    },
+    "tooltip": "Reclaim treasury tokens from a voter back to the manager"
+  }
+}

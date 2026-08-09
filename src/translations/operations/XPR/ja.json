@@ -1,0 +1,237 @@
+{
+  "injectedCall": {
+    "method": "注入されたコール",
+    "title": "挿入された通話リクエスト",
+    "result": "挿入された呼び出しの結果",
+    "headers": {
+      "request": "次の挿入された呼び出しを承認しますか?",
+      "result": "次の挿入された呼び出しが承認されました。"
+    },
+    "tooltip": "挿入されたブロックチェーン操作を処理するようにウォレットに要求します"
+  },
+  "stakexpr": {
+    "method": "XPRのステーク",
+    "title": "XPRステークリクエスト",
+    "result": "XPRステーク結果",
+    "headers": {
+      "request": "以下のXPR数量をステークしますか?",
+      "result": "以下のXPR数量がステークされました:"
+    },
+    "rows": {
+      "account": "アカウント: {account}",
+      "quantity": "数量: {quantity}"
+    },
+    "tooltip": "XPRトークンをステークする"
+  },
+  "unstakexpr": {
+    "method": "XPRのアンステーク",
+    "title": "XPRアンステークリクエスト",
+    "result": "XPRアンステーク結果",
+    "headers": {
+      "request": "以下のXPR数量をアンステークしますか?",
+      "result": "以下のXPR数量がアンステークされました:"
+    },
+    "rows": {
+      "account": "アカウント: {account}",
+      "quantity": "数量: {quantity}"
+    },
+    "tooltip": "XPRトークンをアンステークする"
+  },
+  "updstakexpr": {
+    "method": "XPRステークの更新",
+    "title": "XPRステーク更新リクエスト",
+    "result": "XPRステーク更新結果",
+    "headers": {
+      "request": "以下のXPRステークを更新しますか?",
+      "result": "以下のXPRステークが更新されました:"
+    },
+    "rows": {
+      "account": "アカウント: {account}",
+      "quantity": "数量: {quantity}"
+    },
+    "tooltip": "XPRステーク量を更新する"
+  },
+  "refundxpr": {
+    "method": "XPRステークの返金",
+    "title": "XPRステーク返金リクエスト",
+    "result": "XPRステーク返金結果",
+    "headers": {
+      "request": "以下のXPRステークを返金しますか?",
+      "result": "以下のXPRステークが返金されました:"
+    },
+    "rows": {
+      "account": "アカウント: {account}"
+    },
+    "tooltip": "XPRステークトークンを返金する"
+  },
+  "voterclaim": {
+    "method": "XPR有権者報酬の請求",
+    "title": "XPR有権者報酬請求リクエスト",
+    "result": "XPR有権者報酬請求結果",
+    "headers": {
+      "request": "XPR有権者報酬を請求しますか?",
+      "result": "XPR有権者報酬が請求されました:"
+    },
+    "rows": {
+      "owner": "所有者: {owner}"
+    },
+    "tooltip": "XPR有権者報酬を請求する"
+  },
+  "voterclaimst": {
+    "method": "XPR有権者ステーク報酬の請求",
+    "title": "XPR有権者ステーク報酬請求リクエスト",
+    "result": "XPR有権者ステーク報酬請求結果",
+    "headers": {
+      "request": "XPR有権者ステーク報酬を請求しますか?",
+      "result": "XPR有権者ステーク報酬が請求されました:"
+    },
+    "rows": {
+      "owner": "所有者: {owner}",
+      "amount": "金額: {amount}"
+    },
+    "tooltip": "XPR有権者ステーク報酬を請求する"
+  },
+  "setperm": {
+    "method": "アカウント権限の設定",
+    "title": "アカウント権限設定リクエスト",
+    "result": "アカウント権限設定結果",
+    "headers": {
+      "request": "以下のアカウント権限を設定しますか?",
+      "result": "以下のアカウント権限が設定されました:"
+    },
+    "rows": {
+      "account": "アカウント: {account}",
+      "permission": "権限: {permission}",
+      "allowed_actions": "許可されたアクション: {allowed_actions}"
+    },
+    "tooltip": "Proton/XPRでアカウント権限を設定する"
+  },
+  "setusername": {
+    "method": "Protonユーザー名の設定",
+    "title": "Protonユーザー名設定リクエスト",
+    "result": "Protonユーザー名設定結果",
+    "headers": {
+      "request": "以下のProtonユーザー名を設定しますか?",
+      "result": "以下のProtonユーザー名が設定されました:"
+    },
+    "rows": {
+      "account": "アカウント: {account}",
+      "username": "ユーザー名: {username}"
+    },
+    "tooltip": "Proton/XPRのユーザー名を設定する"
+  },
+  "userverify": {
+    "method": "Protonユーザーの確認",
+    "title": "Protonユーザー確認リクエスト",
+    "result": "Protonユーザー確認結果",
+    "headers": {
+      "request": "以下のProtonユーザーを確認しますか?",
+      "result": "以下のProtonユーザーが確認されました:"
+    },
+    "rows": {
+      "account": "アカウント: {account}",
+      "is_verified": "確認済み: {is_verified}"
+    },
+    "tooltip": "Proton/XPRユーザーを確認する"
+  },
+  "addkyc": {
+    "method": "KYCの追加",
+    "title": "KYC追加リクエスト",
+    "result": "KYC追加結果",
+    "headers": {
+      "request": "以下のKYC情報を追加しますか?",
+      "result": "以下のKYC情報が追加されました:"
+    },
+    "rows": {
+      "account": "アカウント: {account}",
+      "kyc_provider": "KYCプロバイダー: {kyc_provider}",
+      "kyc_app_id": "KYCアプリ ID: {kyc_app_id}",
+      "kyc_status": "KYCステータス: {kyc_status}"
+    },
+    "tooltip": "アカウントにKYC情報を追加する"
+  },
+  "updatekyc": {
+    "method": "KYCの更新",
+    "title": "KYC更新リクエスト",
+    "result": "KYC更新結果",
+    "headers": {
+      "request": "以下のKYC情報を更新しますか?",
+      "result": "以下のKYC情報が更新されました:"
+    },
+    "rows": {
+      "account": "アカウント: {account}",
+      "kyc_provider": "KYCプロバイダー: {kyc_provider}",
+      "kyc_app_id": "KYCアプリ ID: {kyc_app_id}",
+      "kyc_status": "KYCステータス: {kyc_status}"
+    },
+    "tooltip": "アカウントのKYC情報を更新する"
+  },
+  "removekyc": {
+    "method": "KYCの削除",
+    "title": "KYC削除リクエスト",
+    "result": "KYC削除結果",
+    "headers": {
+      "request": "以下のKYC情報を削除しますか?",
+      "result": "以下のKYC情報が削除されました:"
+    },
+    "rows": {
+      "account": "アカウント: {account}"
+    },
+    "tooltip": "アカウントからKYC情報を削除する"
+  },
+  "reg": {
+    "method": "Protonファンドの登録",
+    "title": "Protonファンド登録リクエスト",
+    "result": "Protonファンド登録結果",
+    "headers": {
+      "request": "以下のProtonコミュニティファンドに登録しますか?",
+      "result": "以下のProtonコミュニティファンドへの登録が完了しました:"
+    },
+    "rows": {
+      "account": "アカウント: {account}"
+    },
+    "tooltip": "Protonコミュニティファンドに登録する"
+  },
+  "claimreward": {
+    "method": "Protonファンド報酬の請求",
+    "title": "Protonファンド報酬請求リクエスト",
+    "result": "Protonファンド報酬請求結果",
+    "headers": {
+      "request": "Protonコミュニティファンド報酬を請求しますか?",
+      "result": "Protonコミュニティファンド報酬が請求されました:"
+    },
+    "rows": {
+      "account": "アカウント: {account}"
+    },
+    "tooltip": "Protonコミュニティファンドから報酬を請求する"
+  },
+  "process": {
+    "method": "Protonファンドの処理",
+    "title": "Protonファンド処理リクエスト",
+    "result": "Protonファンド処理結果",
+    "headers": {
+      "request": "以下のProtonコミュニティファンドを処理しますか?",
+      "result": "以下のProtonコミュニティファンドが処理されました:"
+    },
+    "rows": {
+      "account": "アカウント: {account}"
+    },
+    "tooltip": "Protonコミュニティファンドを処理する"
+  },
+  "transfer": {
+    "method": "Transfer Tokens",
+    "title": "Transfer Tokens Request",
+    "result": "Transfer Tokens Result",
+    "headers": {
+      "request": "Transfer the following tokens?",
+      "result": "The following tokens were transferred:"
+    },
+    "rows": {
+      "from": "From: {from}",
+      "to": "To: {to}",
+      "quantity": "Quantity: {quantity}",
+      "memo": "Memo: {memo}"
+    },
+    "tooltip": "Transfer tokens between accounts"
+  }
+}

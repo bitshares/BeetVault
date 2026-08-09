@@ -1,0 +1,237 @@
+{
+  "injectedCall": {
+    "method": "ฉีดโทร",
+    "title": "คำขอโทรที่ฉีดเข้าไป",
+    "result": "ฉีดผลการโทร",
+    "headers": {
+      "request": "อนุมัติการโทรที่แทรกต่อไปนี้หรือไม่",
+      "result": "การโทรที่แทรกต่อไปนี้ได้รับการอนุมัติ:"
+    },
+    "tooltip": "ขอให้กระเป๋าเงินของคุณจัดการกับการดำเนินการบล็อคเชนที่ถูกแทรกเข้าไป"
+  },
+  "stakexpr": {
+    "method": "เดิมพัน XPR",
+    "title": "ขอเดิมพัน XPR",
+    "result": "ผลเดิมพัน XPR",
+    "headers": {
+      "request": "เดิมพันจำนวน XPR ต่อไปนี้หรือไม่",
+      "result": "จำนวน XPR ต่อไปนี้ถูกเดิมพัน:"
+    },
+    "rows": {
+      "account": "บัญชี: {account}",
+      "quantity": "ปริมาณ: {quantity}"
+    },
+    "tooltip": "เดิมพันโทเค็น XPR"
+  },
+  "unstakexpr": {
+    "method": "เลิกเดิมพัน XPR",
+    "title": "ขอเลิกเดิมพัน XPR",
+    "result": "ผลเลิกเดิมพัน XPR",
+    "headers": {
+      "request": "เลิกเดิมพันจำนวน XPR ต่อไปนี้หรือไม่",
+      "result": "จำนวน XPR ต่อไปนี้ถูกเลิกเดิมพัน:"
+    },
+    "rows": {
+      "account": "บัญชี: {account}",
+      "quantity": "ปริมาณ: {quantity}"
+    },
+    "tooltip": "เลิกเดิมพันโทเค็น XPR"
+  },
+  "updstakexpr": {
+    "method": "อัปเดตการเดิมพัน XPR",
+    "title": "ขออัปเดตการเดิมพัน XPR",
+    "result": "ผลอัปเดตการเดิมพัน XPR",
+    "headers": {
+      "request": "อัปเดตการเดิมพัน XPR ต่อไปนี้หรือไม่",
+      "result": "การเดิมพัน XPR ต่อไปนี้ได้รับการอัปเดต:"
+    },
+    "rows": {
+      "account": "บัญชี: {account}",
+      "quantity": "ปริมาณ: {quantity}"
+    },
+    "tooltip": "อัปเดตจำนวนการเดิมพัน XPR"
+  },
+  "refundxpr": {
+    "method": "คืนเงินเดิมพัน XPR",
+    "title": "ขอคืนเงินเดิมพัน XPR",
+    "result": "ผลคืนเงินเดิมพัน XPR",
+    "headers": {
+      "request": "คืนเงินเดิมพัน XPR ต่อไปนี้หรือไม่",
+      "result": "การเดิมพัน XPR ต่อไปนี้ได้รับการคืนเงิน:"
+    },
+    "rows": {
+      "account": "บัญชี: {account}"
+    },
+    "tooltip": "คืนเงินโทเค็น XPR ที่เดิมพัน"
+  },
+  "voterclaim": {
+    "method": "เรียกร้องรางวัลผู้ลงคะแนน XPR",
+    "title": "ขอเรียกร้องรางวัลผู้ลงคะแนน XPR",
+    "result": "ผลเรียกร้องรางวัลผู้ลงคะแนน XPR",
+    "headers": {
+      "request": "เรียกร้องรางวัลผู้ลงคะแนน XPR หรือไม่",
+      "result": "รางวัลผู้ลงคะแนน XPR ได้รับการเรียกร้อง:"
+    },
+    "rows": {
+      "owner": "เจ้าของ: {owner}"
+    },
+    "tooltip": "เรียกร้องรางวัลผู้ลงคะแนน XPR"
+  },
+  "voterclaimst": {
+    "method": "เรียกร้องรางวัลผู้ลงคะแนนเดิมพัน XPR",
+    "title": "ขอเรียกร้องรางวัลผู้ลงคะแนนเดิมพัน XPR",
+    "result": "ผลเรียกร้องรางวัลผู้ลงคะแนนเดิมพัน XPR",
+    "headers": {
+      "request": "เรียกร้องรางวัลผู้ลงคะแนนเดิมพัน XPR หรือไม่",
+      "result": "รางวัลผู้ลงคะแนนเดิมพัน XPR ได้รับการเรียกร้อง:"
+    },
+    "rows": {
+      "owner": "เจ้าของ: {owner}",
+      "amount": "จำนวนเงิน: {amount}"
+    },
+    "tooltip": "เรียกร้องรางวัลผู้ลงคะแนนเดิมพัน XPR"
+  },
+  "setperm": {
+    "method": "ตั้งค่าสิทธิ์บัญชี",
+    "title": "ขอตั้งค่าสิทธิ์บัญชี",
+    "result": "ผลตั้งค่าสิทธิ์บัญชี",
+    "headers": {
+      "request": "ตั้งค่าสิทธิ์บัญชีต่อไปนี้หรือไม่",
+      "result": "สิทธิ์บัญชีต่อไปนี้ถูกตั้งค่า:"
+    },
+    "rows": {
+      "account": "บัญชี: {account}",
+      "permission": "สิทธิ์: {permission}",
+      "allowed_actions": "การดำเนินการที่อนุญาต: {allowed_actions}"
+    },
+    "tooltip": "ตั้งค่าสิทธิ์บัญชีบน Proton/XPR"
+  },
+  "setusername": {
+    "method": "ตั้งค่าชื่อผู้ใช้ Proton",
+    "title": "ขอตั้งค่าชื่อผู้ใช้ Proton",
+    "result": "ผลตั้งค่าชื่อผู้ใช้ Proton",
+    "headers": {
+      "request": "ตั้งค่าชื่อผู้ใช้ Proton ต่อไปนี้หรือไม่",
+      "result": "ชื่อผู้ใช้ Proton ต่อไปนี้ถูกตั้งค่า:"
+    },
+    "rows": {
+      "account": "บัญชี: {account}",
+      "username": "ชื่อผู้ใช้: {username}"
+    },
+    "tooltip": "ตั้งค่าชื่อผู้ใช้ Proton/XPR"
+  },
+  "userverify": {
+    "method": "ตรวจสอบผู้ใช้ Proton",
+    "title": "ขอตรวจสอบผู้ใช้ Proton",
+    "result": "ผลตรวจสอบผู้ใช้ Proton",
+    "headers": {
+      "request": "ตรวจสอบผู้ใช้ Proton ต่อไปนี้หรือไม่",
+      "result": "ผู้ใช้ Proton ต่อไปนี้ได้รับการตรวจสอบ:"
+    },
+    "rows": {
+      "account": "บัญชี: {account}",
+      "is_verified": "ได้รับการตรวจสอบ: {is_verified}"
+    },
+    "tooltip": "ตรวจสอบผู้ใช้ Proton/XPR"
+  },
+  "addkyc": {
+    "method": "เพิ่ม KYC",
+    "title": "ขอเพิ่ม KYC",
+    "result": "ผลเพิ่ม KYC",
+    "headers": {
+      "request": "เพิ่มข้อมูล KYC ต่อไปนี้หรือไม่",
+      "result": "ข้อมูล KYC ต่อไปนี้ถูกเพิ่ม:"
+    },
+    "rows": {
+      "account": "บัญชี: {account}",
+      "kyc_provider": "ผู้ให้บริการ KYC: {kyc_provider}",
+      "kyc_app_id": "รหัสแอป KYC: {kyc_app_id}",
+      "kyc_status": "สถานะ KYC: {kyc_status}"
+    },
+    "tooltip": "เพิ่มข้อมูล KYC ไปยังบัญชี"
+  },
+  "updatekyc": {
+    "method": "อัปเดต KYC",
+    "title": "ขออัปเดต KYC",
+    "result": "ผลอัปเดต KYC",
+    "headers": {
+      "request": "อัปเดตข้อมูล KYC ต่อไปนี้หรือไม่",
+      "result": "ข้อมูล KYC ต่อไปนี้ได้รับการอัปเดต:"
+    },
+    "rows": {
+      "account": "บัญชี: {account}",
+      "kyc_provider": "ผู้ให้บริการ KYC: {kyc_provider}",
+      "kyc_app_id": "รหัสแอป KYC: {kyc_app_id}",
+      "kyc_status": "สถานะ KYC: {kyc_status}"
+    },
+    "tooltip": "อัปเดตข้อมูล KYC บนบัญชี"
+  },
+  "removekyc": {
+    "method": "ลบ KYC",
+    "title": "ขอลบ KYC",
+    "result": "ผลลบ KYC",
+    "headers": {
+      "request": "ลบข้อมูล KYC ต่อไปนี้หรือไม่",
+      "result": "ข้อมูล KYC ต่อไปนี้ถูกลบ:"
+    },
+    "rows": {
+      "account": "บัญชี: {account}"
+    },
+    "tooltip": "ลบข้อมูล KYC จากบัญชี"
+  },
+  "reg": {
+    "method": "ลงทะเบียนกองทุน Proton",
+    "title": "ขอลงทะเบียนกองทุน Proton",
+    "result": "ผลลงทะเบียนกองทุน Proton",
+    "headers": {
+      "request": "ลงทะเบียนกับกองทุนชุมชน Proton ต่อไปนี้หรือไม่",
+      "result": "การลงทะเบียนกับกองทุนชุมชน Proton ต่อไปนี้เสร็จสิ้น:"
+    },
+    "rows": {
+      "account": "บัญชี: {account}"
+    },
+    "tooltip": "ลงทะเบียนกับกองทุนชุมชน Proton"
+  },
+  "claimreward": {
+    "method": "เรียกร้องรางวัลกองทุน Proton",
+    "title": "ขอเรียกร้องรางวัลกองทุน Proton",
+    "result": "ผลเรียกร้องรางวัลกองทุน Proton",
+    "headers": {
+      "request": "เรียกร้องรางวัลกองทุนชุมชน Proton หรือไม่",
+      "result": "รางวัลกองทุนชุมชน Proton ได้รับการเรียกร้อง:"
+    },
+    "rows": {
+      "account": "บัญชี: {account}"
+    },
+    "tooltip": "เรียกร้องรางวัลจากกองทุนชุมชน Proton"
+  },
+  "process": {
+    "method": "ประมวลผลกองทุน Proton",
+    "title": "ขอประมวลผลกองทุน Proton",
+    "result": "ผลประมวลผลกองทุน Proton",
+    "headers": {
+      "request": "ประมวลผลกองทุนชุมชน Proton ต่อไปนี้หรือไม่",
+      "result": "กองทุนชุมชน Proton ต่อไปนี้ถูกประมวลผล:"
+    },
+    "rows": {
+      "account": "บัญชี: {account}"
+    },
+    "tooltip": "ประมวลผลกองทุนชุมชน Proton"
+  },
+  "transfer": {
+    "method": "Transfer Tokens",
+    "title": "Transfer Tokens Request",
+    "result": "Transfer Tokens Result",
+    "headers": {
+      "request": "Transfer the following tokens?",
+      "result": "The following tokens were transferred:"
+    },
+    "rows": {
+      "from": "From: {from}",
+      "to": "To: {to}",
+      "quantity": "Quantity: {quantity}",
+      "memo": "Memo: {memo}"
+    },
+    "tooltip": "Transfer tokens between accounts"
+  }
+}

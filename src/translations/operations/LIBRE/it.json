@@ -1,0 +1,131 @@
+{
+  "injectedCall": {
+    "method": "iniettatoCall",
+    "title": "Richiesta di chiamata inserita",
+    "result": "Risultato della chiamata inserito",
+    "headers": {
+      "request": "Approvare la seguente chiamata inserita?",
+      "result": "È stata approvata la seguente chiamata inserita:"
+    },
+    "tooltip": "Chiede al tuo portafoglio di gestire un'operazione blockchain iniettata"
+  },
+  "voteproducer": {
+    "method": "Vota produttore Libre",
+    "title": "Richiesta di voto produttore Libre",
+    "result": "Risultato del voto produttore Libre",
+    "headers": {
+      "request": "Votare per il seguente produttore Libre?",
+      "result": "I voti sono stati espressi per il seguente produttore Libre:"
+    },
+    "rows": {
+      "voter": "Votante: {voter}",
+      "producers": "Produttori: {producers}"
+    },
+    "tooltip": "Vota per i produttori di blocchi Libre"
+  },
+  "regproducer": {
+    "method": "Registrati come produttore Libre",
+    "title": "Richiesta di registrazione produttore Libre",
+    "result": "Risultato della registrazione produttore Libre",
+    "headers": {
+      "request": "Registrare quanto segue come produttore di blocchi Libre?",
+      "result": "Quanto segue è stato registrato come produttore di blocchi Libre:"
+    },
+    "rows": {
+      "producer": "Produttore: {producer}",
+      "producer_key": "Chiave del produttore: {producer_key}",
+      "url": "URL: {url}",
+      "location": "Posizione: {location}"
+    },
+    "tooltip": "Registrati come produttore di blocchi Libre"
+  },
+  "claimrewards": {
+    "method": "Richiedi ricompense Libre",
+    "title": "Richiesta di ricompense Libre",
+    "result": "Risultato delle ricompense Libre",
+    "headers": {
+      "request": "Richiedere le ricompense della produzione di blocchi?",
+      "result": "Le ricompense della produzione di blocchi sono state richieste:"
+    },
+    "rows": {
+      "owner": "Proprietario: {owner}"
+    },
+    "tooltip": "Richiedi le ricompense della produzione di blocchi Libre"
+  },
+  "setalimits": {
+    "method": "Imposta limiti account",
+    "title": "Richiesta di impostazione limiti account",
+    "result": "Risultato dell'impostazione limiti account",
+    "headers": {
+      "request": "Impostare i seguenti limiti delle risorse dell'account?",
+      "result": "I seguenti limiti delle risorse dell'account sono stati impostati:"
+    },
+    "rows": {
+      "account": "Account: {account}",
+      "ram_bytes": "Limite RAM: {ram_bytes}",
+      "net_weight": "Peso Net: {net_weight}",
+      "cpu_weight": "Peso CPU: {cpu_weight}"
+    },
+    "tooltip": "Imposta i limiti delle risorse dell'account su Libre"
+  },
+  "stake": {
+    "method": "Punta token Libre",
+    "title": "Richiesta di puntata token Libre",
+    "result": "Risultato della puntata token Libre",
+    "headers": {
+      "request": "Puntare i seguenti token Libre?",
+      "result": "I seguenti token Libre sono stati puntati:"
+    },
+    "rows": {
+      "from": "Da: {from}",
+      "to": "A: {to}",
+      "quantity": "Quantità: {quantity}",
+      "memo": "Memo: {memo}"
+    },
+    "tooltip": "Punta token Libre tramite il contratto di puntata"
+  },
+  "unstake": {
+    "method": "Ritira token Libre puntati",
+    "title": "Richiesta di ritiro token Libre puntati",
+    "result": "Risultato del ritiro token Libre puntati",
+    "headers": {
+      "request": "Ritirare i seguenti token Libre dalla puntata?",
+      "result": "I seguenti token Libre sono stati ritirati dalla puntata:"
+    },
+    "rows": {
+      "account": "Account: {account}",
+      "index": "Indice: {index}"
+    },
+    "tooltip": "Ritira token Libre dalla puntata"
+  },
+  "claim": {
+    "method": "Richiedi ricompense puntata Libre",
+    "title": "Richiesta di ricompense puntata Libre",
+    "result": "Risultato delle ricompense puntata Libre",
+    "headers": {
+      "request": "Richiedere le ricompense della puntata Libre?",
+      "result": "Le ricompense della puntata Libre sono state richieste:"
+    },
+    "rows": {
+      "account": "Account: {account}",
+      "index": "Indice: {index}"
+    },
+    "tooltip": "Richiedi le ricompense della puntata Libre"
+  },
+  "transfer": {
+    "method": "Transfer Tokens",
+    "title": "Transfer Tokens Request",
+    "result": "Transfer Tokens Result",
+    "headers": {
+      "request": "Transfer the following tokens?",
+      "result": "The following tokens were transferred:"
+    },
+    "rows": {
+      "from": "From: {from}",
+      "to": "To: {to}",
+      "quantity": "Quantity: {quantity}",
+      "memo": "Memo: {memo}"
+    },
+    "tooltip": "Transfer tokens between accounts"
+  }
+}

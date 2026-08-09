@@ -1,0 +1,125 @@
+{
+  "injectedCall": {
+    "method": "주입전화",
+    "title": "삽입된 통화 요청",
+    "result": "삽입된 통화 결과",
+    "headers": {
+      "request": "다음 삽입된 통화를 승인하시겠습니까?",
+      "result": "다음 삽입된 호출이 승인되었습니다."
+    },
+    "tooltip": "주입된 블록체인 작업을 처리하도록 지갑에 요청"
+  },
+  "regproposer": {
+    "method": "WPS 제안자 등록",
+    "title": "WPS 제안자 등록 요청",
+    "result": "WPS 제안자 등록 결과",
+    "headers": {
+      "request": "다음 계정을 WPS 제안자로 등록하시겠습니까?",
+      "result": "다음 계정이 WPS 제안자로 등록되었습니다:"
+    },
+    "rows": {
+      "proposer": "제안자: {proposer}",
+      "proposer_key": "제안자 키: {proposer_key}"
+    },
+    "tooltip": "WPS 제안자 계정을 등록합니다"
+  },
+  "regproposal": {
+    "method": "WPS 제안 등록",
+    "title": "WPS 제안 등록 요청",
+    "result": "WPS 제안 등록 결과",
+    "headers": {
+      "request": "다음 WPS 제안을 등록하시겠습니까?",
+      "result": "다음 WPS 제안이 등록되었습니다:"
+    },
+    "rows": {
+      "proposer": "제안자: {proposer}",
+      "proposal_name": "제안 이름: {proposal_name}",
+      "title": "제목: {title}",
+      "pay_amount": "지불 금액: {pay_amount}"
+    },
+    "tooltip": "새 WPS 제안을 등록합니다"
+  },
+  "voteproposal": {
+    "method": "WPS 제안 투표",
+    "title": "WPS 제안 투표 요청",
+    "result": "WPS 제안 투표 결과",
+    "headers": {
+      "request": "다음 WPS 제안에 투표하시겠습니까?",
+      "result": "다음 WPS 제안에 대한 투표가 승인되었습니다:"
+    },
+    "rows": {
+      "voter": "유권자: {voter}",
+      "proposal_name": "제안 이름: {proposal_name}",
+      "vote": "투표: {vote}"
+    },
+    "tooltip": "WPS 제안에 투표합니다"
+  },
+  "claimfunds": {
+    "method": "WPS 자금 청구",
+    "title": "WPS 자금 청구 요청",
+    "result": "WPS 자금 청구 결과",
+    "headers": {
+      "request": "다음 제안에 대한 WPS 자금을 청구하시겠습니까?",
+      "result": "다음 제안에 대한 WPS 자금이 청구되었습니다:"
+    },
+    "rows": {
+      "account": "계정: {account}",
+      "proposal_name": "제안 이름: {proposal_name}"
+    },
+    "tooltip": "승인된 WPS 제안에서 자금을 청구합니다"
+  },
+  "voterclaim": {
+    "method": "WPS 유권자 보상 청구",
+    "title": "WPS 유권자 보상 청구 요청",
+    "result": "WPS 유권자 보상 청구 결과",
+    "headers": {
+      "request": "WPS 유권자 보상을 청구하시겠습니까?",
+      "result": "WPS 유권자 보상이 청구되었습니다:"
+    },
+    "rows": {
+      "owner": "소유자: {owner}"
+    },
+    "tooltip": "WPS 유권자 보상을 청구합니다"
+  },
+  "voterclaimst": {
+    "method": "WPS 유권자 스테이크 보상 청구",
+    "title": "WPS 유권자 스테이크 보상 청구 요청",
+    "result": "WPS 유권자 스테이크 보상 청구 결과",
+    "headers": {
+      "request": "WPS 유권자 스테이크 보상을 청구하시겠습니까?",
+      "result": "WPS 유권자 스테이크 보상이 청구되었습니다:"
+    },
+    "rows": {
+      "owner": "소유자: {owner}",
+      "amount": "금액: {amount}"
+    },
+    "tooltip": "WPS 유권자 스테이크 보상을 청구합니다"
+  },
+  "awardgenesis": {
+    "method": "제네시스 수여",
+    "title": "제네시스 수여 요청",
+    "result": "제네시스 수여 결과",
+    "headers": {
+      "request": "다음 계정에 제네시스 토큰을 수여하시겠습니까?",
+      "result": "다음 계정에 제네시스 토큰이 수여되었습니다:"
+    },
+    "rows": {
+      "receiver": "수신자: {receiver}",
+      "amount": "금액: {amount}"
+    },
+    "tooltip": "계정에 제네시스 토큰을 수여합니다"
+  },
+  "claimgenesis": {
+    "method": "제네시스 청구",
+    "title": "제네시스 청구 요청",
+    "result": "제네시스 청구 결과",
+    "headers": {
+      "request": "다음 계정의 제네시스 토큰을 청구하시겠습니까?",
+      "result": "다음 계정의 제네시스 토큰이 청구되었습니다:"
+    },
+    "rows": {
+      "receiver": "수신자: {receiver}"
+    },
+    "tooltip": "제네시스 토큰을 청구합니다"
+  }
+}

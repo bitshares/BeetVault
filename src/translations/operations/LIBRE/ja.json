@@ -1,0 +1,131 @@
+{
+  "injectedCall": {
+    "method": "注入されたコール",
+    "title": "挿入された通話リクエスト",
+    "result": "挿入された呼び出しの結果",
+    "headers": {
+      "request": "次の挿入された呼び出しを承認しますか?",
+      "result": "次の挿入された呼び出しが承認されました。"
+    },
+    "tooltip": "挿入されたブロックチェーン操作を処理するようにウォレットに要求します"
+  },
+  "voteproducer": {
+    "method": "Libreプロデューサーへの投票",
+    "title": "Libreプロデューサー投票リクエスト",
+    "result": "Libreプロデューサー投票結果",
+    "headers": {
+      "request": "以下のLibreプロデューサーに投票しますか?",
+      "result": "以下のLibreプロデューサーに投票されました:"
+    },
+    "rows": {
+      "voter": "投票者: {voter}",
+      "producers": "プロデューサー: {producers}"
+    },
+    "tooltip": "Libreブロックプロデューサーに投票する"
+  },
+  "regproducer": {
+    "method": "Libreプロデューサーの登録",
+    "title": "Libreプロデューサー登録リクエスト",
+    "result": "Libreプロデューサー登録結果",
+    "headers": {
+      "request": "以下のアカウントをLibreブロックプロデューサーとして登録しますか?",
+      "result": "以下のアカウントがLibreブロックプロデューサーとして登録されました:"
+    },
+    "rows": {
+      "producer": "プロデューサー: {producer}",
+      "producer_key": "プロデューサー キー: {producer_key}",
+      "url": "URL: {url}",
+      "location": "場所: {location}"
+    },
+    "tooltip": "Libreブロックプロデューサーとして登録する"
+  },
+  "claimrewards": {
+    "method": "Libre報酬の請求",
+    "title": "Libre報酬請求リクエスト",
+    "result": "Libre報酬請求結果",
+    "headers": {
+      "request": "ブロック生成報酬を請求しますか?",
+      "result": "ブロック生成報酬が請求されました:"
+    },
+    "rows": {
+      "owner": "所有者: {owner}"
+    },
+    "tooltip": "Libreブロック生成報酬を請求する"
+  },
+  "setalimits": {
+    "method": "アカウント制限の設定",
+    "title": "アカウント制限設定リクエスト",
+    "result": "アカウント制限設定結果",
+    "headers": {
+      "request": "以下のアカウントリソース制限を設定しますか?",
+      "result": "以下のアカウントリソース制限が設定されました:"
+    },
+    "rows": {
+      "account": "アカウント: {account}",
+      "ram_bytes": "RAM制限: {ram_bytes}",
+      "net_weight": "ネット重量: {net_weight}",
+      "cpu_weight": "CPU重量: {cpu_weight}"
+    },
+    "tooltip": "Libreでアカウントリソース制限を設定する"
+  },
+  "stake": {
+    "method": "Libreトークンのステーク",
+    "title": "Libreトークンステークリクエスト",
+    "result": "Libreトークンステーク結果",
+    "headers": {
+      "request": "以下のLibreトークンをステークしますか?",
+      "result": "以下のLibreトークンがステークされました:"
+    },
+    "rows": {
+      "from": "差出人: {from}",
+      "to": "宛先: {to}",
+      "quantity": "数量: {quantity}",
+      "memo": "メモ: {memo}"
+    },
+    "tooltip": "ステークコントラクトを通じてLibreトークンをステークする"
+  },
+  "unstake": {
+    "method": "Libreトークンのアンステーク",
+    "title": "Libreトークンアンステークリクエスト",
+    "result": "Libreトークンアンステーク結果",
+    "headers": {
+      "request": "以下のLibreトークンをアンステークしますか?",
+      "result": "以下のLibreトークンがアンステークされました:"
+    },
+    "rows": {
+      "account": "アカウント: {account}",
+      "index": "インデックス: {index}"
+    },
+    "tooltip": "Libreトークンをアンステークする"
+  },
+  "claim": {
+    "method": "Libreステーク報酬の請求",
+    "title": "Libreステーク報酬請求リクエスト",
+    "result": "Libreステーク報酬請求結果",
+    "headers": {
+      "request": "Libreステーク報酬を請求しますか?",
+      "result": "Libreステーク報酬が請求されました:"
+    },
+    "rows": {
+      "account": "アカウント: {account}",
+      "index": "インデックス: {index}"
+    },
+    "tooltip": "Libreステーク報酬を請求する"
+  },
+  "transfer": {
+    "method": "Transfer Tokens",
+    "title": "Transfer Tokens Request",
+    "result": "Transfer Tokens Result",
+    "headers": {
+      "request": "Transfer the following tokens?",
+      "result": "The following tokens were transferred:"
+    },
+    "rows": {
+      "from": "From: {from}",
+      "to": "To: {to}",
+      "quantity": "Quantity: {quantity}",
+      "memo": "Memo: {memo}"
+    },
+    "tooltip": "Transfer tokens between accounts"
+  }
+}

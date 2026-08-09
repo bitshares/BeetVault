@@ -1,9 +1,15 @@
 <script setup>
-    import { onMounted, watchEffect, ref } from 'vue';
+    import { onMounted, watchEffect, ref, computed } from 'vue';
+    import { Button } from '@/components/ui/ui/button';
+    import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from '@/components/ui/ui/table';
+    import { Checkbox } from '@/components/ui/ui/checkbox';
+    import { ScrollArea } from '@/components/ui/ui/scroll-area';
     import { useI18n } from 'vue-i18n';
-    import store from '../../store/index.js';
+    import { useSettingsStore } from '@/stores/settingsStore.js';
+    import { INJECTED_CALL } from '@/lib/Actions.js';
 
     const { t } = useI18n({ useScope: 'global' });
+    const settingsStore = useSettingsStore();
     const props = defineProps({
         ops: {
             type: Array,
@@ -23,20 +29,24 @@
     const emit = defineEmits(['selected', 'exit']);
 
     let selected = ref([]);
+
+    const filteredOps = computed(() => {
+        return props.ops.filter(op => op.id !== INJECTED_CALL);
+    });
+
     onMounted(() => {
-        let rememberedRows = store.getters['SettingsStore/getChainPermissions'](props.chain);
+        let rememberedRows = settingsStore.getChainPermissions(props.chain);
         if (!rememberedRows || !rememberedRows.length) {
             selected.value = [];
             return;
         }
 
-        selected.value = rememberedRows;
+        selected.value = rememberedRows.filter(row => row !== INJECTED_CALL);
     })
 
     function saveRows() {
         window.electron.resetTimer();
-        store.dispatch(
-            "SettingsStore/setChainPermissions",
+        settingsStore.setChainPermissions(
             {
                 chain: props.chain,
                 rows: selected.value
@@ -50,83 +60,54 @@
         emit('exit', true);
     }
 
-    let thead = ref(['ID', 'Method', 'Info'])
-    let tbody = ref([
-        {
-            field: 'id',
-            fn: data => {
-                return data.id
-            }
-        },
-        {
-            field: 'method',
-            fn: data => {
-                return t(`operations.injected.${props.chain === "BTS_TEST" ? "BTS" : props.chain}.${data.method}.method`)
-            }
-        },
-        {
-            field: 'info',
-            fn: data => {
-                return t(`operations.injected.${props.chain === "BTS_TEST" ? "BTS" : props.chain}.${data.method}.tooltip`)
-            }
+    function toggleRow(id) {
+        const idx = selected.value.indexOf(id);
+        if (idx > -1) {
+            selected.value.splice(idx, 1);
+        } else {
+            selected.value.push(id);
         }
-    ]);
+    }
 </script>
 
 <template>
-    <div class="bottom p-0">
-        <span>
-            <span>
-                <p style="marginBottom:0px;">
-                    {{ t('common.totp.prompt') }}
-                </p>
-                <p
-                    v-if="!props.ops || !props.ops.length"
-                    outlined
-                    style="marginTop: 5px;"
-                >
-                    {{ t('common.totp.unsupported') }}
-                </p>
-                <ui-table
-                    v-else 
-                    v-model="selected"
-                    :data="props.ops"
-                    :thead="thead"
-                    :tbody="tbody"
-                    :default-col-width="200"
-                    style="height: 250px;"
-                    row-checkbox
-                    selected-key="id"
-                >
-                    <template #method="{ data }">
-                        <div class="method">{{ data.method }}</div>
-                    </template>
-
-                    <template #info="{ data }">
-                        <div class="info">{{ data.info }}</div>
-                    </template>
-                </ui-table>
-                <ui-list>
-                    <ui-item style="padding-left:100px;">
-                        <ui-button
-                            raised
-                            style="margin-right:5px"
-                            icon="arrow_back_ios"
-                            @click="goBack"
-                        >
-                            {{ t('common.qr.back') }}
-                        </ui-button>
-                        <ui-button
-                            raised
-                            style="margin-right:5px"
-                            icon="save"
-                            @click="saveRows"
-                        >
-                            {{ t('common.totp.save') }}
-                        </ui-button>
-                    </ui-item>
-                </ui-list>
-            </span>
-        </span>
+    <div class="space-y-3 p-2">
+        <p class="mb-0">{{ t('common.totp.prompt') }}</p>
+        <p v-if="!props.ops || !props.ops.length" class="mt-2">
+            {{ t('common.totp.unsupported') }}
+        </p>
+        <ScrollArea v-else class="h-60 w-full rounded-md border">
+            <Table>
+                <TableHeader>
+                    <TableRow>
+                        <TableHead class="w-10"></TableHead>
+                        <TableHead>{{ t('common.operations.id') }}</TableHead>
+                        <TableHead>{{ t('common.operations.method') }}</TableHead>
+                        <TableHead>{{ t('common.operations.info') }}</TableHead>
+                    </TableRow>
+                </TableHeader>
+                <TableBody>
+                    <TableRow v-for="(item, idx) in filteredOps" :key="item.id">
+                        <TableCell>
+                            <Checkbox
+                                :checked="selected.includes(item.id)"
+                                @update:checked="toggleRow(item.id)"
+                            />
+                        </TableCell>
+                        <TableCell>{{ item.id }}</TableCell>
+                        <TableCell>{{ t(`operations.injected.${props.chain === 'BTS_TEST' ? 'BTS' : props.chain}.${item.method}.method`) }}</TableCell>
+                        <TableCell>{{ t(`operations.injected.${props.chain === 'BTS_TEST' ? 'BTS' : props.chain}.${item.method}.tooltip`) }}</TableCell>
+                    </TableRow>
+                </TableBody>
+            </Table>
+        </ScrollArea>
+        <div class="flex flex-wrap gap-2">
+            <Button variant="outline" @click="goBack">
+                {{ t('common.qr.back') }}
+            </Button>
+            <Button @click="saveRows">
+                {{ t('common.totp.save') }}
+            </Button>
+        </div>
     </div>
 </template>

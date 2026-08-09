@@ -1,0 +1,267 @@
+{
+  "injectedCall": {
+    "method": "ฉีดโทร",
+    "title": "คำขอโทรที่ฉีดเข้าไป",
+    "result": "ฉีดผลการโทร",
+    "headers": {
+      "request": "อนุมัติการโทรที่แทรกต่อไปนี้หรือไม่",
+      "result": "การโทรที่แทรกต่อไปนี้ได้รับการอนุมัติ:"
+    },
+    "tooltip": "ขอให้กระเป๋าเงินของคุณจัดการกับการดำเนินการบล็อคเชนที่ถูกแทรกเข้าไป"
+  },
+  "newballot": {
+    "method": "สร้างบัตรลงคะแนน Decide",
+    "title": "ขอสร้างบัตรลงคะแนน Decide",
+    "result": "ผลสร้างบัตรลงคะแนน Decide",
+    "headers": {
+      "request": "สร้างบัตรลงคะแนน Decide ต่อไปนี้หรือไม่",
+      "result": "บัตรลงคะแนน Decide ต่อไปนี้ถูกสร้างขึ้น:"
+    },
+    "rows": {
+      "title": "ชื่อเรื่อง: {title}",
+      "description": "คำอธิบาย: {description}",
+      "treasury_symbol": "สัญลักษณ์คลัง: {treasury_symbol}",
+      "category": "หมวดหมู่: {category}",
+      "voting_method": "วิธีลงคะแนน: {voting_method}",
+      "quorum": "องค์ประชุม: {quorum}",
+      "duration": "ระยะเวลา: {duration}"
+    },
+    "tooltip": "สร้างบัตรลงคะแนน Telos Decide ใหม่"
+  },
+  "castvote": {
+    "method": "ลงคะแนน Decide",
+    "title": "ขอลงคะแนน Decide",
+    "result": "ผลการลงคะแนน Decide",
+    "headers": {
+      "request": "ลงคะแนนในบัตรลงคะแนน Decide ต่อไปนี้หรือไม่",
+      "result": "มีการลงคะแนนในบัตรลงคะแนน Decide ต่อไปนี้:"
+    },
+    "rows": {
+      "voter": "ผู้มีสิทธิเลือกตั้ง: {voter}",
+      "ballot_name": "ชื่อบัตรลงคะแนน: {ballot_name}",
+      "votes": "คะแนนเสียง: {votes}"
+    },
+    "tooltip": "ลงคะแนนในบัตรลงคะแนน Telos Decide"
+  },
+  "openvoting": {
+    "method": "เปิดการลงคะแนน Decide",
+    "title": "ขอเปิดการลงคะแนน Decide",
+    "result": "ผลเปิดการลงคะแนน Decide",
+    "headers": {
+      "request": "เปิดการลงคะแนนสำหรับบัตรลงคะแนน Decide ต่อไปนี้หรือไม่",
+      "result": "เปิดการลงคะแนนสำหรับบัตรลงคะแนน Decide ต่อไปนี้แล้ว:"
+    },
+    "rows": {
+      "ballot_name": "ชื่อบัตรลงคะแนน: {ballot_name}"
+    },
+    "tooltip": "เปิดการลงคะแนนในบัตรลงคะแนน Telos Decide"
+  },
+  "closevoting": {
+    "method": "ปิดการลงคะแนน Decide",
+    "title": "ขอปิดการลงคะแนน Decide",
+    "result": "ผลปิดการลงคะแนน Decide",
+    "headers": {
+      "request": "ปิดการลงคะแนนสำหรับบัตรลงคะแนน Decide ต่อไปนี้หรือไม่",
+      "result": "ปิดการลงคะแนนสำหรับบัตรลงคะแนน Decide ต่อไปนี้แล้ว:"
+    },
+    "rows": {
+      "ballot_name": "ชื่อบัตรลงคะแนน: {ballot_name}"
+    },
+    "tooltip": "ปิดการลงคะแนนในบัตรลงคะแนน Telos Decide"
+  },
+  "cancelballot": {
+    "method": "ยกเลิกบัตรลงคะแนน Decide",
+    "title": "ขอยกเลิกบัตรลงคะแนน Decide",
+    "result": "ผลยกเลิกบัตรลงคะแนน Decide",
+    "headers": {
+      "request": "ยกเลิกบัตรลงคะแนน Decide ต่อไปนี้หรือไม่",
+      "result": "บัตรลงคะแนน Decide ต่อไปนี้ถูกยกเลิก:"
+    },
+    "rows": {
+      "ballot_name": "ชื่อบัตรลงคะแนน: {ballot_name}"
+    },
+    "tooltip": "ยกเลิกบัตรลงคะแนน Telos Decide"
+  },
+  "deleteballot": {
+    "method": "ลบบัตรลงคะแนน Decide",
+    "title": "ขอลบบัตรลงคะแนน Decide",
+    "result": "ผลลบบัตรลงคะแนน Decide",
+    "headers": {
+      "request": "ลบบัตรลงคะแนน Decide ต่อไปนี้หรือไม่",
+      "result": "บัตรลงคะแนน Decide ต่อไปนี้ถูกลบ:"
+    },
+    "rows": {
+      "ballot_name": "ชื่อบัตรลงคะแนน: {ballot_name}"
+    },
+    "tooltip": "ลบบัตรลงคะแนน Telos Decide"
+  },
+  "regvoter": {
+    "method": "ลงทะเบียนผู้ลงคะแนน Decide",
+    "title": "ขอลงทะเบียนผู้ลงคะแนน Decide",
+    "result": "ผลลงทะเบียนผู้ลงคะแนน Decide",
+    "headers": {
+      "request": "ลงทะเบียนบัญชีต่อไปนี้เป็นผู้ลงคะแนน Decide หรือไม่",
+      "result": "บัญชีต่อไปนี้ได้รับการลงทะเบียนเป็นผู้ลงคะแนน Decide:"
+    },
+    "rows": {
+      "voter": "ผู้มีสิทธิเลือกตั้ง: {voter}",
+      "treasury_symbol": "สัญลักษณ์คลัง: {treasury_symbol}"
+    },
+    "tooltip": "ลงทะเบียนผู้ลงคะแนน Telos Decide"
+  },
+  "stake": {
+    "method": "เดิมพัน TLOS",
+    "title": "ขอเดิมพัน TLOS",
+    "result": "ผลเดิมพัน TLOS",
+    "headers": {
+      "request": "เดิมพันจำนวน TLOS ต่อไปนี้หรือไม่",
+      "result": "จำนวน TLOS ต่อไปนี้ถูกเดิมพัน:"
+    },
+    "rows": {
+      "voter": "ผู้มีสิทธิเลือกตั้ง: {voter}",
+      "quantity": "ปริมาณ: {quantity}"
+    },
+    "tooltip": "เดิมพันโทเค็น TLOS"
+  },
+  "unstake": {
+    "method": "เลิกเดิมพัน TLOS",
+    "title": "ขอเลิกเดิมพัน TLOS",
+    "result": "ผลเลิกเดิมพัน TLOS",
+    "headers": {
+      "request": "เลิกเดิมพันจำนวน TLOS ต่อไปนี้หรือไม่",
+      "result": "จำนวน TLOS ต่อไปนี้ถูกเลิกเดิมพัน:"
+    },
+    "rows": {
+      "voter": "ผู้มีสิทธิเลือกตั้ง: {voter}",
+      "quantity": "ปริมาณ: {quantity}"
+    },
+    "tooltip": "เลิกเดิมพันโทเค็น TLOS"
+  },
+  "newtreasury": {
+    "method": "สร้างคลัง Decide",
+    "title": "ขอสร้างคลัง Decide",
+    "result": "ผลสร้างคลัง Decide",
+    "headers": {
+      "request": "สร้างคลัง Decide ต่อไปนี้หรือไม่",
+      "result": "คลัง Decide ต่อไปนี้ถูกสร้างขึ้น:"
+    },
+    "rows": {
+      "manager": "ผู้จัดการ: {manager}",
+      "max_supply": "อุปทานสูงสุด: {max_supply}",
+      "access_type": "ประเภทการเข้าถึง: {access_type}"
+    },
+    "tooltip": "สร้างคลัง Telos Decide ใหม่"
+  },
+  "mint": {
+    "method": "ขุดโทเค็น Decide",
+    "title": "ขอขุดโทเค็น Decide",
+    "result": "ผลขุดโทเค็น Decide",
+    "headers": {
+      "request": "ขุดโทเค็น Decide ต่อไปนี้หรือไม่",
+      "result": "โทเค็น Decide ต่อไปนี้ถูกขุด:"
+    },
+    "rows": {
+      "to": "ถึง: {to}",
+      "quantity": "ปริมาณ: {quantity}",
+      "memo": "บันทึก: {memo}"
+    },
+    "tooltip": "ขุดโทเค็น Telos Decide"
+  },
+  "burn": {
+    "method": "เผาโทเค็น Decide",
+    "title": "ขอเผาโทเค็น Decide",
+    "result": "ผลเผาโทเค็น Decide",
+    "headers": {
+      "request": "เผาโทเค็น Decide ต่อไปนี้หรือไม่",
+      "result": "โทเค็น Decide ต่อไปนี้ถูกเผา:"
+    },
+    "rows": {
+      "quantity": "ปริมาณ: {quantity}",
+      "memo": "บันทึก: {memo}"
+    },
+    "tooltip": "เผาโทเค็น Telos Decide"
+  },
+  "claimpayment": {
+    "method": "เรียกร้องการชำระเงิน Decide",
+    "title": "ขอเรียกร้องการชำระเงิน Decide",
+    "result": "ผลเรียกร้องการชำระเงิน Decide",
+    "headers": {
+      "request": "เรียกร้องการชำระเงิน Decide ต่อไปนี้หรือไม่",
+      "result": "การชำระเงิน Decide ต่อไปนี้ได้รับการเรียกร้อง:"
+    },
+    "rows": {
+      "worker": "ผู้ปฏิบัติงาน: {worker}"
+    },
+    "tooltip": "เรียกร้องการชำระเงินผู้ปฏิบัติงาน Telos Decide"
+  },
+  "regcommittee": {
+    "method": "ลงทะเบียนคณะกรรมการ Decide",
+    "title": "ขอลงทะเบียนคณะกรรมการ Decide",
+    "result": "ผลลงทะเบียนคณะกรรมการ Decide",
+    "headers": {
+      "request": "ลงทะเบียนคณะกรรมการ Decide ต่อไปนี้หรือไม่",
+      "result": "คณะกรรมการ Decide ต่อไปนี้ได้รับการลงทะเบียน:"
+    },
+    "rows": {
+      "committee_name": "ชื่อคณะกรรมการ: {committee_name}",
+      "account": "บัญชี: {account}"
+    },
+    "tooltip": "ลงทะเบียนคณะกรรมการ Telos Decide"
+  },
+  "raw": {
+    "method": "ธุรกรรม EVM ดิบ",
+    "title": "ขอธุรกรรม EVM ดิบ",
+    "result": "ผลธุรกรรม EVM ดิบ",
+    "headers": {
+      "request": "ส่งธุรกรรม EVM ดิบต่อไปนี้หรือไม่",
+      "result": "ธุรกรรม EVM ดิบต่อไปนี้ถูกส่ง:"
+    },
+    "rows": {
+      "tx_hex": "Hex ธุรกรรม: {tx_hex}"
+    },
+    "tooltip": "ส่งธุรกรรม EVM ดิบบน Telos"
+  },
+  "create": {
+    "method": "สร้างบัญชี EVM",
+    "title": "ขอสร้างบัญชี EVM",
+    "result": "ผลสร้างบัญชี EVM",
+    "headers": {
+      "request": "สร้างบัญชี Telos EVM หรือไม่",
+      "result": "บัญชี Telos EVM ต่อไปนี้ถูกสร้างขึ้น:"
+    },
+    "rows": {
+      "account": "บัญชี: {account}",
+      "data": "ข้อมูล: {data}"
+    },
+    "tooltip": "สร้างบัญชี Telos EVM ใหม่"
+  },
+  "withdraw": {
+    "method": "Withdraw from EVM",
+    "title": "Withdraw from EVM Request",
+    "result": "Withdraw from EVM Result",
+    "headers": {
+      "request": "Withdraw from Telos EVM?",
+      "result": "Withdrew from Telos EVM:"
+    },
+    "rows": {
+      "to": "To: {to}",
+      "quantity": "Quantity: {quantity}"
+    },
+    "tooltip": "Withdraw from Telos EVM to native chain"
+  },
+  "reclaim": {
+    "method": "Reclaim Treasury Tokens",
+    "title": "Reclaim Treasury Tokens Request",
+    "result": "Reclaim Treasury Tokens Result",
+    "headers": {
+      "request": "Reclaim the following treasury tokens?",
+      "result": "The following treasury tokens were reclaimed:"
+    },
+    "rows": {
+      "voter": "Voter: {voter}",
+      "quantity": "Quantity: {quantity}",
+      "memo": "Memo: {memo}"
+    },
+    "tooltip": "Reclaim treasury tokens from a voter back to the manager"
+  }
+}

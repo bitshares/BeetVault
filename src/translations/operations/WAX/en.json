@@ -1,0 +1,125 @@
+{
+  "injectedCall": {
+    "method": "injectedCall",
+    "title": "Injected Call Request",
+    "result": "Injected call result",
+    "headers": {
+      "request": "Approve the following injected call?",
+      "result": "The following injected call was approved:"
+    },
+    "tooltip": "Asks your wallet to handle an injected blockchain operation"
+  },
+  "regproposer": {
+    "method": "Register WPS Proposer",
+    "title": "Register WPS Proposer Request",
+    "result": "Register WPS Proposer Result",
+    "headers": {
+      "request": "Register the following account as a WPS proposer?",
+      "result": "The following account was registered as a WPS proposer:"
+    },
+    "rows": {
+      "proposer": "Proposer: {proposer}",
+      "proposer_key": "Proposer Key: {proposer_key}"
+    },
+    "tooltip": "Register a WPS proposer account"
+  },
+  "regproposal": {
+    "method": "Register WPS Proposal",
+    "title": "Register WPS Proposal Request",
+    "result": "Register WPS Proposal Result",
+    "headers": {
+      "request": "Register the following WPS proposal?",
+      "result": "The following WPS proposal was registered:"
+    },
+    "rows": {
+      "proposer": "Proposer: {proposer}",
+      "proposal_name": "Proposal Name: {proposal_name}",
+      "title": "Title: {title}",
+      "pay_amount": "Pay Amount: {pay_amount}"
+    },
+    "tooltip": "Register a new WPS proposal"
+  },
+  "voteproposal": {
+    "method": "Vote WPS Proposal",
+    "title": "Vote WPS Proposal Request",
+    "result": "Vote WPS Proposal Result",
+    "headers": {
+      "request": "Vote on the following WPS proposal?",
+      "result": "Vote on the following WPS proposal was approved:"
+    },
+    "rows": {
+      "voter": "Voter: {voter}",
+      "proposal_name": "Proposal Name: {proposal_name}",
+      "vote": "Vote: {vote}"
+    },
+    "tooltip": "Vote on a WPS proposal"
+  },
+  "claimfunds": {
+    "method": "Claim WPS Funds",
+    "title": "Claim WPS Funds Request",
+    "result": "Claim WPS Funds Result",
+    "headers": {
+      "request": "Claim WPS funds for the following proposal?",
+      "result": "WPS funds were claimed for the following proposal:"
+    },
+    "rows": {
+      "account": "Account: {account}",
+      "proposal_name": "Proposal Name: {proposal_name}"
+    },
+    "tooltip": "Claim funds from an approved WPS proposal"
+  },
+  "voterclaim": {
+    "method": "Claim WPS Voter Rewards",
+    "title": "Claim WPS Voter Rewards Request",
+    "result": "Claim WPS Voter Rewards Result",
+    "headers": {
+      "request": "Claim WPS voter rewards?",
+      "result": "WPS voter rewards were claimed:"
+    },
+    "rows": {
+      "owner": "Owner: {owner}"
+    },
+    "tooltip": "Claim WPS voter rewards"
+  },
+  "voterclaimst": {
+    "method": "Claim WPS Voter Staked Rewards",
+    "title": "Claim WPS Voter Staked Rewards Request",
+    "result": "Claim WPS Voter Staked Rewards Result",
+    "headers": {
+      "request": "Claim WPS voter staked rewards?",
+      "result": "WPS voter staked rewards were claimed:"
+    },
+    "rows": {
+      "owner": "Owner: {owner}",
+      "amount": "Amount: {amount}"
+    },
+    "tooltip": "Claim WPS voter staked rewards"
+  },
+  "awardgenesis": {
+    "method": "Award Genesis",
+    "title": "Award Genesis Request",
+    "result": "Award Genesis Result",
+    "headers": {
+      "request": "Award genesis tokens to the following account?",
+      "result": "Genesis tokens were awarded to the following account:"
+    },
+    "rows": {
+      "receiver": "Receiver: {receiver}",
+      "amount": "Amount: {amount}"
+    },
+    "tooltip": "Award genesis tokens to an account"
+  },
+  "claimgenesis": {
+    "method": "Claim Genesis",
+    "title": "Claim Genesis Request",
+    "result": "Claim Genesis Result",
+    "headers": {
+      "request": "Claim genesis tokens for the following account?",
+      "result": "Genesis tokens were claimed for the following account:"
+    },
+    "rows": {
+      "receiver": "Receiver: {receiver}"
+    },
+    "tooltip": "Claim genesis tokens"
+  }
+}

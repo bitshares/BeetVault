@@ -1,25 +1,15 @@
-import { ipcRenderer, contextBridge } from 'electron';
+import { contextBridge } from 'electron';
+import { safeSend, safeOn } from './lib/ipcWrapper.js';
 
 contextBridge.exposeInMainWorld('electron', {
-  blockchainRequest: async (args) => await ipcRenderer.invoke('blockchainRequest', args),
-  clickedAllow: async (allowData) => ipcRenderer.send('clickedAllow', allowData),
-  clickedDeny: async (denyData) => ipcRenderer.send('clickedDeny', denyData),
-  resetTimer: async () => await ipcRenderer.send('resetTimer'),
-  getLocationSearch: () => window.location.search,
-  getPrompt: (id) => {
-    ipcRenderer.send(`get:prompt:${id}`);
-  },
-  onPrompt: (id, func) => {
-    ipcRenderer.on(`respond:prompt:${id}`, (event, data) => {
-        func(data);
-    });
-  },
-  getReceipt: (id) => {
-    ipcRenderer.send(`get:receipt:${id}`);
-  },
-  onReceipt: (id, func) => {
-    ipcRenderer.on(`respond:receipt:${id}`, (event, data) => {
-        func(data);
-    });
-  },
+    getLocationSearch: () => window.location.search,
+    resetTimer: async () => safeSend('resetTimer'),
+    getPrompt: (id) => {
+        safeSend(`get:prompt:${id}`);
+    },
+    onPrompt: (id, func) => {
+        safeOn(`respond:prompt:${id}`, func);
+    },
+    clickedAllow: async (allowData) => safeSend('clickedAllow', allowData),
+    clickedDeny: async (denyData) => safeSend('clickedDeny', denyData),
 });

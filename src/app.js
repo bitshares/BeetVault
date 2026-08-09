@@ -1,9 +1,8 @@
-import { createApp } from 'vue';
+import { createApp, h } from 'vue';
+import { RouterView } from 'vue-router';
 import mitt from 'mitt';
 
-import BalmUI from 'balm-gui';
-import BalmUIPlus from 'balm-ui-plus';
-import 'balm-ui-css';
+import './styles/globals.css';
 
 import 'typeface-roboto';
 import 'typeface-rajdhani';
@@ -11,7 +10,8 @@ import 'typeface-rajdhani';
 import './scss/beet.scss';
 
 import router from './router/index.js';
-import store from './store/index.js';
+import { pinia } from './stores/index.js';
+import { useSettingsStore } from './stores/settingsStore.js';
 import {i18n} from './lib/i18n.js';
 
 window.onerror = function (msg, url, lineNo, columnNo, error) {
@@ -19,33 +19,33 @@ window.onerror = function (msg, url, lineNo, columnNo, error) {
   return false;
 };
 
-store.dispatch("SettingsStore/loadSettings");
-store.dispatch("WhitelistStore/loadWhitelist");
-
 const emitter = mitt();
-const app = createApp({});
+const app = createApp({
+  render() {
+    return h('div', { class: 'main' }, [
+      h(RouterView, { name: 'header' }),
+      h(RouterView),
+    ]);
+  },
+});
 app.provide('emitter', emitter);
 
 app.config.errorHandler = function (err, vm, info) {
   console.log(err);
 };
 
+// Forward uncaught renderer promise rejections to the main process so they
+// are captured in crash reporting regardless of where they originate.
+window.addEventListener("unhandledrejection", (e) => {
+  window.electron?.sendError?.(e.reason?.stack || e.reason);
+  e.preventDefault();
+});
+
 app.use(i18n);
 
-window.t = (key, params) => {
-    return i18n.global.t(key, params)
-}
-
-app.use(BalmUI, {
-    $theme: {
-        primary: '#C7088E',
-        secondary: '#960069'
-    }
-});
-app.use(BalmUIPlus);
-
 app.use(router);
-app.use(store);
+app.use(pinia);
+useSettingsStore().loadSettings();
 app.mount('#app');
 
 emitter.on('i18n', (data) => {

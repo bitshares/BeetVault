@@ -1,0 +1,131 @@
+{
+  "injectedCall": {
+    "method": "주입전화",
+    "title": "삽입된 통화 요청",
+    "result": "삽입된 통화 결과",
+    "headers": {
+      "request": "다음 삽입된 통화를 승인하시겠습니까?",
+      "result": "다음 삽입된 호출이 승인되었습니다."
+    },
+    "tooltip": "주입된 블록체인 작업을 처리하도록 지갑에 요청"
+  },
+  "voteproducer": {
+    "method": "Libre 프로듀서 투표",
+    "title": "Libre 프로듀서 투표 요청",
+    "result": "Libre 프로듀서 투표 결과",
+    "headers": {
+      "request": "다음 Libre 프로듀서에게 투표하시겠습니까?",
+      "result": "다음 Libre 프로듀서에게 투표되었습니다:"
+    },
+    "rows": {
+      "voter": "유권자: {voter}",
+      "producers": "프로듀서: {producers}"
+    },
+    "tooltip": "Libre 블록 프로듀서에게 투표합니다"
+  },
+  "regproducer": {
+    "method": "Libre 프로듀서 등록",
+    "title": "Libre 프로듀서 등록 요청",
+    "result": "Libre 프로듀서 등록 결과",
+    "headers": {
+      "request": "다음 계정을 Libre 블록 프로듀서로 등록하시겠습니까?",
+      "result": "다음 계정이 Libre 블록 프로듀서로 등록되었습니다:"
+    },
+    "rows": {
+      "producer": "프로듀서: {producer}",
+      "producer_key": "프로듀서 키: {producer_key}",
+      "url": "URL: {url}",
+      "location": "위치: {location}"
+    },
+    "tooltip": "Libre 블록 프로듀서로 등록합니다"
+  },
+  "claimrewards": {
+    "method": "Libre 보상 청구",
+    "title": "Libre 보상 청구 요청",
+    "result": "Libre 보상 청구 결과",
+    "headers": {
+      "request": "블록 생성 보상을 청구하시겠습니까?",
+      "result": "블록 생성 보상이 청구되었습니다:"
+    },
+    "rows": {
+      "owner": "소유자: {owner}"
+    },
+    "tooltip": "Libre 블록 생성 보상을 청구합니다"
+  },
+  "setalimits": {
+    "method": "계정 한도 설정",
+    "title": "계정 한도 설정 요청",
+    "result": "계정 한도 설정 결과",
+    "headers": {
+      "request": "다음 계정 자원 한도를 설정하시겠습니까?",
+      "result": "다음 계정 자원 한도가 설정되었습니다:"
+    },
+    "rows": {
+      "account": "계정: {account}",
+      "ram_bytes": "RAM 한도: {ram_bytes}",
+      "net_weight": "넷 무게: {net_weight}",
+      "cpu_weight": "CPU 무게: {cpu_weight}"
+    },
+    "tooltip": "Libre에서 계정 자원 한도를 설정합니다"
+  },
+  "stake": {
+    "method": "Libre 토큰 스테이크",
+    "title": "Libre 토큰 스테이크 요청",
+    "result": "Libre 토큰 스테이크 결과",
+    "headers": {
+      "request": "다음 Libre 토큰을 스테이크하시겠습니까?",
+      "result": "다음 Libre 토큰이 스테이크되었습니다:"
+    },
+    "rows": {
+      "from": "보낸 사람: {from}",
+      "to": "받는 사람: {to}",
+      "quantity": "수량: {quantity}",
+      "memo": "메모: {memo}"
+    },
+    "tooltip": "스테이크 컨트랙트를 통해 Libre 토큰을 스테이크합니다"
+  },
+  "unstake": {
+    "method": "Libre 토큰 언스테이크",
+    "title": "Libre 토큰 언스테이크 요청",
+    "result": "Libre 토큰 언스테이크 결과",
+    "headers": {
+      "request": "다음 Libre 토큰을 언스테이크하시겠습니까?",
+      "result": "다음 Libre 토큰이 언스테이크되었습니다:"
+    },
+    "rows": {
+      "account": "계정: {account}",
+      "index": "인덱스: {index}"
+    },
+    "tooltip": "Libre 토큰을 언스테이크합니다"
+  },
+  "claim": {
+    "method": "Libre 스테이크 보상 청구",
+    "title": "Libre 스테이크 보상 청구 요청",
+    "result": "Libre 스테이크 보상 청구 결과",
+    "headers": {
+      "request": "Libre 스테이크 보상을 청구하시겠습니까?",
+      "result": "Libre 스테이크 보상이 청구되었습니다:"
+    },
+    "rows": {
+      "account": "계정: {account}",
+      "index": "인덱스: {index}"
+    },
+    "tooltip": "Libre 스테이크 보상을 청구합니다"
+  },
+  "transfer": {
+    "method": "Transfer Tokens",
+    "title": "Transfer Tokens Request",
+    "result": "Transfer Tokens Result",
+    "headers": {
+      "request": "Transfer the following tokens?",
+      "result": "The following tokens were transferred:"
+    },
+    "rows": {
+      "from": "From: {from}",
+      "to": "To: {to}",
+      "quantity": "Quantity: {quantity}",
+      "memo": "Memo: {memo}"
+    },
+    "tooltip": "Transfer tokens between accounts"
+  }
+}

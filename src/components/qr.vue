@@ -1,6 +1,9 @@
 <script setup>
     import { ref, computed, watchEffect, inject, watch, onMounted, toRaw } from 'vue';
     import { useI18n } from 'vue-i18n';
+    import { Button } from '@/components/ui/ui/button';
+    import { Card, CardContent } from '@/components/ui/ui/card';
+    import { Loader2 } from 'lucide-vue-next';
 
     import AccountSelect from "./account-select";
     import Operations from "./blockchains/operations";
@@ -8,10 +11,20 @@
     import QRScan from "./qr/Scan";
     import QRUpload from "./qr/Upload";
 
-    import store from '../store/index.js';
+    import { useWalletStore } from '@/stores/walletStore.js';
+    import { useAccountStore } from '@/stores/accountStore.js';
+    import { useSettingsStore } from '@/stores/settingsStore.js';
+    import { usePopupStore } from '@/stores/popupStore.js';
+    import { blockchainRequest } from '@/lib/blockchainRequestHelper.js';
     import router from '../router/index.js';
 
     const { t } = useI18n({ useScope: 'global' });
+    const walletStore = useWalletStore();
+    const accountStore = useAccountStore();
+    const settingsStore = useSettingsStore();
+    const popupStore = usePopupStore();
+
+    let hasActivePopup = computed(() => popupStore.hasActivePopup);
 
     let chosenScope = ref();
     let qrInProgress = ref(false);
@@ -28,21 +41,21 @@
         window.electron.resetTimer();
         qrChoice.value = null;
     }
- 
+  
     function setChoice(choice) {
         window.electron.resetTimer();
         qrChoice.value = choice;
     }
 
     const chain = computed(() => {
-        return store.getters['AccountStore/getChain'];
+        return accountStore.getChain;
     });
 
     let selectedAccount = computed(() => {
-        if (!store.state.WalletStore.isUnlocked) {
+        if (!walletStore.isUnlocked) {
             return;
         }
-        return store.getters["AccountStore/getCurrentSafeAccount"]()
+        return accountStore.getCurrentSafeAccount()
     })
 
     watch(selectedAccount, async (newVal, oldVal) => {
@@ -60,7 +73,7 @@
 
         let blockchainResponse;
         try {
-            blockchainResponse = await window.electron.blockchainRequest({
+            blockchainResponse = await blockchainRequest({
                 methods: ["processQR"],
                 chain: chain.value,
                 qrChoice: qrChoice.value,
@@ -85,14 +98,14 @@
         window.electron.notify(t("common.qr.prompt_success"));
         qrInProgress.value = false;
     }
-    
+     
     let compatible = ref(false);
     let operationTypes = ref([]);
     watchEffect(() => {
         async function initialize() {
             let blockchainResponse;
             try {
-                blockchainResponse = await window.electron.blockchainRequest({
+                blockchainResponse = await blockchainRequest({
                     methods: ["supportsQR", "getOperationTypes"],
                     chain: chain.value
                 });
@@ -123,22 +136,23 @@
         window.electron.resetTimer();
         chosenScope.value = newValue;
         if (newValue === 'AllowAll') {
-            const _rows = operationTypes.value.map(type => type.id)
+            const _rows = operationTypes.value
+                .map(type => type.id)
+                .filter(id => id !== 'injectedCall')
             selectedRows.value = _rows
-            store.dispatch(
-                "SettingsStore/setChainPermissions",
-                {
-                    chain: chain.value,
-                    rows: _rows
-                }
-            )
+        settingsStore.setChainPermissions(
+            {
+                chain: chain.value,
+                rows: _rows
+            }
+        )
         }
     }
 
     onMounted(() => {
-        if (!store.state.WalletStore.isUnlocked) {
+        if (!walletStore.isUnlocked) {
             console.log("logging user out...");
-            store.dispatch("WalletStore/logout");
+            walletStore.logout();
             router.replace("/");
             return;
         }
@@ -147,137 +161,101 @@
 
 <template>
     <div class="bottom p-0">
-        <span v-if="compatible">
-            <span v-if="qrInProgress">
-                <p>
-                    {{ t('common.qr.progress') }}
-                </p>
-                <ui-spinner active />
-            </span>
-            <span v-else>
-                <AccountSelect />
-                <p
-                    v-if="!chosenScope"
-                    style="marginBottom:0px;"
-                >
-                    {{ t('common.qr.label') }}
-                </p>
-                <ui-card
-                    v-if="!selectedRows"
-                    v-shadow="3"
-                    outlined
-                    style="marginTop: 5px;"
-                >
-                    <span v-if="!chosenScope">
-                        <p>
-                            {{ t('common.chosenScope.title.qr') }}
-                        </p>
-                        <ui-button
-                            raised
-                            style="margin-right:5px; margin-bottom: 5px;"
-                            @click="setScope('Configure')"
-                        >
-                            {{ t('common.chosenScope.yes') }}
-                        </ui-button>
-                        <ui-button
-                            raised
-                            style="margin-right:5px; margin-bottom: 5px;"
-                            @click="setScope('AllowAll')"
-                        >
-                            {{ t('common.chosenScope.no') }}
-                        </ui-button>
-                    </span>
-                    <span v-else-if="chosenScope == 'Configure' && !selectedRows">
-                        <Operations
-                            :ops="operationTypes"
-                            :chain="chain"
-                            @selected="(ops) => selectedRows = ops"
-                            @exit="() => {
-                                chosenScope = null;
-                                selectedRows = null;
-                            }"
-                        />
-                    </span>
-                </ui-card>
-            </span>
+        <div v-if="compatible" class="px-4 py-3 space-y-4">
+            <div v-if="qrInProgress" class="flex flex-col items-center gap-2">
+                <p class="mb-0">{{ t('common.qr.progress') }}</p>
+                <Loader2 class="h-6 w-6 animate-spin" />
+            </div>
 
-            
-            <span v-if="chosenScope && selectedRows">
-                <span v-if="qrChoice && qrChoice === 'Scan'">
+            <div v-else class="space-y-4">
+                <AccountSelect :disabled="hasActivePopup" />
+
+                <div v-if="!chosenScope" class="space-y-3">
+                    <p class="mb-0">{{ t('common.qr.label') }}</p>
+
+                    <Card class="w-full shadow-sm border">
+                        <CardContent class="p-4">
+                            <p class="mb-3">{{ t('common.chosenScope.title.qr') }}</p>
+                            <div class="flex flex-wrap gap-2">
+                                <Button @click="setScope('Configure')">
+                                    {{ t('common.chosenScope.yes') }}
+                                </Button>
+                                <Button variant="outline" @click="setScope('AllowAll')">
+                                    {{ t('common.chosenScope.no') }}
+                                </Button>
+                            </div>
+                        </CardContent>
+                    </Card>
+                </div>
+
+                <div v-else-if="chosenScope == 'Configure' && !selectedRows">
+                    <Operations
+                        :ops="operationTypes"
+                        :chain="chain"
+                        @selected="(ops) => selectedRows = ops"
+                        @exit="() => {
+                            chosenScope = null;
+                            selectedRows = null;
+                        }"
+                    />
+                </div>
+            </div>
+
+            <div v-if="chosenScope && selectedRows" class="space-y-4">
+                <div v-if="qrChoice && qrChoice === 'Scan'">
                     <QRScan @detection="(qr) => evaluateQR(qr)" />
-                    <br>
-                    <ui-button @click="undoQRChoice()">
-                        {{ t('common.qr.back') }}
-                    </ui-button>
-                </span>
-                <span v-else-if="qrChoice && qrChoice === 'Drag'">
+                    <div class="flex justify-end pt-2">
+                        <Button variant="outline" @click="undoQRChoice" :disabled="hasActivePopup">
+                            {{ t('common.qr.back') }}
+                        </Button>
+                    </div>
+                </div>
+                <div v-else-if="qrChoice && qrChoice === 'Drag'">
                     <QRDrag @detection="(qr) => evaluateQR(qr)" />
-                    <br>
-                    <ui-button @click="undoQRChoice()">
-                        {{ t('common.qr.back') }}
-                    </ui-button>
-                </span>
-                <span v-else-if="qrChoice && qrChoice === 'Upload'">
+                    <div class="flex justify-end pt-2">
+                        <Button variant="outline" @click="undoQRChoice" :disabled="hasActivePopup">
+                            {{ t('common.qr.back') }}
+                        </Button>
+                    </div>
+                </div>
+                <div v-else-if="qrChoice && qrChoice === 'Upload'">
                     <QRUpload @detection="(qr) => evaluateQR(qr)" />
-                    <br>
-                    <ui-button @click="undoQRChoice()">
-                        {{ t('common.qr.back') }}
-                    </ui-button>
-                </span>
-                <span v-else>
-                    <p style="marginBottom:0px;">
-                        {{ t('common.qr.main.title') }}
-                    </p>
-                    <br>
-                    <ui-button
-                        raised
-                        style="margin-bottom: 10px;"
-                        @click="setChoice('Drag')"
-                    >
-                        {{ t('common.qr.main.drag') }}
-                    </ui-button>
-                    <br>
-                    <ui-button
-                        raised
-                        style="margin-bottom: 10px;"
-                        @click="setChoice('Scan')"
-                    >
-                        {{ t('common.qr.main.scan') }}
-                    </ui-button>
-                    <br>
-                    <ui-button
-                        raised
-                        style="margin-bottom: 10px;"
-                        @click="setChoice('Upload')"
-                    >
-                        {{ t('common.qr.main.upload') }}
-                    </ui-button>
-                </span>
-            </span>
+                    <div class="flex justify-end pt-2">
+                        <Button variant="outline" @click="undoQRChoice" :disabled="hasActivePopup">
+                            {{ t('common.qr.back') }}
+                        </Button>
+                    </div>
+                </div>
+                <div v-else class="space-y-3">
+                    <p class="mb-0">{{ t('common.qr.main.title') }}</p>
+                    <div class="flex flex-col gap-2">
+                        <Button @click="setChoice('Drag')" :disabled="hasActivePopup">
+                            {{ t('common.qr.main.drag') }}
+                        </Button>
+                        <Button @click="setChoice('Scan')" :disabled="hasActivePopup">
+                            {{ t('common.qr.main.scan') }}
+                        </Button>
+                        <Button @click="setChoice('Upload')" :disabled="hasActivePopup">
+                            {{ t('common.qr.main.upload') }}
+                        </Button>
+                    </div>
+                </div>
+            </div>
 
-            <br>
-            <ui-button
-                v-if="chosenScope && selectedRows && !qrChoice"
-                style="margin-right:5px"
-                icon="arrow_back_ios"
-                @click="goBack"
-            >
-                {{ t('common.qr.back') }}
-            </ui-button>
-            <router-link
-                :to="'/dashboard'"
-                replace
-            >
-                <ui-button
-                    outlined
-                    class="step_btn"
-                >
-                    {{ t('common.qr.exit') }}
-                </ui-button>
-            </router-link>
-        </span>
-        <span v-else>
+        </div>
+
+        <div v-else class="px-4 py-3">
             {{ t('common.qr.unsupported') }}
-        </span>
+        </div>
+
+        <div class="flex justify-between items-center px-4 pt-2 pb-4">
+            <Button v-if="chosenScope && selectedRows && !qrChoice" variant="outline" @click="goBack" :disabled="hasActivePopup">
+                {{ t('common.qr.back') }}
+            </Button>
+            <div v-else></div>
+            <Button variant="outline" @click="router.replace('/dashboard')" :disabled="hasActivePopup">
+                {{ t('common.qr.exit') }}
+            </Button>
+        </div>
     </div>
 </template>

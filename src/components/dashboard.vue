@@ -1,18 +1,22 @@
 <script setup>
-    import { computed, watchEffect, ref, onMounted } from "vue";
+    import { computed, watch, ref, onMounted } from "vue";
 
     import Balances from "./balances";
     import AccountDetails from "./account-details";
     import AccountSelect from "./account-select";
 
-    import store from '../store/index.js';
+    import { useWalletStore } from '@/stores/walletStore.js';
+    import { useAccountStore } from '@/stores/accountStore.js';
     import router from '../router/index.js';
+    import { blockchainRequest } from '@/lib/blockchainRequestHelper.js';
+    const walletStore = useWalletStore();
+    const accountStore = useAccountStore();
 
     let selectedAccount = computed(() => {
-        if (!store.state.WalletStore.isUnlocked) {
+        if (!walletStore.isUnlocked) {
             return;
         }
-        return store.getters["AccountStore/getCurrentSafeAccount"]()
+        return accountStore.getCurrentSafeAccount()
     })
     
     let isConnected = ref();
@@ -25,61 +29,78 @@
     let _balances = ref([]);
     let _chain = ref("");
 
-    watchEffect(async () => {
-        async function lookupBlockchain() {
-            isConnecting.value = true;
-            isConnected.value = false;
-            let selectedDifferentChain = !lastBlockchain.value || (lastBlockchain.value && lastBlockchain.value !== selectedAccount.value.chain);
-            if (selectedDifferentChain) {
-                lastBlockchain.value = selectedAccount.value.chain;
-            }
+    let abortController = ref(null);
 
-            _chain.value = selectedAccount.value.chain;
+    watch([selectedAccount, fetchQty], async (newValues) => {
+        if (abortController.value) {
+            abortController.value.abort();
+        }
+        abortController.value = new AbortController();
 
-            let blockchainRequest;
-            try { 
-                blockchainRequest = await window.electron.blockchainRequest({
-                    methods: selectedDifferentChain
-                        ? ['getExplorer', 'getAccessType', 'getBalances']
-                        : ['getExplorer', 'getBalances'],
-                    account: selectedAccount.value,
-                    chain: selectedAccount.value.chain,
-                })
-            } catch (error) {
-                console.log({error});
-            }
+        if (!newValues[0] || !newValues[1]) {
+            return;
+        }
 
-            if (!blockchainRequest) {
-                console.log("No blockchain request");
-                isConnecting.value = false;
-                isConnected.value = false;
-                return;
-            }
+        console.log(`Fetching blockchain data #${newValues[1]}`);
+        await lookupBlockchain(newValues[0].chain);
+    }, { immediate: true });
 
-            if (blockchainRequest.getExplorer) {
-                _explorer.value = blockchainRequest.getExplorer;
-            }
-            if (blockchainRequest.getAccessType) {
-                _accessType.value = blockchainRequest.getAccessType;
-            }
-            if (blockchainRequest.getBalances) {
-                _balances.value = JSON.parse(blockchainRequest.getBalances);
-            }
+    async function lookupBlockchain(chain) {
+        const signal = abortController.value?.signal;
+        if (!signal || signal.aborted) return;
 
+        isConnecting.value = true;
+        isConnected.value = false;
+        _balances.value = [];
+        let selectedDifferentChain = !lastBlockchain.value || (lastBlockchain.value && lastBlockchain.value !== selectedAccount.value.chain);
+        if (selectedDifferentChain) {
+            lastBlockchain.value = selectedAccount.value.chain;
+        }
+
+        _chain.value = selectedAccount.value.chain;
+
+        let blockchainResponse;
+        try {
+            blockchainResponse = await blockchainRequest({
+                methods: selectedDifferentChain
+                    ? ['getExplorer', 'getAccessType', 'getBalances']
+                    : ['getExplorer', 'getBalances'],
+                account: selectedAccount.value,
+                chain: selectedAccount.value.chain,
+            })
+        } catch (error) {
+            if (signal.aborted) return;
+            console.log({error});
+        }
+
+        if (signal.aborted) return;
+        if (!blockchainResponse) {
+            console.log("No blockchain request");
             isConnecting.value = false;
-            isConnected.value = true;
+            isConnected.value = false;
+            return;
         }
 
-        if (selectedAccount.value && fetchQty.value) {
-            console.log(`Fetching blockchain data #${fetchQty.value}`);
-            lookupBlockchain();
+        if (signal.aborted) return;
+        if (blockchainResponse.getExplorer) {
+            _explorer.value = blockchainResponse.getExplorer;
         }
-    });
+        if (blockchainResponse.getAccessType) {
+            _accessType.value = blockchainResponse.getAccessType;
+        }
+        if (blockchainResponse.getBalances) {
+            _balances.value = JSON.parse(blockchainResponse.getBalances);
+        }
+
+        if (signal.aborted) return;
+        isConnecting.value = false;
+        isConnected.value = true;
+    }
 
     onMounted(() => {
-        if (!store.state.WalletStore.isUnlocked) {
+        if (!walletStore.isUnlocked) {
             console.log("logging user out...");
-            store.dispatch("WalletStore/logout");
+            walletStore.logout();
             router.replace("/");
             return;
         }
@@ -87,12 +108,12 @@
 </script>
 
 <template>
-    <span
-        class="container"
+    <div
+        class="container px-2 py-2"
         style="min-height:700px;"
     >
         <AccountSelect />
-        <span v-if="selectedAccount">
+        <div v-if="selectedAccount">
             <AccountDetails
                 :account="selectedAccount"
                 :explorer="_explorer"
@@ -106,6 +127,6 @@
                 :is-connecting="isConnecting"
                 @refresh="() => fetchQty += 1"
             />
-        </span>
-    </span>
+        </div>
+    </div>
 </template>

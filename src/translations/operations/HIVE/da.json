@@ -1,0 +1,764 @@
+{
+  "injectedCall": {
+    "method": "injectedCall",
+    "title": "Anmodning om injiceret kald",
+    "result": "Resultat af injiceret kald",
+    "headers": {
+      "request": "Godkende følgende injicerede kald?",
+      "result": "Det følgende injicerede kald blev godkendt:"
+    },
+    "tooltip": "Bed din tegnebog om at håndtere en injiceret blockchain-operation"
+  },
+  "vote": {
+    "method": "Stem",
+    "title": "Anmodning om afstemning",
+    "result": "Resultat af afstemning",
+    "headers": {
+      "request": "Vil du godkende følgende afstemning?",
+      "result": "Følgende afstemning blev godkendt:"
+    },
+    "rows": {
+      "voter": "Vælger: {voter}",
+      "author": "Forfatter: {author}",
+      "permlink": "Permlink: {permlink}",
+      "weight": "Vægt: {weight}"
+    },
+    "tooltip": "Stem på et indlæg eller en kommentar"
+  },
+  "vote2": {
+    "method": "Stem 2",
+    "title": "Anmodning om afstemning 2",
+    "result": "Resultat af afstemning 2",
+    "headers": {
+      "request": "Vil du godkende følgende afstemning 2?",
+      "result": "Følgende afstemning 2 blev godkendt:"
+    },
+    "rows": {
+      "voter": "Vælger: {voter}",
+      "author": "Forfatter: {author}",
+      "permlink": "Permlink: {permlink}",
+      "rshares": "Rshares: {rshares}",
+      "extensions": "Udvidelser: {extensions}"
+    },
+    "tooltip": "Stem 2 på et indlæg eller en kommentar"
+  },
+  "comment": {
+    "method": "Kommentér",
+    "title": "Anmodning om kommentar",
+    "result": "Resultat af kommentar",
+    "headers": {
+      "request": "Vil du godkende følgende kommentar?",
+      "result": "Følgende kommentar blev godkendt:"
+    },
+    "rows": {
+      "parent_author": "Overordnet forfatter: {parent_author}",
+      "parent_permlink": "Overordnet permlink: {parent_permlink}",
+      "author": "Forfatter: {author}",
+      "permlink": "Permlink: {permlink}",
+      "title": "Titel: {title}",
+      "body": "Indhold: {body}",
+      "json_metadata": "JSON-metadata: {json_metadata}"
+    },
+    "tooltip": "Opret et indlæg eller en kommentar"
+  },
+  "transfer": {
+    "method": "Overførsel",
+    "title": "Anmodning om overførsel",
+    "result": "Resultat af overførsel",
+    "headers": {
+      "request": "Vil du godkende følgende overførsel?",
+      "result": "Følgende overførsel blev godkendt:"
+    },
+    "rows": {
+      "from": "Fra: {from}",
+      "to": "Til: {to}",
+      "amount": "Beløb: {amount}",
+      "memo": "Memo: {memo}"
+    },
+    "tooltip": "Send aktiver fra en konto til en anden"
+  },
+  "transfer_to_vesting": {
+    "method": "Overfør til vesting",
+    "title": "Anmodning om overførsel til vesting",
+    "result": "Resultat af overførsel til vesting",
+    "headers": {
+      "request": "Vil du godkende følgende overførsel til vesting?",
+      "result": "Følgende overførsel til vesting blev godkendt:"
+    },
+    "rows": {
+      "from": "Fra: {from}",
+      "to": "Til: {to}",
+      "amount": "Beløb: {amount}"
+    },
+    "tooltip": "Overfør aktiver til vesting-fonde"
+  },
+  "withdraw_vesting": {
+    "method": "Hæv vesting",
+    "title": "Anmodning om hævning af vesting",
+    "result": "Resultat af hævning af vesting",
+    "headers": {
+      "request": "Vil du godkende følgende hævning af vesting?",
+      "result": "Følgende hævning af vesting blev godkendt:"
+    },
+    "rows": {
+      "account": "Konto: {account}",
+      "vesting_shares": "Vesting-aktier: {vesting_shares}"
+    },
+    "tooltip": "Opsæt en tidsplan for hævning af vesting"
+  },
+  "limit_order_create": {
+    "method": "Opret limit-ordre",
+    "title": "Anmodning om oprettelse af limit-ordre",
+    "result": "Resultat af limit-ordre",
+    "headers": {
+      "request": "Vil du godkende følgende limit-ordre?",
+      "result": "Følgende limit-ordre blev godkendt:"
+    },
+    "rows": {
+      "owner": "Ejer: {owner}",
+      "orderid": "Ordre-ID: {orderid}",
+      "amount_to_sell": "Beløb til salg: {amount_to_sell}",
+      "min_to_receive": "Minimum at modtage: {min_to_receive}",
+      "fill_or_kill": "Fill eller Kill: {fill_or_kill}",
+      "expiration": "Udløb: {expiration}"
+    },
+    "tooltip": "Opret en limit-ordre på markedet"
+  },
+  "limit_order_create2": {
+    "method": "Opret limit-ordre 2",
+    "title": "Anmodning om oprettelse af limit-ordre 2",
+    "result": "Resultat af limit-ordre 2",
+    "headers": {
+      "request": "Vil du godkende følgende limit-ordre 2?",
+      "result": "Følgende limit-ordre 2 blev godkendt:"
+    },
+    "rows": {
+      "owner": "Ejer: {owner}",
+      "orderid": "Ordre-ID: {orderid}",
+      "amount_to_sell": "Beløb til salg: {amount_to_sell}",
+      "exchange_rate": "Vekselkurs: {exchange_rate}",
+      "fill_or_kill": "Fill eller Kill: {fill_or_kill}",
+      "expiration": "Udløb: {expiration}"
+    },
+    "tooltip": "Opret en limit-ordre med vekselkurs på markedet"
+  },
+  "limit_order_cancel": {
+    "method": "Annullér limit-ordre",
+    "title": "Anmodning om annullering af limit-ordre",
+    "result": "Resultat af annullering af limit-ordre",
+    "headers": {
+      "request": "Vil du godkende følgende annullering af limit-ordre?",
+      "result": "Følgende annullering af limit-ordre blev godkendt:"
+    },
+    "rows": {
+      "owner": "Ejer: {owner}",
+      "orderid": "Ordre-ID: {orderid}"
+    },
+    "tooltip": "Annullér en eksisterende limit-ordre"
+  },
+  "feed_publish": {
+    "method": "Publicér feed",
+    "title": "Anmodning om offentliggørelse af feed",
+    "result": "Resultat af offentliggørelse af feed",
+    "headers": {
+      "request": "Vil du godkende følgende offentliggørelse af feed?",
+      "result": "Følgende offentliggørelse af feed blev godkendt:"
+    },
+    "rows": {
+      "publisher": "Udgiver: {publisher}",
+      "exchange_rate": "Vekselkurs: {exchange_rate}"
+    },
+    "tooltip": "Publicér en pris-feed som vidne"
+  },
+  "convert": {
+    "method": "Konverter",
+    "title": "Anmodning om konvertering",
+    "result": "Resultat af konvertering",
+    "headers": {
+      "request": "Vil du godkende følgende konvertering?",
+      "result": "Følgende konvertering blev godkendt:"
+    },
+    "rows": {
+      "owner": "Ejer: {owner}",
+      "requestid": "Anmodnings-ID: {requestid}",
+      "amount": "Beløb: {amount}"
+    },
+    "tooltip": "Konverter HIVE til HBD eller omvendt"
+  },
+  "collateralized_convert": {
+    "method": "Sikret konvertering",
+    "title": "Anmodning om sikret konvertering",
+    "result": "Resultat af sikret konvertering",
+    "headers": {
+      "request": "Vil du godkende følgende sikrede konvertering?",
+      "result": "Følgende sikrede konvertering blev godkendt:"
+    },
+    "rows": {
+      "owner": "Ejer: {owner}",
+      "requestid": "Anmodnings-ID: {requestid}",
+      "amount": "Beløb: {amount}"
+    },
+    "tooltip": "Konverter HIVE til HBD med sikkerhed"
+  },
+  "account_create": {
+    "method": "Opret konto",
+    "title": "Anmodning om oprettelse af konto",
+    "result": "Resultat af oprettelse af konto",
+    "headers": {
+      "request": "Vil du godkende følgende oprettelse af konto?",
+      "result": "Følgende oprettelse af konto blev godkendt:"
+    },
+    "rows": {
+      "fee": "Gebyr: {fee}",
+      "creator": "Opretter: {creator}",
+      "new_account_name": "Nyt kontonavn: {new_account_name}",
+      "owner": "Ejer: {owner}",
+      "active": "Aktiv: {active}",
+      "posting": "Posting: {posting}",
+      "memo_key": "Memo-nøgle: {memo_key}",
+      "json_metadata": "JSON-metadata: {json_metadata}"
+    },
+    "tooltip": "Opret en ny blockchain-konto"
+  },
+  "create_claimed_account": {
+    "method": "Opret krævet konto",
+    "title": "Anmodning om oprettelse af krævet konto",
+    "result": "Resultat af krævet konto",
+    "headers": {
+      "request": "Vil du godkende følgende oprettelse af krævet konto?",
+      "result": "Følgende oprettelse af krævet konto blev godkendt:"
+    },
+    "rows": {
+      "creator": "Opretter: {creator}",
+      "new_account_name": "Nyt kontonavn: {new_account_name}",
+      "owner": "Ejer: {owner}",
+      "active": "Aktiv: {active}",
+      "posting": "Posting: {posting}",
+      "memo_key": "Memo-nøgle: {memo_key}",
+      "json_metadata": "JSON-metadata: {json_metadata}"
+    },
+    "tooltip": "Opret en ny konto fra en tidligere krævet konto"
+  },
+  "account_update": {
+    "method": "Opdater konto",
+    "title": "Anmodning om opdatering af konto",
+    "result": "Resultat af opdatering af konto",
+    "headers": {
+      "request": "Vil du godkende følgende opdatering af konto?",
+      "result": "Følgende opdatering af konto blev godkendt:"
+    },
+    "rows": {
+      "account": "Konto: {account}",
+      "owner": "Ejer: {owner}",
+      "active": "Aktiv: {active}",
+      "posting": "Posting: {posting}",
+      "memo_key": "Memo-nøgle: {memo_key}",
+      "json_metadata": "JSON-metadata: {json_metadata}"
+    },
+    "tooltip": "Opdater kontonøgler eller metadata"
+  },
+  "account_update2": {
+    "method": "Opdater konto 2",
+    "title": "Anmodning om opdatering af konto 2",
+    "result": "Resultat af opdatering af konto 2",
+    "headers": {
+      "request": "Vil du godkende følgende opdatering af konto 2?",
+      "result": "Følgende opdatering af konto 2 blev godkendt:"
+    },
+    "rows": {
+      "account": "Konto: {account}",
+      "owner": "Ejer: {owner}",
+      "active": "Aktiv: {active}",
+      "posting": "Posting: {posting}",
+      "memo_key": "Memo-nøgle: {memo_key}",
+      "json_metadata": "JSON-metadata: {json_metadata}",
+      "posting_json_metadata": "Posting-JSON-metadata: {posting_json_metadata}"
+    },
+    "tooltip": "Opdater kontonøgler og metadata"
+  },
+  "witness_update": {
+    "method": "Opdater vidne",
+    "title": "Anmodning om opdatering af vidne",
+    "result": "Resultat af opdatering af vidne",
+    "headers": {
+      "request": "Vil du godkende følgende opdatering af vidne?",
+      "result": "Følgende opdatering af vidne blev godkendt:"
+    },
+    "rows": {
+      "owner": "Ejer: {owner}",
+      "url": "URL: {url}",
+      "block_signing_key": "Bloksigneringsnøgle: {block_signing_key}",
+      "props": "Egenskaber: {props}",
+      "fee": "Gebyr: {fee}"
+    },
+    "tooltip": "Opdater vidne-konfiguration"
+  },
+  "witness_set_properties": {
+    "method": "Angiv vidne-egenskaber",
+    "title": "Anmodning om angivelse af vidne-egenskaber",
+    "result": "Resultat af vidne-egenskaber",
+    "headers": {
+      "request": "Vil du godkende følgende opdatering af vidne-egenskaber?",
+      "result": "Følgende opdatering af vidne-egenskaber blev godkendt:"
+    },
+    "rows": {
+      "owner": "Ejer: {owner}",
+      "props": "Egenskaber: {props}",
+      "extensions": "Udvidelser: {extensions}"
+    },
+    "tooltip": "Angiv vidne-egenskaber"
+  },
+  "account_witness_vote": {
+    "method": "Stem på vidne",
+    "title": "Anmodning om afstemning på vidne",
+    "result": "Resultat af afstemning på vidne",
+    "headers": {
+      "request": "Vil du godkende følgende afstemning på vidne?",
+      "result": "Følgende afstemning på vidne blev godkendt:"
+    },
+    "rows": {
+      "account": "Konto: {account}",
+      "witness": "Vidne: {witness}",
+      "approve": "Godkend: {approve}"
+    },
+    "tooltip": "Stem for eller imod et vidne"
+  },
+  "account_witness_proxy": {
+    "method": "Deleger vidne-afstemning",
+    "title": "Anmodning om delegering af vidne-afstemning",
+    "result": "Resultat af delegering af vidne-afstemning",
+    "headers": {
+      "request": "Vil du godkende følgende vidne-proxy?",
+      "result": "Følgende vidne-proxy blev godkendt:"
+    },
+    "rows": {
+      "account": "Konto: {account}",
+      "proxy": "Proxy: {proxy}"
+    },
+    "tooltip": "Angiv en proxy for dine vidne-afstemninger"
+  },
+  "delete_comment": {
+    "method": "Slet kommentar",
+    "title": "Anmodning om sletning af kommentar",
+    "result": "Resultat af sletning af kommentar",
+    "headers": {
+      "request": "Vil du godkende følgende sletning af kommentar?",
+      "result": "Følgende sletning af kommentar blev godkendt:"
+    },
+    "rows": {
+      "author": "Forfatter: {author}",
+      "permlink": "Permlink: {permlink}"
+    },
+    "tooltip": "Slet et indlæg eller en kommentar"
+  },
+  "custom_json": {
+    "method": "Brugerdefineret JSON",
+    "title": "Anmodning om brugerdefineret JSON",
+    "result": "Resultat af brugerdefineret JSON",
+    "headers": {
+      "request": "Vil du godkende følgende brugerdefinerede JSON-operation?",
+      "result": "Følgende brugerdefinerede JSON-operation blev godkendt:"
+    },
+    "rows": {
+      "required_auths": "Påkrævede autorisationer: {required_auths}",
+      "required_posting_auths": "Påkrævede posting-autorisationer: {required_posting_auths}",
+      "id": "ID: {id}",
+      "json": "JSON: {json}"
+    },
+    "tooltip": "Send en brugerdefineret JSON-operation"
+  },
+  "comment_options": {
+    "method": "Kommentarindstillinger",
+    "title": "Anmodning om kommentarindstillinger",
+    "result": "Resultat af kommentarindstillinger",
+    "headers": {
+      "request": "Vil du godkende følgende kommentarindstillinger?",
+      "result": "Følgende kommentarindstillinger blev godkendt:"
+    },
+    "rows": {
+      "author": "Forfatter: {author}",
+      "permlink": "Permlink: {permlink}",
+      "max_accepted_payout": "Maksimal accepteret udbetaling: {max_accepted_payout}",
+      "percent_hbd": "Procent HBD: {percent_hbd}",
+      "allow_votes": "Tillad afstemninger: {allow_votes}",
+      "allow_curation_rewards": "Tillad kurationsbelønninger: {allow_curation_rewards}",
+      "extensions": "Udvidelser: {extensions}"
+    },
+    "tooltip": "Angiv indstillinger for et indlæg eller en kommentar"
+  },
+  "set_withdraw_vesting_route": {
+    "method": "Angiv rute for hævning af vesting",
+    "title": "Anmodning om angivelse af rute for hævning af vesting",
+    "result": "Resultat af rute for hævning af vesting",
+    "headers": {
+      "request": "Vil du godkende følgende rute for hævning af vesting?",
+      "result": "Følgende rute for hævning af vesting blev godkendt:"
+    },
+    "rows": {
+      "from_account": "Fra konto: {from_account}",
+      "to_account": "Til konto: {to_account}",
+      "percent": "Procent: {percent}",
+      "auto_vest": "Auto-vesting: {auto_vest}"
+    },
+    "tooltip": "Opsæt en allokering for en rute til hævning af vesting"
+  },
+  "claim_reward_balance": {
+    "method": "Kræv belønningssaldo",
+    "title": "Anmodning om at kræve belønningssaldo",
+    "result": "Resultat af belønningssaldo",
+    "headers": {
+      "request": "Vil du godkende følgende krav om belønning?",
+      "result": "Følgende krav om belønning blev godkendt:"
+    },
+    "rows": {
+      "account": "Konto: {account}",
+      "reward_hive": "Belønning HIVE: {reward_hive}",
+      "reward_hbd": "Belønning HBD: {reward_hbd}",
+      "reward_vests": "Belønning VESTS: {reward_vests}"
+    },
+    "tooltip": "Kræv optjente belønninger"
+  },
+  "delegate_vesting_shares": {
+    "method": "Deleger vesting-aktier",
+    "title": "Anmodning om delegering af vesting-aktier",
+    "result": "Resultat af delegering af vesting",
+    "headers": {
+      "request": "Vil du godkende følgende delegering af vesting?",
+      "result": "Følgende delegering af vesting blev godkendt:"
+    },
+    "rows": {
+      "delegator": "Delegerende: {delegator}",
+      "delegatee": "Delegeret: {delegatee}",
+      "vesting_shares": "Vesting-aktier: {vesting_shares}"
+    },
+    "tooltip": "Deleger vesting-aktier til en anden konto"
+  },
+  "recover_account": {
+    "method": "Gendan konto",
+    "title": "Anmodning om gendannelse af konto",
+    "result": "Resultat af gendannelse af konto",
+    "headers": {
+      "request": "Vil du godkende følgende gendannelse af konto?",
+      "result": "Følgende gendannelse af konto blev godkendt:"
+    },
+    "rows": {
+      "account_to_recover": "Konto at gendanne: {account_to_recover}",
+      "new_owner_authority": "Ny ejermyndighed: {new_owner_authority}",
+      "recent_owner_authority": "Seneste ejermyndighed: {recent_owner_authority}",
+      "extensions": "Udvidelser: {extensions}"
+    },
+    "tooltip": "Gendan en stjålet eller kompromitteret konto"
+  },
+  "request_account_recovery": {
+    "method": "Anmod om gendannelse af konto",
+    "title": "Anmodning om gendannelse af konto",
+    "result": "Resultat af anmodning om gendannelse af konto",
+    "headers": {
+      "request": "Vil du godkende følgende anmodning om gendannelse af konto?",
+      "result": "Følgende anmodning om gendannelse af konto blev godkendt:"
+    },
+    "rows": {
+      "recovery_account": "Gendannelseskonto: {recovery_account}",
+      "account_to_recover": "Konto at gendanne: {account_to_recover}",
+      "new_owner_authority": "Ny ejermyndighed: {new_owner_authority}",
+      "extensions": "Udvidelser: {extensions}"
+    },
+    "tooltip": "Anmod om gendannelse af en konto som gendannelseskonto"
+  },
+  "change_recovery_account": {
+    "method": "Skift gendannelseskonto",
+    "title": "Anmodning om skift af gendannelseskonto",
+    "result": "Resultat af skift af gendannelseskonto",
+    "headers": {
+      "request": "Vil du godkende følgende skift af gendannelseskonto?",
+      "result": "Følgende skift af gendannelseskonto blev godkendt:"
+    },
+    "rows": {
+      "account_to_recover": "Konto at gendanne: {account_to_recover}",
+      "new_recovery_account": "Ny gendannelseskonto: {new_recovery_account}",
+      "extensions": "Udvidelser: {extensions}"
+    },
+    "tooltip": "Skift gendannelseskontoen for en konto"
+  },
+  "transfer_to_savings": {
+    "method": "Overfør til opsparing",
+    "title": "Anmodning om overførsel til opsparing",
+    "result": "Resultat af overførsel til opsparing",
+    "headers": {
+      "request": "Vil du godkende følgende overførsel til opsparing?",
+      "result": "Følgende overførsel til opsparing blev godkendt:"
+    },
+    "rows": {
+      "from": "Fra: {from}",
+      "to": "Til: {to}",
+      "amount": "Beløb: {amount}",
+      "memo": "Memo: {memo}"
+    },
+    "tooltip": "Overfør aktiver til opsparing"
+  },
+  "transfer_from_savings": {
+    "method": "Overfør fra opsparing",
+    "title": "Anmodning om overførsel fra opsparing",
+    "result": "Resultat af overførsel fra opsparing",
+    "headers": {
+      "request": "Vil du godkende følgende overførsel fra opsparing?",
+      "result": "Følgende overførsel fra opsparing blev godkendt:"
+    },
+    "rows": {
+      "from": "Fra: {from}",
+      "request_id": "Anmodnings-ID: {request_id}",
+      "to": "Til: {to}",
+      "amount": "Beløb: {amount}",
+      "memo": "Memo: {memo}"
+    },
+    "tooltip": "Anmod om en overførsel fra opsparing"
+  },
+  "cancel_transfer_from_savings": {
+    "method": "Annullér overførsel fra opsparing",
+    "title": "Anmodning om annullering af overførsel fra opsparing",
+    "result": "Resultat af annullering af overførsel",
+    "headers": {
+      "request": "Vil du godkende følgende annullering af overførsel?",
+      "result": "Følgende annullering af overførsel blev godkendt:"
+    },
+    "rows": {
+      "from": "Fra: {from}",
+      "request_id": "Anmodnings-ID: {request_id}"
+    },
+    "tooltip": "Annullér en afventende overførsel fra opsparing"
+  },
+  "decline_voting_rights": {
+    "method": "Afvis stemmerettigheder",
+    "title": "Anmodning om afvisning af stemmerettigheder",
+    "result": "Resultat af afvisning af stemmerettigheder",
+    "headers": {
+      "request": "Vil du godkende følgende afvisning af stemmerettigheder?",
+      "result": "Følgende afvisning af stemmerettigheder blev godkendt:"
+    },
+    "rows": {
+      "account": "Konto: {account}",
+      "decline": "Afvis: {decline}"
+    },
+    "tooltip": "Afvis stemmerettigheder permanent"
+  },
+  "claim_account": {
+    "method": "Kræv konto",
+    "title": "Anmodning om krav på konto",
+    "result": "Resultat af krav på konto",
+    "headers": {
+      "request": "Vil du godkende følgende krav på konto?",
+      "result": "Følgende krav på konto blev godkendt:"
+    },
+    "rows": {
+      "fee": "Gebyr: {fee}",
+      "creator": "Opretter: {creator}",
+      "extensions": "Udvidelser: {extensions}"
+    },
+    "tooltip": "Kræv oprettelsen af en ny konto"
+  },
+  "escrow_transfer": {
+    "method": "Escrow-overførsel",
+    "title": "Anmodning om escrow-overførsel",
+    "result": "Resultat af escrow-overførsel",
+    "headers": {
+      "request": "Vil du godkende følgende escrow-overførsel?",
+      "result": "Følgende escrow-overførsel blev godkendt:"
+    },
+    "rows": {
+      "from": "Fra: {from}",
+      "to": "Til: {to}",
+      "agent": "Agent: {agent}",
+      "escrow_id": "Escrow-ID: {escrow_id}",
+      "hbd_amount": "HBD-beløb: {hbd_amount}",
+      "hive_amount": "HIVE-beløb: {hive_amount}",
+      "fee": "Gebyr: {fee}",
+      "ratification_deadline": "Ratifikationsfrist: {ratification_deadline}",
+      "escrow_expiration": "Escrow-udløb: {escrow_expiration}",
+      "json_meta": "JSON-metadata: {json_meta}"
+    },
+    "tooltip": "Opsæt en escrow-overførsel mellem konti"
+  },
+  "escrow_dispute": {
+    "method": "Escrow-tvist",
+    "title": "Anmodning om escrow-tvist",
+    "result": "Resultat af escrow-tvist",
+    "headers": {
+      "request": "Vil du godkende følgende escrow-tvist?",
+      "result": "Følgende escrow-tvist blev godkendt:"
+    },
+    "rows": {
+      "from": "Fra: {from}",
+      "to": "Til: {to}",
+      "agent": "Agent: {agent}",
+      "who": "Hvem: {who}",
+      "escrow_id": "Escrow-ID: {escrow_id}"
+    },
+    "tooltip": "Anlæg en tvist ved en escrow-overførsel"
+  },
+  "escrow_release": {
+    "method": "Escrow-frigivelse",
+    "title": "Anmodning om escrow-frigivelse",
+    "result": "Resultat af escrow-frigivelse",
+    "headers": {
+      "request": "Vil du godkende følgende escrow-frigivelse?",
+      "result": "Følgende escrow-frigivelse blev godkendt:"
+    },
+    "rows": {
+      "from": "Fra: {from}",
+      "to": "Til: {to}",
+      "agent": "Agent: {agent}",
+      "who": "Hvem: {who}",
+      "receiver": "Modtager: {receiver}",
+      "escrow_id": "Escrow-ID: {escrow_id}",
+      "hbd_amount": "HBD-beløb: {hbd_amount}",
+      "hive_amount": "HIVE-beløb: {hive_amount}"
+    },
+    "tooltip": "Frigiv midler fra en escrow-overførsel"
+  },
+  "escrow_approve": {
+    "method": "Godkend escrow",
+    "title": "Anmodning om godkendelse af escrow",
+    "result": "Resultat af godkendelse af escrow",
+    "headers": {
+      "request": "Vil du godkende følgende godkendelse af escrow?",
+      "result": "Følgende godkendelse af escrow blev godkendt:"
+    },
+    "rows": {
+      "from": "Fra: {from}",
+      "to": "Til: {to}",
+      "agent": "Agent: {agent}",
+      "who": "Hvem: {who}",
+      "escrow_id": "Escrow-ID: {escrow_id}",
+      "approve": "Godkend: {approve}"
+    },
+    "tooltip": "Godkend en escrow-overførsel"
+  },
+  "create_proposal": {
+    "method": "Opret forslag",
+    "title": "Anmodning om oprettelse af forslag",
+    "result": "Resultat af oprettelse af forslag",
+    "headers": {
+      "request": "Vil du godkende følgende oprettelse af forslag?",
+      "result": "Følgende oprettelse af forslag blev godkendt:"
+    },
+    "rows": {
+      "creator": "Opretter: {creator}",
+      "receiver": "Modtager: {receiver}",
+      "start_date": "Startdato: {start_date}",
+      "end_date": "Slutdato: {end_date}",
+      "daily_pay": "Daglig betaling: {daily_pay}",
+      "subject": "Emne: {subject}",
+      "permlink": "Permlink: {permlink}"
+    },
+    "tooltip": "Opret et styringsforslag"
+  },
+  "update_proposal_votes": {
+    "method": "Opdater forslagsafstemninger",
+    "title": "Anmodning om opdatering af forslagsafstemninger",
+    "result": "Resultat af opdatering af forslagsafstemninger",
+    "headers": {
+      "request": "Vil du godkende følgende opdatering af forslagsafstemning?",
+      "result": "Følgende opdatering af forslagsafstemning blev godkendt:"
+    },
+    "rows": {
+      "voter": "Vælger: {voter}",
+      "proposal_ids": "Forslags-ID'er: {proposal_ids}",
+      "approve": "Godkend: {approve}",
+      "extensions": "Udvidelser: {extensions}"
+    },
+    "tooltip": "Stem for eller imod forslag"
+  },
+  "remove_proposal": {
+    "method": "Fjern forslag",
+    "title": "Anmodning om fjernelse af forslag",
+    "result": "Resultat af fjernelse af forslag",
+    "headers": {
+      "request": "Vil du godkende følgende fjernelse af forslag?",
+      "result": "Følgende fjernelse af forslag blev godkendt:"
+    },
+    "rows": {
+      "creator": "Opretter: {creator}",
+      "proposal_ids": "Forslags-ID'er: {proposal_ids}"
+    },
+    "tooltip": "Fjern et eller flere forslag"
+  },
+  "update_proposal": {
+    "method": "Opdater forslag",
+    "title": "Anmodning om opdatering af forslag",
+    "result": "Resultat af opdatering af forslag",
+    "headers": {
+      "request": "Vil du godkende følgende opdatering af forslag?",
+      "result": "Følgende opdatering af forslag blev godkendt:"
+    },
+    "rows": {
+      "proposal_id": "Forslags-ID: {proposal_id}",
+      "creator": "Opretter: {creator}",
+      "daily_pay": "Daglig betaling: {daily_pay}",
+      "subject": "Emne: {subject}",
+      "permlink": "Permlink: {permlink}"
+    },
+    "tooltip": "Opdater et eksisterende forslag"
+  },
+  "recurrent_transfer": {
+    "method": "Tilbagevendende overførsel",
+    "title": "Anmodning om tilbagevendende overførsel",
+    "result": "Resultat af tilbagevendende overførsel",
+    "headers": {
+      "request": "Vil du godkende følgende tilbagevendende overførsel?",
+      "result": "Følgende tilbagevendende overførsel blev godkendt:"
+    },
+    "rows": {
+      "from": "Fra: {from}",
+      "to": "Til: {to}",
+      "amount": "Beløb: {amount}",
+      "memo": "Memo: {memo}",
+      "recurrence": "Gentagelse: {recurrence}",
+      "executions": "Udførelser: {executions}",
+      "extensions": "Udvidelser: {extensions}"
+    },
+    "tooltip": "Opsæt en tidsplan for tilbagevendende overførsler"
+  },
+  "custom_binary": {
+    "method": "Brugerdefineret binær",
+    "title": "Anmodning om brugerdefineret binær",
+    "result": "Resultat af brugerdefineret binær",
+    "headers": {
+      "request": "Vil du godkende følgende brugerdefinerede binære operation?",
+      "result": "Følgende brugerdefinerede binære operation blev godkendt:"
+    },
+    "rows": {
+      "id": "ID: {id}",
+      "data": "Data: {data}"
+    },
+    "tooltip": "Send en brugerdefineret binær operation"
+  },
+  "custom": {
+    "method": "Brugerdefineret",
+    "title": "Anmodning om brugerdefineret operation",
+    "result": "Resultat af brugerdefineret operation",
+    "headers": {
+      "request": "Vil du godkende følgende brugerdefinerede operation?",
+      "result": "Følgende brugerdefinerede operation blev godkendt:"
+    },
+    "rows": {
+      "required_auths": "Påkrævede autorisationer: {required_auths}",
+      "id": "ID: {id}",
+      "data": "Data: {data}"
+    },
+    "tooltip": "Send en brugerdefineret operation"
+  },
+  "prove_authority": {
+    "method": "Bevis autoritet",
+    "title": "Anmodning om bevis på autoritet",
+    "result": "Resultat af bevis på autoritet",
+    "headers": {
+      "request": "Vil du godkende følgende bevis på autoritet?",
+      "result": "Følgende bevis på autoritet blev godkendt:"
+    },
+    "rows": {
+      "challenged": "Anfægtet: {challenged}",
+      "require_owner": "Kræv ejer: {require_owner}"
+    },
+    "tooltip": "Bevis ejerskab over en kontobeføjelse"
+  }
+}

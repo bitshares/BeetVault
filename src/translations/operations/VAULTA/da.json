@@ -1,0 +1,624 @@
+{
+  "injectedCall": {
+    "method": "injectedCall",
+    "title": "Injected Call Request",
+    "result": "Injected call result",
+    "headers": {
+      "request": "Approve the following injected call?",
+      "result": "The following injected call was approved:"
+    },
+    "tooltip": "Asks your wallet to handle an injected blockchain operation"
+  },
+  "setalimits": {
+    "method": "Set account limits",
+    "title": "Set account limits request",
+    "result": "Set account limits result",
+    "headers": {
+      "request": "Set the following account limits?",
+      "result": "The following account limits were set:"
+    },
+    "rows": {
+      "account": "Account: {account}",
+      "ram_bytes": "RAM limit in bytes: {ram_bytes}",
+      "net_weight": "Net weight: {net_weight}",
+      "cpu_weight": "CPU weight: {cpu_weight}"
+    },
+    "tooltip": "Setting account resource limits operation"
+  },
+  "setacctram": {
+    "method": "Set account RAM limits",
+    "title": "Set account RAM limits request",
+    "result": "Set account RAM limits result",
+    "headers": {
+      "request": "Set the following account RAM limits?",
+      "result": "The following account RAM limits were set:"
+    },
+    "rows": {
+      "account": "Account: {account}",
+      "ram_bytes": "RAM limit in bytes: {ram_bytes}"
+    },
+    "tooltip": "Setting account RAM limits operation"
+  },
+  "setacctnet": {
+    "method": "Set account NET limits",
+    "title": "Set account NET limits request",
+    "result": "Set account NET limits result",
+    "headers": {
+      "request": "Set the following account NET limits?",
+      "result": "The following account NET limits were set:"
+    },
+    "rows": {
+      "account": "Account: {account}",
+      "net_weight": "Net weight: {net_weight}"
+    },
+    "tooltip": "Setting account NET limits operation"
+  },
+  "setacctcpu": {
+    "method": "Set account CPU limits",
+    "title": "Set account CPU limits request",
+    "result": "Set account CPU limits result",
+    "headers": {
+      "request": "Set the following account CPU limits?",
+      "result": "The following account CPU limits were set:"
+    },
+    "rows": {
+      "account": "Account: {account}",
+      "cpu_weight": "CPU weight: {cpu_weight}"
+    },
+    "tooltip": "Setting account CPU limits operation"
+  },
+  "activate": {
+    "method": "Activate protocol feature",
+    "title": "Activate protocol feature request",
+    "result": "Activate protocol feature result",
+    "headers": {
+      "request": "Activate the following protocol feature?",
+      "result": "The following protocol feature was activated:"
+    },
+    "rows": {
+      "feature_digest": "Feature digest: {feature_digest}"
+    },
+    "tooltip": "Activating protocol feature operation"
+  },
+  "delegatebw": {
+    "method": "Delegate bandwidth",
+    "title": "Delegate bandwidth request",
+    "result": "Delegate bandwidth result",
+    "headers": {
+      "request": "Delegate the following bandwidth?",
+      "result": "The following bandwidth was delegated:"
+    },
+    "rows": {
+      "from": "From: {from}",
+      "receiver": "Receiver: {receiver}",
+      "stake_net_quantity": "Stake NET quantity: {stake_net_quantity}",
+      "stake_cpu_quantity": "Stake CPU quantity: {stake_cpu_quantity}",
+      "transfer": "Transfer: {transfer}"
+    },
+    "tooltip": "Delegating bandwidth operation"
+  },
+  "setrex": {
+    "method": "Set REX balance",
+    "title": "Set REX balance request",
+    "result": "Set REX balance result",
+    "headers": {
+      "request": "Set the following REX balance?",
+      "result": "The following REX balance was set:"
+    },
+    "rows": {
+      "balance": "Balance: {balance}"
+    },
+    "tooltip": "Setting REX balance operation"
+  },
+  "deposit": {
+    "method": "Deposit to REX fund",
+    "title": "Deposit to REX fund request",
+    "result": "Deposit to REX fund result",
+    "headers": {
+      "request": "Deposit the following to REX fund?",
+      "result": "The following was deposited to REX fund:"
+    },
+    "rows": {
+      "owner": "Owner: {owner}",
+      "amount": "Amount: {amount}"
+    },
+    "tooltip": "Depositing to REX fund operation"
+  },
+  "buyrex": {
+    "method": "Buy REX",
+    "title": "Buy REX request",
+    "result": "Buy REX result",
+    "headers": {
+      "request": "Buy the following REX?",
+      "result": "The following REX was bought:"
+    },
+    "rows": {
+      "from": "From: {from}",
+      "amount": "Amount: {amount}"
+    },
+    "tooltip": "Buying REX operation"
+  },
+  "unstaketorex": {
+    "method": "Unstake to REX",
+    "title": "Unstake to REX request",
+    "result": "Unstake to REX result",
+    "headers": {
+      "request": "Unstake the following to REX?",
+      "result": "The following was unstaked to REX:"
+    },
+    "rows": {
+      "owner": "Owner: {owner}",
+      "receiver": "Receiver: {receiver}",
+      "from_net": "From NET: {from_net}",
+      "from_cpu": "From CPU: {from_cpu}"
+    },
+    "tooltip": "Unstaking to REX operation"
+  },
+  "sellrex": {
+    "method": "Sell REX",
+    "title": "Sell REX request",
+    "result": "Sell REX result",
+    "headers": {
+      "request": "Sell the following REX?",
+      "result": "The following REX was sold:"
+    },
+    "rows": {
+      "from": "From: {from}",
+      "rex": "REX: {rex}"
+    },
+    "tooltip": "Selling REX operation"
+  },
+  "cnclrexorder": {
+    "method": "Cancel REX order",
+    "title": "Cancel REX order request",
+    "result": "Cancel REX order result",
+    "headers": {
+      "request": "Cancel the following REX order?",
+      "result": "The following REX order was cancelled:"
+    },
+    "rows": {
+      "owner": "Owner: {owner}"
+    },
+    "tooltip": "Cancelling REX order operation"
+  },
+  "rentcpu": {
+    "method": "Rent CPU",
+    "title": "Rent CPU request",
+    "result": "Rent CPU result",
+    "headers": {
+      "request": "Rent the following CPU?",
+      "result": "The following CPU was rented:"
+    },
+    "rows": {
+      "from": "From: {from}",
+      "receiver": "Receiver: {receiver}",
+      "loan_payment": "Loan payment: {loan_payment}",
+      "loan_fund": "Loan fund: {loan_fund}"
+    },
+    "tooltip": "Renting CPU operation"
+  },
+  "rentnet": {
+    "method": "Rent NET",
+    "title": "Rent NET request",
+    "result": "Rent NET result",
+    "headers": {
+      "request": "Rent the following NET?",
+      "result": "The following NET was rented:"
+    },
+    "rows": {
+      "from": "From: {from}",
+      "receiver": "Receiver: {receiver}",
+      "loan_payment": "Loan payment: {loan_payment}",
+      "loan_fund": "Loan fund: {loan_fund}"
+    },
+    "tooltip": "Renting NET operation"
+  },
+  "fundcpuloan": {
+    "method": "Fund CPU Loan",
+    "title": "Fund CPU Loan request",
+    "result": "Fund CPU Loan result",
+    "headers": {
+      "request": "Fund the following CPU Loan?",
+      "result": "The following CPU Loan was funded:"
+    },
+    "rows": {
+      "from": "From: {from}",
+      "loan_num": "Loan Number: {loan_num}",
+      "payment": "Payment: {payment}"
+    },
+    "tooltip": "Funding CPU Loan operation"
+  },
+  "fundnetloan": {
+    "method": "Fund NET Loan",
+    "title": "Fund NET Loan request",
+    "result": "Fund NET Loan result",
+    "headers": {
+      "request": "Fund the following NET Loan?",
+      "result": "The following NET Loan was funded:"
+    },
+    "rows": {
+      "from": "From: {from}",
+      "loan_num": "Loan Number: {loan_num}",
+      "payment": "Payment: {payment}"
+    },
+    "tooltip": "Funding NET Loan operation"
+  },
+  "defcpuloan": {
+    "method": "Defund CPU Loan",
+    "title": "Defund CPU Loan request",
+    "result": "Defund CPU Loan result",
+    "headers": {
+      "request": "Defund the following CPU Loan?",
+      "result": "The following CPU Loan was defunded:"
+    },
+    "rows": {
+      "from": "From: {from}",
+      "loan_num": "Loan Number: {loan_num}",
+      "amount": "Amount: {amount}"
+    },
+    "tooltip": "Defunding CPU Loan operation"
+  },
+  "defnetloan": {
+    "method": "Defund NET Loan",
+    "title": "Defund NET Loan request",
+    "result": "Defund NET Loan result",
+    "headers": {
+      "request": "Defund the following NET Loan?",
+      "result": "The following NET Loan was defunded:"
+    },
+    "rows": {
+      "from": "From: {from}",
+      "loan_num": "Loan Number: {loan_num}",
+      "amount": "Amount: {amount}"
+    },
+    "tooltip": "Defunding NET Loan operation"
+  },
+  "updaterex": {
+    "method": "Update REX",
+    "title": "Update REX request",
+    "result": "Update REX result",
+    "headers": {
+      "request": "Update the following REX?",
+      "result": "The following REX was updated:"
+    },
+    "rows": {
+      "owner": "Owner: {owner}"
+    },
+    "tooltip": "Updating REX operation"
+  },
+  "rexexec": {
+    "method": "Execute REX",
+    "title": "Execute REX request",
+    "result": "Execute REX result",
+    "headers": {
+      "request": "Execute the following REX?",
+      "result": "The following REX was executed:"
+    },
+    "rows": {
+      "user": "User: {user}",
+      "max": "Max: {max}"
+    },
+    "tooltip": "Executing REX operation"
+  },
+  "consolidate": {
+    "method": "Consolidate REX",
+    "title": "Consolidate REX request",
+    "result": "Consolidate REX result",
+    "headers": {
+      "request": "Consolidate the following REX?",
+      "result": "The following REX was consolidated:"
+    },
+    "rows": {
+      "owner": "Owner: {owner}"
+    },
+    "tooltip": "Consolidating REX operation"
+  },
+  "mvtosavings": {
+    "method": "Move REX to Savings",
+    "title": "Move REX to Savings Request",
+    "result": "Move REX to Savings Result",
+    "headers": {
+      "request": "Move the following amount of REX into the savings bucket?",
+      "result": "The following amount of REX was moved into the savings bucket:"
+    },
+    "rows": {
+      "owner": "Owner: {owner}",
+      "rex": "REX: {rex}"
+    },
+    "tooltip": "Moving REX to savings operation"
+  },
+  "mvfrsavings": {
+    "method": "Move REX from Savings",
+    "title": "Move REX from Savings Request",
+    "result": "Move REX from Savings Result",
+    "headers": {
+      "request": "Move the following amount of REX out of the savings bucket?",
+      "result": "The following amount of REX was moved out of the savings bucket:"
+    },
+    "rows": {
+      "owner": "Owner: {owner}",
+      "rex": "REX: {rex}"
+    },
+    "tooltip": "Moving REX from savings operation"
+  },
+  "closerex": {
+    "method": "Close REX",
+    "title": "Close REX Request",
+    "result": "Close REX Result",
+    "headers": {
+      "request": "Delete owner records from REX tables and free used RAM for the following owner?",
+      "result": "Owner records from REX tables were deleted and RAM was freed for the following owner:"
+    },
+    "rows": {
+      "owner": "Owner: {owner}"
+    },
+    "tooltip": "Closing REX operation"
+  },
+  "undelegatebw": {
+    "method": "Undelegate Bandwidth",
+    "title": "Undelegate Bandwidth Request",
+    "result": "Undelegate Bandwidth Result",
+    "headers": {
+      "request": "Decrease total tokens delegated and/or free memory for the following?",
+      "result": "Total tokens delegated were decreased and/or memory was freed for the following:"
+    },
+    "rows": {
+      "from": "From: {from}",
+      "receiver": "Receiver: {receiver}",
+      "unstake_net_quantity": "NET Unstake Quantity: {unstake_net_quantity}",
+      "unstake_cpu_quantity": "CPU Unstake Quantity: {unstake_cpu_quantity}"
+    },
+    "tooltip": "Undelegating Bandwidth operation"
+  },
+  "buyram": {
+    "method": "Buy RAM",
+    "title": "Buy RAM Request",
+    "result": "Buy RAM Result",
+    "headers": {
+      "request": "Increase RAM quota for the following receiver?",
+      "result": "RAM quota was increased for the following receiver:"
+    },
+    "rows": {
+      "payer": "Payer: {payer}",
+      "receiver": "Receiver: {receiver}",
+      "quant": "Quantity: {quant}"
+    },
+    "tooltip": "Buying RAM operation"
+  },
+  "buyrambytes": {
+    "method": "Buy RAM Bytes",
+    "title": "Buy RAM Bytes Request",
+    "result": "Buy RAM Bytes Result",
+    "headers": {
+      "request": "Increase RAM for the following receiver by specified bytes?",
+      "result": "RAM was increased for the following receiver:"
+    },
+    "rows": {
+      "payer": "Payer: {payer}",
+      "receiver": "Receiver: {receiver}",
+      "bytes": "Bytes: {bytes}"
+    },
+    "tooltip": "Buying RAM Bytes operation"
+  },
+  "sellram": {
+    "method": "Sell RAM",
+    "title": "Sell RAM Request",
+    "result": "Sell RAM Result",
+    "headers": {
+      "request": "Reduce RAM quota and transfer tokens to receiver?",
+      "result": "RAM quota was reduced and tokens were transferred:"
+    },
+    "rows": {
+      "account": "Account: {account}",
+      "bytes": "Bytes: {bytes}"
+    },
+    "tooltip": "Selling RAM operation"
+  },
+  "refund": {
+    "method": "Refund",
+    "title": "Refund Request",
+    "result": "Refund Result",
+    "headers": {
+      "request": "Claim all pending unstaked tokens for the following owner?",
+      "result": "All pending unstaked tokens were claimed for the following owner:"
+    },
+    "rows": {
+      "owner": "Owner: {owner}"
+    },
+    "tooltip": "Refund operation"
+  },
+  "regproducer": {
+    "method": "Register Producer",
+    "title": "Register Producer Request",
+    "result": "Register Producer Result",
+    "headers": {
+      "request": "Register the following account as a producer candidate?",
+      "result": "The following account was registered as a producer candidate:"
+    },
+    "rows": {
+      "producer": "Producer: {producer}",
+      "producer_key": "Producer Key: {producer_key}",
+      "url": "URL: {url}",
+      "location": "Location: {location}"
+    },
+    "tooltip": "Registering Producer operation"
+  },
+  "unregprod": {
+    "method": "Unregister Producer",
+    "title": "Unregister Producer Request",
+    "result": "Unregister Producer Result",
+    "headers": {
+      "request": "Deactivate the following block producer account?",
+      "result": "The following block producer account was deactivated:"
+    },
+    "rows": {
+      "producer": "Producer: {producer}"
+    },
+    "tooltip": "Unregistering Producer operation"
+  },
+  "setram": {
+    "method": "Set RAM",
+    "title": "Set RAM Request",
+    "result": "Set RAM Result",
+    "headers": {
+      "request": "Set the RAM supply to the following amount?",
+      "result": "The RAM supply was set to the following amount:"
+    },
+    "rows": {
+      "max_ram_size": "Max RAM Size: {max_ram_size}"
+    },
+    "tooltip": "Setting RAM operation"
+  },
+  "setramrate": {
+    "method": "Set RAM Rate",
+    "title": "Set RAM Rate Request",
+    "result": "Set RAM Rate Result",
+    "headers": {
+      "request": "Set the rate of increase of RAM in bytes per block?",
+      "result": "The rate of increase of RAM was set:"
+    },
+    "rows": {
+      "bytes_per_block": "Bytes Per Block: {bytes_per_block}"
+    },
+    "tooltip": "Setting RAM Rate operation"
+  },
+  "voteproducer": {
+    "method": "Vote Producer",
+    "title": "Vote Producer Request",
+    "result": "Vote Producer Result",
+    "headers": {
+      "request": "Vote for a set of producers or a proxy?",
+      "result": "Voted for the following set of producers or proxy:"
+    },
+    "rows": {
+      "voter": "Voter: {voter}",
+      "proxy": "Proxy: {proxy}",
+      "producers": "Producers: \n{producers}"
+    },
+    "tooltip": "Voting Producer operation"
+  },
+  "regproxy": {
+    "method": "Register Proxy",
+    "title": "Register Proxy Request",
+    "result": "Register Proxy Result",
+    "headers": {
+      "request": "Register the following account as a voter proxy?",
+      "result": "The following account was registered as a voter proxy:"
+    },
+    "rows": {
+      "proxy": "Proxy: {proxy}",
+      "isproxy": "Is Proxy: {isproxy}"
+    },
+    "tooltip": "Registering Proxy operation"
+  },
+  "setparams": {
+    "method": "Set Parameters",
+    "title": "Set Parameters Request",
+    "result": "Set Parameters Result",
+    "headers": {
+      "request": "Set the blockchain parameters?",
+      "result": "The blockchain parameters were set:"
+    },
+    "rows": {
+      "params": "Parameters: \n{params}"
+    },
+    "tooltip": "Setting Parameters operation"
+  },
+  "claimrewards": {
+    "method": "Claim Rewards",
+    "title": "Claim Rewards Request",
+    "result": "Claim Rewards Result",
+    "headers": {
+      "request": "Claim block producing and vote rewards for the following producer account?",
+      "result": "Block producing and vote rewards were claimed for the following producer account:"
+    },
+    "rows": {
+      "owner": "Owner: {owner}"
+    },
+    "tooltip": "Claiming Rewards operation"
+  },
+  "setpriv": {
+    "method": "Set Privilege",
+    "title": "Set Privilege Request",
+    "result": "Set Privilege Result",
+    "headers": {
+      "request": "Set privilege status for the following account?",
+      "result": "Privilege status was set for the following account:"
+    },
+    "rows": {
+      "account": "Account: {account}",
+      "is_priv": "Is Privileged: {is_priv}"
+    },
+    "tooltip": "Setting Privilege operation"
+  },
+  "rmvproducer": {
+    "method": "Remove Producer",
+    "title": "Remove Producer Request",
+    "result": "Remove Producer Result",
+    "headers": {
+      "request": "Deactivate the following producer by name?",
+      "result": "The following producer was deactivated:"
+    },
+    "rows": {
+      "producer": "Producer: {producer}"
+    },
+    "tooltip": "Removing Producer operation"
+  },
+  "updtrevision": {
+    "method": "Update Revision",
+    "title": "Update Revision Request",
+    "result": "Update Revision Result",
+    "headers": {
+      "request": "Update the current revision?",
+      "result": "The current revision was updated:"
+    },
+    "rows": {
+      "revision": "Revision: {revision}"
+    },
+    "tooltip": "Updating Revision operation"
+  },
+  "bidname": {
+    "method": "Bid Name",
+    "title": "Bid Name Request",
+    "result": "Bid Name Result",
+    "headers": {
+      "request": "Place a bid for a name?",
+      "result": "A bid was placed for the name:"
+    },
+    "rows": {
+      "bidder": "Bidder: {bidder}",
+      "newname": "New Name: {newname}",
+      "bid": "Bid: {bid}"
+    },
+    "tooltip": "Bidding Name operation"
+  },
+  "bidrefund": {
+    "method": "Bid Refund",
+    "title": "Bid Refund Request",
+    "result": "Bid Refund Result",
+    "headers": {
+      "request": "Refund the bid for a name?",
+      "result": "A bid was refunded for the name:"
+    },
+    "rows": {
+      "bidder": "Bidder: {bidder}",
+      "newname": "New Name: {newname}"
+    },
+    "tooltip": "Refunding Bid operation"
+  },
+  "ramtransfer": {
+    "method": "RAM Transfer",
+    "title": "RAM Transfer Request",
+    "result": "RAM Transfer Result",
+    "headers": {
+      "request": "Transfer RAM from one account to another?",
+      "result": "RAM was transferred from one account to another:"
+    },
+    "rows": {
+      "from": "From: {from}",
+      "to": "To: {to}",
+      "bytes": "Bytes: {bytes}"
+    },
+    "tooltip": "Transferring RAM operation"
+  }
+}

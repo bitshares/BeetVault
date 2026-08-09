@@ -1,0 +1,237 @@
+{
+  "injectedCall": {
+    "method": "chamada injetada",
+    "title": "Solicitação de chamada injetada",
+    "result": "Resultado da chamada injetada",
+    "headers": {
+      "request": "Aprovar a seguinte chamada injetada?",
+      "result": "A seguinte chamada injetada foi aprovada:"
+    },
+    "tooltip": "Pede à sua carteira para lidar com uma operação de blockchain injetada"
+  },
+  "stakexpr": {
+    "method": "Apostar XPR",
+    "title": "Solicitação de Aposta XPR",
+    "result": "Resultado da Aposta XPR",
+    "headers": {
+      "request": "Apostar a seguinte quantidade de XPR?",
+      "result": "A seguinte quantidade de XPR foi apostada:"
+    },
+    "rows": {
+      "account": "Conta: {account}",
+      "quantity": "Quantidade: {quantity}"
+    },
+    "tooltip": "Apostar tokens XPR"
+  },
+  "unstakexpr": {
+    "method": "Desapostar XPR",
+    "title": "Solicitação de Desaposta XPR",
+    "result": "Resultado da Desaposta XPR",
+    "headers": {
+      "request": "Desapostar a seguinte quantidade de XPR?",
+      "result": "A seguinte quantidade de XPR foi desapostada:"
+    },
+    "rows": {
+      "account": "Conta: {account}",
+      "quantity": "Quantidade: {quantity}"
+    },
+    "tooltip": "Desapostar tokens XPR"
+  },
+  "updstakexpr": {
+    "method": "Atualizar Aposta XPR",
+    "title": "Solicitação de Atualização de Aposta XPR",
+    "result": "Resultado da Atualização de Aposta XPR",
+    "headers": {
+      "request": "Atualizar a seguinte aposta XPR?",
+      "result": "A seguinte aposta XPR foi atualizada:"
+    },
+    "rows": {
+      "account": "Conta: {account}",
+      "quantity": "Quantidade: {quantity}"
+    },
+    "tooltip": "Atualizar a quantidade de aposta XPR"
+  },
+  "refundxpr": {
+    "method": "Reembolsar Aposta XPR",
+    "title": "Solicitação de Reembolso de Aposta XPR",
+    "result": "Resultado do Reembolso de Aposta XPR",
+    "headers": {
+      "request": "Reembolsar a seguinte aposta XPR?",
+      "result": "A seguinte aposta XPR foi reembolsada:"
+    },
+    "rows": {
+      "account": "Conta: {account}"
+    },
+    "tooltip": "Reembolsar tokens XPR apostados"
+  },
+  "voterclaim": {
+    "method": "Reivindicar Recompensas de Eleitor XPR",
+    "title": "Solicitação de Recompensas de Eleitor XPR",
+    "result": "Resultado das Recompensas de Eleitor XPR",
+    "headers": {
+      "request": "Reivindicar recompensas de eleitor XPR?",
+      "result": "As recompensas de eleitor XPR foram reivindicadas:"
+    },
+    "rows": {
+      "owner": "Proprietário: {owner}"
+    },
+    "tooltip": "Reivindicar recompensas de eleitor XPR"
+  },
+  "voterclaimst": {
+    "method": "Reivindicar Recompensas de Eleitor Apostado XPR",
+    "title": "Solicitação de Recompensas de Eleitor Apostado XPR",
+    "result": "Resultado das Recompensas de Eleitor Apostado XPR",
+    "headers": {
+      "request": "Reivindicar recompensas de eleitor apostado XPR?",
+      "result": "As recompensas de eleitor apostado XPR foram reivindicadas:"
+    },
+    "rows": {
+      "owner": "Proprietário: {owner}",
+      "amount": "Valor: {amount}"
+    },
+    "tooltip": "Reivindicar recompensas de eleitor apostado XPR"
+  },
+  "setperm": {
+    "method": "Definir Permissão da Conta",
+    "title": "Solicitação de Definição de Permissão da Conta",
+    "result": "Resultado da Definição de Permissão da Conta",
+    "headers": {
+      "request": "Definir a seguinte permissão da conta?",
+      "result": "A seguinte permissão da conta foi definida:"
+    },
+    "rows": {
+      "account": "Conta: {account}",
+      "permission": "Permissão: {permission}",
+      "allowed_actions": "Ações Permitidas: {allowed_actions}"
+    },
+    "tooltip": "Definir permissão da conta no Proton/XPR"
+  },
+  "setusername": {
+    "method": "Definir Nome de Usuário Proton",
+    "title": "Solicitação de Nome de Usuário Proton",
+    "result": "Resultado do Nome de Usuário Proton",
+    "headers": {
+      "request": "Definir o seguinte nome de usuário Proton?",
+      "result": "O seguinte nome de usuário Proton foi definido:"
+    },
+    "rows": {
+      "account": "Conta: {account}",
+      "username": "Nome de Usuário: {username}"
+    },
+    "tooltip": "Definir um nome de usuário Proton/XPR"
+  },
+  "userverify": {
+    "method": "Verificar Usuário Proton",
+    "title": "Solicitação de Verificação de Usuário Proton",
+    "result": "Resultado da Verificação de Usuário Proton",
+    "headers": {
+      "request": "Verificar o seguinte usuário Proton?",
+      "result": "O seguinte usuário Proton foi verificado:"
+    },
+    "rows": {
+      "account": "Conta: {account}",
+      "is_verified": "É Verificado: {is_verified}"
+    },
+    "tooltip": "Verificar um usuário Proton/XPR"
+  },
+  "addkyc": {
+    "method": "Adicionar KYC",
+    "title": "Solicitação de Adição de KYC",
+    "result": "Resultado da Adição de KYC",
+    "headers": {
+      "request": "Adicionar as seguintes informações KYC?",
+      "result": "As seguintes informações KYC foram adicionadas:"
+    },
+    "rows": {
+      "account": "Conta: {account}",
+      "kyc_provider": "Provedor KYC: {kyc_provider}",
+      "kyc_app_id": "ID do App KYC: {kyc_app_id}",
+      "kyc_status": "Status KYC: {kyc_status}"
+    },
+    "tooltip": "Adicionar informações KYC a uma conta"
+  },
+  "updatekyc": {
+    "method": "Atualizar KYC",
+    "title": "Solicitação de Atualização de KYC",
+    "result": "Resultado da Atualização de KYC",
+    "headers": {
+      "request": "Atualizar as seguintes informações KYC?",
+      "result": "As seguintes informações KYC foram atualizadas:"
+    },
+    "rows": {
+      "account": "Conta: {account}",
+      "kyc_provider": "Provedor KYC: {kyc_provider}",
+      "kyc_app_id": "ID do App KYC: {kyc_app_id}",
+      "kyc_status": "Status KYC: {kyc_status}"
+    },
+    "tooltip": "Atualizar informações KYC em uma conta"
+  },
+  "removekyc": {
+    "method": "Remover KYC",
+    "title": "Solicitação de Remoção de KYC",
+    "result": "Resultado da Remoção de KYC",
+    "headers": {
+      "request": "Remover as seguintes informações KYC?",
+      "result": "As seguintes informações KYC foram removidas:"
+    },
+    "rows": {
+      "account": "Conta: {account}"
+    },
+    "tooltip": "Remover informações KYC de uma conta"
+  },
+  "reg": {
+    "method": "Registrar Fundo Proton",
+    "title": "Solicitação de Registro de Fundo Proton",
+    "result": "Resultado do Registro de Fundo Proton",
+    "headers": {
+      "request": "Registrar no seguinte fundo comunitário Proton?",
+      "result": "O registro no seguinte fundo comunitário Proton foi concluído:"
+    },
+    "rows": {
+      "account": "Conta: {account}"
+    },
+    "tooltip": "Registrar em um fundo comunitário Proton"
+  },
+  "claimreward": {
+    "method": "Reivindicar Recompensa do Fundo Proton",
+    "title": "Solicitação de Recompensa do Fundo Proton",
+    "result": "Resultado da Recompensa do Fundo Proton",
+    "headers": {
+      "request": "Reivindicar recompensa do fundo comunitário Proton?",
+      "result": "A recompensa do fundo comunitário Proton foi reivindicada:"
+    },
+    "rows": {
+      "account": "Conta: {account}"
+    },
+    "tooltip": "Reivindicar recompensa de um fundo comunitário Proton"
+  },
+  "process": {
+    "method": "Processar Fundo Proton",
+    "title": "Solicitação de Processamento de Fundo Proton",
+    "result": "Resultado do Processamento de Fundo Proton",
+    "headers": {
+      "request": "Processar o seguinte fundo comunitário Proton?",
+      "result": "O seguinte fundo comunitário Proton foi processado:"
+    },
+    "rows": {
+      "account": "Conta: {account}"
+    },
+    "tooltip": "Processar um fundo comunitário Proton"
+  },
+  "transfer": {
+    "method": "Transfer Tokens",
+    "title": "Transfer Tokens Request",
+    "result": "Transfer Tokens Result",
+    "headers": {
+      "request": "Transfer the following tokens?",
+      "result": "The following tokens were transferred:"
+    },
+    "rows": {
+      "from": "From: {from}",
+      "to": "To: {to}",
+      "quantity": "Quantity: {quantity}",
+      "memo": "Memo: {memo}"
+    },
+    "tooltip": "Transfer tokens between accounts"
+  }
+}

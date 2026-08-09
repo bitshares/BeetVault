@@ -1,0 +1,267 @@
+{
+  "injectedCall": {
+    "method": "주입전화",
+    "title": "삽입된 통화 요청",
+    "result": "삽입된 통화 결과",
+    "headers": {
+      "request": "다음 삽입된 통화를 승인하시겠습니까?",
+      "result": "다음 삽입된 호출이 승인되었습니다."
+    },
+    "tooltip": "주입된 블록체인 작업을 처리하도록 지갑에 요청"
+  },
+  "newballot": {
+    "method": "Decide 투표 생성",
+    "title": "Decide 투표 생성 요청",
+    "result": "Decide 투표 생성 결과",
+    "headers": {
+      "request": "다음 Decide 투표를 만드시겠습니까?",
+      "result": "다음 Decide 투표가 생성되었습니다:"
+    },
+    "rows": {
+      "title": "제목: {title}",
+      "description": "설명: {description}",
+      "treasury_symbol": "기금 심볼: {treasury_symbol}",
+      "category": "카테고리: {category}",
+      "voting_method": "투표 방법: {voting_method}",
+      "quorum": "법정정족수: {quorum}",
+      "duration": "기간: {duration}"
+    },
+    "tooltip": "새 Telos Decide 투표를 만듭니다"
+  },
+  "castvote": {
+    "method": "Decide 투표 실행",
+    "title": "Decide 투표 실행 요청",
+    "result": "Decide 투표 실행 결과",
+    "headers": {
+      "request": "다음 Decide 투표를 실행하시겠습니까?",
+      "result": "다음 Decide 투표가 실행되었습니다:"
+    },
+    "rows": {
+      "voter": "유권자: {voter}",
+      "ballot_name": "투표 이름: {ballot_name}",
+      "votes": "투표수: {votes}"
+    },
+    "tooltip": "Telos Decide 투표에서 투표합니다"
+  },
+  "openvoting": {
+    "method": "Decide 투표 시작",
+    "title": "Decide 투표 시작 요청",
+    "result": "Decide 투표 시작 결과",
+    "headers": {
+      "request": "다음 Decide 투표의 투표를 시작하시겠습니까?",
+      "result": "다음 Decide 투표의 투표가 시작되었습니다:"
+    },
+    "rows": {
+      "ballot_name": "투표 이름: {ballot_name}"
+    },
+    "tooltip": "Telos Decide 투표의 투표를 시작합니다"
+  },
+  "closevoting": {
+    "method": "Decide 투표 종료",
+    "title": "Decide 투표 종료 요청",
+    "result": "Decide 투표 종료 결과",
+    "headers": {
+      "request": "다음 Decide 투표의 투표를 종료하시겠습니까?",
+      "result": "다음 Decide 투표의 투표가 종료되었습니다:"
+    },
+    "rows": {
+      "ballot_name": "투표 이름: {ballot_name}"
+    },
+    "tooltip": "Telos Decide 투표의 투표를 종료합니다"
+  },
+  "cancelballot": {
+    "method": "Decide 투표 취소",
+    "title": "Decide 투표 취소 요청",
+    "result": "Decide 투표 취소 결과",
+    "headers": {
+      "request": "다음 Decide 투표를 취소하시겠습니까?",
+      "result": "다음 Decide 투표가 취소되었습니다:"
+    },
+    "rows": {
+      "ballot_name": "투표 이름: {ballot_name}"
+    },
+    "tooltip": "Telos Decide 투표를 취소합니다"
+  },
+  "deleteballot": {
+    "method": "Decide 투표 삭제",
+    "title": "Decide 투표 삭제 요청",
+    "result": "Decide 투표 삭제 결과",
+    "headers": {
+      "request": "다음 Decide 투표를 삭제하시겠습니까?",
+      "result": "다음 Decide 투표가 삭제되었습니다:"
+    },
+    "rows": {
+      "ballot_name": "투표 이름: {ballot_name}"
+    },
+    "tooltip": "Telos Decide 투표를 삭제합니다"
+  },
+  "regvoter": {
+    "method": "Decide 유권자 등록",
+    "title": "Decide 유권자 등록 요청",
+    "result": "Decide 유권자 등록 결과",
+    "headers": {
+      "request": "다음 계정을 Decide 유권자로 등록하시겠습니까?",
+      "result": "다음 계정이 Decide 유권자로 등록되었습니다:"
+    },
+    "rows": {
+      "voter": "유권자: {voter}",
+      "treasury_symbol": "기금 심볼: {treasury_symbol}"
+    },
+    "tooltip": "Telos Decide 유권자를 등록합니다"
+  },
+  "stake": {
+    "method": "TLOS 스테이크",
+    "title": "TLOS 스테이크 요청",
+    "result": "TLOS 스테이크 결과",
+    "headers": {
+      "request": "다음 TLOS 수량을 스테이크하시겠습니까?",
+      "result": "다음 TLOS 수량이 스테이크되었습니다:"
+    },
+    "rows": {
+      "voter": "유권자: {voter}",
+      "quantity": "수량: {quantity}"
+    },
+    "tooltip": "TLOS 토큰을 스테이크합니다"
+  },
+  "unstake": {
+    "method": "TLOS 언스테이크",
+    "title": "TLOS 언스테이크 요청",
+    "result": "TLOS 언스테이크 결과",
+    "headers": {
+      "request": "다음 TLOS 수량을 언스테이크하시겠습니까?",
+      "result": "다음 TLOS 수량이 언스테이크되었습니다:"
+    },
+    "rows": {
+      "voter": "유권자: {voter}",
+      "quantity": "수량: {quantity}"
+    },
+    "tooltip": "TLOS 토큰을 언스테이크합니다"
+  },
+  "newtreasury": {
+    "method": "Decide 기금 생성",
+    "title": "Decide 기금 생성 요청",
+    "result": "Decide 기금 생성 결과",
+    "headers": {
+      "request": "다음 Decide 기금을 만드시겠습니까?",
+      "result": "다음 Decide 기금이 생성되었습니다:"
+    },
+    "rows": {
+      "manager": "관리자: {manager}",
+      "max_supply": "최대 공급량: {max_supply}",
+      "access_type": "접근 유형: {access_type}"
+    },
+    "tooltip": "새 Telos Decide 기금을 만듭니다"
+  },
+  "mint": {
+    "method": "Decide 토큰 발행",
+    "title": "Decide 토큰 발행 요청",
+    "result": "Decide 토큰 발행 결과",
+    "headers": {
+      "request": "다음 Decide 토큰을 발행하시겠습니까?",
+      "result": "다음 Decide 토큰이 발행되었습니다:"
+    },
+    "rows": {
+      "to": "받는 사람: {to}",
+      "quantity": "수량: {quantity}",
+      "memo": "메모: {memo}"
+    },
+    "tooltip": "Telos Decide 토큰을 발행합니다"
+  },
+  "burn": {
+    "method": "Decide 토큰 소각",
+    "title": "Decide 토큰 소각 요청",
+    "result": "Decide 토큰 소각 결과",
+    "headers": {
+      "request": "다음 Decide 토큰을 소각하시겠습니까?",
+      "result": "다음 Decide 토큰이 소각되었습니다:"
+    },
+    "rows": {
+      "quantity": "수량: {quantity}",
+      "memo": "메모: {memo}"
+    },
+    "tooltip": "Telos Decide 토큰을 소각합니다"
+  },
+  "claimpayment": {
+    "method": "Decide 보상 청구",
+    "title": "Decide 보상 청구 요청",
+    "result": "Decide 보상 청구 결과",
+    "headers": {
+      "request": "다음 Decide 보상을 청구하시겠습니까?",
+      "result": "다음 Decide 보상이 청구되었습니다:"
+    },
+    "rows": {
+      "worker": "작업자: {worker}"
+    },
+    "tooltip": "Telos Decide 작업자 보상을 청구합니다"
+  },
+  "regcommittee": {
+    "method": "Decide 위원회 등록",
+    "title": "Decide 위원회 등록 요청",
+    "result": "Decide 위원회 등록 결과",
+    "headers": {
+      "request": "다음 Decide 위원회를 등록하시겠습니까?",
+      "result": "다음 Decide 위원회가 등록되었습니다:"
+    },
+    "rows": {
+      "committee_name": "위원회 이름: {committee_name}",
+      "account": "계정: {account}"
+    },
+    "tooltip": "Telos Decide 위원회를 등록합니다"
+  },
+  "raw": {
+    "method": "원시 EVM 트랜잭션",
+    "title": "원시 EVM 트랜잭션 요청",
+    "result": "원시 EVM 트랜잭션 결과",
+    "headers": {
+      "request": "다음 원시 EVM 트랜잭션을 제출하시겠습니까?",
+      "result": "다음 원시 EVM 트랜잭션이 제출되었습니다:"
+    },
+    "rows": {
+      "tx_hex": "트랜잭션 HEX: {tx_hex}"
+    },
+    "tooltip": "Telos에서 원시 EVM 트랜잭션을 제출합니다"
+  },
+  "create": {
+    "method": "EVM 계정 생성",
+    "title": "EVM 계정 생성 요청",
+    "result": "EVM 계정 생성 결과",
+    "headers": {
+      "request": "Telos EVM 계정을 만드시겠습니까?",
+      "result": "다음 Telos EVM 계정이 생성되었습니다:"
+    },
+    "rows": {
+      "account": "계정: {account}",
+      "data": "데이터: {data}"
+    },
+    "tooltip": "새 Telos EVM 계정을 만듭니다"
+  },
+  "withdraw": {
+    "method": "Withdraw from EVM",
+    "title": "Withdraw from EVM Request",
+    "result": "Withdraw from EVM Result",
+    "headers": {
+      "request": "Withdraw from Telos EVM?",
+      "result": "Withdrew from Telos EVM:"
+    },
+    "rows": {
+      "to": "To: {to}",
+      "quantity": "Quantity: {quantity}"
+    },
+    "tooltip": "Withdraw from Telos EVM to native chain"
+  },
+  "reclaim": {
+    "method": "Reclaim Treasury Tokens",
+    "title": "Reclaim Treasury Tokens Request",
+    "result": "Reclaim Treasury Tokens Result",
+    "headers": {
+      "request": "Reclaim the following treasury tokens?",
+      "result": "The following treasury tokens were reclaimed:"
+    },
+    "rows": {
+      "voter": "Voter: {voter}",
+      "quantity": "Quantity: {quantity}",
+      "memo": "Memo: {memo}"
+    },
+    "tooltip": "Reclaim treasury tokens from a voter back to the manager"
+  }
+}

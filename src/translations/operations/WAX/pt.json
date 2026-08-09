@@ -1,0 +1,125 @@
+{
+  "injectedCall": {
+    "method": "chamada injetada",
+    "title": "Solicitação de chamada injetada",
+    "result": "Resultado da chamada injetada",
+    "headers": {
+      "request": "Aprovar a seguinte chamada injetada?",
+      "result": "A seguinte chamada injetada foi aprovada:"
+    },
+    "tooltip": "Pede à sua carteira para lidar com uma operação de blockchain injetada"
+  },
+  "regproposer": {
+    "method": "Registrar Proposta WPS",
+    "title": "Solicitação de Registro de Proposta WPS",
+    "result": "Resultado do Registro de Proposta WPS",
+    "headers": {
+      "request": "Registrar a seguinte conta como proponente WPS?",
+      "result": "A seguinte conta foi registrada como proponente WPS:"
+    },
+    "rows": {
+      "proposer": "Proponente: {proposer}",
+      "proposer_key": "Chave do Proponente: {proposer_key}"
+    },
+    "tooltip": "Registrar uma conta de proponente WPS"
+  },
+  "regproposal": {
+    "method": "Registrar Proposta WPS",
+    "title": "Solicitação de Registro de Proposta WPS",
+    "result": "Resultado do Registro de Proposta WPS",
+    "headers": {
+      "request": "Registrar a seguinte proposta WPS?",
+      "result": "A seguinte proposta WPS foi registrada:"
+    },
+    "rows": {
+      "proposer": "Proponente: {proposer}",
+      "proposal_name": "Nome da Proposta: {proposal_name}",
+      "title": "Título: {title}",
+      "pay_amount": "Valor do Pagamento: {pay_amount}"
+    },
+    "tooltip": "Registrar uma nova proposta WPS"
+  },
+  "voteproposal": {
+    "method": "Votar na Proposta WPS",
+    "title": "Solicitação de Voto na Proposta WPS",
+    "result": "Resultado do Voto na Proposta WPS",
+    "headers": {
+      "request": "Votar na seguinte proposta WPS?",
+      "result": "O voto na seguinte proposta WPS foi aprovado:"
+    },
+    "rows": {
+      "voter": "Eleitor: {voter}",
+      "proposal_name": "Nome da Proposta: {proposal_name}",
+      "vote": "Voto: {vote}"
+    },
+    "tooltip": "Votar em uma proposta WPS"
+  },
+  "claimfunds": {
+    "method": "Reivindicar Fundos WPS",
+    "title": "Solicitação de Reivindicação de Fundos WPS",
+    "result": "Resultado da Reivindicação de Fundos WPS",
+    "headers": {
+      "request": "Reivindicar fundos WPS para a seguinte proposta?",
+      "result": "Os fundos WPS foram reivindicados para a seguinte proposta:"
+    },
+    "rows": {
+      "account": "Conta: {account}",
+      "proposal_name": "Nome da Proposta: {proposal_name}"
+    },
+    "tooltip": "Reivindicar fundos de uma proposta WPS aprovada"
+  },
+  "voterclaim": {
+    "method": "Reivindicar Recompensas de Eleitor WPS",
+    "title": "Solicitação de Recompensas de Eleitor WPS",
+    "result": "Resultado das Recompensas de Eleitor WPS",
+    "headers": {
+      "request": "Reivindicar recompensas de eleitor WPS?",
+      "result": "As recompensas de eleitor WPS foram reivindicadas:"
+    },
+    "rows": {
+      "owner": "Proprietário: {owner}"
+    },
+    "tooltip": "Reivindicar recompensas de eleitor WPS"
+  },
+  "voterclaimst": {
+    "method": "Reivindicar Recompensas de Eleitor Apostado WPS",
+    "title": "Solicitação de Recompensas de Eleitor Apostado WPS",
+    "result": "Resultado das Recompensas de Eleitor Apostado WPS",
+    "headers": {
+      "request": "Reivindicar recompensas de eleitor apostado WPS?",
+      "result": "As recompensas de eleitor apostado WPS foram reivindicadas:"
+    },
+    "rows": {
+      "owner": "Proprietário: {owner}",
+      "amount": "Valor: {amount}"
+    },
+    "tooltip": "Reivindicar recompensas de eleitor apostado WPS"
+  },
+  "awardgenesis": {
+    "method": "Conceder Gênesis",
+    "title": "Solicitação de Concessão de Gênesis",
+    "result": "Resultado da Concessão de Gênesis",
+    "headers": {
+      "request": "Conceder tokens gênesis para a seguinte conta?",
+      "result": "Os tokens gênesis foram concedidos para a seguinte conta:"
+    },
+    "rows": {
+      "receiver": "Receptor: {receiver}",
+      "amount": "Valor: {amount}"
+    },
+    "tooltip": "Conceder tokens gênesis para uma conta"
+  },
+  "claimgenesis": {
+    "method": "Reivindicar Gênesis",
+    "title": "Solicitação de Reivindicação de Gênesis",
+    "result": "Resultado da Reivindicação de Gênesis",
+    "headers": {
+      "request": "Reivindicar tokens gênesis para a seguinte conta?",
+      "result": "Os tokens gênesis foram reivindicados para a seguinte conta:"
+    },
+    "rows": {
+      "receiver": "Receptor: {receiver}"
+    },
+    "tooltip": "Reivindicar tokens gênesis"
+  }
+}

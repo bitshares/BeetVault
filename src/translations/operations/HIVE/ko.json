@@ -1,0 +1,764 @@
+{
+  "injectedCall": {
+    "method": "injectedCall",
+    "title": "주입 호출 요청",
+    "result": "주입 호출 결과",
+    "headers": {
+      "request": "다음 주입 호출을 승인하시겠습니까?",
+      "result": "다음 주입 호출이 승인되었습니다:"
+    },
+    "tooltip": "지갑에 주입된 블록체인 작업 처리를 요청합니다"
+  },
+  "vote": {
+    "method": "투표",
+    "title": "투표 요청",
+    "result": "투표 결과",
+    "headers": {
+      "request": "다음 투표를 승인하시겠습니까?",
+      "result": "다음 투표가 승인되었습니다:"
+    },
+    "rows": {
+      "voter": "투표자: {voter}",
+      "author": "작성자: {author}",
+      "permlink": "퍼멀링크: {permlink}",
+      "weight": "가중치: {weight}"
+    },
+    "tooltip": "게시물 또는 댓글에 투표합니다"
+  },
+  "vote2": {
+    "method": "투표 2",
+    "title": "투표 2 요청",
+    "result": "투표 2 결과",
+    "headers": {
+      "request": "다음 투표 2를 승인하시겠습니까?",
+      "result": "다음 투표 2가 승인되었습니다:"
+    },
+    "rows": {
+      "voter": "투표자: {voter}",
+      "author": "작성자: {author}",
+      "permlink": "퍼멀링크: {permlink}",
+      "rshares": "Rshares: {rshares}",
+      "extensions": "확장: {extensions}"
+    },
+    "tooltip": "게시물 또는 댓글에 투표 2를 합니다"
+  },
+  "comment": {
+    "method": "댓글",
+    "title": "댓글 요청",
+    "result": "댓글 결과",
+    "headers": {
+      "request": "다음 댓글을 승인하시겠습니까?",
+      "result": "다음 댓글이 승인되었습니다:"
+    },
+    "rows": {
+      "parent_author": "부모 작성자: {parent_author}",
+      "parent_permlink": "부모 퍼멀링크: {parent_permlink}",
+      "author": "작성자: {author}",
+      "permlink": "퍼멀링크: {permlink}",
+      "title": "제목: {title}",
+      "body": "본문: {body}",
+      "json_metadata": "JSON 메타데이터: {json_metadata}"
+    },
+    "tooltip": "게시물 또는 댓글을 생성합니다"
+  },
+  "transfer": {
+    "method": "전송",
+    "title": "전송 요청",
+    "result": "전송 결과",
+    "headers": {
+      "request": "다음 전송을 승인하시겠습니까?",
+      "result": "다음 전송이 승인되었습니다:"
+    },
+    "rows": {
+      "from": "보내는 계정: {from}",
+      "to": "받는 계정: {to}",
+      "amount": "금액: {amount}",
+      "memo": "메모: {memo}"
+    },
+    "tooltip": "한 계정에서 다른 계정으로 자산을 보냅니다"
+  },
+  "transfer_to_vesting": {
+    "method": "베스팅으로 전송",
+    "title": "베스팅 전송 요청",
+    "result": "베스팅 전송 결과",
+    "headers": {
+      "request": "다음 베스팅 전송을 승인하시겠습니까?",
+      "result": "다음 베스팅 전송이 승인되었습니다:"
+    },
+    "rows": {
+      "from": "보내는 계정: {from}",
+      "to": "받는 계정: {to}",
+      "amount": "금액: {amount}"
+    },
+    "tooltip": "자산을 베스팅 펀드로 전송합니다"
+  },
+  "withdraw_vesting": {
+    "method": "베스팅 인출",
+    "title": "베스팅 인출 요청",
+    "result": "베스팅 인출 결과",
+    "headers": {
+      "request": "다음 베스팅 인출을 승인하시겠습니까?",
+      "result": "다음 베스팅 인출이 승인되었습니다:"
+    },
+    "rows": {
+      "account": "계정: {account}",
+      "vesting_shares": "베스팅 지분: {vesting_shares}"
+    },
+    "tooltip": "베스팅 인출 일정을 설정합니다"
+  },
+  "limit_order_create": {
+    "method": "지정가 주문 생성",
+    "title": "지정가 주문 생성 요청",
+    "result": "지정가 주문 결과",
+    "headers": {
+      "request": "다음 지정가 주문을 승인하시겠습니까?",
+      "result": "다음 지정가 주문이 승인되었습니다:"
+    },
+    "rows": {
+      "owner": "소유자: {owner}",
+      "orderid": "주문 ID: {orderid}",
+      "amount_to_sell": "판매 금액: {amount_to_sell}",
+      "min_to_receive": "최소 수령액: {min_to_receive}",
+      "fill_or_kill": "필오어킬: {fill_or_kill}",
+      "expiration": "만료: {expiration}"
+    },
+    "tooltip": "시장에 지정가 주문을 생성합니다"
+  },
+  "limit_order_create2": {
+    "method": "지정가 주문 2 생성",
+    "title": "지정가 주문 2 생성 요청",
+    "result": "지정가 주문 2 결과",
+    "headers": {
+      "request": "다음 지정가 주문 2를 승인하시겠습니까?",
+      "result": "다음 지정가 주문 2가 승인되었습니다:"
+    },
+    "rows": {
+      "owner": "소유자: {owner}",
+      "orderid": "주문 ID: {orderid}",
+      "amount_to_sell": "판매 금액: {amount_to_sell}",
+      "exchange_rate": "환율: {exchange_rate}",
+      "fill_or_kill": "필오어킬: {fill_or_kill}",
+      "expiration": "만료: {expiration}"
+    },
+    "tooltip": "시장에 환율이 포함된 지정가 주문을 생성합니다"
+  },
+  "limit_order_cancel": {
+    "method": "지정가 주문 취소",
+    "title": "지정가 주문 취소 요청",
+    "result": "지정가 주문 취소 결과",
+    "headers": {
+      "request": "다음 지정가 주문 취소를 승인하시겠습니까?",
+      "result": "다음 지정가 주문 취소가 승인되었습니다:"
+    },
+    "rows": {
+      "owner": "소유자: {owner}",
+      "orderid": "주문 ID: {orderid}"
+    },
+    "tooltip": "기존 지정가 주문을 취소합니다"
+  },
+  "feed_publish": {
+    "method": "피드 게시",
+    "title": "피드 게시 요청",
+    "result": "피드 게시 결과",
+    "headers": {
+      "request": "다음 피드 게시를 승인하시겠습니까?",
+      "result": "다음 피드 게시가 승인되었습니다:"
+    },
+    "rows": {
+      "publisher": "게시자: {publisher}",
+      "exchange_rate": "환율: {exchange_rate}"
+    },
+    "tooltip": "증인으로서 가격 피드를 게시합니다"
+  },
+  "convert": {
+    "method": "변환",
+    "title": "변환 요청",
+    "result": "변환 결과",
+    "headers": {
+      "request": "다음 변환을 승인하시겠습니까?",
+      "result": "다음 변환이 승인되었습니다:"
+    },
+    "rows": {
+      "owner": "소유자: {owner}",
+      "requestid": "요청 ID: {requestid}",
+      "amount": "금액: {amount}"
+    },
+    "tooltip": "HIVE를 HBD로 또는 그 반대로 변환합니다"
+  },
+  "collateralized_convert": {
+    "method": "담보 변환",
+    "title": "담보 변환 요청",
+    "result": "담보 변환 결과",
+    "headers": {
+      "request": "다음 담보 변환을 승인하시겠습니까?",
+      "result": "다음 담보 변환이 승인되었습니다:"
+    },
+    "rows": {
+      "owner": "소유자: {owner}",
+      "requestid": "요청 ID: {requestid}",
+      "amount": "금액: {amount}"
+    },
+    "tooltip": "담보를 사용하여 HIVE를 HBD로 변환합니다"
+  },
+  "account_create": {
+    "method": "계정 생성",
+    "title": "계정 생성 요청",
+    "result": "계정 생성 결과",
+    "headers": {
+      "request": "다음 계정 생성을 승인하시겠습니까?",
+      "result": "다음 계정 생성이 승인되었습니다:"
+    },
+    "rows": {
+      "fee": "수수료: {fee}",
+      "creator": "생성자: {creator}",
+      "new_account_name": "새 계정 이름: {new_account_name}",
+      "owner": "소유자: {owner}",
+      "active": "활성: {active}",
+      "posting": "포스팅: {posting}",
+      "memo_key": "메모 키: {memo_key}",
+      "json_metadata": "JSON 메타데이터: {json_metadata}"
+    },
+    "tooltip": "새 블록체인 계정을 생성합니다"
+  },
+  "create_claimed_account": {
+    "method": "청구된 계정 생성",
+    "title": "청구된 계정 생성 요청",
+    "result": "청구된 계정 결과",
+    "headers": {
+      "request": "다음 청구된 계정 생성을 승인하시겠습니까?",
+      "result": "다음 청구된 계정 생성이 승인되었습니다:"
+    },
+    "rows": {
+      "creator": "생성자: {creator}",
+      "new_account_name": "새 계정 이름: {new_account_name}",
+      "owner": "소유자: {owner}",
+      "active": "활성: {active}",
+      "posting": "포스팅: {posting}",
+      "memo_key": "메모 키: {memo_key}",
+      "json_metadata": "JSON 메타데이터: {json_metadata}"
+    },
+    "tooltip": "이전에 청구된 계정에서 새 계정을 생성합니다"
+  },
+  "account_update": {
+    "method": "계정 업데이트",
+    "title": "계정 업데이트 요청",
+    "result": "계정 업데이트 결과",
+    "headers": {
+      "request": "다음 계정 업데이트를 승인하시겠습니까?",
+      "result": "다음 계정 업데이트가 승인되었습니다:"
+    },
+    "rows": {
+      "account": "계정: {account}",
+      "owner": "소유자: {owner}",
+      "active": "활성: {active}",
+      "posting": "포스팅: {posting}",
+      "memo_key": "메모 키: {memo_key}",
+      "json_metadata": "JSON 메타데이터: {json_metadata}"
+    },
+    "tooltip": "계정 키 또는 메타데이터를 업데이트합니다"
+  },
+  "account_update2": {
+    "method": "계정 업데이트 2",
+    "title": "계정 업데이트 2 요청",
+    "result": "계정 업데이트 2 결과",
+    "headers": {
+      "request": "다음 계정 업데이트 2를 승인하시겠습니까?",
+      "result": "다음 계정 업데이트 2가 승인되었습니다:"
+    },
+    "rows": {
+      "account": "계정: {account}",
+      "owner": "소유자: {owner}",
+      "active": "활성: {active}",
+      "posting": "포스팅: {posting}",
+      "memo_key": "메모 키: {memo_key}",
+      "json_metadata": "JSON 메타데이터: {json_metadata}",
+      "posting_json_metadata": "포스팅 JSON 메타데이터: {posting_json_metadata}"
+    },
+    "tooltip": "계정 키와 메타데이터를 업데이트합니다"
+  },
+  "witness_update": {
+    "method": "증인 업데이트",
+    "title": "증인 업데이트 요청",
+    "result": "증인 업데이트 결과",
+    "headers": {
+      "request": "다음 증인 업데이트를 승인하시겠습니까?",
+      "result": "다음 증인 업데이트가 승인되었습니다:"
+    },
+    "rows": {
+      "owner": "소유자: {owner}",
+      "url": "URL: {url}",
+      "block_signing_key": "블록 서명 키: {block_signing_key}",
+      "props": "속성: {props}",
+      "fee": "수수료: {fee}"
+    },
+    "tooltip": "증인 구성을 업데이트합니다"
+  },
+  "witness_set_properties": {
+    "method": "증인 속성 설정",
+    "title": "증인 속성 설정 요청",
+    "result": "증인 속성 결과",
+    "headers": {
+      "request": "다음 증인 속성 업데이트를 승인하시겠습니까?",
+      "result": "다음 증인 속성 업데이트가 승인되었습니다:"
+    },
+    "rows": {
+      "owner": "소유자: {owner}",
+      "props": "속성: {props}",
+      "extensions": "확장: {extensions}"
+    },
+    "tooltip": "증인 속성을 설정합니다"
+  },
+  "account_witness_vote": {
+    "method": "증인 투표",
+    "title": "증인 투표 요청",
+    "result": "증인 투표 결과",
+    "headers": {
+      "request": "다음 증인 투표를 승인하시겠습니까?",
+      "result": "다음 증인 투표가 승인되었습니다:"
+    },
+    "rows": {
+      "account": "계정: {account}",
+      "witness": "증인: {witness}",
+      "approve": "승인: {approve}"
+    },
+    "tooltip": "증인에 찬성 또는 반대 투표를 합니다"
+  },
+  "account_witness_proxy": {
+    "method": "증인 투표 위임",
+    "title": "증인 투표 위임 요청",
+    "result": "증인 투표 위임 결과",
+    "headers": {
+      "request": "다음 증인 프록시를 승인하시겠습니까?",
+      "result": "다음 증인 프록시가 승인되었습니다:"
+    },
+    "rows": {
+      "account": "계정: {account}",
+      "proxy": "프록시: {proxy}"
+    },
+    "tooltip": "증인 투표에 대한 프록시를 설정합니다"
+  },
+  "delete_comment": {
+    "method": "댓글 삭제",
+    "title": "댓글 삭제 요청",
+    "result": "댓글 삭제 결과",
+    "headers": {
+      "request": "다음 댓글 삭제를 승인하시겠습니까?",
+      "result": "다음 댓글 삭제가 승인되었습니다:"
+    },
+    "rows": {
+      "author": "작성자: {author}",
+      "permlink": "퍼멀링크: {permlink}"
+    },
+    "tooltip": "게시물 또는 댓글을 삭제합니다"
+  },
+  "custom_json": {
+    "method": "사용자 정의 JSON",
+    "title": "사용자 정의 JSON 요청",
+    "result": "사용자 정의 JSON 결과",
+    "headers": {
+      "request": "다음 사용자 정의 JSON 작업을 승인하시겠습니까?",
+      "result": "다음 사용자 정의 JSON 작업이 승인되었습니다:"
+    },
+    "rows": {
+      "required_auths": "필요한 인증: {required_auths}",
+      "required_posting_auths": "필요한 포스팅 인증: {required_posting_auths}",
+      "id": "ID: {id}",
+      "json": "JSON: {json}"
+    },
+    "tooltip": "사용자 정의 JSON 작업을 제출합니다"
+  },
+  "comment_options": {
+    "method": "댓글 옵션",
+    "title": "댓글 옵션 요청",
+    "result": "댓글 옵션 결과",
+    "headers": {
+      "request": "다음 댓글 옵션을 승인하시겠습니까?",
+      "result": "다음 댓글 옵션이 승인되었습니다:"
+    },
+    "rows": {
+      "author": "작성자: {author}",
+      "permlink": "퍼멀링크: {permlink}",
+      "max_accepted_payout": "최대 허용 지급액: {max_accepted_payout}",
+      "percent_hbd": "HBD 비율: {percent_hbd}",
+      "allow_votes": "투표 허용: {allow_votes}",
+      "allow_curation_rewards": "큐레이션 보상 허용: {allow_curation_rewards}",
+      "extensions": "확장: {extensions}"
+    },
+    "tooltip": "게시물 또는 댓글에 대한 옵션을 설정합니다"
+  },
+  "set_withdraw_vesting_route": {
+    "method": "베스팅 인출 경로 설정",
+    "title": "베스팅 인출 경로 설정 요청",
+    "result": "베스팅 인출 경로 결과",
+    "headers": {
+      "request": "다음 베스팅 인출 경로를 승인하시겠습니까?",
+      "result": "다음 베스팅 인출 경로가 승인되었습니다:"
+    },
+    "rows": {
+      "from_account": "보내는 계정: {from_account}",
+      "to_account": "받는 계정: {to_account}",
+      "percent": "비율: {percent}",
+      "auto_vest": "자동 베스팅: {auto_vest}"
+    },
+    "tooltip": "베스팅 인출 경로 할당을 설정합니다"
+  },
+  "claim_reward_balance": {
+    "method": "보상 잔액 청구",
+    "title": "보상 잔액 청구 요청",
+    "result": "보상 잔액 결과",
+    "headers": {
+      "request": "다음 보상 청구를 승인하시겠습니까?",
+      "result": "다음 보상 청구가 승인되었습니다:"
+    },
+    "rows": {
+      "account": "계정: {account}",
+      "reward_hive": "보상 HIVE: {reward_hive}",
+      "reward_hbd": "보상 HBD: {reward_hbd}",
+      "reward_vests": "보상 VESTS: {reward_vests}"
+    },
+    "tooltip": "누적된 보상을 청구합니다"
+  },
+  "delegate_vesting_shares": {
+    "method": "베스팅 지분 위임",
+    "title": "베스팅 지분 위임 요청",
+    "result": "베스팅 위임 결과",
+    "headers": {
+      "request": "다음 베스팅 위임을 승인하시겠습니까?",
+      "result": "다음 베스팅 위임이 승인되었습니다:"
+    },
+    "rows": {
+      "delegator": "위임자: {delegator}",
+      "delegatee": "수임자: {delegatee}",
+      "vesting_shares": "베스팅 지분: {vesting_shares}"
+    },
+    "tooltip": "베스팅 지분을 다른 계정에 위임합니다"
+  },
+  "recover_account": {
+    "method": "계정 복구",
+    "title": "계정 복구 요청",
+    "result": "계정 복구 결과",
+    "headers": {
+      "request": "다음 계정 복구를 승인하시겠습니까?",
+      "result": "다음 계정 복구가 승인되었습니다:"
+    },
+    "rows": {
+      "account_to_recover": "복구할 계정: {account_to_recover}",
+      "new_owner_authority": "새 소유자 권한: {new_owner_authority}",
+      "recent_owner_authority": "최근 소유자 권한: {recent_owner_authority}",
+      "extensions": "확장: {extensions}"
+    },
+    "tooltip": "도난 또는 손상된 계정을 복구합니다"
+  },
+  "request_account_recovery": {
+    "method": "계정 복구 요청",
+    "title": "계정 복구 요청",
+    "result": "계정 복구 요청 결과",
+    "headers": {
+      "request": "다음 계정 복구 요청을 승인하시겠습니까?",
+      "result": "다음 계정 복구 요청이 승인되었습니다:"
+    },
+    "rows": {
+      "recovery_account": "복구 계정: {recovery_account}",
+      "account_to_recover": "복구할 계정: {account_to_recover}",
+      "new_owner_authority": "새 소유자 권한: {new_owner_authority}",
+      "extensions": "확장: {extensions}"
+    },
+    "tooltip": "복구 계정으로서 계정 복구를 요청합니다"
+  },
+  "change_recovery_account": {
+    "method": "복구 계정 변경",
+    "title": "복구 계정 변경 요청",
+    "result": "복구 계정 변경 결과",
+    "headers": {
+      "request": "다음 복구 계정 변경을 승인하시겠습니까?",
+      "result": "다음 복구 계정 변경이 승인되었습니다:"
+    },
+    "rows": {
+      "account_to_recover": "복구할 계정: {account_to_recover}",
+      "new_recovery_account": "새 복구 계정: {new_recovery_account}",
+      "extensions": "확장: {extensions}"
+    },
+    "tooltip": "계정의 복구 계정을 변경합니다"
+  },
+  "transfer_to_savings": {
+    "method": "저축으로 전송",
+    "title": "저축 전송 요청",
+    "result": "저축 전송 결과",
+    "headers": {
+      "request": "다음 저축 전송을 승인하시겠습니까?",
+      "result": "다음 저축 전송이 승인되었습니다:"
+    },
+    "rows": {
+      "from": "보내는 계정: {from}",
+      "to": "받는 계정: {to}",
+      "amount": "금액: {amount}",
+      "memo": "메모: {memo}"
+    },
+    "tooltip": "자산을 저축으로 전송합니다"
+  },
+  "transfer_from_savings": {
+    "method": "저축에서 전송",
+    "title": "저축에서 전송 요청",
+    "result": "저축에서 전송 결과",
+    "headers": {
+      "request": "다음 저축에서 전송을 승인하시겠습니까?",
+      "result": "다음 저축에서 전송이 승인되었습니다:"
+    },
+    "rows": {
+      "from": "보내는 계정: {from}",
+      "request_id": "요청 ID: {request_id}",
+      "to": "받는 계정: {to}",
+      "amount": "금액: {amount}",
+      "memo": "메모: {memo}"
+    },
+    "tooltip": "저축에서 전송을 요청합니다"
+  },
+  "cancel_transfer_from_savings": {
+    "method": "저축에서 전송 취소",
+    "title": "저축에서 전송 취소 요청",
+    "result": "전송 취소 결과",
+    "headers": {
+      "request": "다음 전송 취소를 승인하시겠습니까?",
+      "result": "다음 전송 취소가 승인되었습니다:"
+    },
+    "rows": {
+      "from": "보내는 계정: {from}",
+      "request_id": "요청 ID: {request_id}"
+    },
+    "tooltip": "보류 중인 저축에서 전송을 취소합니다"
+  },
+  "decline_voting_rights": {
+    "method": "투표권 포기",
+    "title": "투표권 포기 요청",
+    "result": "투표권 포기 결과",
+    "headers": {
+      "request": "다음 투표권 포기를 승인하시겠습니까?",
+      "result": "다음 투표권 포기가 승인되었습니다:"
+    },
+    "rows": {
+      "account": "계정: {account}",
+      "decline": "포기: {decline}"
+    },
+    "tooltip": "투표권을 영구적으로 포기합니다"
+  },
+  "claim_account": {
+    "method": "계정 청구",
+    "title": "계정 청구 요청",
+    "result": "계정 청구 결과",
+    "headers": {
+      "request": "다음 계정 청구를 승인하시겠습니까?",
+      "result": "다음 계정 청구가 승인되었습니다:"
+    },
+    "rows": {
+      "fee": "수수료: {fee}",
+      "creator": "생성자: {creator}",
+      "extensions": "확장: {extensions}"
+    },
+    "tooltip": "새 계정 생성을 청구합니다"
+  },
+  "escrow_transfer": {
+    "method": "에스크로 전송",
+    "title": "에스크로 전송 요청",
+    "result": "에스크로 전송 결과",
+    "headers": {
+      "request": "다음 에스크로 전송을 승인하시겠습니까?",
+      "result": "다음 에스크로 전송이 승인되었습니다:"
+    },
+    "rows": {
+      "from": "보내는 계정: {from}",
+      "to": "받는 계정: {to}",
+      "agent": "에이전트: {agent}",
+      "escrow_id": "에스크로 ID: {escrow_id}",
+      "hbd_amount": "HBD 금액: {hbd_amount}",
+      "hive_amount": "HIVE 금액: {hive_amount}",
+      "fee": "수수료: {fee}",
+      "ratification_deadline": "비준 마감: {ratification_deadline}",
+      "escrow_expiration": "에스크로 만료: {escrow_expiration}",
+      "json_meta": "JSON 메타: {json_meta}"
+    },
+    "tooltip": "계정 간 에스크로 전송을 설정합니다"
+  },
+  "escrow_dispute": {
+    "method": "에스크로 분쟁",
+    "title": "에스크로 분쟁 요청",
+    "result": "에스크로 분쟁 결과",
+    "headers": {
+      "request": "다음 에스크로 분쟁을 승인하시겠습니까?",
+      "result": "다음 에스크로 분쟁이 승인되었습니다:"
+    },
+    "rows": {
+      "from": "보내는 계정: {from}",
+      "to": "받는 계정: {to}",
+      "agent": "에이전트: {agent}",
+      "who": "누가: {who}",
+      "escrow_id": "에스크로 ID: {escrow_id}"
+    },
+    "tooltip": "에스크로 전송에 대해 분쟁을 제기합니다"
+  },
+  "escrow_release": {
+    "method": "에스크로 해제",
+    "title": "에스크로 해제 요청",
+    "result": "에스크로 해제 결과",
+    "headers": {
+      "request": "다음 에스크로 해제를 승인하시겠습니까?",
+      "result": "다음 에스크로 해제가 승인되었습니다:"
+    },
+    "rows": {
+      "from": "보내는 계정: {from}",
+      "to": "받는 계정: {to}",
+      "agent": "에이전트: {agent}",
+      "who": "누가: {who}",
+      "receiver": "수취인: {receiver}",
+      "escrow_id": "에스크로 ID: {escrow_id}",
+      "hbd_amount": "HBD 금액: {hbd_amount}",
+      "hive_amount": "HIVE 금액: {hive_amount}"
+    },
+    "tooltip": "에스크로 전송에서 자금을 해제합니다"
+  },
+  "escrow_approve": {
+    "method": "에스크로 승인",
+    "title": "에스크로 승인 요청",
+    "result": "에스크로 승인 결과",
+    "headers": {
+      "request": "다음 에스크로 승인을 승인하시겠습니까?",
+      "result": "다음 에스크로 승인이 승인되었습니다:"
+    },
+    "rows": {
+      "from": "보내는 계정: {from}",
+      "to": "받는 계정: {to}",
+      "agent": "에이전트: {agent}",
+      "who": "누가: {who}",
+      "escrow_id": "에스크로 ID: {escrow_id}",
+      "approve": "승인: {approve}"
+    },
+    "tooltip": "에스크로 전송을 승인합니다"
+  },
+  "create_proposal": {
+    "method": "제안 생성",
+    "title": "제안 생성 요청",
+    "result": "제안 생성 결과",
+    "headers": {
+      "request": "다음 제안 생성을 승인하시겠습니까?",
+      "result": "다음 제안 생성이 승인되었습니다:"
+    },
+    "rows": {
+      "creator": "생성자: {creator}",
+      "receiver": "수취인: {receiver}",
+      "start_date": "시작일: {start_date}",
+      "end_date": "종료일: {end_date}",
+      "daily_pay": "일일 지급액: {daily_pay}",
+      "subject": "제목: {subject}",
+      "permlink": "퍼멀링크: {permlink}"
+    },
+    "tooltip": "거버넌스 제안을 생성합니다"
+  },
+  "update_proposal_votes": {
+    "method": "제안 투표 업데이트",
+    "title": "제안 투표 업데이트 요청",
+    "result": "제안 투표 업데이트 결과",
+    "headers": {
+      "request": "다음 제안 투표 업데이트를 승인하시겠습니까?",
+      "result": "다음 제안 투표 업데이트가 승인되었습니다:"
+    },
+    "rows": {
+      "voter": "투표자: {voter}",
+      "proposal_ids": "제안 ID: {proposal_ids}",
+      "approve": "승인: {approve}",
+      "extensions": "확장: {extensions}"
+    },
+    "tooltip": "제안에 찬성 또는 반대 투표를 합니다"
+  },
+  "remove_proposal": {
+    "method": "제안 제거",
+    "title": "제안 제거 요청",
+    "result": "제안 제거 결과",
+    "headers": {
+      "request": "다음 제안 제거를 승인하시겠습니까?",
+      "result": "다음 제안 제거가 승인되었습니다:"
+    },
+    "rows": {
+      "creator": "생성자: {creator}",
+      "proposal_ids": "제안 ID: {proposal_ids}"
+    },
+    "tooltip": "하나 이상의 제안을 제거합니다"
+  },
+  "update_proposal": {
+    "method": "제안 업데이트",
+    "title": "제안 업데이트 요청",
+    "result": "제안 업데이트 결과",
+    "headers": {
+      "request": "다음 제안 업데이트를 승인하시겠습니까?",
+      "result": "다음 제안 업데이트가 승인되었습니다:"
+    },
+    "rows": {
+      "proposal_id": "제안 ID: {proposal_id}",
+      "creator": "생성자: {creator}",
+      "daily_pay": "일일 지급액: {daily_pay}",
+      "subject": "제목: {subject}",
+      "permlink": "퍼멀링크: {permlink}"
+    },
+    "tooltip": "기존 제안을 업데이트합니다"
+  },
+  "recurrent_transfer": {
+    "method": "반복 전송",
+    "title": "반복 전송 요청",
+    "result": "반복 전송 결과",
+    "headers": {
+      "request": "다음 반복 전송을 승인하시겠습니까?",
+      "result": "다음 반복 전송이 승인되었습니다:"
+    },
+    "rows": {
+      "from": "보내는 계정: {from}",
+      "to": "받는 계정: {to}",
+      "amount": "금액: {amount}",
+      "memo": "메모: {memo}",
+      "recurrence": "반복 주기: {recurrence}",
+      "executions": "실행 횟수: {executions}",
+      "extensions": "확장: {extensions}"
+    },
+    "tooltip": "반복 전송 일정을 설정합니다"
+  },
+  "custom_binary": {
+    "method": "사용자 정의 바이너리",
+    "title": "사용자 정의 바이너리 요청",
+    "result": "사용자 정의 바이너리 결과",
+    "headers": {
+      "request": "다음 사용자 정의 바이너리 작업을 승인하시겠습니까?",
+      "result": "다음 사용자 정의 바이너리 작업이 승인되었습니다:"
+    },
+    "rows": {
+      "id": "ID: {id}",
+      "data": "데이터: {data}"
+    },
+    "tooltip": "사용자 정의 바이너리 작업을 제출합니다"
+  },
+  "custom": {
+    "method": "사용자 정의",
+    "title": "사용자 정의 작업 요청",
+    "result": "사용자 정의 작업 결과",
+    "headers": {
+      "request": "다음 사용자 정의 작업을 승인하시겠습니까?",
+      "result": "다음 사용자 정의 작업이 승인되었습니다:"
+    },
+    "rows": {
+      "required_auths": "필요한 인증: {required_auths}",
+      "id": "ID: {id}",
+      "data": "데이터: {data}"
+    },
+    "tooltip": "사용자 정의 작업을 제출합니다"
+  },
+  "prove_authority": {
+    "method": "권한 증명",
+    "title": "권한 증명 요청",
+    "result": "권한 증명 결과",
+    "headers": {
+      "request": "다음 권한 증명을 승인하시겠습니까?",
+      "result": "다음 권한 증명이 승인되었습니다:"
+    },
+    "rows": {
+      "challenged": "이의 대상: {challenged}",
+      "require_owner": "소유자 필요: {require_owner}"
+    },
+    "tooltip": "계정 권한의 소유를 증명합니다"
+  }
+}

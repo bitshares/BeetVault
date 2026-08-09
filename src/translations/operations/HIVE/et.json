@@ -1,0 +1,764 @@
+{
+  "injectedCall": {
+    "method": "injectedCall",
+    "title": "Süstitud väljakutse taotlus",
+    "result": "Süstitud väljakutse tulemus",
+    "headers": {
+      "request": "Kiita järgmine süstitud väljakutse heaks?",
+      "result": "Järgmine süstitud väljakutse kiideti heaks:"
+    },
+    "tooltip": "Palub teie rahakotil süstitud ahela tehingut töödelda"
+  },
+  "vote": {
+    "method": "Hääleta",
+    "title": "Hääletustaotlus",
+    "result": "Hääletuse tulemus",
+    "headers": {
+      "request": "Kas soovite järgmise hääletuse heaks kiita?",
+      "result": "Järgmine hääletus kiideti heaks:"
+    },
+    "rows": {
+      "voter": "Hääletaja: {voter}",
+      "author": "Autor: {author}",
+      "permlink": "Permlink: {permlink}",
+      "weight": "Kaal: {weight}"
+    },
+    "tooltip": "Hääletage postituse või kommentaari üle"
+  },
+  "vote2": {
+    "method": "Hääleta 2",
+    "title": "Hääletustaotlus 2",
+    "result": "Hääletuse tulemus 2",
+    "headers": {
+      "request": "Kas soovite järgmise hääletuse 2 heaks kiita?",
+      "result": "Järgmine hääletus 2 kiideti heaks:"
+    },
+    "rows": {
+      "voter": "Hääletaja: {voter}",
+      "author": "Autor: {author}",
+      "permlink": "Permlink: {permlink}",
+      "rshares": "Rshares: {rshares}",
+      "extensions": "Laiendused: {extensions}"
+    },
+    "tooltip": "Hääletage 2 postituse või kommentaari üle"
+  },
+  "comment": {
+    "method": "Kommenteeri",
+    "title": "Kommentaaritaotlus",
+    "result": "Kommentaari tulemus",
+    "headers": {
+      "request": "Kas soovite järgmise kommentaari heaks kiita?",
+      "result": "Järgmine kommentaar kiideti heaks:"
+    },
+    "rows": {
+      "parent_author": "Lähtekonto autor: {parent_author}",
+      "parent_permlink": "Lähtekonto permlink: {parent_permlink}",
+      "author": "Autor: {author}",
+      "permlink": "Permlink: {permlink}",
+      "title": "Pealkiri: {title}",
+      "body": "Sisu: {body}",
+      "json_metadata": "JSON-metadata: {json_metadata}"
+    },
+    "tooltip": "Looge postitus või kommentaar"
+  },
+  "transfer": {
+    "method": "Ülekanne",
+    "title": "Ülekandetaotlus",
+    "result": "Ülekande tulemus",
+    "headers": {
+      "request": "Kas soovite järgmise ülekande heaks kiita?",
+      "result": "Järgmine ülekanne kiideti heaks:"
+    },
+    "rows": {
+      "from": "Kellelt: {from}",
+      "to": "Kellele: {to}",
+      "amount": "Summa: {amount}",
+      "memo": "Memo: {memo}"
+    },
+    "tooltip": "Saatke varasid ühelt kontolt teisele"
+  },
+  "transfer_to_vesting": {
+    "method": "Ülekanne vestingule",
+    "title": "Vestingule ülekandmise taotlus",
+    "result": "Vestingule ülekandmise tulemus",
+    "headers": {
+      "request": "Kas soovite järgmise vestingule ülekande heaks kiita?",
+      "result": "Järgmine vestingule ülekanne kiideti heaks:"
+    },
+    "rows": {
+      "from": "Kellelt: {from}",
+      "to": "Kellele: {to}",
+      "amount": "Summa: {amount}"
+    },
+    "tooltip": "Kandke varad üle vestingufondidesse"
+  },
+  "withdraw_vesting": {
+    "method": "Võta vesting välja",
+    "title": "Vestingi väljavõtmise taotlus",
+    "result": "Vestingi väljavõtmise tulemus",
+    "headers": {
+      "request": "Kas soovite järgmise vestingi väljavõtmise heaks kiita?",
+      "result": "Järgmine vestingi väljavõtmine kiideti heaks:"
+    },
+    "rows": {
+      "account": "Konto: {account}",
+      "vesting_shares": "Vestingiosakud: {vesting_shares}"
+    },
+    "tooltip": "Seadistage vestingi väljavõtmise ajakava"
+  },
+  "limit_order_create": {
+    "method": "Loo piirorder",
+    "title": "Piirorderi loomise taotlus",
+    "result": "Piirorderi tulemus",
+    "headers": {
+      "request": "Kas soovite järgmise piirorderi heaks kiita?",
+      "result": "Järgmine piirorder kiideti heaks:"
+    },
+    "rows": {
+      "owner": "Omanik: {owner}",
+      "orderid": "Orderi ID: {orderid}",
+      "amount_to_sell": "Müügisumma: {amount_to_sell}",
+      "min_to_receive": "Minimaalne laekuv summa: {min_to_receive}",
+      "fill_or_kill": "Fill või Kill: {fill_or_kill}",
+      "expiration": "Aegumine: {expiration}"
+    },
+    "tooltip": "Looge turul piirorder"
+  },
+  "limit_order_create2": {
+    "method": "Loo piirorder 2",
+    "title": "Piirorderi loomise taotlus 2",
+    "result": "Piirorderi tulemus 2",
+    "headers": {
+      "request": "Kas soovite järgmise piirorderi 2 heaks kiita?",
+      "result": "Järgmine piirorder 2 kiideti heaks:"
+    },
+    "rows": {
+      "owner": "Omanik: {owner}",
+      "orderid": "Orderi ID: {orderid}",
+      "amount_to_sell": "Müügisumma: {amount_to_sell}",
+      "exchange_rate": "Vahetuskurss: {exchange_rate}",
+      "fill_or_kill": "Fill või Kill: {fill_or_kill}",
+      "expiration": "Aegumine: {expiration}"
+    },
+    "tooltip": "Looge turul vahetuskursiga piirorder"
+  },
+  "limit_order_cancel": {
+    "method": "Tühista piirorder",
+    "title": "Piirorderi tühistamise taotlus",
+    "result": "Piirorderi tühistamise tulemus",
+    "headers": {
+      "request": "Kas soovite järgmise piirorderi tühistamise heaks kiita?",
+      "result": "Järgmine piirorderi tühistamine kiideti heaks:"
+    },
+    "rows": {
+      "owner": "Omanik: {owner}",
+      "orderid": "Orderi ID: {orderid}"
+    },
+    "tooltip": "Tühistage olemasolev piirorder"
+  },
+  "feed_publish": {
+    "method": "Avalda feed",
+    "title": "Feed avaldamise taotlus",
+    "result": "Feed avaldamise tulemus",
+    "headers": {
+      "request": "Kas soovite järgmise feed avaldamise heaks kiita?",
+      "result": "Järgmine feed avaldamine kiideti heaks:"
+    },
+    "rows": {
+      "publisher": "Avaldaja: {publisher}",
+      "exchange_rate": "Vahetuskurss: {exchange_rate}"
+    },
+    "tooltip": "Avaldage witnessina hinnafeed"
+  },
+  "convert": {
+    "method": "Konverteer",
+    "title": "Konverteerimistaotlus",
+    "result": "Konverteerimise tulemus",
+    "headers": {
+      "request": "Kas soovite järgmise konverteerimise heaks kiita?",
+      "result": "Järgmine konverteerimine kiideti heaks:"
+    },
+    "rows": {
+      "owner": "Omanik: {owner}",
+      "requestid": "Taotluse ID: {requestid}",
+      "amount": "Summa: {amount}"
+    },
+    "tooltip": "Konverteerige HIVE HBD-ks või vastupidi"
+  },
+  "collateralized_convert": {
+    "method": "Tagatis­ineline konverteerimine",
+    "title": "Tagatisega konverteerimise taotlus",
+    "result": "Tagatisega konverteerimise tulemus",
+    "headers": {
+      "request": "Kas soovite järgmise tagatisega konverteerimise heaks kiita?",
+      "result": "Järgmine tagatisega konverteerimine kiideti heaks:"
+    },
+    "rows": {
+      "owner": "Omanik: {owner}",
+      "requestid": "Taotluse ID: {requestid}",
+      "amount": "Summa: {amount}"
+    },
+    "tooltip": "Konverteerige HIVE HBD-ks tagatisega"
+  },
+  "account_create": {
+    "method": "Loo konto",
+    "title": "Konto loomise taotlus",
+    "result": "Konto loomise tulemus",
+    "headers": {
+      "request": "Kas soovite järgmise konto loomise heaks kiita?",
+      "result": "Järgmine konto loomine kiideti heaks:"
+    },
+    "rows": {
+      "fee": "Tasu: {fee}",
+      "creator": "Loov konto: {creator}",
+      "new_account_name": "Uue konto nimi: {new_account_name}",
+      "owner": "Omanik: {owner}",
+      "active": "Aktiivne: {active}",
+      "posting": "Posting: {posting}",
+      "memo_key": "Memo-võti: {memo_key}",
+      "json_metadata": "JSON-metadata: {json_metadata}"
+    },
+    "tooltip": "Looge uus ahela konto"
+  },
+  "create_claimed_account": {
+    "method": "Loo nõutud konto",
+    "title": "Nõutud konto loomise taotlus",
+    "result": "Nõutud konto tulemus",
+    "headers": {
+      "request": "Kas soovite järgmise nõutud konto loomise heaks kiita?",
+      "result": "Järgmine nõutud konto loomine kiideti heaks:"
+    },
+    "rows": {
+      "creator": "Loov konto: {creator}",
+      "new_account_name": "Uue konto nimi: {new_account_name}",
+      "owner": "Omanik: {owner}",
+      "active": "Aktiivne: {active}",
+      "posting": "Posting: {posting}",
+      "memo_key": "Memo-võti: {memo_key}",
+      "json_metadata": "JSON-metadata: {json_metadata}"
+    },
+    "tooltip": "Looge uus konto varem nõutud kontost"
+  },
+  "account_update": {
+    "method": "Uuenda kontot",
+    "title": "Konto uuendamise taotlus",
+    "result": "Konto uuendamise tulemus",
+    "headers": {
+      "request": "Kas soovite järgmise konto uuendamise heaks kiita?",
+      "result": "Järgmine konto uuendamine kiideti heaks:"
+    },
+    "rows": {
+      "account": "Konto: {account}",
+      "owner": "Omanik: {owner}",
+      "active": "Aktiivne: {active}",
+      "posting": "Posting: {posting}",
+      "memo_key": "Memo-võti: {memo_key}",
+      "json_metadata": "JSON-metadata: {json_metadata}"
+    },
+    "tooltip": "Uuendage konto võtmeid või metadatat"
+  },
+  "account_update2": {
+    "method": "Uuenda kontot 2",
+    "title": "Konto uuendamise taotlus 2",
+    "result": "Konto uuendamise tulemus 2",
+    "headers": {
+      "request": "Kas soovite järgmise konto uuendamise 2 heaks kiita?",
+      "result": "Järgmine konto uuendamine 2 kiideti heaks:"
+    },
+    "rows": {
+      "account": "Konto: {account}",
+      "owner": "Omanik: {owner}",
+      "active": "Aktiivne: {active}",
+      "posting": "Posting: {posting}",
+      "memo_key": "Memo-võti: {memo_key}",
+      "json_metadata": "JSON-metadata: {json_metadata}",
+      "posting_json_metadata": "Postingu JSON-metadata: {posting_json_metadata}"
+    },
+    "tooltip": "Uuendage konto võtmeid ja metadatat"
+  },
+  "witness_update": {
+    "method": "Uuenda witnessit",
+    "title": "Witnessi uuendamise taotlus",
+    "result": "Witnessi uuendamise tulemus",
+    "headers": {
+      "request": "Kas soovite järgmise witnessi uuendamise heaks kiita?",
+      "result": "Järgmine witnessi uuendamine kiideti heaks:"
+    },
+    "rows": {
+      "owner": "Omanik: {owner}",
+      "url": "URL: {url}",
+      "block_signing_key": "Ploki allkirjavõti: {block_signing_key}",
+      "props": "Atribuudid: {props}",
+      "fee": "Tasu: {fee}"
+    },
+    "tooltip": "Uuendage witnessi konfiguratsiooni"
+  },
+  "witness_set_properties": {
+    "method": "Määra witnessi atribuudid",
+    "title": "Witnessi atribuutide määramise taotlus",
+    "result": "Witnessi atribuutide tulemus",
+    "headers": {
+      "request": "Kas soovite järgmise witnessi atribuutide uuendamise heaks kiita?",
+      "result": "Järgmine witnessi atribuutide uuendamine kiideti heaks:"
+    },
+    "rows": {
+      "owner": "Omanik: {owner}",
+      "props": "Atribuudid: {props}",
+      "extensions": "Laiendused: {extensions}"
+    },
+    "tooltip": "Määrake witnessi atribuudid"
+  },
+  "account_witness_vote": {
+    "method": "Hääleta witnessi poolt",
+    "title": "Witnessi hääletamise taotlus",
+    "result": "Witnessi hääletamise tulemus",
+    "headers": {
+      "request": "Kas soovite järgmise witnessi hääletuse heaks kiita?",
+      "result": "Järgmine witnessi hääletus kiideti heaks:"
+    },
+    "rows": {
+      "account": "Konto: {account}",
+      "witness": "Witness: {witness}",
+      "approve": "Kinnita: {approve}"
+    },
+    "tooltip": "Hääletage witnessi poolt või vastu"
+  },
+  "account_witness_proxy": {
+    "method": "Delegeeri witnessi hääletus",
+    "title": "Witnessi hääletuse delegeerimise taotlus",
+    "result": "Witnessi hääletuse delegeerimise tulemus",
+    "headers": {
+      "request": "Kas soovite järgmise witnessi proksit heaks kiita?",
+      "result": "Järgmine witnessi proksi kiideti heaks:"
+    },
+    "rows": {
+      "account": "Konto: {account}",
+      "proxy": "Proksi: {proxy}"
+    },
+    "tooltip": "Määrake oma witnessi hääletuste proksi"
+  },
+  "delete_comment": {
+    "method": "Kustuta kommentaar",
+    "title": "Kommentaari kustutamise taotlus",
+    "result": "Kommentaari kustutamise tulemus",
+    "headers": {
+      "request": "Kas soovite järgmise kommentaari kustutamise heaks kiita?",
+      "result": "Järgmine kommentaari kustutamine kiideti heaks:"
+    },
+    "rows": {
+      "author": "Autor: {author}",
+      "permlink": "Permlink: {permlink}"
+    },
+    "tooltip": "Kustutage postitus või kommentaar"
+  },
+  "custom_json": {
+    "method": "Kohandatud JSON",
+    "title": "Kohandatud JSON taotlus",
+    "result": "Kohandatud JSON tulemus",
+    "headers": {
+      "request": "Kas soovite järgmise kohandatud JSON tehingu heaks kiita?",
+      "result": "Järgmine kohandatud JSON tehing kiideti heaks:"
+    },
+    "rows": {
+      "required_auths": "Nõutavad volitused: {required_auths}",
+      "required_posting_auths": "Nõutavad postingutunnistused: {required_posting_auths}",
+      "id": "ID: {id}",
+      "json": "JSON: {json}"
+    },
+    "tooltip": "Esitage kohandatud JSON tehing"
+  },
+  "comment_options": {
+    "method": "Kommentaari valikud",
+    "title": "Kommentaari valikute taotlus",
+    "result": "Kommentaari valikute tulemus",
+    "headers": {
+      "request": "Kas soovite järgmised kommentaari valikud heaks kiita?",
+      "result": "Järgmised kommentaari valikud kiideti heaks:"
+    },
+    "rows": {
+      "author": "Autor: {author}",
+      "permlink": "Permlink: {permlink}",
+      "max_accepted_payout": "Maksimaalne aktsepteeritud väljamakse: {max_accepted_payout}",
+      "percent_hbd": "Protsent HBD: {percent_hbd}",
+      "allow_votes": "Luba hääled: {allow_votes}",
+      "allow_curation_rewards": "Luba kureerimistasud: {allow_curation_rewards}",
+      "extensions": "Laiendused: {extensions}"
+    },
+    "tooltip": "Määrake postituse või kommentaari valikud"
+  },
+  "set_withdraw_vesting_route": {
+    "method": "Määra vestingi väljavõturuut",
+    "title": "Vestingi väljavõturuudi määramise taotlus",
+    "result": "Vestingi väljavõturuudi tulemus",
+    "headers": {
+      "request": "Kas soovite järgmise vestingi väljavõturuudi heaks kiita?",
+      "result": "Järgmine vestingi väljavõturuut kiideti heaks:"
+    },
+    "rows": {
+      "from_account": "Kontolt: {from_account}",
+      "to_account": "Kontole: {to_account}",
+      "percent": "Protsent: {percent}",
+      "auto_vest": "Automaatne vesting: {auto_vest}"
+    },
+    "tooltip": "Seadistage vestingi väljavõturuudi jaotus"
+  },
+  "claim_reward_balance": {
+    "method": "Nõu auhinnasaldot",
+    "title": "Auhinnasaldo nõudmise taotlus",
+    "result": "Auhinnasaldo tulemus",
+    "headers": {
+      "request": "Kas soovite järgmise auhinnanõude heaks kiita?",
+      "result": "Järgmine auhinnanõue kiideti heaks:"
+    },
+    "rows": {
+      "account": "Konto: {account}",
+      "reward_hive": "Auhind HIVE: {reward_hive}",
+      "reward_hbd": "Auhind HBD: {reward_hbd}",
+      "reward_vests": "Auhind VESTS: {reward_vests}"
+    },
+    "tooltip": "Nõudke kogunenud auhindu"
+  },
+  "delegate_vesting_shares": {
+    "method": "Delegeeri vestingiosakud",
+    "title": "Vestingiosakute delegeerimise taotlus",
+    "result": "Vestingi delegeerimise tulemus",
+    "headers": {
+      "request": "Kas soovite järgmise vestingi delegeerimise heaks kiita?",
+      "result": "Järgmine vestingi delegeerimine kiideti heaks:"
+    },
+    "rows": {
+      "delegator": "Delegeerija: {delegator}",
+      "delegatee": "Delegeeritav: {delegatee}",
+      "vesting_shares": "Vestingiosakud: {vesting_shares}"
+    },
+    "tooltip": "Delegeerige vestingiosakud teisele kontole"
+  },
+  "recover_account": {
+    "method": "Taasta konto",
+    "title": "Konto taastamise taotlus",
+    "result": "Konto taastamise tulemus",
+    "headers": {
+      "request": "Kas soovite järgmise konto taastamise heaks kiita?",
+      "result": "Järgmine konto taastamine kiideti heaks:"
+    },
+    "rows": {
+      "account_to_recover": "Taastatav konto: {account_to_recover}",
+      "new_owner_authority": "Uus omanikubefoetus: {new_owner_authority}",
+      "recent_owner_authority": "Hiljutine omanikubefoetus: {recent_owner_authority}",
+      "extensions": "Laiendused: {extensions}"
+    },
+    "tooltip": "Taastage varastatud või ohustatud konto"
+  },
+  "request_account_recovery": {
+    "method": "Taotle konto taastamist",
+    "title": "Konto taastamise taotlus",
+    "result": "Konto taastamise taotluse tulemus",
+    "headers": {
+      "request": "Kas soovite järgmise konto taastamise taotluse heaks kiita?",
+      "result": "Järgmine konto taastamise taotlus kiideti heaks:"
+    },
+    "rows": {
+      "recovery_account": "Taastekonto: {recovery_account}",
+      "account_to_recover": "Taastatav konto: {account_to_recover}",
+      "new_owner_authority": "Uus omanikubefoetus: {new_owner_authority}",
+      "extensions": "Laiendused: {extensions}"
+    },
+    "tooltip": "Taotlege konto taastamist taastekontona"
+  },
+  "change_recovery_account": {
+    "method": "Muuda taastekontot",
+    "title": "Taastekonto muutmise taotlus",
+    "result": "Taastekonto muutmise tulemus",
+    "headers": {
+      "request": "Kas soovite järgmise taastekonto muutmise heaks kiita?",
+      "result": "Järgmine taastekonto muutmine kiideti heaks:"
+    },
+    "rows": {
+      "account_to_recover": "Taastatav konto: {account_to_recover}",
+      "new_recovery_account": "Uus taastekonto: {new_recovery_account}",
+      "extensions": "Laiendused: {extensions}"
+    },
+    "tooltip": "Muutke konto taastekontot"
+  },
+  "transfer_to_savings": {
+    "method": "Kanna hoiustele",
+    "title": "Hoiustele ülekandmise taotlus",
+    "result": "Hoiustele ülekandmise tulemus",
+    "headers": {
+      "request": "Kas soovite järgmise hoiustele ülekande heaks kiita?",
+      "result": "Järgmine hoiustele ülekanne kiideti heaks:"
+    },
+    "rows": {
+      "from": "Kellelt: {from}",
+      "to": "Kellele: {to}",
+      "amount": "Summa: {amount}",
+      "memo": "Memo: {memo}"
+    },
+    "tooltip": "Kandke varad hoiustele"
+  },
+  "transfer_from_savings": {
+    "method": "Kanna hoiustelt",
+    "title": "Hoiustelt ülekandmise taotlus",
+    "result": "Hoiustelt ülekandmise tulemus",
+    "headers": {
+      "request": "Kas soovite järgmise hoiustelt ülekande heaks kiita?",
+      "result": "Järgmine hoiustelt ülekanne kiideti heaks:"
+    },
+    "rows": {
+      "from": "Kellelt: {from}",
+      "request_id": "Taotluse ID: {request_id}",
+      "to": "Kellele: {to}",
+      "amount": "Summa: {amount}",
+      "memo": "Memo: {memo}"
+    },
+    "tooltip": "Taotlege hoiustelt väljakandmist"
+  },
+  "cancel_transfer_from_savings": {
+    "method": "Tühista hoiustelt ülekanne",
+    "title": "Hoiustelt ülekande tühistamise taotlus",
+    "result": "Ülekande tühistamise tulemus",
+    "headers": {
+      "request": "Kas soovite järgmise ülekande tühistamise heaks kiita?",
+      "result": "Järgmine ülekande tühistamine kiideti heaks:"
+    },
+    "rows": {
+      "from": "Kellelt: {from}",
+      "request_id": "Taotluse ID: {request_id}"
+    },
+    "tooltip": "Tühistage ootel hoiustelt ülekanne"
+  },
+  "decline_voting_rights": {
+    "method": "Loobu hääleõigusest",
+    "title": "Hääleõigusest loobumise taotlus",
+    "result": "Hääleõigusest loobumise tulemus",
+    "headers": {
+      "request": "Kas soovite järgmise hääleõigusest loobumise heaks kiita?",
+      "result": "Järgmine hääleõigusest loobumine kiideti heaks:"
+    },
+    "rows": {
+      "account": "Konto: {account}",
+      "decline": "Loobu: {decline}"
+    },
+    "tooltip": "Loobuge hääleõigusest jäädavalt"
+  },
+  "claim_account": {
+    "method": "Nõu konto",
+    "title": "Konto nõudmise taotlus",
+    "result": "Konto nõudmise tulemus",
+    "headers": {
+      "request": "Kas soovite järgmise konto nõudmise heaks kiita?",
+      "result": "Järgmine konto nõudmine kiideti heaks:"
+    },
+    "rows": {
+      "fee": "Tasu: {fee}",
+      "creator": "Loov konto: {creator}",
+      "extensions": "Laiendused: {extensions}"
+    },
+    "tooltip": "Nõudke uue konto loomine"
+  },
+  "escrow_transfer": {
+    "method": "Escrow ülekanne",
+    "title": "Escrow ülekande taotlus",
+    "result": "Escrow ülekande tulemus",
+    "headers": {
+      "request": "Kas soovite järgmise escrow ülekande heaks kiita?",
+      "result": "Järgmine escrow ülekanne kiideti heaks:"
+    },
+    "rows": {
+      "from": "Kellelt: {from}",
+      "to": "Kellele: {to}",
+      "agent": "Agent: {agent}",
+      "escrow_id": "Escrow ID: {escrow_id}",
+      "hbd_amount": "HBD summa: {hbd_amount}",
+      "hive_amount": "HIVE summa: {hive_amount}",
+      "fee": "Tasu: {fee}",
+      "ratification_deadline": "Ratifikatsiooni tähtaeg: {ratification_deadline}",
+      "escrow_expiration": "Escrow aegumine: {escrow_expiration}",
+      "json_meta": "JSON-metadata: {json_meta}"
+    },
+    "tooltip": "Seadistage kontode vahel escrow ülekanne"
+  },
+  "escrow_dispute": {
+    "method": "Escrow vaidlus",
+    "title": "Escrow vaidluse taotlus",
+    "result": "Escrow vaidluse tulemus",
+    "headers": {
+      "request": "Kas soovite järgmise escrow vaidluse heaks kiita?",
+      "result": "Järgmine escrow vaidlus kiideti heaks:"
+    },
+    "rows": {
+      "from": "Kellelt: {from}",
+      "to": "Kellele: {to}",
+      "agent": "Agent: {agent}",
+      "who": "Kes: {who}",
+      "escrow_id": "Escrow ID: {escrow_id}"
+    },
+    "tooltip": "Esitage escrow ülekande vaidlus"
+  },
+  "escrow_release": {
+    "method": "Escrow vabastamine",
+    "title": "Escrow vabastamise taotlus",
+    "result": "Escrow vabastamise tulemus",
+    "headers": {
+      "request": "Kas soovite järgmise escrow vabastamise heaks kiita?",
+      "result": "Järgmine escrow vabastamine kiideti heaks:"
+    },
+    "rows": {
+      "from": "Kellelt: {from}",
+      "to": "Kellele: {to}",
+      "agent": "Agent: {agent}",
+      "who": "Kes: {who}",
+      "receiver": "Saaja: {receiver}",
+      "escrow_id": "Escrow ID: {escrow_id}",
+      "hbd_amount": "HBD summa: {hbd_amount}",
+      "hive_amount": "HIVE summa: {hive_amount}"
+    },
+    "tooltip": "Vabastage vahendid escrow ülekandest"
+  },
+  "escrow_approve": {
+    "method": "Kinnita escrow",
+    "title": "Escrow kinnitamise taotlus",
+    "result": "Escrow kinnitamise tulemus",
+    "headers": {
+      "request": "Kas soovite järgmise escrow kinnitamise heaks kiita?",
+      "result": "Järgmine escrow kinnitamine kiideti heaks:"
+    },
+    "rows": {
+      "from": "Kellelt: {from}",
+      "to": "Kellele: {to}",
+      "agent": "Agent: {agent}",
+      "who": "Kes: {who}",
+      "escrow_id": "Escrow ID: {escrow_id}",
+      "approve": "Kinnita: {approve}"
+    },
+    "tooltip": "Kinnitage escrow ülekanne"
+  },
+  "create_proposal": {
+    "method": "Loo ettepanek",
+    "title": "Ettepaneku loomise taotlus",
+    "result": "Ettepaneku loomise tulemus",
+    "headers": {
+      "request": "Kas soovite järgmise ettepaneku loomise heaks kiita?",
+      "result": "Järgmine ettepaneku loomine kiideti heaks:"
+    },
+    "rows": {
+      "creator": "Loov konto: {creator}",
+      "receiver": "Saaja: {receiver}",
+      "start_date": "Alguskuupäev: {start_date}",
+      "end_date": "Lõppkuupäev: {end_date}",
+      "daily_pay": "Päevatasu: {daily_pay}",
+      "subject": "Teema: {subject}",
+      "permlink": "Permlink: {permlink}"
+    },
+    "tooltip": "Looge valitsemise ettepanek"
+  },
+  "update_proposal_votes": {
+    "method": "Uuenda ettepaneku hääli",
+    "title": "Ettepaneku häälte uuendamise taotlus",
+    "result": "Ettepaneku häälte uuendamise tulemus",
+    "headers": {
+      "request": "Kas soovite järgmise ettepaneku hääle uuendamise heaks kiita?",
+      "result": "Järgmine ettepaneku hääle uuendamine kiideti heaks:"
+    },
+    "rows": {
+      "voter": "Hääletaja: {voter}",
+      "proposal_ids": "Ettepanekute ID-d: {proposal_ids}",
+      "approve": "Kinnita: {approve}",
+      "extensions": "Laiendused: {extensions}"
+    },
+    "tooltip": "Hääletage ettepanekute poolt või vastu"
+  },
+  "remove_proposal": {
+    "method": "Eemalda ettepanek",
+    "title": "Ettepaneku eemaldamise taotlus",
+    "result": "Ettepaneku eemaldamise tulemus",
+    "headers": {
+      "request": "Kas soovite järgmise ettepaneku eemaldamise heaks kiita?",
+      "result": "Järgmine ettepaneku eemaldamine kiideti heaks:"
+    },
+    "rows": {
+      "creator": "Loov konto: {creator}",
+      "proposal_ids": "Ettepanekute ID-d: {proposal_ids}"
+    },
+    "tooltip": "Eemaldage üks või mitu ettepanekut"
+  },
+  "update_proposal": {
+    "method": "Uuenda ettepanekut",
+    "title": "Ettepaneku uuendamise taotlus",
+    "result": "Ettepaneku uuendamise tulemus",
+    "headers": {
+      "request": "Kas soovite järgmise ettepaneku uuendamise heaks kiita?",
+      "result": "Järgmine ettepaneku uuendamine kiideti heaks:"
+    },
+    "rows": {
+      "proposal_id": "Ettepaneku ID: {proposal_id}",
+      "creator": "Loov konto: {creator}",
+      "daily_pay": "Päevatasu: {daily_pay}",
+      "subject": "Teema: {subject}",
+      "permlink": "Permlink: {permlink}"
+    },
+    "tooltip": "Uuendage olemasolevat ettepanekut"
+  },
+  "recurrent_transfer": {
+    "method": "Korduv ülekanne",
+    "title": "Korduva ülekande taotlus",
+    "result": "Korduva ülekande tulemus",
+    "headers": {
+      "request": "Kas soovite järgmise korduva ülekande heaks kiita?",
+      "result": "Järgmine korduv ülekanne kiideti heaks:"
+    },
+    "rows": {
+      "from": "Kellelt: {from}",
+      "to": "Kellele: {to}",
+      "amount": "Summa: {amount}",
+      "memo": "Memo: {memo}",
+      "recurrence": "Kordumine: {recurrence}",
+      "executions": "Täitmised: {executions}",
+      "extensions": "Laiendused: {extensions}"
+    },
+    "tooltip": "Seadistage korduvate ülekannete ajakava"
+  },
+  "custom_binary": {
+    "method": "Kohandatud binaar",
+    "title": "Kohandatud binaari taotlus",
+    "result": "Kohandatud binaari tulemus",
+    "headers": {
+      "request": "Kas soovite järgmise kohandatud binaartehingu heaks kiita?",
+      "result": "Järgmine kohandatud binaartehing kiideti heaks:"
+    },
+    "rows": {
+      "id": "ID: {id}",
+      "data": "Andmed: {data}"
+    },
+    "tooltip": "Esitage kohandatud binaartehing"
+  },
+  "custom": {
+    "method": "Kohandatud",
+    "title": "Kohandatud tehingu taotlus",
+    "result": "Kohandatud tehingu tulemus",
+    "headers": {
+      "request": "Kas soovite järgmise kohandatud tehingu heaks kiita?",
+      "result": "Järgmine kohandatud tehing kiideti heaks:"
+    },
+    "rows": {
+      "required_auths": "Nõutavad volitused: {required_auths}",
+      "id": "ID: {id}",
+      "data": "Andmed: {data}"
+    },
+    "tooltip": "Esitage kohandatud tehing"
+  },
+  "prove_authority": {
+    "method": "Tõenda autoriteet",
+    "title": "Autoriteedi tõendamise taotlus",
+    "result": "Autoriteedi tõendamise tulemus",
+    "headers": {
+      "request": "Kas soovite järgmise autoriteedi tõendamise heaks kiita?",
+      "result": "Järgmine autoriteedi tõendamine kiideti heaks:"
+    },
+    "rows": {
+      "challenged": "Vaidlustatud: {challenged}",
+      "require_owner": "Nõua omanikku: {require_owner}"
+    },
+    "tooltip": "Tõendage kontovolituse omamist"
+  }
+}

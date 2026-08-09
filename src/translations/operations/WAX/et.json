@@ -1,0 +1,125 @@
+{
+  "injectedCall": {
+    "method": "süstitud Helista",
+    "title": "Süstitud kõne taotlus",
+    "result": "Süstitud kõne tulemus",
+    "headers": {
+      "request": "Kas kinnitada järgmine süstitud kõne?",
+      "result": "Järgmine süstitud kõne kiideti heaks:"
+    },
+    "tooltip": "Palub teie rahakotil süstitud plokiahela operatsiooniga hakkama saada"
+  },
+  "regproposer": {
+    "method": "Registreeri WPS pakkuja",
+    "title": "Registreeri WPS pakkuja taotlus",
+    "result": "Registreeri WPS pakkuja tulemus",
+    "headers": {
+      "request": "Registreeri järgmine konto WPS pakkujana?",
+      "result": "Järgmine konto registreeriti WPS pakkujana:"
+    },
+    "rows": {
+      "proposer": "Pakkuja: {proposer}",
+      "proposer_key": "Pakkuja võti: {proposer_key}"
+    },
+    "tooltip": "Registreeri WPS pakkuja konto"
+  },
+  "regproposal": {
+    "method": "Registreeri WPS ettepanek",
+    "title": "Registreeri WPS ettepaneku taotlus",
+    "result": "Registreeri WPS ettepaneku tulemus",
+    "headers": {
+      "request": "Registreeri järgmine WPS ettepanek?",
+      "result": "Järgmine WPS ettepanek registreeriti:"
+    },
+    "rows": {
+      "proposer": "Pakkuja: {proposer}",
+      "proposal_name": "Ettepaneku nimi: {proposal_name}",
+      "title": "Pealkiri: {title}",
+      "pay_amount": "Makse summa: {pay_amount}"
+    },
+    "tooltip": "Registreeri uus WPS ettepanek"
+  },
+  "voteproposal": {
+    "method": "Hääleta WPS ettepaneku poolt",
+    "title": "Hääleta WPS ettepaneku taotlus",
+    "result": "Hääleta WPS ettepaneku tulemus",
+    "headers": {
+      "request": "Hääleta järgmise WPS ettepaneku poolt?",
+      "result": "Hääletati järgmise WPS ettepaneku poolt:"
+    },
+    "rows": {
+      "voter": "Hääletaja: {voter}",
+      "proposal_name": "Ettepaneku nimi: {proposal_name}",
+      "vote": "Hääl: {vote}"
+    },
+    "tooltip": "Hääleta WPS ettepaneku poolt"
+  },
+  "claimfunds": {
+    "method": "Nõua WPS vahendeid",
+    "title": "Nõua WPS vahendite taotlus",
+    "result": "Nõua WPS vahendite tulemus",
+    "headers": {
+      "request": "Nõua WPS vahendeid järgmise ettepaneku jaoks?",
+      "result": "WPS vahendid nõuti järgmise ettepaneku jaoks:"
+    },
+    "rows": {
+      "account": "Konto: {account}",
+      "proposal_name": "Ettepaneku nimi: {proposal_name}"
+    },
+    "tooltip": "Nõu heakskiidetud WPS ettepaneku vahendeid"
+  },
+  "voterclaim": {
+    "method": "Nõua WPS hääletaja preemiaid",
+    "title": "Nõua WPS hääletaja preemiaid taotlus",
+    "result": "Nõua WPS hääletaja preemiaid tulemus",
+    "headers": {
+      "request": "Nõua WPS hääletaja preemiaid?",
+      "result": "WPS hääletaja preemiad nõuti:"
+    },
+    "rows": {
+      "owner": "Omanik: {owner}"
+    },
+    "tooltip": "Nõu WPS hääletaja preemiaid"
+  },
+  "voterclaimst": {
+    "method": "Nõua WPS hääletaja panustatud preemiaid",
+    "title": "Nõua WPS hääletaja panustatud preemiaid taotlus",
+    "result": "Nõua WPS hääletaja panustatud preemiaid tulemus",
+    "headers": {
+      "request": "Nõua WPS hääletaja panustatud preemiaid?",
+      "result": "WPS hääletaja panustatud preemiad nõuti:"
+    },
+    "rows": {
+      "owner": "Omanik: {owner}",
+      "amount": "Summa: {amount}"
+    },
+    "tooltip": "Nõu WPS hääletaja panustatud preemiaid"
+  },
+  "awardgenesis": {
+    "method": "Autasusta genesis",
+    "title": "Autasusta genesis taotlus",
+    "result": "Autasusta genesis tulemus",
+    "headers": {
+      "request": "Autasusta genesis märgid järgmisele kontole?",
+      "result": "Genesis märgid autasustati järgmisele kontole:"
+    },
+    "rows": {
+      "receiver": "Saaja: {receiver}",
+      "amount": "Summa: {amount}"
+    },
+    "tooltip": "Autasusta genesis märgid kontole"
+  },
+  "claimgenesis": {
+    "method": "Nõua genesis",
+    "title": "Nõua genesis taotlus",
+    "result": "Nõua genesis tulemus",
+    "headers": {
+      "request": "Nõua genesis märgid järgmisele kontole?",
+      "result": "Genesis märgid nõuti järgmisele kontole:"
+    },
+    "rows": {
+      "receiver": "Saaja: {receiver}"
+    },
+    "tooltip": "Nõu genesis märgid"
+  }
+}

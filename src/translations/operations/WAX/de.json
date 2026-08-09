@@ -1,0 +1,125 @@
+{
+  "injectedCall": {
+    "method": "injectedCall",
+    "title": "Injizierter Aufruf Request",
+    "result": "Injizierter Aufruf Ergebnis",
+    "headers": {
+      "request": "Folgenden injizierten Aufruf genehmigen?",
+      "result": "Folgender injizierter Aufruf wurde genehmigt:"
+    },
+    "tooltip": "Bittet Ihr Wallet, einen injizierten Blockchain-Vorgang zu verarbeiten"
+  },
+  "regproposer": {
+    "method": "WPS-Vorschlagenden registrieren",
+    "title": "WPS-Vorschlagendenregistrierung Anfrage",
+    "result": "WPS-Vorschlagendenregistrierung Ergebnis",
+    "headers": {
+      "request": "Folgendes Konto als WPS-Vorschlagenden registrieren?",
+      "result": "Folgendes Konto wurde als WPS-Vorschlagender registriert:"
+    },
+    "rows": {
+      "proposer": "Vorschlagender: {proposer}",
+      "proposer_key": "Vorschlagender-Schlüssel: {proposer_key}"
+    },
+    "tooltip": "Einen WPS-Vorschlagenden registrieren"
+  },
+  "regproposal": {
+    "method": "WPS-Vorschlag registrieren",
+    "title": "WPS-Vorschlagsregistrierung Anfrage",
+    "result": "WPS-Vorschlagsregistrierung Ergebnis",
+    "headers": {
+      "request": "Folgenden WPS-Vorschlag registrieren?",
+      "result": "Folgender WPS-Vorschlag wurde registriert:"
+    },
+    "rows": {
+      "proposer": "Vorschlagender: {proposer}",
+      "proposal_name": "Vorschlagsname: {proposal_name}",
+      "title": "Titel: {title}",
+      "pay_amount": "Zahlungsbetrag: {pay_amount}"
+    },
+    "tooltip": "Einen neuen WPS-Vorschlag registrieren"
+  },
+  "voteproposal": {
+    "method": "WPS-Vorschlag abstimmen",
+    "title": "WPS-Vorschlagsabstimmung Anfrage",
+    "result": "WPS-Vorschlagsabstimmung Ergebnis",
+    "headers": {
+      "request": "Über folgenden WPS-Vorschlag abstimmen?",
+      "result": "Die Abstimmung über folgenden WPS-Vorschlag wurde genehmigt:"
+    },
+    "rows": {
+      "voter": "Wähler: {voter}",
+      "proposal_name": "Vorschlagsname: {proposal_name}",
+      "vote": "Stimme: {vote}"
+    },
+    "tooltip": "Über einen WPS-Vorschlag abstimmen"
+  },
+  "claimfunds": {
+    "method": "WPS-Mittel beanspruchen",
+    "title": "WPS-Mittel-Beanspruchung Anfrage",
+    "result": "WPS-Mittel-Beanspruchung Ergebnis",
+    "headers": {
+      "request": "WPS-Mittel für folgenden Vorschlag beanspruchen?",
+      "result": "WPS-Mittel wurden für folgenden Vorschlag beansprucht:"
+    },
+    "rows": {
+      "account": "Konto: {account}",
+      "proposal_name": "Vorschlagsname: {proposal_name}"
+    },
+    "tooltip": "Mittel von einem genehmigten WPS-Vorschlag beanspruchen"
+  },
+  "voterclaim": {
+    "method": "WPS-Wählerbelohnungen beanspruchen",
+    "title": "WPS-Wählerbelohnungen-Beanspruchung Anfrage",
+    "result": "WPS-Wählerbelohnungen-Beanspruchung Ergebnis",
+    "headers": {
+      "request": "WPS-Wählerbelohnungen beanspruchen?",
+      "result": "WPS-Wählerbelohnungen wurden beansprucht:"
+    },
+    "rows": {
+      "owner": "Besitzer: {owner}"
+    },
+    "tooltip": "WPS-Wählerbelohnungen beanspruchen"
+  },
+  "voterclaimst": {
+    "method": "WPS-Gestakete Wählerbelohnungen beanspruchen",
+    "title": "WPS-Gestakete Wählerbelohnungen-Beanspruchung Anfrage",
+    "result": "WPS-Gestakete Wählerbelohnungen-Beanspruchung Ergebnis",
+    "headers": {
+      "request": "WPS-gestakete Wählerbelohnungen beanspruchen?",
+      "result": "WPS-gestakete Wählerbelohnungen wurden beansprucht:"
+    },
+    "rows": {
+      "owner": "Besitzer: {owner}",
+      "amount": "Betrag: {amount}"
+    },
+    "tooltip": "WPS-gestakete Wählerbelohnungen beanspruchen"
+  },
+  "awardgenesis": {
+    "method": "Genesis-Token vergeben",
+    "title": "Genesis-Token-Vergabe Anfrage",
+    "result": "Genesis-Token-Vergabe Ergebnis",
+    "headers": {
+      "request": "Genesis-Token an folgendes Konto vergeben?",
+      "result": "Genesis-Token wurden an folgendes Konto vergeben:"
+    },
+    "rows": {
+      "receiver": "Empfänger: {receiver}",
+      "amount": "Betrag: {amount}"
+    },
+    "tooltip": "Genesis-Token an ein Konto vergeben"
+  },
+  "claimgenesis": {
+    "method": "Genesis-Token beanspruchen",
+    "title": "Genesis-Token-Beanspruchung Anfrage",
+    "result": "Genesis-Token-Beanspruchung Ergebnis",
+    "headers": {
+      "request": "Genesis-Token für folgendes Konto beanspruchen?",
+      "result": "Genesis-Token wurden für folgendes Konto beansprucht:"
+    },
+    "rows": {
+      "receiver": "Empfänger: {receiver}"
+    },
+    "tooltip": "Genesis-Token beanspruchen"
+  }
+}

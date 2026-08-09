@@ -6,7 +6,7 @@ export default class BlockchainAPI {
 
     constructor(config, initNode) {
         this._config = config;
-        this._node = initNode;
+        this._node = initNode && initNode.url ? initNode.url : initNode;
         this._isConnected = false;
         this._isConnectingInProgress = false;
         this._isConnectedToNode = null;
@@ -19,77 +19,68 @@ export default class BlockchainAPI {
      * @returns {Promise} connection
      */
     async ensureConnection(nodeToConnect = null) {
-        return new Promise(async (resolve, reject) => {
-            if (nodeToConnect && this._isConnectedToNode !== nodeToConnect) {
-                // enforce connection to that node
-                this._isConnected = false;
-                this._isConnectedToNode = null;
-            }
+        if (nodeToConnect && this._isConnectedToNode !== nodeToConnect) {
+            // enforce connection to that node
+            this._isConnected = false;
+            this._isConnectedToNode = null;
+        }
 
-            let badConnection = await this._needsNewConnection();
-            if (!nodeToConnect && !badConnection) {
-                console.log(`Using existing connection: ${this._isConnectedToNode}`);
-                return this._connectionEstablished(resolve, this._isConnectedToNode);
-            }
+        let badConnection = await this._needsNewConnection();
+        if (!nodeToConnect && !badConnection) {
+            console.log(`Using existing connection: ${this._isConnectedToNode}`);
+            return this._connectionEstablished(this._isConnectedToNode);
+        }
 
-            if (this._isConnectingInProgress) {
-                // there should be a promise queue for pending connects, this is the lazy way
-                console.log("Queued connection - existing connection handshake in progress.");
+        if (this._isConnectingInProgress) {
+            // there should be a promise queue for pending connects, this is the lazy way
+            console.log("Queued connection - existing connection handshake in progress.");
+            return new Promise((resolve, reject) => {
                 setTimeout(() => {
                     if (this._isConnected) {
-                        this._connectionEstablished(resolve, this._node);
+                        resolve(this._connectionEstablished(this._node));
                     } else {
-                        this._connectionFailed(
-                          reject,
-                          this._node,
-                          "Timeout"
-                        );
+                        reject(this._connectionFailed(this._node, "Timeout"));
                     }
                 }, 4000);
-                return;
-            } else {
-                this._isConnectingInProgress = true;
-            }
-
-            this._connect(nodeToConnect).then((res) => {
-                this._isConnectingInProgress = false;
-                this._isConnected = true;
-                return resolve(res);
-            }).catch((error) => {
-                console.log(error);
-                return reject(error);
             });
-        });
+        }
+
+        this._isConnectingInProgress = true;
+
+        try {
+            const res = await this._connect(nodeToConnect);
+            this._isConnectingInProgress = false;
+            this._isConnected = true;
+            return res;
+        } catch (error) {
+            console.log(error);
+            throw error;
+        }
     }
 
     /*
      * Triggers upon successful blockchain node connection. Stores successful changes.
-     * @param {callback} resolveCallback
      * @param {String} node
      * @returns {String} node
      */
-    _connectionEstablished(resolveCallback, node) {
+    _connectionEstablished(node) {
         this._isConnectedToNode = node;
         this._isConnected = true;
         this._isConnectingInProgress = false;
-        if (resolveCallback) {
-            resolveCallback(node);
-        }
+        return node;
     }
 
     /*
      * Triggers upon blockchain node connection failure. Logs and changes connection states.
-     * @param {callback} resolveCallback
      * @param {String} node
+     * @param {String} error
      * @returns {String} node
      */
-    _connectionFailed(resolveCallback, node, error) {
+    _connectionFailed(node, error) {
         console.log(this._config.name + " Failed to connect to " + node, error);
         this._isConnected = false;
         this._isConnectingInProgress = false;
-        if (resolveCallback != null) {
-            resolveCallback(node);
-        }
+        return node;
     }
 
     /*
@@ -99,29 +90,16 @@ export default class BlockchainAPI {
      * @param {String} messageText
      * @returns {Promise}
      */
-    signMessage(key, accountName, messageText) {
+    signMessage(key, accountName, messageText, chain) {
         return new Promise((resolve,reject) => {
-            // do as a list, to preserve order
-            let message = [
-                "from",
-                accountName,
-                "key",
-                this.getPublicKey(key),
-                "time",
-                new Date().toUTCString(),
-                "text",
-                messageText
-            ];
-            if (this._config.identifier !== message[2].substring(0, 3)) {
-                message.push("chain");
-                message.push(this._config.identifier);
-            }
-            message = JSON.stringify(message);
             try {
+                let signature = this._signString(key, messageText);
+                let publickey = this.getPublicKey(key);
                 resolve({
-                    signed: message,
-                    payload: JSON.parse(message),
-                    signature: this._signString(key, message)
+                    chain: chain,
+                    publickey: publickey,
+                    message: messageText,
+                    signature: signature
                 });
             } catch (err) {
                 reject(err);
@@ -136,67 +114,26 @@ export default class BlockchainAPI {
      */
     verifyMessage(signedMessage) {
         return new Promise((resolve, reject) => {
-            if (typeof signedMessage.payload.params === "string" || signedMessage.payload.params instanceof String) {
-                signedMessage.payload.params = JSON.parse(signedMessage.payload.params);
-            }
-            // parse payload
-            let payload_dict = {};
-            let payload_list = signedMessage.payload.params.payload;
-            if (payload_list[2] == "key") {
-                for (let i = 0; i < payload_list.length - 1; i = i+2) {
-                    payload_dict[payload_list[i]] = payload_list[i + 1];
-                }
-            } else {
-                for (let i = 3; i < payload_list.length - 1; i = i+2) {
-                    payload_dict[payload_list[i]] = payload_list[i + 1];
-                }
-                payload_dict.key = payload_list[2];
-                payload_dict.from = payload_list[1];
+            let params = signedMessage.payload.params;
+
+            if (!params.publickey || !params.message || !params.signature) {
+                reject("Missing required fields: publickey, message, signature");
+                return;
             }
 
-            // validate account and key
-            this._verifyAccountAndKey(payload_dict.from, payload_dict.key).then(
-                found => {
-                    if (found.account == null) {
-                        reject("invalid user");
-                    }
-                    // verify message signed
+            let verified;
+            try {
+                verified = this._verifyString(
+                    params.signature,
+                    params.publickey,
+                    params.message
+                );
+            } catch (err) {
+                reject("Error verifying signature");
+                return;
+            }
 
-                    let signedParams = signedMessage.payload.params;
-
-                    let signature;
-                    try {
-                      signature = signedParams.signature;
-                    } catch (error) {
-                      console.log(error);
-                    }
-
-                    let signed;
-                    try {
-                      signed = signedParams.signed;
-                    } catch (error) {
-                      console.log(error);
-                    }
-
-                    let verified;
-                    try {
-                        verified = this._verifyString(
-                          signature,
-                          payload_dict.key,
-                          signed
-                        );
-                    } catch (err) {
-                        // wrap message that could be raised from Signature
-                        reject("Error verifying signature", err);
-                    }
-                    if (!verified) {
-                        reject("Invalid signature");
-                    }
-                    return resolve({result: verified});
-                }
-            ).catch(err => {
-                reject(err);
-            });
+            return resolve({ result: verified });
         });
     }
 
@@ -267,7 +204,11 @@ export default class BlockchainAPI {
           account = await this.getAccount(accountName);
         } catch (error) {
           console.log(`getAccount: ${error}`);
-          return;
+          throw { key: "account_not_found" };
+        }
+
+        if (!account) {
+          throw { key: "account_not_found" };
         }
 
         let required = this.getSignUpInput();
@@ -407,34 +348,9 @@ export default class BlockchainAPI {
      getOperationTypes() {
         return [
             {
-                id: Actions.GET_ACCOUNT,
-                from: '',
-                method: Actions.GET_ACCOUNT
-            },
-            {
-                id: Actions.REQUEST_SIGNATURE,
-                from: '',
-                method: Actions.REQUEST_SIGNATURE
-            },
-            {
                 id: Actions.INJECTED_CALL,
                 from: '',
                 method: Actions.INJECTED_CALL
-            },
-            {
-                id: Actions.SIGN_MESSAGE,
-                from: '',
-                method: Actions.SIGN_MESSAGE
-            },
-            {
-                id: Actions.SIGN_NFT,
-                from: '',
-                method: Actions.SIGN_NFT
-            },
-            {
-                id: Actions.VERIFY_MESSAGE,
-                from: '',
-                method: Actions.VERIFY_MESSAGE
             }
         ];
     }
@@ -600,5 +516,12 @@ export default class BlockchainAPI {
     signNFT(thing) {
         return false;
     }
+
+    /*
+     * Cleanup persistent connections before the instance is discarded.
+     * Subclasses with persistent connections (e.g. BitShares WebSocket)
+     * must override this to tear them down.
+     */
+    async disconnect() {}
 
 }

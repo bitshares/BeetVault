@@ -2,6 +2,13 @@
     import { computed, ref, watchEffect, onMounted } from "vue";
     import { useI18n } from 'vue-i18n';
     import {formatChain} from "../../lib/formatter.js";
+    import { Button } from '@/components/ui/ui/button';
+    import { Card, CardContent, CardHeader, CardTitle, CardFooter } from '@/components/ui/ui/card';
+    import { Textarea } from '@/components/ui/ui/textarea';
+    import { Alert, AlertDescription } from '@/components/ui/ui/alert';
+    import { Pagination, PaginationContent, PaginationItem, PaginationPrevious, PaginationNext } from '@/components/ui/ui/pagination';
+    import { Switch } from '@/components/ui/ui/switch';
+    import { Dialog, DialogContent, DialogTitle } from '@/components/ui/ui/dialog';
 
     const { t } = useI18n({ useScope: 'global' });
 
@@ -47,6 +54,7 @@
     let open = ref(false);
     let page = ref(1);
     let receipt = ref(false);
+    let isApproving = ref(false);
 
     let tableTooltip = computed(() => {
         if (!props.request) {
@@ -84,6 +92,8 @@
     });
 
     function _clickedAllow() {
+        if (isApproving.value) return;
+        isApproving.value = true;
         window.electron.clickedAllow({
             result: {
                 success: true,
@@ -125,166 +135,130 @@
     });
 </script>
 <template>
-    <div style="padding-bottom:5px;">
-        {{ tableTooltip }}
-    </div>
-    <div>
-        {{ 
-            parsedParameters && parsedParameters.length > 1
-                ? t('operations.rawsig.summary', {numOps: parsedParameters.length})
-                : t('operations.rawsig.summary_single')
-        }}
-    </div>
-    <div
-        v-if="!!parsedParameters"
-        class="text-left custom-content"
-        style="marginTop: 10px;"
-    >
-        <ui-card>
-            <ui-card-content>
-                <ui-card-text>
-                    <div
-                        v-if="parsedParameters.length > 1"
-                        :class="$tt('subtitle1')"
-                    >
-                        {{ t(parsedParameters[page - 1].title) }} ({{ page }}/{{ parsedParameters.length }})
-                    </div>
-                    <div
-                        v-else
-                        :class="$tt('subtitle1')"
-                    >
-                        {{ t(parsedParameters[page - 1].title) }}
-                    </div>
-                    <div>
+    <div class="space-y-4">
+        <p class="text-sm">{{ tableTooltip }}</p>
+        <p class="text-sm">
+            {{ 
+                parsedParameters && parsedParameters.length > 1
+                    ? t('operations.rawsig.summary', {numOps: parsedParameters.length})
+                    : t('operations.rawsig.summary_single')
+            }}
+        </p>
+
+        <div v-if="!!parsedParameters" class="space-y-3">
+            <Card>
+                <CardHeader>
+                    <CardTitle class="text-lg">
+                        <span v-if="parsedParameters.length > 1">
+                            {{ t(parsedParameters[page - 1].title) }} ({{ page }}/{{ parsedParameters.length }})
+                        </span>
+                        <span v-else>
+                            {{ t(parsedParameters[page - 1].title) }}
+                        </span>
+                    </CardTitle>
+                </CardHeader>
+                <CardContent class="space-y-2">
+                    <p class="text-sm text-muted-foreground">
                         {{ t(`operations.injected.${props.request.payload.chain === "BTS_TEST" ? "BTS" : props.request.payload.chain}.${parsedParameters[page - 1].method}.headers.request`) }}
-                    </div>
-                    <div
+                    </p>
+                    <p
                         v-for="row in parsedParameters[page - 1].rows"
                         :key="row.key"
-                        :class="$tt('subtitle2')"
+                        class="text-sm font-medium text-muted-foreground"
                     >
                         {{ t(`operations.injected.${props.request.payload.chain === "BTS_TEST" ? "BTS" : props.request.payload.chain}.${parsedParameters[page - 1].method}.rows.${row.key}`, row.params) }}
-                    </div>
-                </ui-card-text>
-            </ui-card-content>
-            <ui-card-actions>
-                <ui-card-buttons>
-                    <ui-button
-                        outlined
-                        @click="open = true"
-                    >
+                    </p>
+                </CardContent>
+                <CardFooter>
+                    <Button variant="outline" @click="open = true">
                         {{ t('common.popup.request') }}
-                    </ui-button>
-                </ui-card-buttons>
-                <ui-card-icons />
-            </ui-card-actions>
-        </ui-card>
-        <ui-pagination
-            v-model="page"
-            :total="parsedParameters.length"
-            mini
-            show-total
-            :page-size="[1]"
-            position="center"
-        />
+                    </Button>
+                </CardFooter>
+            </Card>
 
-        <h4 class="h4 beet-typo-small">
-            {{ t('operations.rawsig.receipt.title') }}
-        </h4>
-        <ui-switch
-            v-model="receipt"
-            input-id="enable-receipt"
-            style="margin-bottom: 5px;"
-        />
-        <label
-            :for="'enable-receipt'"
-            style="margin-left: 15px;"
-        >
-            {{ t(`operations.rawsig.receipt.${receipt ? "yes" : "no"}`) }}
-        </label>
+            <Pagination
+                v-model:page="page"
+                :total="parsedParameters.length"
+                :items-per-page="1"
+                :sibling-count="0"
+                show-edges
+            >
+                <PaginationContent v-slot="{ items }">
+                    <PaginationPrevious />
+                    <template v-for="(item, index) in items" :key="index">
+                        <PaginationItem :value="item.value" :is-active="item.value === page" @click="page = item.value">
+                            {{ item.value }}
+                        </PaginationItem>
+                    </template>
+                    <PaginationNext />
+                </PaginationContent>
+            </Pagination>
 
-        <h4 class="h4 beet-typo-small">
-            {{ t('operations.rawsig.request_cta') }}
-        </h4>
-        <ui-alert
-            v-if="warning"
-            state="warning"
-        >
-            {{ 
-                warning && warning === "serverError"
-                    ? t("operations.transfer.server_error")
-                    : null
-            }}
-            {{
-                warning && warning !== "serverError"
-                    ? t("operations.transfer.detected_scammer")
-                    : null
-            }}
-        </ui-alert>
-        <div
-            v-if="!!parsedParameters"
-            style="padding-bottom: 25px;"
-        >
-            <ui-button
-                raised
-                style="margin-right:5px"
-                @click="_clickedAllow()"
-            >
-                {{ buttonText }}
-            </ui-button>
-            <ui-button
-                raised
-                @click="_clickedDeny()"
-            >
-                {{ t('operations.rawsig.reject_btn') }}
-            </ui-button>
+            <h4 class="text-lg font-bold">{{ t('operations.rawsig.receipt.title') }}</h4>
+            <div class="flex items-center gap-2">
+                <Switch
+                    v-model="receipt"
+                    id="enable-receipt"
+                />
+                <label for="enable-receipt" class="text-sm">
+                    {{ t(`operations.rawsig.receipt.${receipt ? "yes" : "no"}`) }}
+                </label>
+            </div>
+
+            <h4 class="text-lg font-bold">{{ t('operations.rawsig.request_cta') }}</h4>
+
+            <Alert v-if="warning" class="border-yellow-500 bg-yellow-50">
+                <AlertDescription>
+                    {{
+                        warning && warning === "serverError"
+                            ? t("operations.transfer.server_error")
+                            : null
+                    }}
+                    {{
+                        warning && warning !== "serverError"
+                            ? t("operations.transfer.detected_scammer")
+                            : null
+                    }}
+                </AlertDescription>
+            </Alert>
+
+            <div v-if="!!parsedParameters" class="flex flex-wrap gap-2">
+                <Button @click="_clickedAllow()" :disabled="isApproving">
+                    {{ buttonText }}
+                </Button>
+                <Button variant="outline" @click="_clickedDeny()">
+                    {{ t('operations.rawsig.reject_btn') }}
+                </Button>
+            </div>
+            <div v-else class="flex flex-wrap gap-2">
+                <Button disabled>
+                    {{ buttonText }}
+                </Button>
+                <Button variant="outline" @click="_clickedDeny()">
+                    {{ t('operations.rawsig.reject_btn') }}
+                </Button>
+            </div>
         </div>
-        <div
-            v-else
-            style="padding-bottom: 25px;"
-        >
-            <ui-button
-                raised
-                style="margin-right:5px"
-                disabled
-            >
-                {{ buttonText }}
-            </ui-button>
-            <ui-button
-                raised
-                @click="_clickedDeny()"
-            >
-                {{ t('operations.rawsig.reject_btn') }}
-            </ui-button>
-        </div>
-    </div>
-    <div
-        v-else
-        class="text-left custom-content"
-    >
-        <pre>
-            {{ t('operations.rawsig.loading') }}
-        </pre>
-    </div>
 
-    <ui-dialog
-        v-model="open"
-        fullscreen
-    >
-        <ui-dialog-title v-if="parsedParameters.length > 1">
-            {{ t(parsedParameters[page - 1].title) }} ({{ page }}/{{ parsedParameters.length }})
-        </ui-dialog-title>
-        <ui-dialog-title v-else>
-            {{ t(parsedParameters[page - 1].title) }}
-        </ui-dialog-title>
-        <ui-dialog-content>
-            <ui-textfield
-                v-model="jsonData"
-                input-type="textarea"
-                fullwidth
-                disabled
-                rows="8"
-            />
-        </ui-dialog-content>
-    </ui-dialog>
+        <div v-else class="text-left">
+            <pre>{{ t('operations.rawsig.loading') }}</pre>
+        </div>
+
+        <Dialog v-model:open="open">
+            <DialogContent>
+                <DialogTitle v-if="parsedParameters.length > 1">
+                    {{ t(parsedParameters[page - 1].title) }} ({{ page }}/{{ parsedParameters.length }})
+                </DialogTitle>
+                <DialogTitle v-else>
+                    {{ t(parsedParameters[page - 1].title) }}
+                </DialogTitle>
+                <Textarea
+                    v-model="jsonData"
+                    disabled
+                    class="w-full"
+                    rows="8"
+                />
+            </DialogContent>
+        </Dialog>
+    </div>
 </template>

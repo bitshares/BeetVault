@@ -1,15 +1,28 @@
 <script setup>
-    import { ref, computed, watchEffect, onMounted, toRaw } from 'vue';
+    import { ref, computed, watch, watchEffect, onMounted, toRaw } from 'vue';
     import { useI18n } from 'vue-i18n';
+    import { Button } from '@/components/ui/ui/button';
+    import { Card, CardContent } from '@/components/ui/ui/card';
+    import { Badge } from '@/components/ui/ui/badge';
+    import { Shield, ThumbsUp, Loader2, Info } from 'lucide-vue-next';
 
     import AccountSelect from "./account-select";
     import Operations from "./blockchains/operations";
     
-    import store from '../store/index.js';
+    import { useWalletStore } from '@/stores/walletStore.js';
+    import { useAccountStore } from '@/stores/accountStore.js';
+    import { useSettingsStore } from '@/stores/settingsStore.js';
+    import { usePopupStore } from '@/stores/popupStore.js';
+    import { blockchainRequest } from '@/lib/blockchainRequestHelper.js';
     import router from '../router/index.js';
-    import { watch } from 'vue';
 
     const { t } = useI18n({ useScope: 'global' });
+    const walletStore = useWalletStore();
+    const accountStore = useAccountStore();
+    const settingsStore = useSettingsStore();
+    const popupStore = usePopupStore();
+
+    let hasActivePopup = computed(() => popupStore.hasActivePopup);
 
     let selectedRows = ref();
     let chosenScope = ref();
@@ -24,10 +37,11 @@
         window.electron.resetTimer();
         chosenScope.value = newValue;
         if (newValue === 'AllowAll') {
-            const _ids = operationTypes.value.map(type => type.id);
+            const _ids = operationTypes.value
+                .map(type => type.id)
+                .filter(id => id !== 'injectedCall');
             selectedRows.value = _ids;
-            store.dispatch(
-                "SettingsStore/setChainPermissions",
+            settingsStore.setChainPermissions(
                 {
                     chain: chain.value,
                     rows: _ids
@@ -37,10 +51,10 @@
     }
 
     let selectedAccount = computed(() => {
-        if (!store.state.WalletStore.isUnlocked) {
+        if (!walletStore.isUnlocked) {
             return;
         }
-        return store.getters["AccountStore/getCurrentSafeAccount"]()
+        return accountStore.getCurrentSafeAccount()
     })
 
     watch(selectedAccount, async (newVal, oldVal) => {
@@ -50,18 +64,18 @@
     }, {immediate: true});
 
     let chain = computed(() => {
-        return store.getters['AccountStore/getChain'];
+        return accountStore.getChain;
     });
 
     let compatibleChain = ref();
     let operationTypes = ref([]);
     watchEffect(() => {
         async function initialize() {
-            let blockchainRequest;
+            let blockchainResponse;
             try {
-                blockchainRequest = await window.electron.blockchainRequest(
-                    { 
-                        methods: ['supportsTOTP', 'getOperationTypes'],
+                blockchainResponse = await blockchainRequest(
+                    {
+                        methods: ['getOperationTypes'],
                         chain: chain.value
                     }
                 );
@@ -69,13 +83,11 @@
                 console.error(error);
             }
 
-            if (blockchainRequest) {
-                const { supportsTOTP, getOperationTypes } = blockchainRequest;
-                if (supportsTOTP) {
-                    compatibleChain.value = supportsTOTP;
-                }
+            if (blockchainResponse) {
+                const { getOperationTypes } = blockchainResponse;
                 if (getOperationTypes) {
                     operationTypes.value = getOperationTypes;
+                    compatibleChain.value = true;
                 }
             }
         }
@@ -86,13 +98,13 @@
 
     let deepLinkInProgress = ref(false);
     window.electron.onRawDeepLink(async (args) => {
-        if (!store.state.WalletStore.isUnlocked || router.currentRoute.value.path != "/raw-link") {
+        if (!walletStore.isUnlocked || router.currentRoute.value.path != "/raw-link") {
             console.log("Wallet must be unlocked for raw deeplinks to work.");
             window.electron.notify(t("common.raw.promptFailure"));
             return;
         }
 
-        let account = store.getters['AccountStore/getCurrentSafeAccount']();
+        let account = accountStore.getCurrentSafeAccount();
         if (!account) {
             console.log('No account')
             deepLinkInProgress.value = false;
@@ -103,9 +115,9 @@
 
         deepLinkInProgress.value = true;
 
-        let blockchainRequest;
+        let blockchainResponse;
         try {
-            blockchainRequest = await window.electron.blockchainRequest(
+            blockchainResponse = await blockchainRequest(
                 { 
                     methods: ['getRawLink'],
                     chain: account.chain,
@@ -120,22 +132,22 @@
             return;
         }
 
-        if (!blockchainRequest || !blockchainRequest.getRawLink) {
+        if (!blockchainResponse || !blockchainResponse.getRawLink) {
             console.log("Raw link processing error");
             window.electron.notify(t("common.raw.promptFailure"));
             deepLinkInProgress.value = false;
             return;
         }
         
-        console.log({result: blockchainRequest.getRawLink});
+        console.log({result: blockchainResponse.getRawLink});
         window.electron.notify(t("common.local.promptSuccess"));
         deepLinkInProgress.value = false;
     });
 
     onMounted(() => {
-        if (!store.state.WalletStore.isUnlocked) {
+        if (!walletStore.isUnlocked) {
             console.log("logging user out...");
-            store.dispatch("WalletStore/logout");
+            walletStore.logout();
             router.replace("/");
             return;
         }
@@ -143,110 +155,79 @@
 </script>
 
 <template>
-    <div
-        class="bottom p-0"
-    >
-        <span v-if="operationTypes && compatibleChain">
-            <AccountSelect />
-            <span v-if="deepLinkInProgress">
-                <p style="marginBottom:0px;">
-                    {{ t('common.totp.inProgress') }}
-                </p>
-                <ui-card
-                    v-shadow="3"
-                    outlined
-                    style="marginTop: 5px;"
-                >
-                    <br>
-                    <ui-progress indeterminate />
-                    <br>
-                </ui-card>
-            </span>
-            <span v-else>
-                <p style="marginBottom:0px;">
-                    {{ t('common.raw.label') }}
-                </p>
-                <p style="marginBottom:0px;">
-                    {{ t('common.raw.desc') }}
-                </p>
-                <ui-card
-                    v-shadow="3"
-                    outlined
-                    style="marginTop: 5px;"
-                >
-                    <span v-if="!chosenScope">
-                        <p>
-                            {{ t('common.chosenScope.title.rawLink') }}
-                        </p>
-                        <ui-button
-                            raised
-                            style="margin-right:5px; margin-bottom: 5px;"
-                            @click="setScope('Configure')"
-                        >
-                            {{ t('common.chosenScope.yes') }}
-                        </ui-button>
-                        <ui-button
-                            raised
-                            style="margin-right:5px; margin-bottom: 5px;"
-                            @click="setScope('AllowAll')"
-                        >
-                            {{ t('common.chosenScope.no') }}
-                        </ui-button>
-                    </span>
-                    <span v-else-if="chosenScope == 'Configure' && !selectedRows">
-                        <Operations
-                            :ops="operationTypes"
-                            :chain="chain"
-                            @selected="(ops) => selectedRows = ops"
-                            @exit="() => {
-                                chosenScope = null;
-                                selectedRows = null;
-                            }"
-                        />
-                    </span>
+    <div class="bottom p-0">
+        <div v-if="operationTypes && compatibleChain" class="px-4 py-3 space-y-4">
+            <AccountSelect :disabled="hasActivePopup" />
 
-                    <span v-if="chosenScope && selectedRows">
-                        <ui-chips
-                            id="input-chip-set"
-                            type="input"
-                        >
-                            <ui-chip
-                                icon="security"
-                                style="margin-left:30px;"
-                            >
-                                {{ selectedRows ? selectedRows.length : 0 }} {{ t('common.totp.chosen') }}
-                            </ui-chip>
-                            <ui-chip
-                                icon="thumb_up"
-                            >
-                                Ready for raw links!
-                            </ui-chip>
-                        </ui-chips>
-                    </span>
-                </ui-card>
-            </span>
-            <ui-button
-                v-if="chosenScope && selectedRows"
-                style="margin-right:5px"
-                icon="arrow_back_ios"
-                @click="goBack"
-            >
+            <div v-if="deepLinkInProgress" class="flex flex-col items-center gap-2">
+                <p class="mb-0">{{ t('common.totp.inProgress') }}</p>
+                <Card class="w-full max-w-sm shadow-sm border">
+                    <CardContent class="flex flex-col items-center py-4">
+                        <Loader2 class="h-6 w-6 animate-spin" />
+                    </CardContent>
+                </Card>
+            </div>
+
+            <div v-else class="space-y-4">
+                <p class="mb-0">{{ t('common.raw.label') }}</p>
+                <p class="mb-0">{{ t('common.raw.desc') }}</p>
+
+                <Card class="w-full shadow-sm border">
+                    <CardContent class="space-y-4 p-4">
+                        <div v-if="!chosenScope">
+                            <p class="mb-3">{{ t('common.chosenScope.title.rawLink') }}</p>
+                            <div class="flex flex-wrap gap-2">
+                                <Button @click="setScope('Configure')">
+                                    {{ t('common.chosenScope.yes') }}
+                                </Button>
+                                <Button variant="outline" @click="setScope('AllowAll')">
+                                    {{ t('common.chosenScope.no') }}
+                                </Button>
+                            </div>
+                        </div>
+
+                        <div v-else-if="chosenScope == 'Configure' && !selectedRows">
+                            <Operations
+                                :ops="operationTypes"
+                                :chain="chain"
+                                @selected="(ops) => selectedRows = ops"
+                                @exit="() => {
+                                    chosenScope = null;
+                                    selectedRows = null;
+                                }"
+                            />
+                        </div>
+
+                        <div v-if="chosenScope && selectedRows" class="space-y-3">
+                            <div class="flex flex-wrap gap-2">
+                                <Badge variant="secondary" class="flex items-center gap-1">
+                                    <Shield class="h-3 w-3" />
+                                    {{ selectedRows ? selectedRows.length : 0 }} {{ t('common.totp.chosen') }}
+                                </Badge>
+                                <Badge variant="default" class="flex items-center gap-1">
+                                    <ThumbsUp class="h-3 w-3" />
+                                    {{ t('common.raw.ready') }}
+                                </Badge>
+                            </div>
+                        </div>
+                    </CardContent>
+                </Card>
+            </div>
+
+        </div>
+
+        <div v-else class="px-4 py-3">
+            {{ t('common.chain.unsupported') }}
+        </div>
+
+        <div class="flex justify-between items-center px-4 pt-2 pb-4">
+            <Button v-if="chosenScope && selectedRows" variant="outline" @click="goBack" :disabled="hasActivePopup">
                 {{ t('common.qr.back') }}
-            </ui-button>
-            <router-link
-                :to="'/dashboard'"
-                replace
-            >
-                <ui-button
-                    outlined
-                    class="step_btn"
-                >
-                    {{ t('common.raw.exit') }}
-                </ui-button>
-            </router-link>
-        </span>
-        <span v-else>
-            Unsupported chain.
-        </span>
+            </Button>
+            <div v-else></div>
+            <Button variant="outline" @click="router.replace('/dashboard')" :disabled="hasActivePopup">
+                {{ t('common.raw.exit') }}
+            </Button>
+        </div>
     </div>
 </template>

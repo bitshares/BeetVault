@@ -1,6 +1,9 @@
 <script setup>
     import { watchEffect, ref, computed } from "vue";
     import { useI18n } from 'vue-i18n';
+    import { Button } from '@/components/ui/ui/button';
+    import { Card } from '@/components/ui/ui/card';
+    import { Skeleton } from '@/components/ui/ui/skeleton';
 
     const { t } = useI18n({ useScope: 'global' });
 
@@ -75,75 +78,80 @@
                             undefined,
                             { minimumFractionDigits: balance.precision }
                         ),
-
                         asset_name: balance.asset_name
                     }
                 }),
-                thead: [
-                    {
-                        value: 'Asset name',
-                        sort: 'asc',
-                        columnId: 'asset_name'
-                    },
-                    {
-                        value: 'Balance',
-                        columnId: 'balance'
-                    },
-                ],
-                tbody: ['asset_name', 'balance'],
             };
+        } else {
+            tableData.value = null;
         }
     });
 </script>
 
 <template>
-    <div style="padding:5px">
-        {{ t('common.balances_lbl') }}
-        <ui-button
-            v-if="isConnected || balances"
-            class="step_btn"
-            @click="loadBalances()"
-        >
-            {{ t('common.balances.refresh') }}
-        </ui-button>
-        <ui-button
-            v-else-if="!isConnected && !isConnecting"
-            class="step_btn"
-            @click="loadBalances()"
-        >
-            {{ t('common.balances.reconnect') }}
-        </ui-button>
+    <div class="px-2 py-3">
+        <div class="flex items-center justify-between mb-2">
+            <span class="font-medium">
+                {{ t('common.balances_lbl') }}
+            </span>
+            <Button
+                v-if="isConnected || (balances && balances.length)"
+                @click="loadBalances()"
+            >
+                {{ t('common.balances.refresh') }}
+            </Button>
+            <Button
+                v-else-if="!isConnected && !isConnecting"
+                @click="loadBalances()"
+            >
+                {{ t('common.balances.reconnect') }}
+            </Button>
+        </div>
 
-        <ui-table
-            v-if="tableData"
-            v-shadow="1"
-            :data="tableData.data"
-            :thead="tableData.thead"
-            :tbody="tableData.tbody"
-            style="height: 180px;"
-        />
-        <ui-card
-            v-if="balances && !balances.length"
-            v-shadow="1"
-            outlined
+        <div v-if="isConnecting" class="border rounded-md p-4">
+            <Skeleton class="h-4 w-[250px]" />
+        </div>
+
+        <Card
+            v-else-if="tableData && tableData.data && tableData.data.length"
+            class="shadow-sm border overflow-hidden"
+        >
+            <div class="flex items-center px-3 py-2 border-b bg-muted/50">
+                <div class="flex-1 text-sm font-medium text-left">
+                    {{ t('common.balances.asset_name') }}
+                </div>
+                <div class="w-32 text-sm font-medium text-left">
+                    {{ t('common.balances.balance') }}
+                </div>
+            </div>
+            <div class="overflow-y-auto" style="max-height: 180px;">
+                <div
+                    v-for="(row, idx) in tableData.data"
+                    :key="idx"
+                    class="flex items-center px-3 py-2 border-b last:border-b-0"
+                >
+                    <div class="flex-1 text-sm text-left">
+                        {{ row.asset_name }}
+                    </div>
+                    <div class="w-32 text-sm text-left">
+                        {{ row.balance }}
+                    </div>
+                </div>
+            </div>
+        </Card>
+
+        <Card
+            v-else-if="balances && !balances.length && isConnected"
+            class="shadow-sm border p-3 text-sm text-muted-foreground"
         >
             {{ t('common.balances.empty') }}
-        </ui-card>
-        <ui-card
-            v-if="isConnecting"
-            v-shadow="1"
-            outlined
-            style="padding:5px; text-align: center;"
-        >
-            <ui-skeleton active />
-        </ui-card>
-        <ui-card
-            v-if="!isConnected && !isConnecting"
-            v-shadow="1"
-            outlined
-            style="padding:5px"
+        </Card>
+
+        <Card
+            v-else-if="!isConnected && !isConnecting"
+            class="shadow-sm border p-3 text-sm text-muted-foreground"
         >
             {{ t('common.balances.error') }}
-        </ui-card>
+        </Card>
     </div>
 </template>

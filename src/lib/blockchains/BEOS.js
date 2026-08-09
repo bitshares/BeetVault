@@ -1,6 +1,11 @@
-import EOSmainnet from "./EOSmainnet.js";
+import Antelope from "./Antelope.js";
+import beautify from "./Vaulta/beautify.js";
 
-export default class BEOS extends EOSmainnet {
+export default class BEOS extends Antelope {
+
+    get beautifyModule() {
+        return beautify;
+    }
 
     getExplorer(object, chain) {
         if (object.accountName) {

@@ -1,0 +1,334 @@
+{
+  "version": 1,
+  "sections": [
+    {
+      "id": "index",
+      "titleKey": "docs.nav.home",
+      "path": "index.md",
+      "icon": "BookOpen"
+    },
+    {
+      "id": "blockchains",
+      "titleKey": "docs.nav.blockchains",
+      "path": "blockchains.md",
+      "icon": "Blocks",
+      "items": [
+        {
+          "id": "chain-bitshares",
+          "titleKey": "docs.nav.chainBitshares",
+          "path": "chains/bitshares/overview.md",
+          "items": [
+            {
+              "id": "chain-bitshares-overview",
+              "titleKey": "docs.nav.chainOverview",
+              "path": "chains/bitshares/overview.md"
+            },
+            {
+              "id": "chain-bitshares-operations",
+              "titleKey": "docs.nav.chainOperations",
+              "path": "chains/bitshares/operations.md"
+            }
+          ]
+        },
+        {
+          "id": "chain-vaulta",
+          "titleKey": "docs.nav.chainVaulta",
+          "path": "chains/vaulta/overview.md",
+          "items": [
+            {
+              "id": "chain-vaulta-overview",
+              "titleKey": "docs.nav.chainOverview",
+              "path": "chains/vaulta/overview.md"
+            },
+            {
+              "id": "chain-vaulta-operations",
+              "titleKey": "docs.nav.chainOperations",
+              "path": "chains/vaulta/operations.md"
+            }
+          ]
+        },
+        {
+          "id": "chain-wax",
+          "titleKey": "docs.nav.chainWax",
+          "path": "chains/wax/overview.md",
+          "items": [
+            {
+              "id": "chain-wax-overview",
+              "titleKey": "docs.nav.chainOverview",
+              "path": "chains/wax/overview.md"
+            },
+            {
+              "id": "chain-wax-operations",
+              "titleKey": "docs.nav.chainOperations",
+              "path": "chains/wax/operations.md"
+            }
+          ]
+        },
+        {
+          "id": "chain-telos",
+          "titleKey": "docs.nav.chainTelos",
+          "path": "chains/telos/overview.md",
+          "items": [
+            {
+              "id": "chain-telos-overview",
+              "titleKey": "docs.nav.chainOverview",
+              "path": "chains/telos/overview.md"
+            },
+            {
+              "id": "chain-telos-operations",
+              "titleKey": "docs.nav.chainOperations",
+              "path": "chains/telos/operations.md"
+            }
+          ]
+        },
+        {
+          "id": "chain-fio",
+          "titleKey": "docs.nav.chainFio",
+          "path": "chains/fio/overview.md",
+          "items": [
+            {
+              "id": "chain-fio-overview",
+              "titleKey": "docs.nav.chainOverview",
+              "path": "chains/fio/overview.md"
+            },
+            {
+              "id": "chain-fio-operations",
+              "titleKey": "docs.nav.chainOperations",
+              "path": "chains/fio/operations.md"
+            }
+          ]
+        },
+        {
+          "id": "chain-libre",
+          "titleKey": "docs.nav.chainLibre",
+          "path": "chains/libre/overview.md",
+          "items": [
+            {
+              "id": "chain-libre-overview",
+              "titleKey": "docs.nav.chainOverview",
+              "path": "chains/libre/overview.md"
+            },
+            {
+              "id": "chain-libre-operations",
+              "titleKey": "docs.nav.chainOperations",
+              "path": "chains/libre/operations.md"
+            }
+          ]
+        },
+        {
+          "id": "chain-xpr-network",
+          "titleKey": "docs.nav.chainXprNetwork",
+          "path": "chains/xpr-network/overview.md",
+          "items": [
+            {
+              "id": "chain-xpr-network-overview",
+              "titleKey": "docs.nav.chainOverview",
+              "path": "chains/xpr-network/overview.md"
+            },
+            {
+              "id": "chain-xpr-network-operations",
+              "titleKey": "docs.nav.chainOperations",
+              "path": "chains/xpr-network/operations.md"
+            }
+          ]
+        },
+        {
+          "id": "chain-beos",
+          "titleKey": "docs.nav.chainBeos",
+          "path": "chains/beos/overview.md",
+          "items": [
+            {
+              "id": "chain-beos-overview",
+              "titleKey": "docs.nav.chainOverview",
+              "path": "chains/beos/overview.md"
+            },
+            {
+              "id": "chain-beos-operations",
+              "titleKey": "docs.nav.chainOperations",
+              "path": "chains/beos/operations.md"
+            }
+          ]
+        },
+        {
+          "id": "chain-hive",
+          "titleKey": "docs.nav.chainHive",
+          "path": "chains/hive/overview.md",
+          "items": [
+            {
+              "id": "chain-hive-overview",
+              "titleKey": "docs.nav.chainOverview",
+              "path": "chains/hive/overview.md"
+            },
+            {
+              "id": "chain-hive-operations",
+              "titleKey": "docs.nav.chainOperations",
+              "path": "chains/hive/operations.md"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "deeplinks",
+      "titleKey": "docs.nav.deeplinks",
+      "path": "deeplinks/totp/overview.md",
+      "icon": "Link",
+      "items": [
+        {
+          "id": "deeplinks-totp",
+          "titleKey": "docs.nav.deeplinksTotp",
+          "path": "deeplinks/totp/overview.md",
+          "icon": "Clock",
+          "items": [
+            {
+              "id": "deeplinks-totp-overview",
+              "titleKey": "docs.nav.deeplinksOverview",
+              "path": "deeplinks/totp/overview.md"
+            },
+            {
+              "id": "deeplinks-totp-bts",
+              "titleKey": "docs.nav.deeplinksBts",
+              "path": "deeplinks/totp/bts.md"
+            },
+            {
+              "id": "deeplinks-totp-antelope",
+              "titleKey": "docs.nav.deeplinksAntelope",
+              "path": "deeplinks/totp/antelope.md"
+            },
+            {
+              "id": "deeplinks-totp-hive",
+              "titleKey": "docs.nav.deeplinksHive",
+              "path": "deeplinks/totp/hive.md"
+            }
+          ]
+        },
+        {
+          "id": "deeplinks-raw",
+          "titleKey": "docs.nav.deeplinksRaw",
+          "path": "deeplinks/raw/overview.md",
+          "icon": "Code",
+          "items": [
+            {
+              "id": "deeplinks-raw-overview",
+              "titleKey": "docs.nav.deeplinksOverview",
+              "path": "deeplinks/raw/overview.md"
+            },
+            {
+              "id": "deeplinks-raw-bts",
+              "titleKey": "docs.nav.deeplinksBts",
+              "path": "deeplinks/raw/bts.md"
+            },
+            {
+              "id": "deeplinks-raw-antelope",
+              "titleKey": "docs.nav.deeplinksAntelope",
+              "path": "deeplinks/raw/antelope.md"
+            },
+            {
+              "id": "deeplinks-raw-hive",
+              "titleKey": "docs.nav.deeplinksHive",
+              "path": "deeplinks/raw/hive.md"
+            }
+          ]
+        },
+        {
+          "id": "deeplinks-qr",
+          "titleKey": "docs.nav.deeplinksQr",
+          "path": "deeplinks/qr/overview.md",
+          "icon": "ScanLine",
+          "items": [
+            {
+              "id": "deeplinks-qr-overview",
+              "titleKey": "docs.nav.deeplinksOverview",
+              "path": "deeplinks/qr/overview.md"
+            },
+            {
+              "id": "deeplinks-qr-bts",
+              "titleKey": "docs.nav.deeplinksBts",
+              "path": "deeplinks/qr/bts.md"
+            },
+            {
+              "id": "deeplinks-qr-antelope",
+              "titleKey": "docs.nav.deeplinksAntelope",
+              "path": "deeplinks/qr/antelope.md"
+            },
+            {
+              "id": "deeplinks-qr-hive",
+              "titleKey": "docs.nav.deeplinksHive",
+              "path": "deeplinks/qr/hive.md"
+            }
+          ]
+        },
+        {
+          "id": "deeplinks-json-file",
+          "titleKey": "docs.nav.deeplinksJsonFile",
+          "path": "deeplinks/json-file/overview.md",
+          "icon": "FileJson",
+          "items": [
+            {
+              "id": "deeplinks-json-file-overview",
+              "titleKey": "docs.nav.deeplinksOverview",
+              "path": "deeplinks/json-file/overview.md"
+            },
+            {
+              "id": "deeplinks-json-file-bts",
+              "titleKey": "docs.nav.deeplinksBts",
+              "path": "deeplinks/json-file/bts.md"
+            },
+            {
+              "id": "deeplinks-json-file-antelope",
+              "titleKey": "docs.nav.deeplinksAntelope",
+              "path": "deeplinks/json-file/antelope.md"
+            },
+            {
+              "id": "deeplinks-json-file-hive",
+              "titleKey": "docs.nav.deeplinksHive",
+              "path": "deeplinks/json-file/hive.md"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "sign-message",
+      "titleKey": "docs.nav.signMessage",
+      "path": "sign-message.md",
+      "icon": "PenLine"
+    },
+    {
+      "id": "verify-message",
+      "titleKey": "docs.nav.verifyMessage",
+      "path": "verify-message.md",
+      "icon": "ShieldCheck"
+    },
+    {
+      "id": "features",
+      "titleKey": "docs.nav.features",
+      "path": "features.md",
+      "icon": "Zap"
+    },
+    {
+      "id": "security",
+      "titleKey": "docs.nav.security",
+      "path": "security.md",
+      "icon": "Shield"
+    },
+    {
+      "id": "troubleshooting",
+      "titleKey": "docs.nav.troubleshooting",
+      "path": "troubleshooting.md",
+      "icon": "Wrench"
+    },
+    {
+      "id": "faq",
+      "titleKey": "docs.nav.faq",
+      "path": "faq.md",
+      "icon": "HelpCircle"
+    },
+    {
+      "id": "developer-guide",
+      "titleKey": "docs.nav.developerGuide",
+      "path": "developer-guide.md",
+      "icon": "Code2"
+    }
+  ]
+}

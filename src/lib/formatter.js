@@ -1,17 +1,13 @@
 import { blockchains } from "../config/config.js";
 
-export function formatAccount(account, withTooltip=false) {
-    let accountString = account.accountName;
-    let displayString = account.accountName;
-    if (accountString.length > 20) {
-        displayString = displayString.substring(0, 20) + "...";
-    }
-    if (withTooltip) {
-        return `<span v-tooltip="${accountString}">${displayString}</span>`;
-    } else {
-        return displayString;
-    }
+const ACCOUNT_DISPLAY_LIMIT = 20;
 
+export function formatAccountName(accountName) {
+    if (!accountName) return "";
+    if (accountName.length > ACCOUNT_DISPLAY_LIMIT) {
+        return accountName.substring(0, ACCOUNT_DISPLAY_LIMIT) + "...";
+    }
+    return accountName;
 }
 
 export function formatChain(chain) {

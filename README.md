@@ -4,82 +4,111 @@ Interacting with any blockchain can be cumbersome if you are not familiar with h
 
 In general, every action on a blockchain requires a cryptographic signature of the required private keys for the action, and when you are using third party tools (especially closed source ones), the question about trust quickly arises ("Are they gonna steal my private keys?").
 
-BeetEOS aims to solve these trust concerns, whilst additionally facilitating private key managament for the everyday EOS/Bitshares based blockchain user.
+BeetVault aims to solve these trust concerns, whilst additionally facilitating private key management for the everyday Graphene and Antelope based blockchain user.
 
 A general rule of thumb for the inexperienced: Never ever expose your private keys on the internet, and if that is ever needed, stay vigilant and do your due diligence.
 
-# BeetEOS - Your Bitshares & EOS blockchain companion
+# BeetVault - Your Graphene & Antelope blockchain companion
 
-BeetEOS is a locally installed stand-alone key and identity manager and signing app for both Bitshares and EOS based blockchains, heavily influenced by the [Beet](https://github.com/bitshares/beet) and [Scatter](https://github.com/GetScatter) wallets.
+BeetVault is a locally installed stand-alone key and identity manager and signing app for Graphene and Antelope based blockchains, heavily influenced by the [Beet](https://github.com/bitshares/beet) and [Scatter](https://github.com/GetScatter) wallets.
 
-BeetEOS allows separate account management while being in full control of what data to expose to third parties.
+BeetVault allows separate account management while being in full control of what data to expose to third parties.
 
-Private keys are locally stored and encrypted, protected by a wallet master password.
+Private keys are stored locally and encrypted, protected by a wallet master password.
 
 All transactions suggested by third parties must be confirmed before being broadcast.
 
 Telegram channel: https://t.me/beetapp
 
+## Supported blockchains
+
+| Blockchain | Symbol | Family | Testnet |
+|------------|--------|--------|---------|
+| BitShares | BTS | Graphene | Yes |
+| Vaulta *(formerly EOS)* | A | Antelope | Yes |
+| WAX | WAX | Antelope | Yes |
+| Telos | TLOS | Antelope | Yes |
+| FIO | FIO | Antelope | Yes |
+| Libre | LIBRE | Antelope | Yes |
+| XPR Network *(formerly Proton)* | XPR | Antelope | Yes |
+| BEOS | BEOS | Antelope | No |
+| Hive | HIVE | Hive | No |
+
+Hive accounts support balance viewing and message signing, but not the deeplink, QR, or file based transaction methods described below.
+
 ## Features / User Guide
 
-On first run, you will be prompted to create a new wallet to hold your keys. You pick a name for the wallet,
-enter your first account / address (in the case of BitShares that is the account name, active and memo private keys) and select a password to protect your wallet (AES encrypted). You can add several accounts
-of different chains to one wallet.
+On first run, you will be prompted to create a new wallet to hold your keys. You pick a name for the wallet, enter your first account / address (in the case of BitShares that is the account name, active and memo private keys) and select a password to protect your wallet. You can add several accounts of different chains to one wallet.
 
-The app will generate your public keys from those private keys and verify them against the ones stored on-chain for the account name / address you provided. Depending on the blockchain you are adding different import options are available.
+Wallet data is encrypted using Argon2id for memory-hard key derivation, HKDF-SHA-256 for key separation, and XChaCha20-Poly1305 for authenticated encryption. The decrypted seed is held in memory only and is cleared on logout, on a configurable inactivity timeout, and when the system sleeps or locks.
+
+The app will generate your public keys from those private keys and verify them against the ones stored on-chain for the account name / address you provided. Depending on the blockchain you are adding, different import options are available.
 
 Once your keys and account are verified, you will be redirected to the dashboard view which currently displays your account details and balances.
 
-While logged-in, BeetEOS can optionally create a local socket.io server which can only be accessed by applications running on your computer (internet browser or any other third party application installed on your computer),
-as long as it includes our client-side javascript library [BeeteosJS](https://github.com/beetapp/beeteos-js).
+### Requesting transactions from third party applications
 
-BeeteosJS allows any web-page to send requests to BeetEOS in order to retrieve identity (account id / address) or ask for an action to be taken (sign a transaction, vote or others).
-Of-course, any incoming request has to be **explicitly** approved by the user inside the BeetEOS app and is clearly displayed.
+BeetVault accepts transaction requests through four input methods. None of them require an external package or a running local server, and each request must be **explicitly** approved by the user inside the app before anything is broadcast.
 
-The EOS blockchain has their own native javascript library that can be used (e.g. [eosjs](https://github.com/EOSIO/eosjs)) with BeetEOS. BeeteosJS can be injected into said native library to redirect all signature and broadcast requests to BeetEOS, i.e. you can simply use the native javascript library and inject BeetEOSJS when starting your application, and voila, BeetEOS is integrated.
+- **TOTP deeplinks** (`beetvault://`) — the wallet generates a short-lived passcode which the requesting application uses to encrypt its payload. Encryption uses XChaCha20-Poly1305 with a SHA-256 derived key.
+- **Raw deeplinks** (`rawbeetvault://`) — an unencrypted, URL-encoded transaction payload for direct signing.
+- **QR codes** — scan with a camera, drag in an image, or upload a file. Useful for air-gapped or cross-device signing.
+- **Local JSON files** — upload a transaction payload from disk. Unlike the other methods, this has no size limit, making it the right choice for large batches of operations.
 
-The Bitshares blockchain also has [its own native javascript library](https://github.com/bitshares/bitsharesjs/) which can be used with BeetEOS. BeetEOSJS can similarly be injected into bitsharesjs to redirect important requests to BeetEOS.
+The legacy `beeteos://` and `rawbeeteos://` schemes remain registered for backwards compatibility.
 
-The wallet now also supports deeplinks, encrypted deeplinks, qr codes and local json files for generating blockchain request prompts for approval & broadcast with the BeetEOS wallet. These input methods do not require external packages, and can be stored for later use.
+Before any of these can be used, the user configures which operation types a given input method is permitted to authorise, so the scope of what a third party can request is bounded.
 
-Supported blockchains: Bitshares, Bitshares testnet, EOS, BEOS, TLOS.
+### Other features
+
+- **Message signing and verification** — prove account ownership off-chain, or verify a signature someone else produced.
+- **Encrypted backups** — export a wallet to an encrypted `.beet` file and restore it on any BeetVault installation.
+- **Multi-account management** — hold accounts from several chains in a single wallet and switch between them.
+- **Node selection** — choose between the bundled RPC endpoints per chain, or point at your own.
+- **Built-in documentation** — a dedicated documentation window covering each input method, every supported chain, and a developer integration guide. Available from the main menu, and translated across the wallet's supported locales.
 
 ## For end users
 
-Releases are bundled as installers and are available at https://github.com/beetapp/beeteos/releases
+Releases are bundled as installers and are available at https://github.com/beetapp/beetvault/releases
 
     ATTENTION
 
-BeetEOS binaries will never be hosted anywhere but within GitHub releases. If you find Beet binaries anywhere else, it is likely a phishing attempt.
+BeetVault binaries will never be hosted anywhere but within GitHub releases. If you find BeetVault binaries anywhere else, it is likely a phishing attempt.
 
 ## For developers
 
-BeetEOS is an [electron-based app](https://www.electronjs.org) for [cross-platform compatibility](https://www.electron.build), utilising the [VueJS framework](https://blog.vuejs.org/posts/vue-3-as-the-new-default.html), [BalmUI design system](https://material.balmjs.com) and the [Socket.IO](https://socket.io) libraries.
+BeetVault is an [electron-based app](https://www.electronjs.org) for [cross-platform compatibility](https://www.electron.build), utilising the [Vue 3 framework](https://blog.vuejs.org/posts/vue-3-as-the-new-default.html), [Tailwind CSS](https://tailwindcss.com) with [shadcn-vue](https://www.shadcn-vue.com) components, [Pinia](https://pinia.vuejs.org) for state management and [vue-i18n](https://vue-i18n.intlify.dev) for localisation.
 
-To run BeetEOS it's simply a case of
+To run BeetVault it's simply a case of
 
 ```bash
 # clone
-git clone https://github.com/beetapp/beeteos
-cd beeteos
+git clone https://github.com/beetapp/beetvault
+cd beetvault
 
 # install dependencies
 npm install
 
-# start Beet
+# start BeetVault
 npm run start
 ```
 
-If you are in linux you may need to do: `sudo apt-get install libudev-dev` before start BeetEOS.
+If you are on Linux you may need to run `sudo apt-get install libudev-dev` before starting BeetVault.
+
+### Integrating your application
+
+If you are building an application that needs BeetVault to sign transactions, the in-app **Developer Guide** (Documentation → Developer Guide) documents the request envelope format, the encoding pipeline for each input method, per-chain differences between Graphene and Antelope transactions, and the size limits that apply to deeplinks and QR codes.
+
+The same content lives in this repository under `docs/en/`, and is bundled into the application at build time.
 
 ## Current Limitations
 
-BeetEOS currently only supports single-signature accounts (one private key to unlock the blockchain action), and depending on the blockchain different import options may be available.
+BeetVault currently only supports single-signature accounts (one private key to unlock the blockchain action), and depending on the blockchain different import options may be available.
 
 Please open an issue to add support for your desired way.
 
 ## Encountered an issue? Want a new feature?
 
-Open a [new issue](https://github.com/beetapp/beeteos/issues/) on github.
+Open a [new issue](https://github.com/beetapp/beetvault/issues/) on github.
 
 If you're skilled in Vue, electron or even just want to help localize the wallet, then fork the repo, create a new branch for your idea/task and submit a pull request for peer review.

@@ -1,10 +1,16 @@
-import { ipcMain } from "electron";
+import { BTS_FAMILY, VAULTA_FAMILY, HIVE_FAMILY } from "./blockchains/chainFamilies.js";
+import { validateSender } from "./senderValidation.js";
+import { ipcOnceWithTimeout } from "./ipcMainWrapper.js";
+
+function isBadActor(actor, blockedAccounts) {
+    return blockedAccounts.some((x) => x === actor);
+}
 
 export async function inject(blockchain, request, webContents) {
     let isBlocked = false;
     let blockedAccounts;
     let foundIDs = [];
-    let regexBTS = /1.2.\d+/g;
+    let regexBTS = /1\.2\.\d+/g;
 
     if (blockchain._config.identifier === "BTS") {
         // Decentralized warn list
@@ -23,9 +29,7 @@ export async function inject(blockchain, request, webContents) {
             }
 
             if (blockedAccounts) {
-                const isBadActor = (actor) =>
-                    blockedAccounts.find((x) => x === actor) ? true : false;
-                isBlocked = foundIDs.some(isBadActor);
+                isBlocked = foundIDs.some((id) => isBadActor(id, blockedAccounts));
             }
         }
     }
@@ -59,9 +63,7 @@ export async function inject(blockchain, request, webContents) {
         }
 
         if (blockedAccounts) {
-            const isBadActor = (actor) =>
-                blockedAccounts.find((x) => x === actor) ? true : false;
-            isBlocked = foundIDs.some(isBadActor);
+            isBlocked = foundIDs.some((id) => isBadActor(id, blockedAccounts));
         }
     }
 
@@ -69,16 +71,16 @@ export async function inject(blockchain, request, webContents) {
 
     let account = "";
     let visualizedAccount;
-    if (["BTS", "BTS_TEST"].includes(blockchain._config.identifier)) {
+    if (BTS_FAMILY.includes(blockchain._config.identifier)) {
         let fromField = types.find((type) => type.method === request.type).from;
         if (!fromField || !fromField.length) {
             const _account = async () => {
-                return new Promise((resolve, reject) => {
-                    webContents.send("getSafeAccount");
-                    ipcMain.once("getSafeAccountResponse", (event, arg) => {
-                        resolve(arg);
-                    });
-                });
+                webContents.send("getSafeAccount");
+                const { event, args } = await ipcOnceWithTimeout("getSafeAccountResponse", 10_000);
+                if (!validateSender(event.senderFrame)) {
+                    throw new Error('Unauthorized sender');
+                }
+                return args[0];
             };
 
             account = await _account();
@@ -93,7 +95,7 @@ export async function inject(blockchain, request, webContents) {
             }
         }
     } else if (
-        ["EOS", "BEOS", "TLOS"].includes(blockchain._config.identifier)
+        VAULTA_FAMILY.includes(blockchain._config.identifier)
     ) {
         const params = request.payload.params[1];
         const _actions =
@@ -102,6 +104,14 @@ export async function inject(blockchain, request, webContents) {
                 : params.actions;
 
         visualizedAccount = _actions[0].authorization[0].actor;
+    } else if (HIVE_FAMILY.includes(blockchain._config.identifier)) {
+        const params = request.payload.params[1];
+        const parsed =
+            typeof params === "string" ? JSON.parse(params) : params;
+        const ops = parsed.operations || parsed.actions || [];
+        const firstOp = ops[0];
+        const firstOpData = Array.isArray(firstOp) ? firstOp[1] : firstOp?.data;
+        visualizedAccount = firstOpData?.from || "";
     }
 
     const _injectedCall = (
@@ -114,29 +124,35 @@ export async function inject(blockchain, request, webContents) {
         _blockedAccounts,
         _foundIDs
     ) => {
-        return new Promise((resolve, reject) => {
-            webContents.send("injectedCall", {
-                request: _apiobj,
-                chain: _chain,
-                account: _account,
-                visualizedAccount: _visualizedAccount,
-                visualizedParams: _visualizedParams,
-                isBlocked: _isBlocked,
-                blockedAccounts: _blockedAccounts,
-                foundIDs: _foundIDs,
-            });
-            ipcMain.once("injectedCallResponse", (event, arg) => {
-                return resolve(arg);
-            });
-            ipcMain.once("injectedCallError", (event, error) => {
-                return reject(error);
-            });
+        webContents.send("injectedCall", {
+            request: _apiobj,
+            chain: _chain,
+            account: _account,
+            visualizedAccount: _visualizedAccount,
+            visualizedParams: _visualizedParams,
+            isBlocked: _isBlocked,
+            blockedAccounts: _blockedAccounts,
+            foundIDs: _foundIDs,
+        });
+
+        const abortController = new AbortController();
+        const onResult = ipcOnceWithTimeout("injectedCallResponse", 300_000, abortController.signal);
+        const onError = ipcOnceWithTimeout("injectedCallError", 300_000, abortController.signal);
+
+        onResult.catch(() => null);
+        onError.catch(() => null);
+
+        return Promise.race([
+            onResult.then(r => ({ type: "response", ...r })),
+            onError.then(r => ({ type: "error", ...r })),
+        ]).finally(() => {
+            abortController.abort();
         });
     };
 
     let injectedCallResult;
     try {
-        injectedCallResult = await _injectedCall(
+        const result = await _injectedCall(
             request,
             blockchain._config.identifier,
             account,
@@ -146,6 +162,13 @@ export async function inject(blockchain, request, webContents) {
             blockedAccounts,
             foundIDs
         );
+        if (result.type === "error") {
+            throw result.args[0];
+        }
+        if (!validateSender(result.event.senderFrame)) {
+            throw new Error('Unauthorized sender');
+        }
+        injectedCallResult = result.args[0];
     } catch (error) {
         console.log({ error, location: "_injectedCall" });
     }

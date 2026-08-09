@@ -1,22 +1,30 @@
 <script setup>
     import { ref, onMounted, computed } from 'vue';
+    import { Button } from '@/components/ui/ui/button';
+    import { Spinner } from '@/components/ui/ui/spinner';
+    import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/ui/select';
+    import { Separator } from '@/components/ui/ui/separator';
 
     import { useI18n } from 'vue-i18n';
     const { t } = useI18n({ useScope: 'global' });
 
-    import store from '../store/index.js';
+    import { useWalletStore } from '@/stores/walletStore.js';
     import router from '../router/index.js';
+    import { useProcessing } from '../composables/useProcessing.js';
+
+    const { startProcessing, stopProcessing } = useProcessing();
+    const walletStore = useWalletStore();
 
     let hasWallet = computed(() => {
-        return store.getters['WalletStore/getHasWallet'];
+        return walletStore.getHasWallet;
     })
 
     let walletlist = computed(() => {
-        return store.getters['WalletStore/getWalletList'];
+        return walletStore.getWalletList;
     })
 
     let walletOptions = computed(() => {
-        let wallets = store.getters['WalletStore/getWalletList'];
+        let wallets = walletStore.getWalletList;
 
         return wallets.map((wallet, i) => {
             return {label: wallet.name, value: i}
@@ -26,33 +34,48 @@
     let walletpass = ref("");
     let selectedWallet = ref(0);
     let passincorrect = ref("");
+    let storageBackend = ref(null);
+    let unlocking = ref(false);
 
-    onMounted(() => {
-        store.dispatch("WalletStore/loadWallets", {}).catch((error) => {
+    onMounted(async () => {
+        walletStore.loadWallets().catch((error) => {
             console.log({error});
         });
-        store.dispatch("OriginStore/loadApps");
+        try {
+            storageBackend.value = await window.electron.getSafeStorageBackend();
+        } catch (error) {
+            console.log({error});
+        }
     });
 
     function unlockWallet() {
-        store
-            .dispatch("WalletStore/getWallet", {
+        if (unlocking.value) return;
+        unlocking.value = true;
+        startProcessing();
+
+        walletStore.loadWallet({
                 wallet_id: walletlist.value[selectedWallet.value].id,
                 wallet_pass: walletpass.value
             })
             .then(async () => {
                 try {
-                    await store.dispatch("WalletStore/confirmUnlock");
+                await walletStore.confirmUnlock();
                 } catch (error) {
                     console.log(error);
+                    unlocking.value = false;
+                    stopProcessing();
                     return;
                 }
-                store.dispatch("WalletStore/setSelectedWalletIndex", selectedWallet.value);
+                stopProcessing();
+                walletStore.setSelectedWalletIndex(selectedWallet.value);
                 walletpass.value = "";
                 router.replace("/dashboard");
             })
             .catch(() => {
                 passincorrect.value = "is-invalid";
+                unlocking.value = false;
+                stopProcessing();
+                walletpass.value = "";
                 window.electron.notify(t('common.start.invalid_password'));
             });
     }
@@ -69,14 +92,17 @@
             </p>
 
             <router-link
-                v-if="!hasWallet"
+                v-if="!hasWallet && !unlocking"
                 to="/create"
                 replace
             >
-                <ui-button raised>
+                <Button>
                     {{ t('common.start_cta') }}
-                </ui-button>
+                </Button>
             </router-link>
+            <Button v-else-if="!hasWallet" disabled>
+                {{ t('common.start_cta') }}
+            </Button>
 
             <p
                 v-if="!hasWallet"
@@ -86,80 +112,86 @@
             </p>
 
             <router-link
-                v-if="!hasWallet"
+                v-if="!hasWallet && !unlocking"
                 to="/restore"
                 replace
             >
-                <ui-button raised>
+                <Button>
                     {{ t('common.restore_cta') }}
-                </ui-button>
+                </Button>
             </router-link>
-            <section :dir="null">
-                <ui-select
-                    v-if="hasWallet"
-                    id="wallet-select"
-                    v-model="selectedWallet"
-                    style="width:100%"
-                    :options="walletOptions"
-                    full-bleed
-                    @change="passincorrect=''"
-                >
-                    {{ t('common.start.wallet_name') }}
-                </ui-select>
-            </section>
-            <input
-                v-if="hasWallet"
-                id="inputPassword"
-                v-model="walletpass"
-                style="width:97%; margin-top: 5px;"
-                type="password"
-                class="form-control mb-4 px-3"
-                :placeholder=" t('common.password_placeholder')"
-                required
-                :class="passincorrect"
-                @keypress.enter="unlockWallet"
-                @focus="passincorrect=''"
-            >
-            <br>
-            <ui-button
-                v-if="hasWallet"
-                type="submit"
-                raised
-                style="margin-top: 10px; margin-bottom: 5px;"
-                @click="unlockWallet"
-            >
-                {{ t('common.unlock_cta') }}
-            </ui-button>
+            <Button v-else-if="!hasWallet" disabled>
+                {{ t('common.restore_cta') }}
+            </Button>
 
-            <ui-divider class="divider" />
-
-            <router-link
-                v-if="hasWallet"
-                to="/create"
-                replace
-            >
-                <ui-button
-                    class="step_btn"
-                    raised
+            <div v-if="hasWallet" class="w-full px-2 mt-2">
+                <Select v-model="selectedWallet" @update:model-value="passincorrect=''" :disabled="unlocking">
+                    <SelectTrigger class="w-full" :disabled="unlocking">
+                        <SelectValue :placeholder="t('common.start.wallet_name')" />
+                    </SelectTrigger>
+                    <SelectContent>
+                        <SelectItem v-for="option in walletOptions" :key="option.value" :value="option.value">
+                            {{ option.label }}
+                        </SelectItem>
+                    </SelectContent>
+                </Select>
+            </div>
+            <div v-if="hasWallet" class="w-full px-2 mt-3">
+                <input
+                    id="inputPassword"
+                    v-model="walletpass"
+                    class="w-full px-3 py-2 border rounded-md text-sm"
+                    type="password"
+                    :placeholder="t('common.password_placeholder')"
+                    :disabled="unlocking"
+                    required
+                    :class="passincorrect"
+                    @keypress.enter="unlockWallet"
+                    @focus="passincorrect=''"
                 >
+            </div>
+            <div v-if="hasWallet" class="mt-4">
+                <Button
+                    type="submit"
+                    :disabled="unlocking"
+                    @click="unlockWallet"
+                >
+                    <Spinner v-if="unlocking" class="mr-2" />
+                    <template v-if="unlocking">{{ t('common.unlocking_wallet') }}</template>
+                    <template v-else>{{ t('common.unlock_cta') }}</template>
+                </Button>
+            </div>
+            <div
+                v-if="storageBackend && !storageBackend.available"
+                class="mt-4 p-3 bg-yellow-100 border border-yellow-400 rounded text-yellow-800 text-xs"
+            >
+                <strong>{{ t('common.securityWarning.title') }}:</strong>
+                {{ t('common.securityWarning.text', { backend: storageBackend.backend }) }}
+            </div>
+        </div>
+            <div v-if="hasWallet" class="mb-2">
+            <Separator class="my-3" />
+            <div class="flex justify-center gap-2 mb-3">
+                <router-link v-if="!unlocking" to="/create" replace>
+                    <Button class="step_btn">
+                        {{ t('common.create_cta') }}
+                    </Button>
+                </router-link>
+                <Button v-else class="step_btn" disabled>
                     {{ t('common.create_cta') }}
-                </ui-button>
-            </router-link>
-            <router-link
-                v-if="hasWallet"
-                to="/restore"
-                replace
-            >
-                <ui-button
-                    class="step_btn"
-                    raised
-                >
+                </Button>
+                <router-link v-if="!unlocking" to="/restore" replace>
+                    <Button class="step_btn">
+                        {{ t('common.restore_cta') }}
+                    </Button>
+                </router-link>
+                <Button v-else class="step_btn" disabled>
                     {{ t('common.restore_cta') }}
-                </ui-button>
-            </router-link>
+                </Button>
+            </div>
         </div>
         <p class="mt-2 mb-2 small">
-            &copy; 2019-2023 BitShares
+            &copy; 2019-2026 BitShares
         </p>
     </div>
 </template>

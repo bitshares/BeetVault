@@ -1,0 +1,624 @@
+{
+  "injectedCall": {
+    "method": "injiziertAnruf",
+    "title": "Eingefügte Anrufanfrage",
+    "result": "Eingefügtes Anrufergebnis",
+    "headers": {
+      "request": "Den folgenden injizierten Anruf genehmigen?",
+      "result": "Der folgende injizierte Anruf wurde genehmigt:"
+    },
+    "tooltip": "Fordert Ihr Wallet auf, einen injizierten Blockchain-Vorgang abzuwickeln"
+  },
+  "setalimits": {
+    "method": "Legen Sie Kontolimits fest",
+    "title": "Anfrage zum Festlegen von Kontolimits",
+    "result": "Ergebnis der Kontolimits festlegen",
+    "headers": {
+      "request": "Legen Sie die folgenden Kontolimits fest?",
+      "result": "Folgende Kontolimits wurden festgelegt:"
+    },
+    "rows": {
+      "account": "Konto: {account}",
+      "ram_bytes": "RAM-Limit in Bytes: {ram_bytes}",
+      "net_weight": "Nettogewicht: {net_weight}",
+      "cpu_weight": "CPU-Gewicht: {cpu_weight}"
+    },
+    "tooltip": "Festlegen der Ressourcenlimits für Konten"
+  },
+  "setacctram": {
+    "method": "Legen Sie die RAM-Grenzwerte für Ihr Konto fest",
+    "title": "Anforderung zur Festlegung der RAM-Grenzwerte für das Konto",
+    "result": "Legen Sie das Ergebnis der RAM-Grenzwerte für das Konto fest",
+    "headers": {
+      "request": "Legen Sie die folgenden RAM-Grenzwerte für Ihr Konto fest?",
+      "result": "Die folgenden Konto-RAM-Grenzwerte wurden festgelegt:"
+    },
+    "rows": {
+      "account": "Konto: {account}",
+      "ram_bytes": "RAM-Limit in Bytes: {ram_bytes}"
+    },
+    "tooltip": "Durch das Festlegen des Konto-RAM wird der Betrieb eingeschränkt"
+  },
+  "setacctnet": {
+    "method": "Legen Sie die NET-Limits für das Konto fest",
+    "title": "Anfrage zum Festlegen der NET-Limits für das Konto",
+    "result": "Legen Sie das Ergebnis der NET-Limits für das Konto fest",
+    "headers": {
+      "request": "Folgende NET-Limits für das Konto festlegen?",
+      "result": "Die folgenden Konto-NET-Limits wurden festgelegt:"
+    },
+    "rows": {
+      "account": "Konto: {account}",
+      "net_weight": "Nettogewicht: {net_weight}"
+    },
+    "tooltip": "Durch das Festlegen des NET-Kontos wird der Betrieb eingeschränkt"
+  },
+  "setacctcpu": {
+    "method": "Legen Sie die CPU-Grenzwerte für das Konto fest",
+    "title": "Anforderung zum Festlegen der CPU-Limits für das Konto",
+    "result": "Legen Sie das Ergebnis der CPU-Grenzwerte für das Konto fest",
+    "headers": {
+      "request": "Legen Sie die folgenden CPU-Grenzwerte für das Konto fest?",
+      "result": "Die folgenden Konto-CPU-Limits wurden festgelegt:"
+    },
+    "rows": {
+      "account": "Konto: {account}",
+      "cpu_weight": "CPU-Gewicht: {cpu_weight}"
+    },
+    "tooltip": "Durch Festlegen der CPU-Begrenzung des Kontos wird der Betrieb begrenzt"
+  },
+  "activate": {
+    "method": "Protokollfunktion aktivieren",
+    "title": "Protokollfunktionsanforderung aktivieren",
+    "result": "Ergebnis der Protokollfunktion aktivieren",
+    "headers": {
+      "request": "Folgende Protokollfunktion aktivieren?",
+      "result": "Die folgende Protokollfunktion wurde aktiviert:"
+    },
+    "rows": {
+      "feature_digest": "Feature-Digest: {feature_digest}"
+    },
+    "tooltip": "Aktivieren des Protokollfunktionsbetriebs"
+  },
+  "delegatebw": {
+    "method": "Bandbreite delegieren",
+    "title": "Bandbreitenanforderung delegieren",
+    "result": "Bandbreitenergebnis delegieren",
+    "headers": {
+      "request": "Folgende Bandbreite delegieren?",
+      "result": "Folgende Bandbreite wurde delegiert:"
+    },
+    "rows": {
+      "from": "Von: {from}",
+      "receiver": "Empfänger: {receiver}",
+      "stake_net_quantity": "Netto-Einsatzmenge: {stake_net_quantity}",
+      "stake_cpu_quantity": "CPU-Menge einsetzen: {stake_cpu_quantity}",
+      "transfer": "Überweisung: {transfer}"
+    },
+    "tooltip": "Bandbreitenbetrieb delegieren"
+  },
+  "setrex": {
+    "method": "REX-Balance einstellen",
+    "title": "Stellen Sie die REX-Guthabenanforderung ein",
+    "result": "Legen Sie das REX-Balance-Ergebnis fest",
+    "headers": {
+      "request": "Stellen Sie die folgende REX-Balance ein?",
+      "result": "Folgende REX-Bilanz wurde festgelegt:"
+    },
+    "rows": {
+      "balance": "Kontostand: {balance}"
+    },
+    "tooltip": "Einstellen des REX-Waagenbetriebs"
+  },
+  "deposit": {
+    "method": "Einzahlung in den REX-Fonds",
+    "title": "Einzahlung auf REX-Fondsanfrage",
+    "result": "Ergebnis der Einzahlung in den REX-Fonds",
+    "headers": {
+      "request": "Folgendes in den REX-Fonds einzahlen?",
+      "result": "Folgendes wurde in den REX-Fonds eingezahlt:"
+    },
+    "rows": {
+      "owner": "Besitzer: {owner}",
+      "amount": "Betrag: {amount}"
+    },
+    "tooltip": "Einzahlung in den REX-Fondsbetrieb"
+  },
+  "buyrex": {
+    "method": "Kaufen Sie REX",
+    "title": "REX-Anfrage kaufen",
+    "result": "REX-Ergebnis kaufen",
+    "headers": {
+      "request": "Den folgenden REX kaufen?",
+      "result": "Gekauft wurde folgender REX:"
+    },
+    "rows": {
+      "from": "Von: {from}",
+      "amount": "Betrag: {amount}"
+    },
+    "tooltip": "Kauf eines REX-Betriebs"
+  },
+  "unstaketorex": {
+    "method": "Anteil an REX aufheben",
+    "title": "Stake zur REX-Anfrage aufheben",
+    "result": "Unstake zum REX-Ergebnis",
+    "headers": {
+      "request": "Folgendes an REX abstecken?",
+      "result": "Folgendes wurde an REX freigegeben:"
+    },
+    "rows": {
+      "owner": "Besitzer: {owner}",
+      "receiver": "Empfänger: {receiver}",
+      "from_net": "Von NET: {from_net}",
+      "from_cpu": "Von CPU: {from_cpu}"
+    },
+    "tooltip": "Absteckung zum REX-Betrieb"
+  },
+  "sellrex": {
+    "method": "Verkaufe REX",
+    "title": "REX-Anfrage verkaufen",
+    "result": "REX-Ergebnis verkaufen",
+    "headers": {
+      "request": "Den folgenden REX verkaufen?",
+      "result": "Folgender REX wurde verkauft:"
+    },
+    "rows": {
+      "from": "Von: {from}",
+      "rex": "REX: {rex}"
+    },
+    "tooltip": "Verkaufe den REX-Betrieb"
+  },
+  "cnclrexorder": {
+    "method": "REX-Auftrag stornieren",
+    "title": "REX-Bestellanfrage stornieren",
+    "result": "REX-Auftragsergebnis stornieren",
+    "headers": {
+      "request": "Folgende REX-Bestellung stornieren?",
+      "result": "Die folgende REX-Bestellung wurde storniert:"
+    },
+    "rows": {
+      "owner": "Besitzer: {owner}"
+    },
+    "tooltip": "Stornieren des REX-Auftragsvorgangs"
+  },
+  "rentcpu": {
+    "method": "CPU mieten",
+    "title": "CPU-Miete-Anfrage",
+    "result": "CPU-Ergebnis vermieten",
+    "headers": {
+      "request": "Folgende CPU mieten?",
+      "result": "Folgende CPU wurde gemietet:"
+    },
+    "rows": {
+      "from": "Von: {from}",
+      "receiver": "Empfänger: {receiver}",
+      "loan_payment": "Darlehenszahlung: {loan_payment}",
+      "loan_fund": "Darlehensfonds: {loan_fund}"
+    },
+    "tooltip": "CPU-Betrieb mieten"
+  },
+  "rentnet": {
+    "method": "Miete NET",
+    "title": "Miete NET auf Anfrage",
+    "result": "Miete NETTO-Ergebnis",
+    "headers": {
+      "request": "Folgendes NET mieten?",
+      "result": "Folgendes NET wurde vermietet:"
+    },
+    "rows": {
+      "from": "Von: {from}",
+      "receiver": "Empfänger: {receiver}",
+      "loan_payment": "Darlehenszahlung: {loan_payment}",
+      "loan_fund": "Darlehensfonds: {loan_fund}"
+    },
+    "tooltip": "Vermietung von NET-Betrieb"
+  },
+  "fundcpuloan": {
+    "method": "CPU-Darlehen finanzieren",
+    "title": "CPU-Darlehensanfrage finanzieren",
+    "result": "Ergebnis des Fonds-CPU-Darlehens",
+    "headers": {
+      "request": "Den folgenden CPU-Kredit finanzieren?",
+      "result": "Das folgende CPU-Darlehen wurde finanziert:"
+    },
+    "rows": {
+      "from": "Von: {from}",
+      "loan_num": "Kreditnummer: {loan_num}",
+      "payment": "Zahlung: {payment}"
+    },
+    "tooltip": "Finanzierung des CPU-Darlehens"
+  },
+  "fundnetloan": {
+    "method": "Nettodarlehen des Fonds",
+    "title": "Fonds-NET-Darlehensanfrage",
+    "result": "Nettodarlehensergebnis des Fonds",
+    "headers": {
+      "request": "Das folgende NET-Darlehen finanzieren?",
+      "result": "Das folgende NET-Darlehen wurde finanziert:"
+    },
+    "rows": {
+      "from": "Von: {from}",
+      "loan_num": "Kreditnummer: {loan_num}",
+      "payment": "Zahlung: {payment}"
+    },
+    "tooltip": "Finanzierung der NET-Darlehensoperation"
+  },
+  "defcpuloan": {
+    "method": "CPU-Darlehen tilgen",
+    "title": "CPU-Darlehensantrag zurückzahlen",
+    "result": "CPU-Darlehensergebnis defundieren",
+    "headers": {
+      "request": "Den folgenden CPU-Kredit streichen?",
+      "result": "Das folgende CPU-Darlehen wurde zurückgezogen:"
+    },
+    "rows": {
+      "from": "Von: {from}",
+      "loan_num": "Kreditnummer: {loan_num}",
+      "amount": "Betrag: {amount}"
+    },
+    "tooltip": "Entlastung der CPU-Kreditoperation"
+  },
+  "defnetloan": {
+    "method": "NET-Darlehen tilgen",
+    "title": "Antrag auf Rückzahlung eines NET-Darlehens",
+    "result": "Nettokreditergebnis defundieren",
+    "headers": {
+      "request": "Den folgenden Nettokredit tilgen?",
+      "result": "Das folgende NET-Darlehen wurde defundiert:"
+    },
+    "rows": {
+      "from": "Von: {from}",
+      "loan_num": "Kreditnummer: {loan_num}",
+      "amount": "Betrag: {amount}"
+    },
+    "tooltip": "Definanzierung des NET-Darlehensvorgangs"
+  },
+  "updaterex": {
+    "method": "REX aktualisieren",
+    "title": "REX-Anfrage aktualisieren",
+    "result": "REX-Ergebnis aktualisieren",
+    "headers": {
+      "request": "Den folgenden REX aktualisieren?",
+      "result": "Der folgende REX wurde aktualisiert:"
+    },
+    "rows": {
+      "owner": "Besitzer: {owner}"
+    },
+    "tooltip": "Aktualisieren des REX-Betriebs"
+  },
+  "rexexec": {
+    "method": "REX ausführen",
+    "title": "REX-Anfrage ausführen",
+    "result": "REX-Ergebnis ausführen",
+    "headers": {
+      "request": "Den folgenden REX ausführen?",
+      "result": "Der folgende REX wurde ausgeführt:"
+    },
+    "rows": {
+      "user": "Benutzer: {user}",
+      "max": "Maximal: {max}"
+    },
+    "tooltip": "REX-Operation wird ausgeführt"
+  },
+  "consolidate": {
+    "method": "Konsolidieren Sie REX",
+    "title": "Konsolidieren Sie die REX-Anfrage",
+    "result": "Konsolidieren Sie das REX-Ergebnis",
+    "headers": {
+      "request": "Den folgenden REX konsolidieren?",
+      "result": "Der folgende REX wurde konsolidiert:"
+    },
+    "rows": {
+      "owner": "Besitzer: {owner}"
+    },
+    "tooltip": "Konsolidierung des REX-Betriebs"
+  },
+  "mvtosavings": {
+    "method": "Verschieben Sie REX in die Sparliste",
+    "title": "Verschieben Sie REX in die Sparanforderung",
+    "result": "REX in das Sparergebnis verschieben",
+    "headers": {
+      "request": "Folgende Menge REX in den Sparkorb verschieben?",
+      "result": "Die folgende Menge an REX wurde in den Sparkorb verschoben:"
+    },
+    "rows": {
+      "owner": "Besitzer: {owner}",
+      "rex": "REX: {rex}"
+    },
+    "tooltip": "Überführung von REX in den Sparbetrieb"
+  },
+  "mvfrsavings": {
+    "method": "Bewegen Sie REX von Savings",
+    "title": "REX aus Sparanfrage entfernen",
+    "result": "REX aus dem Sparergebnis verschieben",
+    "headers": {
+      "request": "Folgende Menge REX aus dem Spareimer entfernen?",
+      "result": "Der folgende Betrag an REX wurde aus dem Sparkorb entfernt:"
+    },
+    "rows": {
+      "owner": "Besitzer: {owner}",
+      "rex": "REX: {rex}"
+    },
+    "tooltip": "Umzug von REX aus dem Sparbetrieb"
+  },
+  "closerex": {
+    "method": "Schließen Sie REX",
+    "title": "REX-Anfrage schließen",
+    "result": "REX-Ergebnis schließen",
+    "headers": {
+      "request": "Besitzerdatensätze aus REX-Tabellen löschen und belegten RAM für den folgenden Besitzer freigeben?",
+      "result": "Eigentümerdatensätze aus REX-Tabellen wurden gelöscht und RAM wurde für den folgenden Eigentümer freigegeben:"
+    },
+    "rows": {
+      "owner": "Besitzer: {owner}"
+    },
+    "tooltip": "Abschluss des REX-Vorgangs"
+  },
+  "undelegatebw": {
+    "method": "Delegierung der Bandbreite rückgängig machen",
+    "title": "Delegierung der Bandbreitenanfrage rückgängig machen",
+    "result": "Bandbreitenergebnis rückgängig machen",
+    "headers": {
+      "request": "Gesamtzahl der delegierten Token und/oder freien Speicher für Folgendes verringern?",
+      "result": "Die Gesamtzahl der delegierten Token wurde verringert und/oder Speicher wurde für Folgendes freigegeben:"
+    },
+    "rows": {
+      "from": "Von: {from}",
+      "receiver": "Empfänger: {receiver}",
+      "unstake_net_quantity": "NET-Unstake-Menge: {unstake_net_quantity}",
+      "unstake_cpu_quantity": "CPU-Unstake-Menge: {unstake_cpu_quantity}"
+    },
+    "tooltip": "Delegierung des Bandbreitenvorgangs aufheben"
+  },
+  "buyram": {
+    "method": "RAM kaufen",
+    "title": "RAM-Anfrage kaufen",
+    "result": "Kaufen Sie RAM Result",
+    "headers": {
+      "request": "RAM-Kontingent für folgenden Receiver erhöhen?",
+      "result": "Das RAM-Kontingent wurde für den folgenden Empfänger erhöht:"
+    },
+    "rows": {
+      "payer": "Zahler: {payer}",
+      "receiver": "Empfänger: {receiver}",
+      "quant": "Menge: {quant}"
+    },
+    "tooltip": "RAM-Betrieb kaufen"
+  },
+  "buyrambytes": {
+    "method": "Kaufen Sie RAM-Bytes",
+    "title": "RAM-Bytes-Anfrage kaufen",
+    "result": "RAM Bytes Ergebnis kaufen",
+    "headers": {
+      "request": "RAM für folgenden Empfänger um angegebene Bytes erhöhen?",
+      "result": "Der Arbeitsspeicher wurde für den folgenden Empfänger erhöht:"
+    },
+    "rows": {
+      "payer": "Zahler: {payer}",
+      "receiver": "Empfänger: {receiver}",
+      "bytes": "Bytes: {bytes}"
+    },
+    "tooltip": "Kauf von RAM-Bytes"
+  },
+  "sellram": {
+    "method": "RAM verkaufen",
+    "title": "RAM-Anfrage verkaufen",
+    "result": "RAM-Ergebnis verkaufen",
+    "headers": {
+      "request": "RAM-Kontingent reduzieren und Token an den Empfänger übertragen?",
+      "result": "Das RAM-Kontingent wurde reduziert und Token wurden übertragen:"
+    },
+    "rows": {
+      "account": "Konto: {account}",
+      "bytes": "Bytes: {bytes}"
+    },
+    "tooltip": "Verkaufe RAM-Betrieb"
+  },
+  "refund": {
+    "method": "Erstattung",
+    "title": "Erstattungsantrag",
+    "result": "Rückerstattungsergebnis",
+    "headers": {
+      "request": "Alle ausstehenden, nicht eingesetzten Token für den folgenden Eigentümer beanspruchen?",
+      "result": "Alle ausstehenden nicht abgesteckten Token wurden für den folgenden Eigentümer beansprucht:"
+    },
+    "rows": {
+      "owner": "Besitzer: {owner}"
+    },
+    "tooltip": "Rückerstattungsvorgang"
+  },
+  "regproducer": {
+    "method": "Registrieren Sie den Produzenten",
+    "title": "Herstelleranfrage registrieren",
+    "result": "Registrieren Sie das Producer-Ergebnis",
+    "headers": {
+      "request": "Das folgende Konto als Produzentenkandidat registrieren?",
+      "result": "Der folgende Account wurde als Produzentenkandidat registriert:"
+    },
+    "rows": {
+      "producer": "Produzent: {producer}",
+      "producer_key": "Produzentenschlüssel: {producer_key}",
+      "url": "URL: {url}",
+      "location": "Standort: {location}"
+    },
+    "tooltip": "Registrieren des Producer-Vorgangs"
+  },
+  "unregprod": {
+    "method": "Registrierung des Produzenten aufheben",
+    "title": "Registrierung des Produzenten aufheben",
+    "result": "Registrierung des Producer-Ergebnisses aufheben",
+    "headers": {
+      "request": "Das folgende Blockproduzentenkonto deaktivieren?",
+      "result": "Das folgende Blockproduzentenkonto wurde deaktiviert:"
+    },
+    "rows": {
+      "producer": "Produzent: {producer}"
+    },
+    "tooltip": "Registrierung des Producer-Vorgangs wird aufgehoben"
+  },
+  "setram": {
+    "method": "RAM einstellen",
+    "title": "Legen Sie die RAM-Anforderung fest",
+    "result": "Legen Sie das RAM-Ergebnis fest",
+    "headers": {
+      "request": "Stellen Sie die RAM-Versorgung auf die folgende Menge ein?",
+      "result": "Der RAM-Vorrat wurde auf folgende Menge eingestellt:"
+    },
+    "rows": {
+      "max_ram_size": "Maximale RAM-Größe: {max_ram_size}"
+    },
+    "tooltip": "RAM-Betrieb einstellen"
+  },
+  "setramrate": {
+    "method": "Stellen Sie die RAM-Rate ein",
+    "title": "RAM-Ratenanforderung festlegen",
+    "result": "Legen Sie das Ergebnis der RAM-Rate fest",
+    "headers": {
+      "request": "Legen Sie die RAM-Zuwachsrate in Bytes pro Block fest?",
+      "result": "Die RAM-Zuwachsrate wurde eingestellt:"
+    },
+    "rows": {
+      "bytes_per_block": "Bytes pro Block: {bytes_per_block}"
+    },
+    "tooltip": "Einstellen der RAM-Rate"
+  },
+  "voteproducer": {
+    "method": "Abstimmungsproduzent",
+    "title": "Abstimmungsanfrage des Produzenten",
+    "result": "Abstimmung des Produzentenergebnisses",
+    "headers": {
+      "request": "Für eine Gruppe von Produzenten oder einen Stellvertreter stimmen?",
+      "result": "Für die folgende Gruppe von Produzenten oder Stellvertretern gestimmt:"
+    },
+    "rows": {
+      "voter": "Wähler: {voter}",
+      "proxy": "Proxy: {proxy}",
+      "producers": "Produzenten:\n"
+    },
+    "tooltip": "Voting Producer-Betrieb"
+  },
+  "regproxy": {
+    "method": "Proxy registrieren",
+    "title": "Proxy-Anfrage registrieren",
+    "result": "Proxy-Ergebnis registrieren",
+    "headers": {
+      "request": "Das folgende Konto als Wählervertreter registrieren?",
+      "result": "Als Wählervertreter wurde folgender Account registriert:"
+    },
+    "rows": {
+      "proxy": "Proxy: {proxy}",
+      "isproxy": "Ist Proxy: {isproxy}"
+    },
+    "tooltip": "Registrieren des Proxy-Vorgangs"
+  },
+  "setparams": {
+    "method": "Parameter festlegen",
+    "title": "Anforderung zum Festlegen von Parametern",
+    "result": "Ergebnis der Parameter festlegen",
+    "headers": {
+      "request": "Die Blockchain-Parameter festlegen?",
+      "result": "Die Blockchain-Parameter wurden festgelegt:"
+    },
+    "rows": {
+      "params": "Parameter:\n"
+    },
+    "tooltip": "Vorgang zum Einstellen der Parameter"
+  },
+  "claimrewards": {
+    "method": "Belohnung entgegennehmen",
+    "title": "Fordern Sie eine Prämienanfrage an",
+    "result": "Fordern Sie das Ergebnis der Prämien an",
+    "headers": {
+      "request": "Blockproduktions- und Abstimmungsprämien für das folgende Produzentenkonto beanspruchen?",
+      "result": "Für das folgende Produzentenkonto wurden Blockproduktions- und Abstimmungsprämien beansprucht:"
+    },
+    "rows": {
+      "owner": "Besitzer: {owner}"
+    },
+    "tooltip": "Vorgang zum Einfordern von Prämien"
+  },
+  "setpriv": {
+    "method": "Privileg festlegen",
+    "title": "Berechtigungsanforderung festlegen",
+    "result": "Berechtigungsergebnis festlegen",
+    "headers": {
+      "request": "Berechtigungsstatus für das folgende Konto festlegen?",
+      "result": "Für das folgende Konto wurde der Berechtigungsstatus festgelegt:"
+    },
+    "rows": {
+      "account": "Konto: {account}",
+      "is_priv": "Ist privilegiert: {is_priv}"
+    },
+    "tooltip": "Berechtigungsvorgang festlegen"
+  },
+  "rmvproducer": {
+    "method": "Entfernen Sie den Produzenten",
+    "title": "Herstelleranfrage entfernen",
+    "result": "Producer-Ergebnis entfernen",
+    "headers": {
+      "request": "Den folgenden Produzenten namentlich deaktivieren?",
+      "result": "Der folgende Produzent wurde deaktiviert:"
+    },
+    "rows": {
+      "producer": "Produzent: {producer}"
+    },
+    "tooltip": "Der Producer-Vorgang wird entfernt"
+  },
+  "updtrevision": {
+    "method": "Revision aktualisieren",
+    "title": "Revisionsanforderung aktualisieren",
+    "result": "Revisionsergebnis aktualisieren",
+    "headers": {
+      "request": "Aktuelle Revision aktualisieren?",
+      "result": "Die aktuelle Revision wurde aktualisiert:"
+    },
+    "rows": {
+      "revision": "Revision: {revision}"
+    },
+    "tooltip": "Aktualisierung des Revisionsvorgangs"
+  },
+  "bidname": {
+    "method": "Angebotsname",
+    "title": "Angebotsnamensanfrage",
+    "result": "Ergebnis des Gebotsnamens",
+    "headers": {
+      "request": "Ein Gebot für einen Namen abgeben?",
+      "result": "Für den Namen wurde ein Gebot abgegeben:"
+    },
+    "rows": {
+      "bidder": "Bieter: {bidder}",
+      "newname": "Neuer Name: {newname}",
+      "bid": "Gebot: {bid}"
+    },
+    "tooltip": "Bieternamen-Vorgang"
+  },
+  "bidrefund": {
+    "method": "Gebotsrückerstattung",
+    "title": "Antrag auf Rückerstattung des Gebots",
+    "result": "Ergebnis der Gebotsrückerstattung",
+    "headers": {
+      "request": "Das Gebot für einen Namen zurückerstatten?",
+      "result": "Für den Namen wurde ein Gebot zurückerstattet:"
+    },
+    "rows": {
+      "bidder": "Bieter: {bidder}",
+      "newname": "Neuer Name: {newname}"
+    },
+    "tooltip": "Rückerstattung des Gebotsvorgangs"
+  },
+  "ramtransfer": {
+    "method": "RAM-Übertragung",
+    "title": "RAM-Übertragungsanforderung",
+    "result": "RAM-Übertragungsergebnis",
+    "headers": {
+      "request": "RAM von einem Konto auf ein anderes übertragen?",
+      "result": "RAM wurde von einem Konto auf ein anderes übertragen:"
+    },
+    "rows": {
+      "from": "Von: {from}",
+      "to": "An: {to}",
+      "bytes": "Bytes: {bytes}"
+    },
+    "tooltip": "RAM-Betrieb übertragen"
+  }
+}

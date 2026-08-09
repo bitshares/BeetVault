@@ -1,0 +1,384 @@
+{
+  "injectedCall": {
+    "method": "ฉีดโทร",
+    "title": "คำขอโทรที่ฉีดเข้าไป",
+    "result": "ฉีดผลการโทร",
+    "headers": {
+      "request": "อนุมัติการโทรที่แทรกต่อไปนี้หรือไม่",
+      "result": "การโทรที่แทรกต่อไปนี้ได้รับการอนุมัติ:"
+    },
+    "tooltip": "ขอให้กระเป๋าเงินของคุณจัดการกับการดำเนินการบล็อคเชนที่ถูกแทรกเข้าไป"
+  },
+  "regaddress": {
+    "method": "ลงทะเบียนที่อยู่ FIO",
+    "title": "ขอลงทะเบียนที่อยู่ FIO",
+    "result": "ผลลงทะเบียนที่อยู่ FIO",
+    "headers": {
+      "request": "ลงทะเบียนที่อยู่ FIO ต่อไปนี้หรือไม่",
+      "result": "ที่อยู่ FIO ต่อไปนี้ได้รับการลงทะเบียน:"
+    },
+    "rows": {
+      "fio_address": "ที่อยู่ FIO: {fio_address}",
+      "owner_fio_public_key": "คีย์สาธารณะ FIO ของเจ้าของ: {owner_fio_public_key}",
+      "max_fee": "ค่าธรรมเนียมสูงสุด: {max_fee}",
+      "tpid": "TPID: {tpid}"
+    },
+    "tooltip": "ลงทะเบียนที่อยู่ FIO ใหม่"
+  },
+  "renewaddress": {
+    "method": "ต่ออายุที่อยู่ FIO",
+    "title": "ขอต่ออายุที่อยู่ FIO",
+    "result": "ผลต่ออายุที่อยู่ FIO",
+    "headers": {
+      "request": "ต่ออายุที่อยู่ FIO ต่อไปนี้หรือไม่",
+      "result": "ที่อยู่ FIO ต่อไปนี้ได้รับการต่ออายุ:"
+    },
+    "rows": {
+      "fio_address": "ที่อยู่ FIO: {fio_address}",
+      "max_fee": "ค่าธรรมเนียมสูงสุด: {max_fee}",
+      "tpid": "TPID: {tpid}"
+    },
+    "tooltip": "ต่ออายุที่อยู่ FIO ที่มีอยู่"
+  },
+  "regdomain": {
+    "method": "ลงทะเบียนโดเมน FIO",
+    "title": "ขอลงทะเบียนโดเมน FIO",
+    "result": "ผลลงทะเบียนโดเมน FIO",
+    "headers": {
+      "request": "ลงทะเบียนโดเมน FIO ต่อไปนี้หรือไม่",
+      "result": "โดเมน FIO ต่อไปนี้ได้รับการลงทะเบียน:"
+    },
+    "rows": {
+      "fio_domain": "โดเมน FIO: {fio_domain}",
+      "owner_fio_public_key": "คีย์สาธารณะ FIO ของเจ้าของ: {owner_fio_public_key}",
+      "max_fee": "ค่าธรรมเนียมสูงสุด: {max_fee}",
+      "tpid": "TPID: {tpid}"
+    },
+    "tooltip": "ลงทะเบียนโดเมน FIO ใหม่"
+  },
+  "renewdomain": {
+    "method": "ต่ออายุโดเมน FIO",
+    "title": "ขอต่ออายุโดเมน FIO",
+    "result": "ผลต่ออายุโดเมน FIO",
+    "headers": {
+      "request": "ต่ออายุโดเมน FIO ต่อไปนี้หรือไม่",
+      "result": "โดเมน FIO ต่อไปนี้ได้รับการต่ออายุ:"
+    },
+    "rows": {
+      "fio_domain": "โดเมน FIO: {fio_domain}",
+      "max_fee": "ค่าธรรมเนียมสูงสุด: {max_fee}",
+      "tpid": "TPID: {tpid}"
+    },
+    "tooltip": "ต่ออายุโดเมน FIO ที่มีอยู่"
+  },
+  "addaddress": {
+    "method": "เพิ่มลิงก์ที่อยู่ FIO",
+    "title": "ขอเพิ่มลิงก์ที่อยู่ FIO",
+    "result": "ผลเพิ่มลิงก์ที่อยู่ FIO",
+    "headers": {
+      "request": "เพิ่มลิงก์ที่อยู่ FIO ต่อไปนี้หรือไม่",
+      "result": "ลิงก์ที่อยู่ FIO ต่อไปนี้ถูกเพิ่ม:"
+    },
+    "rows": {
+      "fio_address": "ที่อยู่ FIO: {fio_address}",
+      "chain_code": "รหัสเชน: {chain_code}",
+      "token_code": "รหัสโทเค็น: {token_code}",
+      "public_address": "ที่อยู่สาธารณะ: {public_address}",
+      "max_fee": "ค่าธรรมเนียมสูงสุด: {max_fee}",
+      "tpid": "TPID: {tpid}"
+    },
+    "tooltip": "เชื่อมโยงที่อยู่เชนกับที่อยู่ FIO"
+  },
+  "remaddress": {
+    "method": "ลบลิงก์ที่อยู่ FIO",
+    "title": "ขอลบลิงก์ที่อยู่ FIO",
+    "result": "ผลลบลิงก์ที่อยู่ FIO",
+    "headers": {
+      "request": "ลบลิงก์ที่อยู่ FIO ต่อไปนี้หรือไม่",
+      "result": "ลิงก์ที่อยู่ FIO ต่อไปนี้ถูกลบ:"
+    },
+    "rows": {
+      "fio_address": "ที่อยู่ FIO: {fio_address}",
+      "chain_code": "รหัสเชน: {chain_code}",
+      "token_code": "รหัสโทเค็น: {token_code}",
+      "token_public_address": "ที่อยู่สาธารณะโทเค็น: {token_public_address}",
+      "max_fee": "ค่าธรรมเนียมสูงสุด: {max_fee}",
+      "tpid": "TPID: {tpid}"
+    },
+    "tooltip": "ลบลิงก์ที่อยู่เชนจากที่อยู่ FIO"
+  },
+  "xferdomain": {
+    "method": "โอนโดเมน FIO",
+    "title": "ขอโอนโดเมน FIO",
+    "result": "ผลโอนโดเมน FIO",
+    "headers": {
+      "request": "โอนโดเมน FIO ต่อไปนี้หรือไม่",
+      "result": "โดเมน FIO ต่อไปนี้ถูกโอน:"
+    },
+    "rows": {
+      "fio_domain": "โดเมน FIO: {fio_domain}",
+      "new_owner_key": "คีย์เจ้าของใหม่: {new_owner_key}",
+      "max_fee": "ค่าธรรมเนียมสูงสุด: {max_fee}",
+      "tpid": "TPID: {tpid}"
+    },
+    "tooltip": "โอนโดเมน FIO ไปยังเจ้าของใหม่"
+  },
+  "xferaddress": {
+    "method": "โอนที่อยู่ FIO",
+    "title": "ขอโอนที่อยู่ FIO",
+    "result": "ผลโอนที่อยู่ FIO",
+    "headers": {
+      "request": "โอนที่อยู่ FIO ต่อไปนี้หรือไม่",
+      "result": "ที่อยู่ FIO ต่อไปนี้ถูกโอน:"
+    },
+    "rows": {
+      "fio_address": "ที่อยู่ FIO: {fio_address}",
+      "new_owner_key": "คีย์เจ้าของใหม่: {new_owner_key}",
+      "max_fee": "ค่าธรรมเนียมสูงสุด: {max_fee}",
+      "tpid": "TPID: {tpid}"
+    },
+    "tooltip": "โอนที่อยู่ FIO ไปยังเจ้าของใหม่"
+  },
+  "burnexpired": {
+    "method": "เผา FIO หมดอายุ",
+    "title": "ขอเผา FIO หมดอายุ",
+    "result": "ผลเผา FIO หมดอายุ",
+    "headers": {
+      "request": "เผาที่อยู่ FIO หมดอายุต่อไปนี้หรือไม่",
+      "result": "ที่อยู่ FIO หมดอายุต่อไปนี้ถูกเผา:"
+    },
+    "rows": {
+      "fio_address": "ที่อยู่ FIO: {fio_address}",
+      "max_fee": "ค่าธรรมเนียมสูงสุด: {max_fee}",
+      "tpid": "TPID: {tpid}"
+    },
+    "tooltip": "เผาที่อยู่หรือโดเมน FIO ที่หมดอายุ"
+  },
+  "trnsfiopubky": {
+    "method": "โอนโทเค็น FIO",
+    "title": "ขอโอนโทเค็น FIO",
+    "result": "ผลโอนโทเค็น FIO",
+    "headers": {
+      "request": "โอนโทเค็น FIO ไปยังคีย์สาธารณะต่อไปนี้หรือไม่",
+      "result": "โทเค็น FIO ถูกโอนไปยังคีย์สาธารณะต่อไปนี้:"
+    },
+    "rows": {
+      "payee_fio_public_key": "คีย์สาธารณะ FIO ของผู้รับเงิน: {payee_fio_public_key}",
+      "amount": "จำนวนเงิน: {amount}",
+      "max_fee": "ค่าธรรมเนียมสูงสุด: {max_fee}",
+      "tpid": "TPID: {tpid}"
+    },
+    "tooltip": "โอนโทเค็น FIO ไปยังคีย์สาธารณะ"
+  },
+  "recordobt": {
+    "method": "บันทึกข้อมูล OBT",
+    "title": "ขอบันทึกข้อมูล OBT",
+    "result": "ผลบันทึกข้อมูล OBT",
+    "headers": {
+      "request": "บันทึกข้อมูล OBT ต่อไปนี้หรือไม่",
+      "result": "ข้อมูล OBT ต่อไปนี้ถูกบันทึก:"
+    },
+    "rows": {
+      "payer_fio_address": "ที่อยู่ FIO ของผู้จ่าย: {payer_fio_address}",
+      "payee_fio_address": "ที่อยู่ FIO ของผู้รับเงิน: {payee_fio_address}",
+      "amount": "จำนวนเงิน: {amount}",
+      "chain_code": "รหัสเชน: {chain_code}",
+      "token_code": "รหัสโทเค็น: {token_code}",
+      "obt_id": "รหัส OBT: {obt_id}",
+      "memo": "บันทึก: {memo}",
+      "max_fee": "ค่าธรรมเนียมสูงสุด: {max_fee}",
+      "tpid": "TPID: {tpid}"
+    },
+    "tooltip": "บันทึกข้อมูลธุรกรรมออฟเชนบนเชน FIO"
+  },
+  "newfundsreq": {
+    "method": "ขอเงินทุน FIO",
+    "title": "ขอเงินทุน FIO",
+    "result": "ผลขอเงินทุน FIO",
+    "headers": {
+      "request": "สร้างคำขอเงินทุน FIO ต่อไปนี้หรือไม่",
+      "result": "คำขอเงินทุน FIO ต่อไปนี้ถูกสร้างขึ้น:"
+    },
+    "rows": {
+      "payer_fio_address": "ที่อยู่ FIO ของผู้จ่าย: {payer_fio_address}",
+      "payee_fio_address": "ที่อยู่ FIO ของผู้รับเงิน: {payee_fio_address}",
+      "amount": "จำนวนเงิน: {amount}",
+      "chain_code": "รหัสเชน: {chain_code}",
+      "token_code": "รหัสโทเค็น: {token_code}",
+      "memo": "บันทึก: {memo}",
+      "max_fee": "ค่าธรรมเนียมสูงสุด: {max_fee}",
+      "tpid": "TPID: {tpid}"
+    },
+    "tooltip": "ขอเงินทุนผ่านโปรโตคอล FIO"
+  },
+  "stakefio": {
+    "method": "เดิมพัน FIO",
+    "title": "ขอเดิมพัน FIO",
+    "result": "ผลเดิมพัน FIO",
+    "headers": {
+      "request": "เดิมพันจำนวน FIO ต่อไปนี้หรือไม่",
+      "result": "จำนวน FIO ต่อไปนี้ถูกเดิมพัน:"
+    },
+    "rows": {
+      "amount": "จำนวนเงิน: {amount}",
+      "fio_public_key": "คีย์สาธารณะ FIO: {fio_public_key}",
+      "max_fee": "ค่าธรรมเนียมสูงสุด: {max_fee}",
+      "tpid": "TPID: {tpid}"
+    },
+    "tooltip": "เดิมพันโทเค็น FIO"
+  },
+  "unstakefio": {
+    "method": "เลิกเดิมพัน FIO",
+    "title": "ขอเลิกเดิมพัน FIO",
+    "result": "ผลเลิกเดิมพัน FIO",
+    "headers": {
+      "request": "เลิกเดิมพันจำนวน FIO ต่อไปนี้หรือไม่",
+      "result": "จำนวน FIO ต่อไปนี้ถูกเลิกเดิมพัน:"
+    },
+    "rows": {
+      "amount": "จำนวนเงิน: {amount}",
+      "fio_public_key": "คีย์สาธารณะ FIO: {fio_public_key}",
+      "max_fee": "ค่าธรรมเนียมสูงสุด: {max_fee}",
+      "tpid": "TPID: {tpid}"
+    },
+    "tooltip": "เลิกเดิมพันโทเค็น FIO"
+  },
+  "newfioacc": {
+    "method": "สร้างบัญชี FIO",
+    "title": "ขอสร้างบัญชี FIO",
+    "result": "ผลสร้างบัญชี FIO",
+    "headers": {
+      "request": "สร้างบัญชี FIO ใหม่หรือไม่",
+      "result": "บัญชี FIO ต่อไปนี้ถูกสร้างขึ้น:"
+    },
+    "rows": {
+      "owner_fio_public_key": "คีย์สาธารณะ FIO ของเจ้าของ: {owner_fio_public_key}",
+      "max_fee": "ค่าธรรมเนียมสูงสุด: {max_fee}",
+      "tpid": "TPID: {tpid}"
+    },
+    "tooltip": "สร้างบัญชี FIO ใหม่"
+  },
+  "regproducer": {
+    "method": "ลงทะเบียนผู้ผลิต FIO",
+    "title": "ขอลงทะเบียนผู้ผลิต FIO",
+    "result": "ผลลงทะเบียนผู้ผลิต FIO",
+    "headers": {
+      "request": "ลงทะเบียนสิ่งต่อไปนี้เป็นผู้ผลิตบล็อก FIO หรือไม่",
+      "result": "สิ่งต่อไปนี้ได้รับการลงทะเบียนเป็นผู้ผลิตบล็อก FIO:"
+    },
+    "rows": {
+      "fio_address": "ที่อยู่ FIO: {fio_address}",
+      "fio_pub_key": "คีย์สาธารณะ FIO: {fio_pub_key}",
+      "url": "URL: {url}",
+      "location": "ที่ตั้ง: {location}"
+    },
+    "tooltip": "ลงทะเบียนเป็นผู้ผลิตบล็อก FIO"
+  },
+  "voteproducer": {
+    "method": "ลงคะแนนผู้ผลิต FIO",
+    "title": "ขอลงคะแนนผู้ผลิต FIO",
+    "result": "ผลการลงคะแนนผู้ผลิต FIO",
+    "headers": {
+      "request": "ลงคะแนนให้ผู้ผลิต FIO ต่อไปนี้หรือไม่",
+      "result": "มีการลงคะแนนให้ผู้ผลิต FIO ต่อไปนี้:"
+    },
+    "rows": {
+      "fio_address": "ที่อยู่ FIO: {fio_address}",
+      "producers": "ผู้ผลิต: {producers}"
+    },
+    "tooltip": "ลงคะแนนให้ผู้ผลิตบล็อก FIO"
+  },
+  "listdomain": {
+    "method": "列出โดเมน FIO ขาย",
+    "title": "ขอ列出โดเมน FIO ขาย",
+    "result": "ผล列出โดเมน FIO ขาย",
+    "headers": {
+      "request": "列出โดเมน FIO ต่อไปนี้ขายหรือไม่",
+      "result": "โดเมน FIO ต่อไปนี้ถูก列出ขาย:"
+    },
+    "rows": {
+      "fio_domain": "โดเมน FIO: {fio_domain}",
+      "sale_price": "ราคาขาย: {sale_price}",
+      "max_fee": "ค่าธรรมเนียมสูงสุด: {max_fee}",
+      "tpid": "TPID: {tpid}"
+    },
+    "tooltip": "列出โดเมน FIO ขายในตลาด"
+  },
+  "buydomain": {
+    "method": "ซื้อโดเมน FIO",
+    "title": "ขอซื้อโดเมน FIO",
+    "result": "ผลซื้อโดเมน FIO",
+    "headers": {
+      "request": "ซื้อโดเมน FIO ต่อไปนี้หรือไม่",
+      "result": "โดเมน FIO ต่อไปนี้ถูกซื้อ:"
+    },
+    "rows": {
+      "fio_domain": "โดเมน FIO: {fio_domain}",
+      "buyer_key": "คีย์ผู้ซื้อ: {buyer_key}",
+      "max_fee": "ค่าธรรมเนียมสูงสุด: {max_fee}",
+      "tpid": "TPID: {tpid}"
+    },
+    "tooltip": "ซื้อโดเมน FIO จากตลาด"
+  },
+  "wraptokens": {
+    "method": "พันโทเค็น FIO",
+    "title": "ขอพันโทเค็น FIO",
+    "result": "ผลพันโทเค็น FIO",
+    "headers": {
+      "request": "พันโทเค็นต่อไปนี้เป็น FIO หรือไม่",
+      "result": "โทเค็นต่อไปนี้ถูกพันเป็น FIO:"
+    },
+    "rows": {
+      "chain_code": "รหัสเชน: {chain_code}",
+      "public_address": "ที่อยู่สาธารณะ: {public_address}",
+      "amount": "จำนวนเงิน: {amount}",
+      "max_fee": "ค่าธรรมเนียมสูงสุด: {max_fee}",
+      "tpid": "TPID: {tpid}"
+    },
+    "tooltip": "พันโทเค็นจากเชนอื่นไปยังเชน FIO"
+  },
+  "bpclaim": {
+    "method": "เรียกร้องรางวัลผู้ผลิตบล็อก",
+    "title": "ขอเรียกร้องรางวัลผู้ผลิตบล็อก",
+    "result": "ผลเรียกร้องรางวัลผู้ผลิตบล็อก",
+    "headers": {
+      "request": "เรียกร้องรางวัลผู้ผลิตบล็อกหรือไม่",
+      "result": "รางวัลผู้ผลิตบล็อกได้รับการเรียกร้อง:"
+    },
+    "rows": {
+      "fio_address": "ที่อยู่ FIO: {fio_address}",
+      "tpid": "TPID: {tpid}"
+    },
+    "tooltip": "เรียกร้องรางวัลผู้ผลิตบล็อก FIO"
+  },
+  "setfeevote": {
+    "method": "ตั้งค่าการลงคะแนนค่าธรรมเนียม",
+    "title": "ขอตั้งค่าการลงคะแนนค่าธรรมเนียม",
+    "result": "ผลตั้งค่าการลงคะแนนค่าธรรมเนียม",
+    "headers": {
+      "request": "ตั้งค่าการลงคะแนนค่าธรรมเนียมต่อไปนี้หรือไม่",
+      "result": "การลงคะแนนค่าธรรมเนียมต่อไปนี้ถูกตั้งค่า:"
+    },
+    "rows": {
+      "max_fee": "ค่าธรรมเนียมสูงสุด: {max_fee}",
+      "tpid": "TPID: {tpid}"
+    },
+    "tooltip": "ลงคะแนนในค่าธรรมเนียม FIO"
+  },
+  "transfer": {
+    "method": "Transfer FIO Tokens",
+    "title": "Transfer FIO Tokens Request",
+    "result": "Transfer FIO Tokens Result",
+    "headers": {
+      "request": "Transfer the following FIO tokens?",
+      "result": "The following FIO tokens were transferred:"
+    },
+    "rows": {
+      "from": "From: {from}",
+      "to": "To: {to}",
+      "quantity": "Quantity: {quantity}",
+      "memo": "Memo: {memo}"
+    },
+    "tooltip": "Transfer FIO tokens between accounts"
+  }
+}

@@ -1,0 +1,125 @@
+{
+  "injectedCall": {
+    "method": "注入されたコール",
+    "title": "挿入された通話リクエスト",
+    "result": "挿入された呼び出しの結果",
+    "headers": {
+      "request": "次の挿入された呼び出しを承認しますか?",
+      "result": "次の挿入された呼び出しが承認されました。"
+    },
+    "tooltip": "挿入されたブロックチェーン操作を処理するようにウォレットに要求します"
+  },
+  "regproposer": {
+    "method": "WPS提案者の登録",
+    "title": "WPS提案者登録リクエスト",
+    "result": "WPS提案者登録結果",
+    "headers": {
+      "request": "以下のアカウントをWPS提案者として登録しますか?",
+      "result": "以下のアカウントがWPS提案者として登録されました:"
+    },
+    "rows": {
+      "proposer": "提案者: {proposer}",
+      "proposer_key": "提案者キー: {proposer_key}"
+    },
+    "tooltip": "WPS提案者アカウントを登録する"
+  },
+  "regproposal": {
+    "method": "WPS提案の登録",
+    "title": "WPS提案登録リクエスト",
+    "result": "WPS提案登録結果",
+    "headers": {
+      "request": "以下のWPS提案を登録しますか?",
+      "result": "以下のWPS提案が登録されました:"
+    },
+    "rows": {
+      "proposer": "提案者: {proposer}",
+      "proposal_name": "提案名: {proposal_name}",
+      "title": "タイトル: {title}",
+      "pay_amount": "支払金額: {pay_amount}"
+    },
+    "tooltip": "新しいWPS提案を登録する"
+  },
+  "voteproposal": {
+    "method": "WPS提案への投票",
+    "title": "WPS提案投票リクエスト",
+    "result": "WPS提案投票結果",
+    "headers": {
+      "request": "以下のWPS提案に投票しますか?",
+      "result": "以下のWPS提案への投票が承認されました:"
+    },
+    "rows": {
+      "voter": "投票者: {voter}",
+      "proposal_name": "提案名: {proposal_name}",
+      "vote": "投票: {vote}"
+    },
+    "tooltip": "WPS提案に投票する"
+  },
+  "claimfunds": {
+    "method": "WPS資金の請求",
+    "title": "WPS資金請求リクエスト",
+    "result": "WPS資金請求結果",
+    "headers": {
+      "request": "以下の提案のWPS資金を請求しますか?",
+      "result": "以下の提案のWPS資金が請求されました:"
+    },
+    "rows": {
+      "account": "アカウント: {account}",
+      "proposal_name": "提案名: {proposal_name}"
+    },
+    "tooltip": "承認されたWPS提案から資金を請求する"
+  },
+  "voterclaim": {
+    "method": "WPS有権者報酬の請求",
+    "title": "WPS有権者報酬請求リクエスト",
+    "result": "WPS有権者報酬請求結果",
+    "headers": {
+      "request": "WPS有権者報酬を請求しますか?",
+      "result": "WPS有権者報酬が請求されました:"
+    },
+    "rows": {
+      "owner": "所有者: {owner}"
+    },
+    "tooltip": "WPS有権者報酬を請求する"
+  },
+  "voterclaimst": {
+    "method": "WPS有権者ステーク報酬の請求",
+    "title": "WPS有権者ステーク報酬請求リクエスト",
+    "result": "WPS有権者ステーク報酬請求結果",
+    "headers": {
+      "request": "WPS有権者ステーク報酬を請求しますか?",
+      "result": "WPS有権者ステーク報酬が請求されました:"
+    },
+    "rows": {
+      "owner": "所有者: {owner}",
+      "amount": "金額: {amount}"
+    },
+    "tooltip": "WPS有権者ステーク報酬を請求する"
+  },
+  "awardgenesis": {
+    "method": "ジェネシスの授与",
+    "title": "ジェネシス授与リクエスト",
+    "result": "ジェネシス授与結果",
+    "headers": {
+      "request": "以下のアカウントにジェネシストークンを授与しますか?",
+      "result": "以下のアカウントにジェネシストークンが授与されました:"
+    },
+    "rows": {
+      "receiver": "受信者: {receiver}",
+      "amount": "金額: {amount}"
+    },
+    "tooltip": "アカウントにジェネシストークンを授与する"
+  },
+  "claimgenesis": {
+    "method": "ジェネシスの請求",
+    "title": "ジェネシス請求リクエスト",
+    "result": "ジェネシス請求結果",
+    "headers": {
+      "request": "以下のアカウントのジェネシストークンを請求しますか?",
+      "result": "以下のアカウントのジェネシストークンが請求されました:"
+    },
+    "rows": {
+      "receiver": "受信者: {receiver}"
+    },
+    "tooltip": "ジェネシストークンを請求する"
+  }
+}
