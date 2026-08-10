@@ -32,7 +32,11 @@ The testnet is **Jungle 4**, a long-running community-operated Antelope test net
 
 <ExternalLink hyperlink="https://eosauthority.com" text="EOS Authority (mainnet)" />
 
-<ExternalLink hyperlink="https://jungle4.cryptolions.io" text="Jungle 4 explorer (testnet)" />
+<ExternalLink hyperlink="https://explorer.antelope.io/network?network=eos" text="Antelope explorer (Mainnet)" />
+
+<ExternalLink hyperlink="https://eosauthority.com/?network=jungle" text="Jungle 4 explorer (testnet)" />
+
+<ExternalLink hyperlink="https://explorer.antelope.io/network?network=jungle" text="Antelope explorer (Testnet)" />
 
 ## Resources
 

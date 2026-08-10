@@ -28,9 +28,13 @@ See [Operations](./operations.md) for the full list of actions BeetVault can bro
 
 ## Block Explorer
 
-<ExternalLink hyperlink="https://eosauthority.com" text="EOS Authority" />
+<ExternalLink hyperlink="https://eosauthority.com/?network=telos" text="EOS Authority (Mainnet)" />
 
-Supports both networks via a network parameter (`?network=telos` and `?network=telostest`).
+<ExternalLink hyperlink="https://explorer.antelope.io/network?network=telos" text="Antelope (Mainnet)" />
+
+<ExternalLink hyperlink="https://eosauthority.com/?network=telostest" text="EOS Authority (Testnet)" />
+
+<ExternalLink hyperlink="https://explorer.antelope.io/network?network=telos-testnet" text="Antelope (Testnet)" />
 
 ## Resources
 

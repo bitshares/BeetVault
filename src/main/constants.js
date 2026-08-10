@@ -18,6 +18,7 @@ export const SAFE_DOMAINS = [
     'telos.eosx.io',
     // Vaulta / WAX (shared explorer)
     'eosauthority.com',
+    'explorer.antelope.io',
     // Vaulta testnet
     'jungle4.cryptolions.io',
     // FIO
@@ -29,15 +30,16 @@ export const SAFE_DOMAINS = [
     'www.libreblocks.io',
     'tools.libre.org',
     'libre-explorer.edenia.cloud',
+    'gitlab.com',
     // XPR Network
     'explorer.xprnetwork.org',
     'testnet.explorer.xprnetwork.org',
     // Hive
     'hiveblocks.com',
+    'hivexplorer.com',
     // Project
     'github.com',
     // Official blockchain project websites (linked from documentation)
-    'bitshares.org',
     'vaulta.com',
     'wax.io',
     'telos.net',

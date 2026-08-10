@@ -47,7 +47,7 @@ See [Operations](./operations.md) for the full list of actions BeetVault can bro
 
 ## Block Explorer
 
-<ExternalLink hyperlink="https://hiveblocks.com" text="HiveBlocks" />
+<ExternalLink hyperlink="https://hivexplorer.com/" text="HiveExplorer" />
 
 ## Resources
 

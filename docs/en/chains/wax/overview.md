@@ -28,9 +28,11 @@ See [Operations](./operations.md) for the full list of actions BeetVault can bro
 
 ## Block Explorer
 
-<ExternalLink hyperlink="https://eosauthority.com" text="EOS Authority" />
+<ExternalLink hyperlink="https://eosauthority.com/?network=wax" text="EOS Authority (Mainnet)" />
 
-Supports both networks via a network parameter (`?network=wax` and `?network=waxtest`).
+<ExternalLink hyperlink="https://explorer.antelope.io/network?network=wax" text="Antelope (Mainnet)" />
+
+<ExternalLink hyperlink="https://eosauthority.com/?network=waxtest" text="EOS Authority (Testnet)" />
 
 ## Resources
 

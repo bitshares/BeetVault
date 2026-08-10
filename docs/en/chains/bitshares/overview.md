@@ -27,15 +27,14 @@ See [Operations](./operations.md) for the full list of actions BeetVault can bro
 
 ## Block Explorer
 
-<ExternalLink hyperlink="https://blocksights.info" text="BlockSights" />
-
-Accounts, transactions, operations, assets, and markets. Testnet data is available on the same explorer via a `?network=testnet` parameter.
+<ExternalLink hyperlink="https://blocksights.info" text="BlockSights (Mainnet)" />
 
 ## Resources
 
-<ExternalLink hyperlink="https://bitshares.org" text="Official website" />
-
 <ExternalLink hyperlink="https://github.com/bitshares" text="GitHub organisation" />
+
+<ExternalLink hyperlink="https://github.com/bitshares/awesome-bitshares" text="GitHub - Awesome Bitshares" />
+
 
 ## Notes
 

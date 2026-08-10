@@ -56,7 +56,7 @@ function handleOpen() {
                 {{ text }}
             </Button>
         </AlertDialogTrigger>
-        <AlertDialogContent>
+        <AlertDialogContent @pointer-down-outside="open = false">
             <AlertDialogHeader>
                 <AlertDialogTitle>
                     {{ t('common.externalLink.leaveApp') }}

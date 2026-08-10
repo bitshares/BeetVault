@@ -30,7 +30,11 @@ See [Operations](./operations.md) for the full list of actions BeetVault can bro
 
 <ExternalLink hyperlink="https://fio.bloks.io" text="FIO Bloks (mainnet)" />
 
+<ExternalLink hyperlink="https://eosauthority.com/?network=fio" text="EOS Authority (mainnet)" />
+
 <ExternalLink hyperlink="https://fio-test.bloks.io" text="FIO Bloks (testnet)" />
+
+<ExternalLink hyperlink="https://eosauthority.com/?network=fiotest" text="EOS Authority (testnet)" />
 
 ## Resources
 

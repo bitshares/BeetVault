@@ -36,7 +36,7 @@ See [Operations](./operations.md) for the full list of actions BeetVault can bro
 
 <ExternalLink hyperlink="https://libre.org" text="Official website" />
 
-<ExternalLink hyperlink="https://github.com/Libre-Chain" text="GitHub organisation" />
+<ExternalLink hyperlink="https://gitlab.com/libre-chain" text="GitLab organisation" />
 
 ## Notes
 
