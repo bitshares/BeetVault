@@ -23,7 +23,8 @@
         },
         "generic": {
             "warning": "This operation is not recognized by your wallet version. Carefully review the contract name and parameters before approving."
-        }
+        },
+        "esrNullUser": "The requesting application did not specify which account to use. Your currently selected account will be used to sign this transaction."
     },
     "testnet_prefix": "Testnet:",
     "noImportOption": "No import option found",

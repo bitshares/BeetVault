@@ -17,6 +17,7 @@ import BTSWalletHandler from '../lib/blockchains/bitshares/BTSWalletHandler.js';
 import { getMainWindow } from './windows.js';
 import { BASE_EOSIO_OPERATIONS, ATOMIC_ASSETS_OPERATIONS, ATOMIC_MARKET_OPERATIONS } from '../lib/blockchains/Antelope.js';
 import { clearContractKitCache } from '../lib/blockchains/Antelope/contractKit.js';
+import { decodeEsr, resolveEsrRequest, isEsrEncoded } from '../lib/blockchains/Antelope/esrHelper.js';
 
 const ALL_KNOWN_OPERATIONS = [
     ...BASE_EOSIO_OPERATIONS,
@@ -240,11 +241,70 @@ export async function parseDeeplink(requestContent, type, chain, blockchain, blo
         } else if (VAULTA_FAMILY.includes(chain)) {
             if (request.payload.params && request.payload.params.length > 1) {
                 let actions;
-                try {
-                    actions = JSON.parse(request.payload.params[1]).actions;
-                } catch (error) {
-                    console.log({ error, location: '_parseDeeplink.VAULTA.parse' });
-                    return;
+                let esrRequest = null;
+                let esrResolved = null;
+
+                const txData = request.payload.params[1];
+                const isEsr = request.payload.encoding === 'esr' || isEsrEncoded(txData);
+
+                if (isEsr) {
+                    try {
+                        esrRequest = decodeEsr(txData);
+
+                        const rawActions = esrRequest.getRawActions();
+                        const firstAuth = rawActions[0]?.authorization?.[0];
+                        const isPlaceholderSigner = firstAuth
+                            && String(firstAuth.actor) === '............1';
+
+                        if (!isPlaceholderSigner && blockchain && nodeUrl) {
+                            try {
+                                esrResolved = await resolveEsrRequest(
+                                    esrRequest, chain, nodeUrl, blockchain
+                                );
+                            } catch (resolveErr) {
+                                console.log({ error: resolveErr, location: 'parseDeeplink.esr.resolve' });
+                            }
+                        }
+
+                        actions = esrResolved
+                            ? esrResolved.resolvedActions
+                            : rawActions.map((a) => ({
+                                account: String(a.account),
+                                name: String(a.name),
+                                authorization: (a.authorization || []).map((auth) => ({
+                                    actor: String(auth.actor),
+                                    permission: String(auth.permission),
+                                })),
+                                data: a.data,
+                            }));
+
+                        request._esrRequest = esrRequest;
+                        request._esrResolved = esrResolved;
+                        request._resolvedSigner = esrResolved
+                            ? String(esrResolved.resolvedActions[0]?.authorization?.[0]?.actor || '')
+                            : '';
+                        request._encoding = 'esr';
+                    } catch (error) {
+                        console.log({ error, location: 'parseDeeplink.esr.decode' });
+                        return;
+                    }
+                } else {
+                    try {
+                        const tx = JSON.parse(txData);
+                        actions = tx.actions;
+
+                        const hasPlaceholderAuth = actions && actions.some(a =>
+                            a.authorization && a.authorization.some(auth =>
+                                auth.actor === '............1' || auth.actor === '............2'
+                            )
+                        );
+                        if (hasPlaceholderAuth) {
+                            request._nullJson = true;
+                        }
+                    } catch (error) {
+                        console.log({ error, location: '_parseDeeplink.VAULTA.parse' });
+                        return;
+                    }
                 }
 
                 if (actions) {
@@ -549,7 +609,8 @@ export async function handleBlockchainRequest(event, arg) {
                     blockchain,
                     apiobj,
                     win ? win.webContents : null,
-                    allowedOperations
+                    allowedOperations,
+                    account
                 );
             } catch (error) {
                 console.log({ error: error || 'No status' });
@@ -591,7 +652,8 @@ export async function handleBlockchainRequest(event, arg) {
                     blockchain,
                     apiobj,
                     win ? win.webContents : null,
-                    allowedOperations
+                    allowedOperations,
+                    account
                 );
             } catch (error) {
                 console.log({ error: error || 'No status' });
@@ -635,7 +697,8 @@ export async function handleBlockchainRequest(event, arg) {
                         blockchain,
                         apiobj,
                         win ? win.webContents : null,
-                        allowedOperations
+                        allowedOperations,
+                        account
                     );
                 } catch (error) {
                     console.log({ error: error || 'No status' });
@@ -658,76 +721,123 @@ export async function handleBlockchainRequest(event, arg) {
     if (methods.includes('processQR')) {
         const { qrChoice, qrData, allowedOperations } = arg;
 
-        let parsedData;
-        try {
-            parsedData = JSON.parse(qrData);
-        } catch (error) {
-            console.log({ error, location: 'processQR.parse' });
-            return responses;
-        }
-        let authorizedUse = false;
-        if (BTS_FAMILY.includes(chain)) {
-            const ops = parsedData.operations[0].operations;
-            for (let i = 0; i < ops.length; i++) {
-                let operation = ops[i];
-                if (
-                    allowedOperations &&
-                    allowedOperations.includes(operation[0])
-                ) {
-                    authorizedUse = true;
-                    break;
-                }
-            }
-        } else if (VAULTA_FAMILY.includes(chain)) {
-            const ops = parsedData.actions;
-            for (let i = 0; i < ops.length; i++) {
-                let operation = ops[i];
-                if (
-                    allowedOperations &&
-                    allowedOperations.includes(operation.name)
-                ) {
-                    authorizedUse = true;
-                    break;
-                }
-            }
-        } else if (HIVE_FAMILY.includes(chain)) {
-            const ops = parsedData.operations || parsedData.actions;
-            for (let i = 0; i < ops.length; i++) {
-                const opName = Array.isArray(ops[i]) ? ops[i][0] : ops[i].name;
-                if (allowedOperations && allowedOperations.includes(opName)) {
-                    authorizedUse = true;
-                    break;
-                }
-            }
-        }
+        let apiobj = null;
 
-        if (authorizedUse) {
-            let qrTX;
+        if (VAULTA_FAMILY.includes(chain) && isEsrEncoded(qrData)) {
             try {
-                qrTX = BTS_FAMILY.includes(chain)
-                    ? await blockchain.handleQR(
-                        JSON.stringify(parsedData.operations[0])
-                    )
-                    : parsedData;
+                const esrRequest = decodeEsr(qrData);
+                const rawActions = esrRequest.getRawActions();
+
+                let authorizedUse = false;
+                for (const action of rawActions) {
+                    const opName = String(action.name);
+                    if (allowedOperations && allowedOperations.includes(opName)) {
+                        authorizedUse = true;
+                        break;
+                    }
+                    const allowUnknown = allowedOperations && allowedOperations.includes('customOperations');
+                    if (allowUnknown && !isKnownOperation(opName)) {
+                        authorizedUse = true;
+                        break;
+                    }
+                }
+
+                if (authorizedUse) {
+                    apiobj = {
+                        type: Actions.INJECTED_CALL,
+                        id: uuidv4(),
+                        payload: {
+                            origin: 'localhost',
+                            appName: 'qr',
+                            browser: qrChoice,
+                            params: ['signAndBroadcast', qrData, []],
+                            encoding: 'esr',
+                            chain: chain,
+                        },
+                    };
+                }
             } catch (error) {
-                console.log({ error, location: 'background' });
+                console.log({ error, location: 'processQR.esr' });
+            }
+        } else {
+            let parsedData;
+            try {
+                parsedData = JSON.parse(qrData);
+            } catch (error) {
+                console.log({ error, location: 'processQR.parse' });
+                return responses;
+            }
+            let authorizedUse = false;
+            if (BTS_FAMILY.includes(chain)) {
+                const ops = parsedData.operations[0].operations;
+                for (let i = 0; i < ops.length; i++) {
+                    let operation = ops[i];
+                    if (
+                        allowedOperations &&
+                        allowedOperations.includes(operation[0])
+                    ) {
+                        authorizedUse = true;
+                        break;
+                    }
+                }
+            } else if (VAULTA_FAMILY.includes(chain)) {
+                const ops = parsedData.actions;
+                for (let i = 0; i < ops.length; i++) {
+                    let operation = ops[i];
+                    if (
+                        allowedOperations &&
+                        allowedOperations.includes(operation.name)
+                    ) {
+                        authorizedUse = true;
+                        break;
+                    }
+                    const allowUnknown = allowedOperations && allowedOperations.includes('customOperations');
+                    if (allowUnknown && !isKnownOperation(operation.name)) {
+                        authorizedUse = true;
+                        break;
+                    }
+                }
+            } else if (HIVE_FAMILY.includes(chain)) {
+                const ops = parsedData.operations || parsedData.actions;
+                for (let i = 0; i < ops.length; i++) {
+                    const opName = Array.isArray(ops[i]) ? ops[i][0] : ops[i].name;
+                    if (allowedOperations && allowedOperations.includes(opName)) {
+                        authorizedUse = true;
+                        break;
+                    }
+                }
             }
 
-            console.log('Authorized use of QR codes');
+            if (authorizedUse) {
+                let qrTX;
+                try {
+                    qrTX = BTS_FAMILY.includes(chain)
+                        ? await blockchain.handleQR(
+                            JSON.stringify(parsedData.operations[0])
+                        )
+                        : parsedData;
+                } catch (error) {
+                    console.log({ error, location: 'background' });
+                }
 
-            let apiobj = {
-                type: Actions.INJECTED_CALL,
-                id: uuidv4(),
-                payload: {
-                    origin: 'localhost',
-                    appName: 'qr',
-                    browser: qrChoice,
-                    params: BTS_FAMILY.includes(chain)
-                        ? qrTX.toObject()
-                        : ['signAndBroadcast', qrTX, []],
-                    chain: chain,
-                },
-            };
+                apiobj = {
+                    type: Actions.INJECTED_CALL,
+                    id: uuidv4(),
+                    payload: {
+                        origin: 'localhost',
+                        appName: 'qr',
+                        browser: qrChoice,
+                        params: BTS_FAMILY.includes(chain)
+                            ? qrTX.toObject()
+                            : ['signAndBroadcast', qrTX, []],
+                        chain: chain,
+                    },
+                };
+            }
+        }
+
+        if (apiobj) {
+            console.log('Authorized use of QR codes');
 
             const win = getMainWindow ? getMainWindow() : null;
             let status;
@@ -736,7 +846,8 @@ export async function handleBlockchainRequest(event, arg) {
                     blockchain,
                     apiobj,
                     win ? win.webContents : null,
-                    allowedOperations
+                    allowedOperations,
+                    account
                 );
             } catch (error) {
                 console.log({ error, location: 'processQR' });

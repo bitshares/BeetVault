@@ -6,7 +6,7 @@ function isBadActor(actor, blockedAccounts) {
     return blockedAccounts.some((x) => x === actor);
 }
 
-export async function inject(blockchain, request, webContents, allowedOperations) {
+export async function inject(blockchain, request, webContents, allowedOperations, userAccount = null) {
     let isBlocked = false;
     let blockedAccounts;
     let foundIDs = [];
@@ -100,13 +100,21 @@ export async function inject(blockchain, request, webContents, allowedOperations
     } else if (
         VAULTA_FAMILY.includes(blockchain._config.identifier)
     ) {
-        const params = request.payload.params[1];
-        const _actions =
-            typeof params === "string"
-                ? JSON.parse(params).actions
-                : params.actions;
+        if (request._esrRequest && request._resolvedSigner) {
+            visualizedAccount = request._resolvedSigner;
+        } else if (request._esrRequest && userAccount) {
+            visualizedAccount = userAccount.accountName || userAccount.name || '';
+        } else if (request._nullJson && userAccount) {
+            visualizedAccount = userAccount.accountName || userAccount.name || '';
+        } else {
+            const params = request.payload.params[1];
+            const _actions =
+                typeof params === "string"
+                    ? JSON.parse(params).actions
+                    : params.actions;
 
-        visualizedAccount = _actions[0].authorization[0].actor;
+            visualizedAccount = _actions[0].authorization[0].actor;
+        }
     } else if (HIVE_FAMILY.includes(blockchain._config.identifier)) {
         const params = request.payload.params[1];
         const parsed =

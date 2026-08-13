@@ -64,6 +64,10 @@ export const useAccountStore = defineStore('account', {
             let currentAccount = state.accountlist[state.selectedIndex];
             return currentAccount.keys.privateKey;
         },
+        getVaultaAccount: (state) => () => {
+            let currentAccount = state.accountlist[state.selectedIndex];
+            return currentAccount.accountName;
+        },
         getActiveKey: (state) => (request) => {
             let signing = state.accountlist.filter(account => {
                 return (

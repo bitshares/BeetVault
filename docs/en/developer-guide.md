@@ -56,7 +56,17 @@ Each method encodes the same envelope differently:
 | Raw Deeplink | `JSON.stringify` → `encodeURIComponent` |
 | TOTP Deeplink | `JSON.stringify` → encrypt → base64 → base64 → `encodeURIComponent` |
 | JSON File | `JSON.stringify` |
-| QR Code | `JSON.stringify` of the bare transaction object |
+| QR Code | `JSON.stringify` of the bare transaction object (or ESR string) |
+
+For **Antelope chains**, three encoding options are available for `params[1]`:
+
+| Encoding | `params[1]` content | `payload.encoding` | Benefits |
+|----------|---------------------|-------------------|----------|
+| ESR | Base64url ESR binary (`esr://...`) | `"esr"` | Fresh TAPOS, placeholders, smaller payload |
+| JSON (full) | Stringified transaction with TAPOS + hex data | omitted | Full dApp control |
+| JSON (null) | Stringified `{actions}` with placeholder auth | omitted | No chain access needed, signer-agnostic |
+
+See the [Antelope Raw Deeplink](./deeplinks/raw/antelope.md) page for encoding examples.
 
 ## Worked Example
 
@@ -151,6 +161,7 @@ See [TOTP Deeplink](./deeplinks/totp/overview.md) for the `encryptForBeetVault` 
 - Operations are actions carrying a string `name`
 - QR codes carry an object with an `actions` array
 - Authorization is matched against each action's `name`
+- Antelope supports optional ESR encoding (`payload.encoding: "esr"`) for smaller payloads, fresh TAPOS, and null-user flows
 
 The request envelope is identical across all chains — only transaction construction and the QR payload shape differ.
 

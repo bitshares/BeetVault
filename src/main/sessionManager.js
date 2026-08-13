@@ -13,6 +13,8 @@ import {
     randomBytes,
     TIERS
 } from '../lib/crypto.js';
+import { resolveEsrRequest } from '../lib/blockchains/Antelope/esrHelper.js';
+import { VAULTA_FAMILY } from '../lib/blockchains/chainFamilies.js';
 import { hkdf } from '@noble/hashes/hkdf.js';
 import { sha256 } from '@noble/hashes/sha2.js';
 import { hmac } from '@noble/hashes/hmac.js';
@@ -535,7 +537,41 @@ export async function decryptAndSign(event, arg, chainNodes) {
 
     let transaction;
     try {
-        transaction = await blockchain.sign(operation, signingKey);
+        if (VAULTA_FAMILY.includes(chain) && operation._esrRequest) {
+            const nodeUrl = chainNodes[chain] || null;
+            const signerAccount = operation._userAccount
+                ? { actor: operation._userAccount, permission: 'active' }
+                : null;
+            const resolved = await resolveEsrRequest(
+                operation._esrRequest,
+                chain,
+                nodeUrl,
+                blockchain,
+                signerAccount
+            );
+            operation.actions = resolved.resolvedActions;
+            operation._esrSerializedTx = resolved.serializedTransaction;
+            operation._esrChainId = resolved.chainId;
+            operation._esrSigningDigest = resolved.signingDigest;
+            delete operation._esrRequest;
+            transaction = await blockchain.sign(operation, signingKey);
+        } else if (VAULTA_FAMILY.includes(chain) && operation._nullJson && operation._userAccount) {
+            const accountName = operation._userAccount;
+            if (operation.actions) {
+                operation.actions = operation.actions.map(action => ({
+                    ...action,
+                    authorization: action.authorization.map(auth => ({
+                        actor: (auth.actor === '............1' || auth.actor === '............2') ? accountName : auth.actor,
+                        permission: (auth.permission === '............1' || auth.permission === '............2') ? 'active' : auth.permission,
+                    })),
+                }));
+            }
+            delete operation._nullJson;
+            delete operation._userAccount;
+            transaction = await blockchain.sign(operation, signingKey);
+        } else {
+            transaction = await blockchain.sign(operation, signingKey);
+        }
     } catch (error) {
         const errData = {
             code: error.code,
@@ -565,6 +601,7 @@ export async function decryptAndSign(event, arg, chainNodes) {
             err.message = JSON.stringify(errData);
             throw err;
         }
+
         return broadcastResponse;
     }
 

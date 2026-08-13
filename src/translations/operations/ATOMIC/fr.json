@@ -1,4 +1,13 @@
 {
+  "generic": {
+    "method": "Opération inconnue",
+    "title": "Demande d'opération inconnue",
+    "headers": {
+      "request": "Examinez attentivement cette opération inconnue",
+      "result": "L'opération inconnue suivante a été approuvée:"
+    },
+    "tooltip": "Une opération non reconnue par cette version de portefeuille"
+  },
   "init": {
     "method": "Initialize Contract",
     "title": "Initialize Contract Request",

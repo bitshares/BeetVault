@@ -1,4 +1,13 @@
 {
+  "generic": {
+    "method": "Operación desconocida",
+    "title": "Solicitud de operación desconocida",
+    "headers": {
+      "request": "Revise esta operación desconocida cuidadosamente",
+      "result": "La siguiente operación desconocida fue aprobada:"
+    },
+    "tooltip": "Una operación no reconocida por esta versión de billetera"
+  },
   "injectedCall": {
     "method": "injectedCall",
     "title": "Solicitud de llamada inyectada",

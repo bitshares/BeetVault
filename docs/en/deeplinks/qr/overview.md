@@ -46,7 +46,7 @@ After selecting your input method:
 
 ## QR Code Data Format
 
-> **Important:** QR codes do **not** use the `{type, id, payload}` request envelope that deeplinks and JSON files use. A QR code contains a **bare transaction object**. The wallet builds the envelope itself after scanning.
+> **Important:** QR codes do **not** use the `{type, id, payload}` request envelope that deeplinks and JSON files use. A QR code contains a **bare transaction object** or **ESR-encoded signing request**. The wallet builds the envelope itself after scanning.
 
 The exact shape depends on the chain family:
 

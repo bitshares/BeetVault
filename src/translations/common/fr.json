@@ -376,5 +376,20 @@
         "proceedToURL": "Continuer vers l'URL :",
         "checkingLeave": "Veuillez vérifier que c'est correct avant de continuer.",
         "openLink": "Ouvrir le lien"
+    },
+    "operations": {
+        "id": "ID",
+        "method": "Méthode",
+        "info": "Info",
+        "contract": "Contrat",
+        "generic": {
+            "warning": "Cette opération n'est pas reconnue par votre version de portefeuille. Vérifiez attentivement le nom du contrat et les paramètres avant d'approuver."
+        },
+        "esrNullUser": "L'application demandante n'a pas spécifié quel compte utiliser. Votre compte actuellement sélectionné sera utilisé pour signer cette transaction.",
+        "customOps": {
+            "id": "customOperations",
+            "method": "Autoriser les opérations non listées",
+            "tooltip": "Autoriser les opérations de nouveaux contrats ou de contrats non reconnus. Elles seront affichées avec un formatage générique indiquant le nom du contrat et les paramètres."
+        }
     }
 }

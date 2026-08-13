@@ -1,4 +1,13 @@
 {
+  "generic": {
+    "method": "Unbekannte Operation",
+    "title": "Anfrage für unbekannte Operation",
+    "headers": {
+      "request": "Überprüfen Sie diese unbekannte Operation sorgfältig",
+      "result": "Folgende unbekannte Operation wurde genehmigt:"
+    },
+    "tooltip": "Eine Operation, die von dieser Wallet-Version nicht erkannt wird"
+  },
   "injectedCall": {
     "method": "injiziertAnruf",
     "title": "Eingefügte Anrufanfrage",

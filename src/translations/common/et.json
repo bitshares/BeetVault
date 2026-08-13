@@ -376,5 +376,20 @@
         "proceedToURL": "Jätka URL-ile:",
         "checkingLeave": "Palun kontrolli õiguse enne jätkamist.",
         "openLink": "Ava link"
+    },
+    "operations": {
+        "id": "ID",
+        "method": "Meetod",
+        "info": "Info",
+        "contract": "Leping",
+        "generic": {
+            "warning": "Seda toimingut teie rahakoti versioon ei tunne. Enne kinnitamist vaadake hoolikalt lepingu nime ja parameetreid."
+        },
+        "esrNullUser": "Taotlev rakendus ei määratanud, millist kontot kasutada. Selle tehingu allkirjastamiseks kasutatakse teie praegu valitud kontot.",
+        "customOps": {
+            "id": "customOperations",
+            "method": "Luba loetlemata toimingud",
+            "tooltip": "Luba toimingud uutelt või tundmatutelt lepingutelt. Need kuvatakse üldise vormingus, näidates lepingu nime ja parameetreid."
+        }
     }
 }

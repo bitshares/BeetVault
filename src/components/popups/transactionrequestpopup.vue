@@ -91,6 +91,16 @@
         return props.warning;
     });
 
+    let isEsr = computed(() => {
+        if (!props.request || !props.request.payload) return false;
+        return props.request.payload.encoding === 'esr'
+            || props.request._encoding === 'esr';
+    });
+
+    let isEsrNullUser = computed(() => {
+        return isEsr.value && !props.visualizedAccount;
+    });
+
     function _clickedAllow() {
         if (isApproving.value) return;
         isApproving.value = true;
@@ -162,6 +172,11 @@
                     <Alert v-if="parsedParameters[page - 1].isGeneric" class="border-yellow-500 bg-yellow-50 mt-2 py-2">
                         <AlertDescription class="text-xs">
                             {{ t('common.operations.generic.warning') }}
+                        </AlertDescription>
+                    </Alert>
+                    <Alert v-if="isEsrNullUser" class="border-amber-500 bg-amber-50 mt-2 py-2">
+                        <AlertDescription class="text-xs">
+                            {{ t('common.operations.esrNullUser') }}
                         </AlertDescription>
                     </Alert>
                 </CardHeader>

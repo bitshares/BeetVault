@@ -376,5 +376,20 @@
         "proceedToURL": "Weiter zur URL:",
         "checkingLeave": "Bitte überprüfen Sie dies, bevor Sie fortfahren.",
         "openLink": "Link öffnen"
+    },
+    "operations": {
+        "id": "ID",
+        "method": "Methode",
+        "info": "Info",
+        "contract": "Vertrag",
+        "generic": {
+            "warning": "Diese Operation wird von Ihrer Wallet-Version nicht erkannt. Überprüfen Sie sorgfältig den Vertragsnamen und die Parameter, bevor Sie genehmigen."
+        },
+        "esrNullUser": "Die anfragende Anwendung hat nicht angegeben, welches Konto verwendet werden soll. Ihr aktuell ausgewähltes Konto wird zum Signieren dieser Transaktion verwendet.",
+        "customOps": {
+            "id": "customOperations",
+            "method": "Nicht aufgeführte Operationen erlauben",
+            "tooltip": "Erlauben Sie Operationen von neuen oder unbekannten Verträgen. Diese werden mit allgemeiner Formatierung angezeigt, die den Vertragsnamen und die Parameter anzeigt."
+        }
     }
 }

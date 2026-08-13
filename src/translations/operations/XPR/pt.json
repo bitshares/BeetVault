@@ -1,4 +1,13 @@
 {
+  "generic": {
+    "method": "Operação desconhecida",
+    "title": "Solicitação de operação desconhecida",
+    "headers": {
+      "request": "Revise esta operação desconhecida cuidadosamente",
+      "result": "A seguinte operação desconhecida foi aprovada:"
+    },
+    "tooltip": "Uma operação não reconhecida por esta versão da carteira"
+  },
   "injectedCall": {
     "method": "chamada injetada",
     "title": "Solicitação de chamada injetada",

@@ -10,9 +10,11 @@ import {
     PublicKey,
     Bytes
 } from '@wharfkit/antelope';
+import { SigningRequest } from '@wharfkit/signing-request';
 
 import * as Actions from "../Actions.js";
 import { getContractKit } from './Antelope/contractKit.js';
+import { resolveEsrRequest } from './Antelope/esrHelper.js';
 
 export const BASE_EOSIO_OPERATIONS = [
     "activate", "setparams", "setpriv", "rmvproducer", "updtrevision",
@@ -507,38 +509,50 @@ export default class Antelope extends BlockchainAPI {
 
         try {
             const info = await this.client.v1.chain.get_info();
-            const header = info.getTransactionHeader(30);
+            let signedTransaction;
 
-            const contractNames = [...new Set(transaction.actions.map(action => action.account))];
-            const kit = getContractKit(this._config.identifier, this.getNodes()[0].url);
+            if (transaction._esrSerializedTx) {
+                const signature = transaction.privateKey.signDigest(
+                    transaction._esrSigningDigest
+                );
+                signedTransaction = SignedTransaction.from({
+                    signatures: [signature],
+                    serializedTransaction: transaction._esrSerializedTx,
+                });
+            } else {
+                const header = info.getTransactionHeader(30);
 
-            const contracts = await Promise.all(
-                contractNames.map(async (name) => {
-                    try {
-                        return { contract: name, abi: (await kit.load(name)).abi };
-                    } catch {
-                        return { contract: name, abi: null };
-                    }
-                })
-            );
+                const contractNames = [...new Set(transaction.actions.map(action => action.account))];
+                const kit = getContractKit(this._config.identifier, this.getNodes()[0].url);
 
-            const abis = contracts.filter((c) => c.abi);
+                const contracts = await Promise.all(
+                    contractNames.map(async (name) => {
+                        try {
+                            return { contract: name, abi: (await kit.load(name)).abi };
+                        } catch {
+                            return { contract: name, abi: null };
+                        }
+                    })
+                );
 
-            const preparedActions = prepareActionsForWharfkit(transaction.actions);
+                const abis = contracts.filter((c) => c.abi);
 
-            const tx = Transaction.from({
-                ...header,
-                actions: preparedActions
-            }, abis);
+                const preparedActions = prepareActionsForWharfkit(transaction.actions);
 
-            const signature = transaction.privateKey.signDigest(
-                tx.signingDigest(info.chain_id)
-            );
+                const tx = Transaction.from({
+                    ...header,
+                    actions: preparedActions
+                }, abis);
 
-            const signedTransaction = SignedTransaction.from({
-                ...tx,
-                signatures: [signature]
-            });
+                const signature = transaction.privateKey.signDigest(
+                    tx.signingDigest(info.chain_id)
+                );
+
+                signedTransaction = SignedTransaction.from({
+                    ...tx,
+                    signatures: [signature]
+                });
+            }
 
             return await this.client.v1.chain.push_transaction(signedTransaction);
         } catch (error) {
@@ -605,7 +619,22 @@ export default class Antelope extends BlockchainAPI {
      * @returns
      */
     async visualize(trx, allowedOperations) {
-        const _trx = typeof trx[1] === "string" ? JSON.parse(trx[1]) : trx[1];
+        const txData = trx[1];
+        let _trx;
+
+        if (typeof txData === 'string') {
+            try {
+                const decoded = SigningRequest.from(txData);
+                const resolved = await resolveEsrRequest(
+                    decoded, this._config.identifier, this.getNodes()[0].url, this
+                );
+                _trx = { actions: resolved.resolvedActions };
+            } catch (e) {
+                _trx = JSON.parse(txData);
+            }
+        } else {
+            _trx = txData;
+        }
 
         if (!this.client) {
             this.client = new APIClient({

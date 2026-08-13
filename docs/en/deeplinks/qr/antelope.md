@@ -1,10 +1,14 @@
 # QR Code — Antelope
 
-This page shows how to generate QR code contents for **Antelope chains** (Vaulta, WAX, Telos, FIO, Libre, XPR Network, BEOS).
+This page shows how to generate QR code contents for **Antelope chains** (Vaulta, WAX, Telos, FIO, Libre, XPR Network, BEOS). QR codes support both JSON transaction objects and ESR-encoded signing requests.
 
-## QR Data Format
+## QR Data Formats
 
-The QR contains a complete, signable transaction object produced by `@wharfkit/antelope`. The same object you would put in a deeplink — just encoded as a QR instead of a URL:
+QR codes can contain either a JSON transaction object or an ESR binary string. The wallet auto-detects the format.
+
+### JSON (full transaction)
+
+A complete, signable transaction object with TAPOS and ABI-encoded data:
 
 ```json
 {
@@ -27,9 +31,45 @@ The QR contains a complete, signable transaction object produced by `@wharfkit/a
 }
 ```
 
-The wallet checks authorization by reading each action's `name` field and matching it against your configured permission scope.
+### JSON (null values — wallet fills TAPOS/ABIs/account)
+
+A transaction with placeholder authorization and plain-object data:
+
+```json
+{
+  "actions": [
+    {
+      "account": "eosio.token",
+      "name": "transfer",
+      "authorization": [{ "actor": "............1", "permission": "............2" }],
+      "data": {
+        "from": "............1",
+        "to": "bar",
+        "quantity": "42.0000 EOS",
+        "memo": "Don't panic"
+      }
+    }
+  ]
+}
+```
+
+### ESR (recommended)
+
+An ESR-encoded signing request as a base64url string, optionally with `esr://` prefix:
+
+```
+esr://gmNgZGRkAIFXBqEFopc6760yugsVYWBggtKCMIEFRnclpF9eTWUACgAA
+```
+
+or bare base64url:
+
+```
+gmNgZGRkAIFXBqEFopc6760yugsVYWBggtKCMIEFRnclpF9eTWUACgAA
+```
 
 ## Generating QR Contents
+
+### JSON (full transaction)
 
 ```js
 import { Transaction } from "@wharfkit/antelope";
@@ -50,32 +90,62 @@ async function generateAntelopeQRContents(client, actions) {
     .filter((item) => item.abi);
 
   const tx = Transaction.from({ ...header, actions }, abis);
-
   return tx;
+}
+
+// QR content: JSON.stringify(tx)
+```
+
+### JSON (null values)
+
+```js
+async function generateAntelopeNullJsonQRContents(actions) {
+  return { actions };
+}
+
+// QR content: JSON.stringify({ actions })
+```
+
+### ESR (recommended)
+
+```js
+import { SigningRequest } from "@wharfkit/signing-request";
+
+async function generateAntelopeEsrQRContents(actions, client) {
+  const request = await SigningRequest.create(
+    { actions },
+    {
+      abiProvider: {
+        getAbi: async (account) =>
+          (await client.v1.chain.get_abi(account)).abi,
+      },
+    }
+  );
+
+  return request.encode();  // "esr://gmNg..."
 }
 ```
 
-Render it with any QR library — for example `react-qrcode-logo`:
+## Rendering
+
+Render the QR content with any QR library — for example `react-qrcode-logo`:
 
 ```jsx
 import { QRCode } from "react-qrcode-logo";
 
-<QRCode
-  value={JSON.stringify(qrContents)}
-  ecLevel="M"
-  size={250}
-  quietZone={25}
-  qrStyle="squares"
-  bgColor="#ffffff"
-  fgColor="#000000"
-/>
+// For JSON:
+<QRCode value={JSON.stringify(qrContents)} ecLevel="M" size={250} />
+
+// For ESR:
+<QRCode value={esrString} ecLevel="M" size={250} />
 ```
 
 ## Key Details
 
-- The QR payload is the same complete transaction object used in deeplinks — TAPOS is set, action data is ABI-encoded
-- `getTransactionHeader(seconds)` derives TAPOS from the latest irreversible block
-- Each action's `data` is ABI-encoded to hex — this is the proper on-chain format
+- The wallet auto-detects ESR vs JSON by checking the `esr://` prefix or base64url version byte
+- For JSON (full): TAPOS is set, action data is ABI-encoded to hex
+- For JSON (null): the wallet fills TAPOS, fetches ABIs, encodes data, and supplies the account
+- For ESR: the wallet resolves placeholders, fills TAPOS, and encodes data at signing time
 - Lower `ecLevel` values fit more data; higher values scan more reliably. See [Data Capacity](../qr/overview.md#data-capacity) for the tradeoff
 
 ## See Also
