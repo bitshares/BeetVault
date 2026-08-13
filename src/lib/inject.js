@@ -6,7 +6,7 @@ function isBadActor(actor, blockedAccounts) {
     return blockedAccounts.some((x) => x === actor);
 }
 
-export async function inject(blockchain, request, webContents) {
+export async function inject(blockchain, request, webContents, allowedOperations) {
     let isBlocked = false;
     let blockedAccounts;
     let foundIDs = [];
@@ -36,7 +36,10 @@ export async function inject(blockchain, request, webContents) {
 
     let visualizedParams;
     try {
-        visualizedParams = await blockchain.visualize(request.payload.params);
+        visualizedParams = await blockchain.visualize(
+            request.payload.params,
+            allowedOperations
+        );
     } catch (error) {
         console.log(error);
     }

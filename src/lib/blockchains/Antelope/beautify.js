@@ -55,7 +55,7 @@ const allowedOperations = [
  */
 
 export function createBeautify(namespace) {
-    return async function beautify(operation) {
+    return async function beautify(operation, allowedOperations) {
 
         if (!operation || !operation.name) {
             return;
@@ -64,6 +64,9 @@ export function createBeautify(namespace) {
         const opType = operation.name;
 
         if (!allowedOperations.includes(opType)) {
+            if (allowedOperations.includes('customOperations')) {
+                return buildGenericOperation(operation, opType, namespace);
+            }
             return;
         }
 
@@ -71,6 +74,7 @@ export function createBeautify(namespace) {
             title: `operations.injected.${namespace}.${opType}.title`,
             opType: opType,
             method: opType,
+            contract: operation.account,
             op: operation,
             operation: operation,
         };
@@ -931,4 +935,35 @@ export function createBeautify(namespace) {
 
         return currentOperation;
     };
+}
+
+function buildGenericOperation(operation, opType, namespace) {
+    const data = operation.data;
+    let rows = [];
+
+    if (data && typeof data === 'object' && !Array.isArray(data)) {
+        rows = Object.keys(data).map(key => ({
+            key: key,
+            params: { [key]: formatGenericValue(data[key]) }
+        }));
+    } else {
+        rows = [{ key: 'raw', params: { value: JSON.stringify(data) } }];
+    }
+
+    return {
+        title: 'operations.injected.generic.title',
+        opType: opType,
+        method: opType,
+        contract: operation.account,
+        isGeneric: true,
+        op: operation,
+        operation: operation,
+        rows,
+    };
+}
+
+function formatGenericValue(value) {
+    if (value === null || value === undefined) return '—';
+    if (typeof value === 'object') return JSON.stringify(value);
+    return String(value);
 }

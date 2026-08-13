@@ -1,4 +1,13 @@
 {
+  "generic": {
+    "method": "Unknown Operation",
+    "title": "Unknown Operation Request",
+    "headers": {
+      "request": "Review this unknown operation carefully",
+      "result": "The following unknown operation was approved:"
+    },
+    "tooltip": "An operation not recognized by this wallet version"
+  },
   "injectedCall": {
     "method": "injectedCall",
     "title": "Injected Call Request",

@@ -14,7 +14,16 @@
     "operations": {
         "id": "ID",
         "method": "Method",
-        "info": "Info"
+        "info": "Info",
+        "contract": "Contract",
+        "customOps": {
+            "id": "customOperations",
+            "method": "Allow operations not listed above",
+            "tooltip": "Permit operations from new or unrecognized contracts. These will display with generic formatting showing the contract name and parameters."
+        },
+        "generic": {
+            "warning": "This operation is not recognized by your wallet version. Carefully review the contract name and parameters before approving."
+        }
     },
     "testnet_prefix": "Testnet:",
     "noImportOption": "No import option found",

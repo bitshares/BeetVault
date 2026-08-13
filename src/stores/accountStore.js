@@ -1,6 +1,7 @@
 import { defineStore } from 'pinia';
 import { hashPassword } from '../lib/utils.js';
 import { useWalletStore } from './walletStore.js';
+import { clearContractKitCache } from '../lib/blockchains/Antelope/contractKit.js';
 
 export const useAccountStore = defineStore('account', {
     state: () => ({
@@ -246,6 +247,7 @@ export const useAccountStore = defineStore('account', {
 
             if (index !== -1) {
                 this.selectedIndex = index;
+                clearContractKitCache();
                 return 'Account found';
             }
         },

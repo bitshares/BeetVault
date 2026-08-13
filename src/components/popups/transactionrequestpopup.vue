@@ -156,18 +156,37 @@
                             {{ t(parsedParameters[page - 1].title) }}
                         </span>
                     </CardTitle>
+                    <p class="text-sm font-mono text-muted-foreground pt-1">
+                        {{ t('common.operations.contract') }}: {{ parsedParameters[page - 1].contract }}
+                    </p>
+                    <Alert v-if="parsedParameters[page - 1].isGeneric" class="border-yellow-500 bg-yellow-50 mt-2 py-2">
+                        <AlertDescription class="text-xs">
+                            {{ t('common.operations.generic.warning') }}
+                        </AlertDescription>
+                    </Alert>
                 </CardHeader>
                 <CardContent class="space-y-2">
                     <p class="text-sm text-muted-foreground">
                         {{ t(`operations.injected.${props.request.payload.chain === "BTS_TEST" ? "BTS" : props.request.payload.chain}.${parsedParameters[page - 1].method}.headers.request`) }}
                     </p>
-                    <p
-                        v-for="row in parsedParameters[page - 1].rows"
-                        :key="row.key"
-                        class="text-sm font-medium text-muted-foreground"
-                    >
-                        {{ t(`operations.injected.${props.request.payload.chain === "BTS_TEST" ? "BTS" : props.request.payload.chain}.${parsedParameters[page - 1].method}.rows.${row.key}`, row.params) }}
-                    </p>
+                    <template v-if="parsedParameters[page - 1].isGeneric">
+                        <p
+                            v-for="row in parsedParameters[page - 1].rows"
+                            :key="row.key"
+                            class="font-mono text-sm text-muted-foreground"
+                        >
+                            {{ row.key }}: {{ row.params[row.key] }}
+                        </p>
+                    </template>
+                    <template v-else>
+                        <p
+                            v-for="row in parsedParameters[page - 1].rows"
+                            :key="row.key"
+                            class="text-sm font-medium text-muted-foreground"
+                        >
+                            {{ t(`operations.injected.${props.request.payload.chain === "BTS_TEST" ? "BTS" : props.request.payload.chain}.${parsedParameters[page - 1].method}.rows.${row.key}`, row.params) }}
+                        </p>
+                    </template>
                 </CardContent>
                 <CardFooter>
                     <Button variant="outline" @click="open = true">

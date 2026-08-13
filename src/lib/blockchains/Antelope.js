@@ -12,6 +12,7 @@ import {
 } from '@wharfkit/antelope';
 
 import * as Actions from "../Actions.js";
+import { getContractKit } from './Antelope/contractKit.js';
 
 export const BASE_EOSIO_OPERATIONS = [
     "activate", "setparams", "setpriv", "rmvproducer", "updtrevision",
@@ -143,6 +144,10 @@ export default class Antelope extends BlockchainAPI {
                 id: op,
                 method: op,
             };
+        });
+        _ops.push({
+            id: 'customOperations',
+            method: 'customOperations',
         });
         return _ops;
     }
@@ -505,16 +510,19 @@ export default class Antelope extends BlockchainAPI {
             const header = info.getTransactionHeader(30);
 
             const contractNames = [...new Set(transaction.actions.map(action => action.account))];
-            const abiResponses = await Promise.all(
-                contractNames.map(contract =>
-                    this.client.v1.chain.get_abi(contract)
-                )
+            const kit = getContractKit(this._config.identifier, this.getNodes()[0].url);
+
+            const contracts = await Promise.all(
+                contractNames.map(async (name) => {
+                    try {
+                        return { contract: name, abi: (await kit.load(name)).abi };
+                    } catch {
+                        return { contract: name, abi: null };
+                    }
+                })
             );
 
-            const abis = contractNames.map((contract, index) => ({
-                contract,
-                abi: abiResponses[index]?.abi
-            })).filter(item => item.abi);
+            const abis = contracts.filter((c) => c.abi);
 
             const preparedActions = prepareActionsForWharfkit(transaction.actions);
 
@@ -593,9 +601,10 @@ export default class Antelope extends BlockchainAPI {
     /**
      * Processing and localizing operations in the transaction
      * @param {Object[]} trx
+     * @param {string[]} allowedOperations - user-authorized operation types
      * @returns
      */
-    async visualize(trx) {
+    async visualize(trx, allowedOperations) {
         const _trx = typeof trx[1] === "string" ? JSON.parse(trx[1]) : trx[1];
 
         if (!this.client) {
@@ -605,24 +614,28 @@ export default class Antelope extends BlockchainAPI {
         }
 
         const contractNames = [...new Set(_trx.actions.map((a) => a.account))];
-        const abiResponses = await Promise.all(
-            contractNames.map((c) => this.client.v1.chain.get_abi(c))
-        );
-        const abis = contractNames
-            .map((c, i) => ({ contract: c, abi: abiResponses[i]?.abi }))
-            .filter((a) => a.abi);
+        const kit = getContractKit(this._config.identifier, this.getNodes()[0].url);
 
-        const preparedActions = prepareActionsForWharfkit(_trx.actions);
-
-        const decodedActions = preparedActions.map((action) => {
-            const contractAbi = abis.find((a) => a.contract === action.account);
-            if (contractAbi && action.data) {
+        const contracts = await Promise.all(
+            contractNames.map(async (name) => {
                 try {
+                    return { contract: name, kit: await kit.load(name) };
+                } catch {
+                    return { contract: name, kit: null };
+                }
+            })
+        );
+
+        const decodedActions = _trx.actions.map((action) => {
+            const contract = contracts.find((c) => c.contract === action.account);
+            if (contract?.kit && action.data) {
+                try {
+                    const abi = contract.kit.abi;
                     const decoded = Transaction.from(
                         { actions: [action] },
-                        [contractAbi]
+                        [{ contract: action.account, abi }]
                     ).actions[0].decoded;
-                    return { ...action, data: decoded.data };
+                    return { ...action, data: decoded.data, abi };
                 } catch (e) {
                     // If decoding fails, pass through raw data
                 }
@@ -633,7 +646,7 @@ export default class Antelope extends BlockchainAPI {
         let beautifiedOpPromises = [];
         for (let i = 0; i < decodedActions.length; i++) {
             let operation = decodedActions[i];
-            beautifiedOpPromises.push(this.beautifyModule(operation));
+            beautifiedOpPromises.push(this.beautifyModule(operation, allowedOperations));
         }
 
         return Promise.all(beautifiedOpPromises)

@@ -15,6 +15,18 @@ import { storePendingKey } from './sessionManager.js';
 import getBlockchainAPIImport from '../lib/blockchains/blockchainFactory.js';
 import BTSWalletHandler from '../lib/blockchains/bitshares/BTSWalletHandler.js';
 import { getMainWindow } from './windows.js';
+import { BASE_EOSIO_OPERATIONS, ATOMIC_ASSETS_OPERATIONS, ATOMIC_MARKET_OPERATIONS } from '../lib/blockchains/Antelope.js';
+import { clearContractKitCache } from '../lib/blockchains/Antelope/contractKit.js';
+
+const ALL_KNOWN_OPERATIONS = [
+    ...BASE_EOSIO_OPERATIONS,
+    ...ATOMIC_ASSETS_OPERATIONS,
+    ...ATOMIC_MARKET_OPERATIONS,
+];
+
+function isKnownOperation(opName) {
+    return ALL_KNOWN_OPERATIONS.includes(opName);
+}
 
 /**
  * Stores the current RPC node URL per chain, set by the renderer via
@@ -35,6 +47,7 @@ let _chainNodes = {};
  */
 export function setChainNode(chain, node) {
     _chainNodes[chain] = node;
+    clearContractKitCache();
 }
 
 /**
@@ -235,11 +248,20 @@ export async function parseDeeplink(requestContent, type, chain, blockchain, blo
                 }
 
                 if (actions) {
+                    const allowUnknown = settingsRows && settingsRows.includes('customOperations');
                     for (let i = 0; i < actions.length; i++) {
                         let operation = actions[i];
+                        const opName = operation.name;
                         if (
                             settingsRows &&
-                            settingsRows.includes(operation.name)
+                            settingsRows.includes(opName)
+                        ) {
+                            authorizedUse = true;
+                            break;
+                        }
+                        if (
+                            allowUnknown &&
+                            !isKnownOperation(opName)
                         ) {
                             authorizedUse = true;
                             break;
@@ -526,7 +548,8 @@ export async function handleBlockchainRequest(event, arg) {
                 status = await inject(
                     blockchain,
                     apiobj,
-                    win ? win.webContents : null
+                    win ? win.webContents : null,
+                    allowedOperations
                 );
             } catch (error) {
                 console.log({ error: error || 'No status' });
@@ -567,7 +590,8 @@ export async function handleBlockchainRequest(event, arg) {
                 status = await inject(
                     blockchain,
                     apiobj,
-                    win ? win.webContents : null
+                    win ? win.webContents : null,
+                    allowedOperations
                 );
             } catch (error) {
                 console.log({ error: error || 'No status' });
@@ -610,7 +634,8 @@ export async function handleBlockchainRequest(event, arg) {
                     status = await inject(
                         blockchain,
                         apiobj,
-                        win ? win.webContents : null
+                        win ? win.webContents : null,
+                        allowedOperations
                     );
                 } catch (error) {
                     console.log({ error: error || 'No status' });
@@ -710,7 +735,8 @@ export async function handleBlockchainRequest(event, arg) {
                 status = await inject(
                     blockchain,
                     apiobj,
-                    win ? win.webContents : null
+                    win ? win.webContents : null,
+                    allowedOperations
                 );
             } catch (error) {
                 console.log({ error, location: 'processQR' });
