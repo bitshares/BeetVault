@@ -46,7 +46,7 @@ A transaction with placeholder authorization and plain-object data:
         "from": "............1",
         "to": "bar",
         "quantity": "42.0000 EOS",
-        "memo": "Don't panic"
+        "memo": "Example memo"
       }
     }
   ]

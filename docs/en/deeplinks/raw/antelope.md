@@ -24,7 +24,7 @@ const action = contract.action("transfer", {
   from: "alice",
   to: "bar",
   quantity: "42.0000 EOS",
-  memo: "Don't panic",
+  memo: "Example memo",
 });
 // action.data is ABI-encoded to hex automatically
 // action.authorization defaults to [{actor: "............1", permission: "............2"}]
@@ -182,7 +182,7 @@ const actions = [
       from: "............1",  // resolves to signer's account
       to: "bar",
       quantity: "42.0000 EOS",
-      memo: "Don't panic",
+      memo: "Example memo",
     },
   },
 ];

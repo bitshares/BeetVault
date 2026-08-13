@@ -31,7 +31,7 @@ const action = contract.action("transfer", {
   from: "alice",
   to: "bar",
   quantity: "42.0000 EOS",
-  memo: "Don't panic",
+  memo: "Example memo",
 });
 ```
 
@@ -190,7 +190,7 @@ const actions = [
       from: "............1",  // resolves to signer's account
       to: "bar",
       quantity: "42.0000 EOS",
-      memo: "Don't panic",
+      memo: "Example memo",
     },
   },
 ];
