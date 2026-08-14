@@ -229,7 +229,7 @@ onMounted(async () => {
 
             <!-- Content Area -->
             <main class="flex-1 overflow-y-auto">
-                <div class="max-w-3xl mx-auto p-8">
+                <div class="max-w-4xl lg:max-w-5xl xl:max-w-6xl mx-auto p-8">
                     <!-- Loading State -->
                     <div v-if="isLoading" class="flex items-center justify-center py-20">
                         <Loader2 class="h-8 w-8 animate-spin text-primary" />
