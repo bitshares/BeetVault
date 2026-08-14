@@ -1,6 +1,6 @@
 import { VAULTA_FAMILY } from "@/lib/blockchains/chainFamilies.js";
 import { useAccountStore } from "@/stores/accountStore.js";
-import { decodeEsr } from "@wharfkit/signing-request";
+import { decodeEsr } from "@/lib/blockchains/Antelope/esrHelper.js";
 
 export default {
     name: "antelope",
