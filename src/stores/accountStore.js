@@ -1,6 +1,7 @@
 import { defineStore } from 'pinia';
 import { hashPassword } from '../lib/utils.js';
 import { useWalletStore } from './walletStore.js';
+import { clearContractKitCache } from '../lib/blockchains/Antelope/contractKit.js';
 
 export const useAccountStore = defineStore('account', {
     state: () => ({
@@ -62,6 +63,10 @@ export const useAccountStore = defineStore('account', {
         getVaultaKey: (state) => () => {
             let currentAccount = state.accountlist[state.selectedIndex];
             return currentAccount.keys.privateKey;
+        },
+        getVaultaAccount: (state) => () => {
+            let currentAccount = state.accountlist[state.selectedIndex];
+            return currentAccount.accountName;
         },
         getActiveKey: (state) => (request) => {
             let signing = state.accountlist.filter(account => {
@@ -246,6 +251,7 @@ export const useAccountStore = defineStore('account', {
 
             if (index !== -1) {
                 this.selectedIndex = index;
+                clearContractKitCache();
                 return 'Account found';
             }
         },

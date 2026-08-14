@@ -376,5 +376,20 @@
         "proceedToURL": "Fortsæt til URL:",
         "checkingLeave": "Bekræft at dette er korrekt, før du fortsætter.",
         "openLink": "Åbn link"
+    },
+    "operations": {
+        "id": "ID",
+        "method": "Metode",
+        "info": "Info",
+        "contract": "Kontrakt",
+        "generic": {
+            "warning": "Denne operation genkendes ikke af din tegnebogsversion. Gennemgå nøje kontraktens navn og parametre, før du godkender."
+        },
+        "esrNullUser": "Den anmodende applikation angav ikke, hvilken konto der skal bruges. Din aktuelt valgte konto vil blive brugt til at signere denne transaktion.",
+        "customOps": {
+            "id": "customOperations",
+            "method": "Tillad operationer der ikke er angivet ovenfor",
+            "tooltip": "Tillad operationer fra nye eller ukendte kontrakter. Disse vises med generisk formatering der viser kontraktens navn og parametre."
+        }
     }
 }

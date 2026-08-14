@@ -71,6 +71,7 @@ The `request` parameter contains a URL-encoded JSON object with this structure:
 | `payload.method` | Yes | Request method — typically `"injectedCall"` |
 | `payload.params` | Yes | For `injectedCall`: `[action, stringifiedTx, []]` |
 | `payload.chain` | Yes | **Must match the wallet's currently selected chain** |
+| `payload.encoding` | No | `"json"` (default) or `"esr"` for ESR-encoded requests |
 | `payload.appName` | No | Display name shown in the approval prompt |
 | `payload.browser` | No | Origin browser, shown in the prompt |
 | `payload.origin` | No | Requesting domain, shown in the prompt |

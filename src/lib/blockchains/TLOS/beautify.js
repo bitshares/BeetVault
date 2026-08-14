@@ -154,7 +154,7 @@ const handlers = {
     }),
 };
 
-export default async function beautify(operation) {
+export default async function beautify(operation, allowedOperations) {
     if (!operation || !operation.name) return;
 
     const qualifiedKey = `${operation.account}::${operation.name}`;
@@ -164,5 +164,5 @@ export default async function beautify(operation) {
     if (atomicHandlers[qualifiedKey]) return atomicHandlers[qualifiedKey](operation);
     if (atomicHandlers[operation.name]) return atomicHandlers[operation.name](operation);
 
-    return baseBeautify(operation);
+    return baseBeautify(operation, allowedOperations);
 }

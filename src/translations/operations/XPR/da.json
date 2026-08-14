@@ -1,4 +1,13 @@
 {
+  "generic": {
+    "method": "Ukendt operation",
+    "title": "Forespørgsel om ukendt operation",
+    "headers": {
+      "request": "Gennemgå denne ukendte operation omhyggeligt",
+      "result": "Følgende ukendte operation blev godkendt:"
+    },
+    "tooltip": "En operation der ikke genkendes af denne tegnebogsversion"
+  },
   "injectedCall": {
     "method": "injectedCall",
     "title": "Injected Call Request",

@@ -7,6 +7,7 @@
     import { useI18n } from 'vue-i18n';
     import { useSettingsStore } from '@/stores/settingsStore.js';
     import { INJECTED_CALL } from '@/lib/Actions.js';
+    import { VAULTA_FAMILY } from '@/lib/blockchains/chainFamilies.js';
 
     const { t } = useI18n({ useScope: 'global' });
     const settingsStore = useSettingsStore();
@@ -30,8 +31,15 @@
 
     let selected = ref([]);
 
+    const CUSTOM_OPS_ID = 'customOperations';
+
     const filteredOps = computed(() => {
-        return props.ops.filter(op => op.id !== INJECTED_CALL);
+        return props.ops.filter(op => op.id !== INJECTED_CALL && op.id !== CUSTOM_OPS_ID);
+    });
+
+    const hasCustomOps = computed(() => {
+        return VAULTA_FAMILY.includes(props.chain) &&
+            props.ops.some(op => op.id === CUSTOM_OPS_ID);
     });
 
     onMounted(() => {
@@ -98,6 +106,24 @@
                         <TableCell>{{ t(`operations.injected.${props.chain === 'BTS_TEST' ? 'BTS' : props.chain}.${item.method}.method`) }}</TableCell>
                         <TableCell>{{ t(`operations.injected.${props.chain === 'BTS_TEST' ? 'BTS' : props.chain}.${item.method}.tooltip`) }}</TableCell>
                     </TableRow>
+                    <template v-if="hasCustomOps">
+                        <TableRow>
+                            <TableCell colspan="4" class="p-0">
+                                <div class="border-t border-border my-1 mx-2"></div>
+                            </TableCell>
+                        </TableRow>
+                        <TableRow class="bg-muted/30">
+                            <TableCell>
+                                <Checkbox
+                                    :checked="selected.includes('customOperations')"
+                                    @update:checked="toggleRow('customOperations')"
+                                />
+                            </TableCell>
+                            <TableCell class="font-medium">{{ t('common.operations.customOps.id') }}</TableCell>
+                            <TableCell>{{ t('common.operations.customOps.method') }}</TableCell>
+                            <TableCell>{{ t('common.operations.customOps.tooltip') }}</TableCell>
+                        </TableRow>
+                    </template>
                 </TableBody>
             </Table>
         </ScrollArea>

@@ -88,5 +88,5 @@ export default async function beautify(operation) {
     if (atomicHandlers[qualifiedKey]) return atomicHandlers[qualifiedKey](operation);
     if (atomicHandlers[operation.name]) return atomicHandlers[operation.name](operation);
 
-    return baseBeautify(operation);
+    return baseBeautify(operation, allowedOperations);
 }

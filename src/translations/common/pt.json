@@ -376,5 +376,20 @@
         "proceedToURL": "Continuar para o URL:",
         "checkingLeave": "Por favor verifique se está correto antes de continuar.",
         "openLink": "Abrir ligação"
+    },
+    "operations": {
+        "id": "ID",
+        "method": "Método",
+        "info": "Info",
+        "contract": "Contrato",
+        "generic": {
+            "warning": "Esta operação não é reconhecida pela versão da sua carteira. Revise cuidadosamente o nome do contrato e os parâmetros antes de aprovar."
+        },
+        "esrNullUser": "O aplicativo solicitante não especificou qual conta usar. Sua conta atualmente selecionada será usada para assinar esta transação.",
+        "customOps": {
+            "id": "customOperations",
+            "method": "Permitir operações não listadas",
+            "tooltip": "Permitir operações de contratos novos ou não reconhecidos. Serão exibidas com formatação genérica mostrando o nome do contrato e os parâmetros."
+        }
     }
 }

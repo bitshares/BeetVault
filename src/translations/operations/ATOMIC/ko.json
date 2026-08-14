@@ -1,4 +1,13 @@
 {
+  "generic": {
+    "method": "알 수 없는 작업",
+    "title": "알 수 없는 작업 요청",
+    "headers": {
+      "request": "이 알 수 없는 작업을 주의 깊게 검토하세요",
+      "result": "다음 알 수 없는 작업이 승인되었습니다:"
+    },
+    "tooltip": "이 지갑 버전에서 인식되지 않는 작업"
+  },
   "init": {
     "method": "Initialize Contract",
     "title": "Initialize Contract Request",

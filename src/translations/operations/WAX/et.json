@@ -1,4 +1,13 @@
 {
+  "generic": {
+    "method": "Tundmatu toiming",
+    "title": "Tundmatu toimingu taotlus",
+    "headers": {
+      "request": "Vaadake seda tundmatut toimingut hoolikalt üle",
+      "result": "Järgmine tundmatu toiming kinnitati:"
+    },
+    "tooltip": "Toiming, mida rahakoti versioon ei tunne"
+  },
   "injectedCall": {
     "method": "süstitud Helista",
     "title": "Süstitud kõne taotlus",

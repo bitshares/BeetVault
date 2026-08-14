@@ -9,19 +9,108 @@ This page shows how to generate a TOTP deeplink for **Antelope chains** (Vaulta,
 - The `@wharfkit/antelope` library for transaction building
 - An API client connected to an Antelope node
 
-## Building the Transaction
+## Building Actions
 
-Construct a complete, signable transaction using `@wharfkit/antelope`. The resulting object is one step away from broadcast — if the dApp had the private key, it could sign and broadcast this directly:
+Before encoding, you need to construct the actions. There are two approaches depending on your library choice.
+
+### With `@wharfkit/contract` (recommended)
+
+ContractKit handles ABI fetching and encoding automatically:
+
+```js
+import { ContractKit } from "@wharfkit/contract";
+import { APIClient, FetchProvider } from "@wharfkit/antelope";
+
+const client = new APIClient({
+  provider: new FetchProvider("https://vaulta.greymass.com", { fetch }),
+});
+const kit = new ContractKit({ client });
+
+const contract = await kit.load("eosio.token");
+const action = contract.action("transfer", {
+  from: "alice",
+  to: "bar",
+  quantity: "42.0000 EOS",
+  memo: "Example memo",
+});
+```
+
+### With `@wharfkit/antelope`
+
+Build actions manually with ABI encoding:
+
+```js
+import { Action } from "@wharfkit/antelope";
+
+const abi = (await client.v1.chain.get_abi("eosio.token")).abi;
+const action = Action.from(
+  {
+    account: "eosio.token",
+    name: "transfer",
+    authorization: [{ actor: "alice", permission: "active" }],
+    data: { from: "alice", to: "bar", quantity: "42.0000 EOS", memo: "Hi" },
+  },
+  abi
+);
+```
+
+## Encoding for the Deeplink
+
+### ESR (recommended)
+
+Use `@wharfkit/signing-request` to encode actions as an ESR binary. The wallet detects ESR via `payload.encoding: "esr"` or auto-detects the binary format.
+
+**Benefits over JSON:**
+- **Fresh TAPOS**: The wallet fills TAPOS at signing time — no staleness
+- **Placeholders**: Use `............1` for account, `............2` for permission
+- **Null user**: Omit the account to let the user choose at approval time
+- **Smaller payload**: ~200-400 bytes vs ~1-5KB for JSON
+
+```js
+import { SigningRequest } from "@wharfkit/signing-request";
+
+async function buildAntelopeTotpEsrDeeplink(chain, totpCode, actions, client) {
+  const request = await SigningRequest.create(
+    { actions },
+    {
+      abiProvider: {
+        getAbi: async (account) =>
+          (await client.v1.chain.get_abi(account)).abi,
+      },
+    }
+  );
+
+  const envelope = {
+    type: "api",
+    id: uuidv4(),
+    payload: {
+      method: "injectedCall",
+      params: ["signAndBroadcast", request.encode(), []],
+      encoding: "esr",
+      appName: "My dApp",
+      chain: chain,
+      browser: "web browser",
+      origin: "app.example",
+    },
+  };
+
+  const encrypted = encryptForBeetVault(JSON.stringify(envelope), totpCode);
+  const wire = Buffer.from(encrypted, "utf-8").toString("base64");
+  return `beetvault://api/?chain=${chain}&request=${encodeURIComponent(wire)}`;
+}
+```
+
+### JSON (full transaction)
+
+Build a complete transaction with TAPOS and ABI-encoded data, then stringify it:
 
 ```js
 import { Transaction } from "@wharfkit/antelope";
 
 async function buildAntelopeTransaction(client, actions) {
-  // 1. Fetch TAPOS (transaction as proof of signing) from the blockchain
   const info = await client.v1.chain.get_info();
-  const header = info.getTransactionHeader(30); // expires 30s ahead
+  const header = info.getTransactionHeader(30);
 
-  // 2. Fetch ABIs for each unique contract so action data encodes correctly
   const contractNames = [...new Set(actions.map((a) => a.account))];
   const abiResponses = await Promise.all(
     contractNames.map((contract) => client.v1.chain.get_abi(contract))
@@ -33,40 +122,8 @@ async function buildAntelopeTransaction(client, actions) {
     }))
     .filter((item) => item.abi);
 
-  // 3. Build the transaction — TAPOS + actions + ABIs in a single call
   const tx = Transaction.from({ ...header, actions }, abis);
-
   return tx;
-}
-```
-
-> **Why this matters:** `Transaction.from()` requires TAPOS fields (`expiration`, `ref_block_num`, `ref_block_prefix`) inside the first argument — setting them after construction throws. ABIs are required to encode `data` fields; without them, plain-object `data` throws.
-
-## Generating the TOTP Deeplink
-
-Encrypt the envelope with the passcode and emit the URL:
-
-```js
-import { v4 as uuidv4 } from "uuid";
-import { xchacha20poly1305 } from "@noble/ciphers/chacha.js";
-import { randomBytes, utf8ToBytes } from "@noble/ciphers/utils.js";
-import { sha256 } from "@noble/hashes/sha2.js";
-
-const VERSION_BYTE = 0x01;
-const NONCE_LENGTH = 24;
-
-function encryptForBeetVault(plaintext, totpCode) {
-  const key = sha256(utf8ToBytes(totpCode));
-  const nonce = randomBytes(NONCE_LENGTH);
-  const ciphertext = xchacha20poly1305(key, nonce).encrypt(
-    utf8ToBytes(plaintext)
-  );
-  const packed = new Uint8Array(1 + NONCE_LENGTH + ciphertext.length);
-  packed[0] = VERSION_BYTE;
-  packed.set(nonce, 1);
-  packed.set(ciphertext, 1 + NONCE_LENGTH);
-  key.fill(0);
-  return Buffer.from(packed).toString("base64");
 }
 
 async function buildAntelopeTotpDeeplink(chain, totpCode, actions, client) {
@@ -87,16 +144,59 @@ async function buildAntelopeTotpDeeplink(chain, totpCode, actions, client) {
 
   const encrypted = encryptForBeetVault(JSON.stringify(request), totpCode);
   const wire = Buffer.from(encrypted, "utf-8").toString("base64");
-
   return `beetvault://api/?chain=${chain}&request=${encodeURIComponent(wire)}`;
 }
 ```
 
-Render the result as a normal link — the OS hands it to BeetVault:
+### JSON (null values — wallet fills TAPOS/ABIs/account)
 
-```html
-<a href="beetvault://api/?chain=A&request=...">Broadcast with BeetVault</a>
+Provide actions with placeholder authorization and plain-object data. The wallet fills TAPOS, fetches ABIs, encodes data, and supplies the account at broadcast time.
+
+**Benefits:**
+- **No chain access needed**: The dApp doesn't need to call `get_info()` or `get_abi()`
+- **Signer-agnostic**: Use `............1` placeholders to let the user choose their account
+- **Simpler code**: No TAPOS or ABI encoding logic in the dApp
+
+```js
+async function buildAntelopeTotpNullJsonDeeplink(chain, totpCode, actions) {
+  const request = {
+    type: "api",
+    id: uuidv4(),
+    payload: {
+      method: "injectedCall",
+      params: ["signAndBroadcast", JSON.stringify({ actions }), []],
+      appName: "My dApp",
+      chain: chain,
+      browser: "web browser",
+      origin: "app.example",
+    },
+  };
+
+  const encrypted = encryptForBeetVault(JSON.stringify(request), totpCode);
+  const wire = Buffer.from(encrypted, "utf-8").toString("base64");
+  return `beetvault://api/?chain=${chain}&request=${encodeURIComponent(wire)}`;
+}
 ```
+
+**Example action with placeholders:**
+
+```js
+const actions = [
+  {
+    account: "eosio.token",
+    name: "transfer",
+    authorization: [{ actor: "............1", permission: "............2" }],
+    data: {
+      from: "............1",  // resolves to signer's account
+      to: "bar",
+      quantity: "42.0000 EOS",
+      memo: "Example memo",
+    },
+  },
+];
+```
+
+The wallet detects `............1` / `............2` placeholders in authorization, shows the user's currently selected account, and fills them at signing time.
 
 ## Key Details
 

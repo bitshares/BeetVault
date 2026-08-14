@@ -2,16 +2,19 @@ export function createAtomicBeautify(namespace) {
     return {
         "atomicassets::init": (op) => ({
             title: `operations.injected.${namespace}.init.title`,
+            contract: op.account,
             opType: "init", method: "init", op, operation: op,
             rows: [],
         }),
         "atomicmarket::init": (op) => ({
             title: `operations.injected.${namespace}.init.title`,
+            contract: op.account,
             opType: "init", method: "init", op, operation: op,
             rows: [],
         }),
         "atomicassets::setversion": (op) => ({
             title: `operations.injected.${namespace}.setversion.title`,
+            contract: op.account,
             opType: "setversion", method: "setversion", op, operation: op,
             rows: [
                 { key: "new_version", params: { new_version: op.data.new_version } },
@@ -19,6 +22,7 @@ export function createAtomicBeautify(namespace) {
         }),
         "atomicmarket::setversion": (op) => ({
             title: `operations.injected.${namespace}.setversion.title`,
+            contract: op.account,
             opType: "setversion", method: "setversion", op, operation: op,
             rows: [
                 { key: "new_version", params: { new_version: op.data.new_version } },
@@ -26,6 +30,7 @@ export function createAtomicBeautify(namespace) {
         }),
         "atomicassets::addconftoken": (op) => ({
             title: `operations.injected.${namespace}.addconftoken.title`,
+            contract: op.account,
             opType: "addconftoken", method: "addconftoken", op, operation: op,
             rows: [
                 { key: "token_symbol", params: { token_symbol: op.data.token_symbol } },
@@ -34,6 +39,7 @@ export function createAtomicBeautify(namespace) {
         }),
         "atomicmarket::addconftoken": (op) => ({
             title: `operations.injected.${namespace}.addconftoken.title`,
+            contract: op.account,
             opType: "addconftoken", method: "addconftoken", op, operation: op,
             rows: [
                 { key: "token_symbol", params: { token_symbol: op.data.token_symbol } },
@@ -42,6 +48,7 @@ export function createAtomicBeautify(namespace) {
         }),
         "atomicassets::setmarketfee": (op) => ({
             title: `operations.injected.${namespace}.setmarketfee.title`,
+            contract: op.account,
             opType: "setmarketfee", method: "setmarketfee", op, operation: op,
             rows: [
                 { key: "market_fee", params: { market_fee: op.data.market_fee } },
@@ -49,6 +56,7 @@ export function createAtomicBeautify(namespace) {
         }),
         createcol: (op) => ({
             title: `operations.injected.${namespace}.createcol.title`,
+            contract: op.account,
             opType: "createcol", method: "createcol", op, operation: op,
             rows: [
                 { key: "author", params: { author: op.data.author } },
@@ -59,6 +67,7 @@ export function createAtomicBeautify(namespace) {
         }),
         setcoldata: (op) => ({
             title: `operations.injected.${namespace}.setcoldata.title`,
+            contract: op.account,
             opType: "setcoldata", method: "setcoldata", op, operation: op,
             rows: [
                 { key: "collection_name", params: { collection_name: op.data.collection_name } },
@@ -67,6 +76,7 @@ export function createAtomicBeautify(namespace) {
         }),
         addcolauth: (op) => ({
             title: `operations.injected.${namespace}.addcolauth.title`,
+            contract: op.account,
             opType: "addcolauth", method: "addcolauth", op, operation: op,
             rows: [
                 { key: "collection_name", params: { collection_name: op.data.collection_name } },
@@ -75,6 +85,7 @@ export function createAtomicBeautify(namespace) {
         }),
         remcolauth: (op) => ({
             title: `operations.injected.${namespace}.remcolauth.title`,
+            contract: op.account,
             opType: "remcolauth", method: "remcolauth", op, operation: op,
             rows: [
                 { key: "collection_name", params: { collection_name: op.data.collection_name } },
@@ -83,6 +94,7 @@ export function createAtomicBeautify(namespace) {
         }),
         addnotifyacc: (op) => ({
             title: `operations.injected.${namespace}.addnotifyacc.title`,
+            contract: op.account,
             opType: "addnotifyacc", method: "addnotifyacc", op, operation: op,
             rows: [
                 { key: "collection_name", params: { collection_name: op.data.collection_name } },
@@ -91,6 +103,7 @@ export function createAtomicBeautify(namespace) {
         }),
         remnotifyacc: (op) => ({
             title: `operations.injected.${namespace}.remnotifyacc.title`,
+            contract: op.account,
             opType: "remnotifyacc", method: "remnotifyacc", op, operation: op,
             rows: [
                 { key: "collection_name", params: { collection_name: op.data.collection_name } },
@@ -99,6 +112,7 @@ export function createAtomicBeautify(namespace) {
         }),
         forbidnotify: (op) => ({
             title: `operations.injected.${namespace}.forbidnotify.title`,
+            contract: op.account,
             opType: "forbidnotify", method: "forbidnotify", op, operation: op,
             rows: [
                 { key: "collection_name", params: { collection_name: op.data.collection_name } },
@@ -107,6 +121,7 @@ export function createAtomicBeautify(namespace) {
         }),
         admincoledit: (op) => ({
             title: `operations.injected.${namespace}.admincoledit.title`,
+            contract: op.account,
             opType: "admincoledit", method: "admincoledit", op, operation: op,
             rows: [
                 { key: "collection_name", params: { collection_name: op.data.collection_name } },
@@ -115,6 +130,7 @@ export function createAtomicBeautify(namespace) {
         }),
         createschema: (op) => ({
             title: `operations.injected.${namespace}.createschema.title`,
+            contract: op.account,
             opType: "createschema", method: "createschema", op, operation: op,
             rows: [
                 { key: "collection_name", params: { collection_name: op.data.collection_name } },
@@ -124,6 +140,7 @@ export function createAtomicBeautify(namespace) {
         }),
         extendschema: (op) => ({
             title: `operations.injected.${namespace}.extendschema.title`,
+            contract: op.account,
             opType: "extendschema", method: "extendschema", op, operation: op,
             rows: [
                 { key: "collection_name", params: { collection_name: op.data.collection_name } },
@@ -133,6 +150,7 @@ export function createAtomicBeautify(namespace) {
         }),
         createtempl: (op) => ({
             title: `operations.injected.${namespace}.createtempl.title`,
+            contract: op.account,
             opType: "createtempl", method: "createtempl", op, operation: op,
             rows: [
                 { key: "collection_name", params: { collection_name: op.data.collection_name } },
@@ -145,6 +163,7 @@ export function createAtomicBeautify(namespace) {
         }),
         locktemplate: (op) => ({
             title: `operations.injected.${namespace}.locktemplate.title`,
+            contract: op.account,
             opType: "locktemplate", method: "locktemplate", op, operation: op,
             rows: [
                 { key: "collection_name", params: { collection_name: op.data.collection_name } },
@@ -153,6 +172,7 @@ export function createAtomicBeautify(namespace) {
         }),
         mintasset: (op) => ({
             title: `operations.injected.${namespace}.mintasset.title`,
+            contract: op.account,
             opType: "mintasset", method: "mintasset", op, operation: op,
             rows: [
                 { key: "authorized_minter", params: { authorized_minter: op.data.authorized_minter } },
@@ -164,6 +184,7 @@ export function createAtomicBeautify(namespace) {
         }),
         burnasset: (op) => ({
             title: `operations.injected.${namespace}.burnasset.title`,
+            contract: op.account,
             opType: "burnasset", method: "burnasset", op, operation: op,
             rows: [
                 { key: "asset_owner", params: { asset_owner: op.data.asset_owner } },
@@ -172,6 +193,7 @@ export function createAtomicBeautify(namespace) {
         }),
         setassetdata: (op) => ({
             title: `operations.injected.${namespace}.setassetdata.title`,
+            contract: op.account,
             opType: "setassetdata", method: "setassetdata", op, operation: op,
             rows: [
                 { key: "collection_name", params: { collection_name: op.data.collection_name } },
@@ -181,6 +203,7 @@ export function createAtomicBeautify(namespace) {
         }),
         "atomicassets::transfer": (op) => ({
             title: `operations.injected.${namespace}.transfer.title`,
+            contract: op.account,
             opType: "transfer", method: "transfer", op, operation: op,
             rows: [
                 { key: "from", params: { from: op.data.from } },
@@ -191,6 +214,7 @@ export function createAtomicBeautify(namespace) {
         }),
         backasset: (op) => ({
             title: `operations.injected.${namespace}.backasset.title`,
+            contract: op.account,
             opType: "backasset", method: "backasset", op, operation: op,
             rows: [
                 { key: "collection_name", params: { collection_name: op.data.collection_name } },
@@ -199,6 +223,7 @@ export function createAtomicBeautify(namespace) {
         }),
         announcedepo: (op) => ({
             title: `operations.injected.${namespace}.announcedepo.title`,
+            contract: op.account,
             opType: "announcedepo", method: "announcedepo", op, operation: op,
             rows: [
                 { key: "collection_name", params: { collection_name: op.data.collection_name } },
@@ -208,6 +233,7 @@ export function createAtomicBeautify(namespace) {
         }),
         createoffer: (op) => ({
             title: `operations.injected.${namespace}.createoffer.title`,
+            contract: op.account,
             opType: "createoffer", method: "createoffer", op, operation: op,
             rows: [
                 { key: "sender", params: { sender: op.data.sender } },
@@ -219,6 +245,7 @@ export function createAtomicBeautify(namespace) {
         }),
         acceptoffer: (op) => ({
             title: `operations.injected.${namespace}.acceptoffer.title`,
+            contract: op.account,
             opType: "acceptoffer", method: "acceptoffer", op, operation: op,
             rows: [
                 { key: "offer_id", params: { offer_id: op.data.offer_id } },
@@ -226,6 +253,7 @@ export function createAtomicBeautify(namespace) {
         }),
         canceloffer: (op) => ({
             title: `operations.injected.${namespace}.canceloffer.title`,
+            contract: op.account,
             opType: "canceloffer", method: "canceloffer", op, operation: op,
             rows: [
                 { key: "offer_id", params: { offer_id: op.data.offer_id } },
@@ -233,6 +261,7 @@ export function createAtomicBeautify(namespace) {
         }),
         declineoffer: (op) => ({
             title: `operations.injected.${namespace}.declineoffer.title`,
+            contract: op.account,
             opType: "declineoffer", method: "declineoffer", op, operation: op,
             rows: [
                 { key: "offer_id", params: { offer_id: op.data.offer_id } },
@@ -240,6 +269,7 @@ export function createAtomicBeautify(namespace) {
         }),
         payofferram: (op) => ({
             title: `operations.injected.${namespace}.payofferram.title`,
+            contract: op.account,
             opType: "payofferram", method: "payofferram", op, operation: op,
             rows: [
                 { key: "payer", params: { payer: op.data.payer } },
@@ -248,6 +278,7 @@ export function createAtomicBeautify(namespace) {
         }),
         "atomicassets::withdraw": (op) => ({
             title: `operations.injected.${namespace}.withdraw.title`,
+            contract: op.account,
             opType: "withdraw", method: "withdraw", op, operation: op,
             rows: [
                 { key: "owner", params: { owner: op.data.owner } },
@@ -257,6 +288,7 @@ export function createAtomicBeautify(namespace) {
         }),
         "atomicmarket::withdraw": (op) => ({
             title: `operations.injected.${namespace}.withdraw.title`,
+            contract: op.account,
             opType: "withdraw", method: "withdraw", op, operation: op,
             rows: [
                 { key: "owner", params: { owner: op.data.owner } },
@@ -268,6 +300,7 @@ export function createAtomicBeautify(namespace) {
 
         regmarket: (op) => ({
             title: `operations.injected.${namespace}.regmarket.title`,
+            contract: op.account,
             opType: "regmarket", method: "regmarket", op, operation: op,
             rows: [
                 { key: "creator", params: { creator: op.data.creator } },
@@ -276,6 +309,7 @@ export function createAtomicBeautify(namespace) {
         }),
         "atomicmarket::setmarketfee": (op) => ({
             title: `operations.injected.${namespace}.setmarketfee.title`,
+            contract: op.account,
             opType: "setmarketfee", method: "setmarketfee", op, operation: op,
             rows: [
                 { key: "maker_market_fee", params: { maker_market_fee: op.data.maker_market_fee } },
@@ -284,6 +318,7 @@ export function createAtomicBeautify(namespace) {
         }),
         setminbidinc: (op) => ({
             title: `operations.injected.${namespace}.setminbidinc.title`,
+            contract: op.account,
             opType: "setminbidinc", method: "setminbidinc", op, operation: op,
             rows: [
                 { key: "minimum_bid_increase", params: { minimum_bid_increase: op.data.minimum_bid_increase } },
@@ -291,6 +326,7 @@ export function createAtomicBeautify(namespace) {
         }),
         adddelphi: (op) => ({
             title: `operations.injected.${namespace}.adddelphi.title`,
+            contract: op.account,
             opType: "adddelphi", method: "adddelphi", op, operation: op,
             rows: [
                 { key: "listing_symbol", params: { listing_symbol: op.data.listing_symbol } },
@@ -301,6 +337,7 @@ export function createAtomicBeautify(namespace) {
         }),
         addafeectr: (op) => ({
             title: `operations.injected.${namespace}.addafeectr.title`,
+            contract: op.account,
             opType: "addafeectr", method: "addafeectr", op, operation: op,
             rows: [
                 { key: "bonusfee_id", params: { bonusfee_id: op.data.bonusfee_id } },
@@ -309,6 +346,7 @@ export function createAtomicBeautify(namespace) {
         }),
         addbonusfee: (op) => ({
             title: `operations.injected.${namespace}.addbonusfee.title`,
+            contract: op.account,
             opType: "addbonusfee", method: "addbonusfee", op, operation: op,
             rows: [
                 { key: "fee", params: { fee: op.data.fee } },
@@ -317,6 +355,7 @@ export function createAtomicBeautify(namespace) {
         }),
         delbonusfee: (op) => ({
             title: `operations.injected.${namespace}.delbonusfee.title`,
+            contract: op.account,
             opType: "delbonusfee", method: "delbonusfee", op, operation: op,
             rows: [
                 { key: "bonusfee_id", params: { bonusfee_id: op.data.bonusfee_id } },
@@ -324,6 +363,7 @@ export function createAtomicBeautify(namespace) {
         }),
         stopbonusfee: (op) => ({
             title: `operations.injected.${namespace}.stopbonusfee.title`,
+            contract: op.account,
             opType: "stopbonusfee", method: "stopbonusfee", op, operation: op,
             rows: [
                 { key: "bonusfee_id", params: { bonusfee_id: op.data.bonusfee_id } },
@@ -331,11 +371,13 @@ export function createAtomicBeautify(namespace) {
         }),
         convcounters: (op) => ({
             title: `operations.injected.${namespace}.convcounters.title`,
+            contract: op.account,
             opType: "convcounters", method: "convcounters", op, operation: op,
             rows: [],
         }),
         setdefmktcr: (op) => ({
             title: `operations.injected.${namespace}.setdefmktcr.title`,
+            contract: op.account,
             opType: "setdefmktcr", method: "setdefmktcr", op, operation: op,
             rows: [
                 { key: "new_creator", params: { new_creator: op.data.new_creator } },
@@ -343,6 +385,7 @@ export function createAtomicBeautify(namespace) {
         }),
         migratebal: (op) => ({
             title: `operations.injected.${namespace}.migratebal.title`,
+            contract: op.account,
             opType: "migratebal", method: "migratebal", op, operation: op,
             rows: [
                 { key: "from", params: { from: op.data.from } },
@@ -351,6 +394,7 @@ export function createAtomicBeautify(namespace) {
         }),
         announcesale: (op) => ({
             title: `operations.injected.${namespace}.announcesale.title`,
+            contract: op.account,
             opType: "announcesale", method: "announcesale", op, operation: op,
             rows: [
                 { key: "seller", params: { seller: op.data.seller } },
@@ -362,6 +406,7 @@ export function createAtomicBeautify(namespace) {
         }),
         cancelsale: (op) => ({
             title: `operations.injected.${namespace}.cancelsale.title`,
+            contract: op.account,
             opType: "cancelsale", method: "cancelsale", op, operation: op,
             rows: [
                 { key: "sale_id", params: { sale_id: op.data.sale_id } },
@@ -369,6 +414,7 @@ export function createAtomicBeautify(namespace) {
         }),
         purchasesale: (op) => ({
             title: `operations.injected.${namespace}.purchasesale.title`,
+            contract: op.account,
             opType: "purchasesale", method: "purchasesale", op, operation: op,
             rows: [
                 { key: "buyer", params: { buyer: op.data.buyer } },
@@ -379,6 +425,7 @@ export function createAtomicBeautify(namespace) {
         }),
         assertsale: (op) => ({
             title: `operations.injected.${namespace}.assertsale.title`,
+            contract: op.account,
             opType: "assertsale", method: "assertsale", op, operation: op,
             rows: [
                 { key: "sale_id", params: { sale_id: op.data.sale_id } },
@@ -389,6 +436,7 @@ export function createAtomicBeautify(namespace) {
         }),
         paysaleram: (op) => ({
             title: `operations.injected.${namespace}.paysaleram.title`,
+            contract: op.account,
             opType: "paysaleram", method: "paysaleram", op, operation: op,
             rows: [
                 { key: "payer", params: { payer: op.data.payer } },
@@ -397,6 +445,7 @@ export function createAtomicBeautify(namespace) {
         }),
         announceauct: (op) => ({
             title: `operations.injected.${namespace}.announceauct.title`,
+            contract: op.account,
             opType: "announceauct", method: "announceauct", op, operation: op,
             rows: [
                 { key: "seller", params: { seller: op.data.seller } },
@@ -408,6 +457,7 @@ export function createAtomicBeautify(namespace) {
         }),
         cancelauct: (op) => ({
             title: `operations.injected.${namespace}.cancelauct.title`,
+            contract: op.account,
             opType: "cancelauct", method: "cancelauct", op, operation: op,
             rows: [
                 { key: "auction_id", params: { auction_id: op.data.auction_id } },
@@ -415,6 +465,7 @@ export function createAtomicBeautify(namespace) {
         }),
         auctionbid: (op) => ({
             title: `operations.injected.${namespace}.auctionbid.title`,
+            contract: op.account,
             opType: "auctionbid", method: "auctionbid", op, operation: op,
             rows: [
                 { key: "bidder", params: { bidder: op.data.bidder } },
@@ -425,6 +476,7 @@ export function createAtomicBeautify(namespace) {
         }),
         auctclaimbuy: (op) => ({
             title: `operations.injected.${namespace}.auctclaimbuy.title`,
+            contract: op.account,
             opType: "auctclaimbuy", method: "auctclaimbuy", op, operation: op,
             rows: [
                 { key: "auction_id", params: { auction_id: op.data.auction_id } },
@@ -432,6 +484,7 @@ export function createAtomicBeautify(namespace) {
         }),
         auctclaimsel: (op) => ({
             title: `operations.injected.${namespace}.auctclaimsel.title`,
+            contract: op.account,
             opType: "auctclaimsel", method: "auctclaimsel", op, operation: op,
             rows: [
                 { key: "auction_id", params: { auction_id: op.data.auction_id } },
@@ -439,6 +492,7 @@ export function createAtomicBeautify(namespace) {
         }),
         assertauct: (op) => ({
             title: `operations.injected.${namespace}.assertauct.title`,
+            contract: op.account,
             opType: "assertauct", method: "assertauct", op, operation: op,
             rows: [
                 { key: "auction_id", params: { auction_id: op.data.auction_id } },
@@ -447,6 +501,7 @@ export function createAtomicBeautify(namespace) {
         }),
         payauctram: (op) => ({
             title: `operations.injected.${namespace}.payauctram.title`,
+            contract: op.account,
             opType: "payauctram", method: "payauctram", op, operation: op,
             rows: [
                 { key: "payer", params: { payer: op.data.payer } },
@@ -455,6 +510,7 @@ export function createAtomicBeautify(namespace) {
         }),
         createbuyo: (op) => ({
             title: `operations.injected.${namespace}.createbuyo.title`,
+            contract: op.account,
             opType: "createbuyo", method: "createbuyo", op, operation: op,
             rows: [
                 { key: "sender", params: { sender: op.data.sender } },
@@ -467,6 +523,7 @@ export function createAtomicBeautify(namespace) {
         }),
         cancelbuyo: (op) => ({
             title: `operations.injected.${namespace}.cancelbuyo.title`,
+            contract: op.account,
             opType: "cancelbuyo", method: "cancelbuyo", op, operation: op,
             rows: [
                 { key: "buyoffer_id", params: { buyoffer_id: op.data.buyoffer_id } },
@@ -474,6 +531,7 @@ export function createAtomicBeautify(namespace) {
         }),
         acceptbuyo: (op) => ({
             title: `operations.injected.${namespace}.acceptbuyo.title`,
+            contract: op.account,
             opType: "acceptbuyo", method: "acceptbuyo", op, operation: op,
             rows: [
                 { key: "buyoffer_id", params: { buyoffer_id: op.data.buyoffer_id } },
@@ -484,6 +542,7 @@ export function createAtomicBeautify(namespace) {
         }),
         declinebuyo: (op) => ({
             title: `operations.injected.${namespace}.declinebuyo.title`,
+            contract: op.account,
             opType: "declinebuyo", method: "declinebuyo", op, operation: op,
             rows: [
                 { key: "buyoffer_id", params: { buyoffer_id: op.data.buyoffer_id } },
@@ -492,6 +551,7 @@ export function createAtomicBeautify(namespace) {
         }),
         paybuyoram: (op) => ({
             title: `operations.injected.${namespace}.paybuyoram.title`,
+            contract: op.account,
             opType: "paybuyoram", method: "paybuyoram", op, operation: op,
             rows: [
                 { key: "payer", params: { payer: op.data.payer } },
@@ -500,6 +560,7 @@ export function createAtomicBeautify(namespace) {
         }),
         createtbuyo: (op) => ({
             title: `operations.injected.${namespace}.createtbuyo.title`,
+            contract: op.account,
             opType: "createtbuyo", method: "createtbuyo", op, operation: op,
             rows: [
                 { key: "buyer", params: { buyer: op.data.buyer } },
@@ -511,6 +572,7 @@ export function createAtomicBeautify(namespace) {
         }),
         canceltbuyo: (op) => ({
             title: `operations.injected.${namespace}.canceltbuyo.title`,
+            contract: op.account,
             opType: "canceltbuyo", method: "canceltbuyo", op, operation: op,
             rows: [
                 { key: "buyoffer_id", params: { buyoffer_id: op.data.buyoffer_id } },
@@ -518,6 +580,7 @@ export function createAtomicBeautify(namespace) {
         }),
         fulfilltbuyo: (op) => ({
             title: `operations.injected.${namespace}.fulfilltbuyo.title`,
+            contract: op.account,
             opType: "fulfilltbuyo", method: "fulfilltbuyo", op, operation: op,
             rows: [
                 { key: "buyoffer_id", params: { buyoffer_id: op.data.buyoffer_id } },
@@ -528,6 +591,7 @@ export function createAtomicBeautify(namespace) {
         }),
         setroyalconf: (op) => ({
             title: `operations.injected.${namespace}.setroyalconf.title`,
+            contract: op.account,
             opType: "setroyalconf", method: "setroyalconf", op, operation: op,
             rows: [
                 { key: "collection_name", params: { collection_name: op.data.collection_name } },
@@ -540,6 +604,7 @@ export function createAtomicBeautify(namespace) {
         }),
         delroyalconf: (op) => ({
             title: `operations.injected.${namespace}.delroyalconf.title`,
+            contract: op.account,
             opType: "delroyalconf", method: "delroyalconf", op, operation: op,
             rows: [
                 { key: "collection_name", params: { collection_name: op.data.collection_name } },
@@ -547,6 +612,7 @@ export function createAtomicBeautify(namespace) {
         }),
         settemplroy: (op) => ({
             title: `operations.injected.${namespace}.settemplroy.title`,
+            contract: op.account,
             opType: "settemplroy", method: "settemplroy", op, operation: op,
             rows: [
                 { key: "collection_name", params: { collection_name: op.data.collection_name } },
@@ -556,6 +622,7 @@ export function createAtomicBeautify(namespace) {
         }),
         deltemplroy: (op) => ({
             title: `operations.injected.${namespace}.deltemplroy.title`,
+            contract: op.account,
             opType: "deltemplroy", method: "deltemplroy", op, operation: op,
             rows: [
                 { key: "collection_name", params: { collection_name: op.data.collection_name } },
@@ -564,6 +631,7 @@ export function createAtomicBeautify(namespace) {
         }),
         setattrroy: (op) => ({
             title: `operations.injected.${namespace}.setattrroy.title`,
+            contract: op.account,
             opType: "setattrroy", method: "setattrroy", op, operation: op,
             rows: [
                 { key: "collection_name", params: { collection_name: op.data.collection_name } },
@@ -576,6 +644,7 @@ export function createAtomicBeautify(namespace) {
         }),
         delattrroy: (op) => ({
             title: `operations.injected.${namespace}.delattrroy.title`,
+            contract: op.account,
             opType: "delattrroy", method: "delattrroy", op, operation: op,
             rows: [
                 { key: "collection_name", params: { collection_name: op.data.collection_name } },
@@ -584,6 +653,7 @@ export function createAtomicBeautify(namespace) {
         }),
         lognewsale: (op) => ({
             title: `operations.injected.${namespace}.lognewsale.title`,
+            contract: op.account,
             opType: "lognewsale", method: "lognewsale", op, operation: op,
             rows: [
                 { key: "sale_id", params: { sale_id: op.data.sale_id } },
@@ -591,6 +661,7 @@ export function createAtomicBeautify(namespace) {
         }),
         logsalestart: (op) => ({
             title: `operations.injected.${namespace}.logsalestart.title`,
+            contract: op.account,
             opType: "logsalestart", method: "logsalestart", op, operation: op,
             rows: [
                 { key: "sale_id", params: { sale_id: op.data.sale_id } },
@@ -599,6 +670,7 @@ export function createAtomicBeautify(namespace) {
         }),
         lognewauct: (op) => ({
             title: `operations.injected.${namespace}.lognewauct.title`,
+            contract: op.account,
             opType: "lognewauct", method: "lognewauct", op, operation: op,
             rows: [
                 { key: "auction_id", params: { auction_id: op.data.auction_id } },
@@ -606,6 +678,7 @@ export function createAtomicBeautify(namespace) {
         }),
         logauctstart: (op) => ({
             title: `operations.injected.${namespace}.logauctstart.title`,
+            contract: op.account,
             opType: "logauctstart", method: "logauctstart", op, operation: op,
             rows: [
                 { key: "auction_id", params: { auction_id: op.data.auction_id } },
@@ -613,6 +686,7 @@ export function createAtomicBeautify(namespace) {
         }),
         lognewbuyo: (op) => ({
             title: `operations.injected.${namespace}.lognewbuyo.title`,
+            contract: op.account,
             opType: "lognewbuyo", method: "lognewbuyo", op, operation: op,
             rows: [
                 { key: "buyoffer_id", params: { buyoffer_id: op.data.buyoffer_id } },
@@ -620,6 +694,7 @@ export function createAtomicBeautify(namespace) {
         }),
         lognewtbuyo: (op) => ({
             title: `operations.injected.${namespace}.lognewtbuyo.title`,
+            contract: op.account,
             opType: "lognewtbuyo", method: "lognewtbuyo", op, operation: op,
             rows: [
                 { key: "buyoffer_id", params: { buyoffer_id: op.data.buyoffer_id } },
@@ -627,6 +702,7 @@ export function createAtomicBeautify(namespace) {
         }),
         logroyfound: (op) => ({
             title: `operations.injected.${namespace}.logroyfound.title`,
+            contract: op.account,
             opType: "logroyfound", method: "logroyfound", op, operation: op,
             rows: [
                 { key: "collection_name", params: { collection_name: op.data.collection_name } },
@@ -636,6 +712,7 @@ export function createAtomicBeautify(namespace) {
         }),
         logroytempl: (op) => ({
             title: `operations.injected.${namespace}.logroytempl.title`,
+            contract: op.account,
             opType: "logroytempl", method: "logroytempl", op, operation: op,
             rows: [
                 { key: "collection_name", params: { collection_name: op.data.collection_name } },
@@ -646,6 +723,7 @@ export function createAtomicBeautify(namespace) {
         }),
         logroyattr: (op) => ({
             title: `operations.injected.${namespace}.logroyattr.title`,
+            contract: op.account,
             opType: "logroyattr", method: "logroyattr", op, operation: op,
             rows: [
                 { key: "collection_name", params: { collection_name: op.data.collection_name } },
@@ -656,6 +734,7 @@ export function createAtomicBeautify(namespace) {
         }),
         logroydust: (op) => ({
             title: `operations.injected.${namespace}.logroydust.title`,
+            contract: op.account,
             opType: "logroydust", method: "logroydust", op, operation: op,
             rows: [
                 { key: "collection_name", params: { collection_name: op.data.collection_name } },
