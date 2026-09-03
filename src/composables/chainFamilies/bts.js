@@ -7,6 +7,14 @@ const hexToString = (hex) => {
     return new TextDecoder().decode(bytes);
 };
 
+/**
+ * Renderer-side pubkey cache. Keyed by `${encryptedActive}|${encryptedOwner}`.
+ * When the account switches, the encrypted key strings change, so the cache
+ * auto-invalidates. Cleared on logout (via forceLogout event).
+ * @type {Map<string, {active: string|null, owner: string|null}>}
+ */
+const _pubkeyCache = new Map();
+
 export default {
     name: "bts",
 
@@ -25,10 +33,51 @@ export default {
         return null;
     },
 
-    getSigningKey(request) {
-        return request.payload.account_id
-            ? useAccountStore().getActiveKey(request)
-            : useAccountStore().getCurrentActiveKey();
+    async getSigningKey(request) {
+        const store = useAccountStore();
+        const encryptedActive = store.getCurrentActiveKey();
+        const encryptedOwner = store.getCurrentOwnerKey();
+
+        if (!encryptedActive && !encryptedOwner) {
+            throw new Error('No signing keys available for current account');
+        }
+
+        // Derive pubkeys in main process (decrypt + secp256k1).
+        // Cached in renderer keyed by encrypted key strings — when the account
+        // switches, the strings change, so the cache auto-invalidates.
+        const cacheKey = `${encryptedActive || ''}|${encryptedOwner || ''}`;
+        let pubkeys = _pubkeyCache.get(cacheKey);
+        if (!pubkeys) {
+            pubkeys = await window.electron.derivePubkeys({
+                encryptedKeys: { active: encryptedActive, owner: encryptedOwner },
+                chain: request.payload.chain
+            });
+            _pubkeyCache.set(cacheKey, pubkeys);
+        }
+
+        const available = Object.values(pubkeys).filter(Boolean);
+        if (!available.length) {
+            throw new Error('Failed to derive public keys from encrypted keys');
+        }
+
+        // Ask the blockchain which keys are actually required for this operation
+        const resp = await blockchainRequest({
+            methods: ['getRequiredSignatures'],
+            chain: request.payload.chain,
+            operation: request.payload.params,
+            availableKeys: available
+        });
+        const required = resp?.getRequiredSignatures || [];
+
+        if (!required.length) {
+            throw new Error('Insufficient key authority: no available keys match what the blockchain requires');
+        }
+
+        // Map required pub back to encrypted key
+        if (required.includes(pubkeys.owner)) {
+            return encryptedOwner;
+        }
+        return encryptedActive;
     },
 
     buildSignParams(request) {

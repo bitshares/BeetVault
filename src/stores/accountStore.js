@@ -58,7 +58,11 @@ export const useAccountStore = defineStore('account', {
         },
         getCurrentActiveKey: (state) => () => {
             let currentAccount = state.accountlist[state.selectedIndex];
-            return currentAccount.keys.active;
+            return currentAccount?.keys?.active || null;
+        },
+        getCurrentOwnerKey: (state) => () => {
+            let currentAccount = state.accountlist[state.selectedIndex];
+            return currentAccount?.keys?.owner || null;
         },
         getVaultaKey: (state) => () => {
             let currentAccount = state.accountlist[state.selectedIndex];
@@ -67,38 +71,6 @@ export const useAccountStore = defineStore('account', {
         getVaultaAccount: (state) => () => {
             let currentAccount = state.accountlist[state.selectedIndex];
             return currentAccount.accountName;
-        },
-        getActiveKey: (state) => (request) => {
-            let signing = state.accountlist.filter(account => {
-                return (
-                    account.accountID == request.payload.account_id &&
-                    account.chain == request.payload.chain
-                );
-            });
-
-            if (!signing || !signing.length) {
-                return;
-            }
-
-            return signing.slice()[0].keys.active;
-        },
-        getSigningKey: (state) => (request) => {
-            let signing = state.accountlist.filter(account => {
-                return (
-                    account.accountID == request.payload.account_id &&
-                    account.chain == request.payload.chain
-                );
-            });
-
-            if (!signing || !signing.length) {
-                return;
-            }
-
-            let keys = signing.slice()[0].keys;
-
-            return keys.memo
-                ? keys.memo
-                : keys.active;
         },
         getPrivateMemoKey: (state) => (accountId, chain) => {
             try {

@@ -575,6 +575,18 @@ export async function handleBlockchainRequest(event, arg) {
         }
     }
 
+    if (methods.includes('getRequiredSignatures')) {
+        const { operation, availableKeys } = arg;
+        if (typeof blockchain.getRequiredSignatures === 'function') {
+            try {
+                responses['getRequiredSignatures'] = await blockchain.getRequiredSignatures(operation, availableKeys);
+            } catch (error) {
+                console.log({ error, location: 'getRequiredSignatures' });
+                throw error;
+            }
+        }
+    }
+
     if (methods.includes('totpCode')) {
         const { timestamp } = arg;
         const msg = uuidv4();

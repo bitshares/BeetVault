@@ -48,6 +48,7 @@ export const INVOKE_CHANNELS = Object.freeze([
     'readDoc',
     'readManifest',
     'restore',
+    'derivePubkeys',
 ]);
 
 // Channels that the renderer listens to via ipcRenderer.on()

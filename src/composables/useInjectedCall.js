@@ -298,10 +298,11 @@ export function useInjectedCall(lastIndex, { consoleErrorBuffer, t, startLogoutT
                         return;
                     }
 
-                    // 6c. Sign and broadcast path
-                    let activeKey;
+                    // 6c. Sign and broadcast path (generic: bts.js getSigningKey may be async and does
+                    // authority detection internally, returning single encrypted WIF string)
+                    let signingKey;
                     try {
-                        activeKey = getSigningKey(chain, request);
+                        signingKey = await getSigningKey(chain, request);
                     } catch (error) {
                         console.log(error);
                         window.electron.createError({
@@ -318,7 +319,7 @@ export function useInjectedCall(lastIndex, { consoleErrorBuffer, t, startLogoutT
                             id: request.id,
                             result: {
                                 isError: true,
-                                method: "injectedCall.getActiveKey",
+                                method: "injectedCall.getSigningKey",
                                 error: serializeError(error),
                             },
                         });
@@ -330,7 +331,7 @@ export function useInjectedCall(lastIndex, { consoleErrorBuffer, t, startLogoutT
                             finalResult = await signAndBroadcast(
                                 chain,
                                 request,
-                                activeKey
+                                signingKey
                             );
                         } catch (error) {
                             console.log(error);

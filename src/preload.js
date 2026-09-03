@@ -69,4 +69,5 @@ contextBridge.exposeInMainWorld('electron', {
     getSafeAccountResponse: async (args) => safeSend('getSafeAccountResponse', args),
     //
     removeAllListeners: async (msg) => safeRemoveAllListeners(msg),
+    derivePubkeys: async (args) => safeInvoke('derivePubkeys', args),
 });

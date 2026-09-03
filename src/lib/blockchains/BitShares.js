@@ -1428,6 +1428,48 @@ export default class BitShares extends BlockchainAPI {
         };
     }
 
+    /**
+     * Returns the public keys required to sign the given transaction.
+     * Authoritative check via `get_required_signatures` RPC with the full
+     * `tr_object` (operations array). Handles multi-op transactions where
+     * different ops may require different authorities (union).
+     * Defined here so both `BTS` and `BTS_TEST` (same class, factory
+     * `blockchainFactory.js:70`) inherit automatically.
+     *
+     * @param {object|Array} operation - Transaction JSON or `["signAndBroadcast", JSON.stringify(tx), []]` envelope.
+     * @param {string[]} available_keys - Candidate pubkeys (BTS or TEST prefixed).
+     * @returns {Promise<string[]>} Subset of available_keys that are required.
+     */
+    async getRequiredSignatures(operation, available_keys) {
+        await this.ensureConnection();
+        let tr;
+        try {
+            tr = await this._parseTransactionBuilder(operation);
+        } catch (error) {
+            console.log({ error, location: "getRequiredSignatures._parseTransactionBuilder" });
+            throw new Error("Failed to parse transaction for signature check");
+        }
+        if (!available_keys || !available_keys.length) return [];
+        return await tr.get_required_signatures(available_keys);
+    }
+
+    /**
+     * Returns all potential signing keys for the transaction (union).
+     * @param {object|Array} operation
+     * @returns {Promise<{pubkeys: string[], addys: string[]}>}
+     */
+    async getPotentialSignatures(operation) {
+        await this.ensureConnection();
+        let tr;
+        try {
+            tr = await this._parseTransactionBuilder(operation);
+        } catch (error) {
+            console.log({ error, location: "getPotentialSignatures._parseTransactionBuilder" });
+            throw new Error("Failed to parse transaction for potential signatures");
+        }
+        return await tr.get_potential_signatures();
+    }
+
     /*
      * Returns the remaining nodes sorted by asc latency
      * @returns {Array}

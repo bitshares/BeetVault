@@ -15,6 +15,7 @@ import {
 } from '../lib/crypto.js';
 import { resolveEsrRequest } from '../lib/blockchains/Antelope/esrHelper.js';
 import { VAULTA_FAMILY } from '../lib/blockchains/chainFamilies.js';
+import { PrivateKey } from '../lib/blockchains/bitshares/library/index.js';
 import { hkdf } from '@noble/hashes/hkdf.js';
 import { sha256 } from '@noble/hashes/sha2.js';
 import { hmac } from '@noble/hashes/hmac.js';
@@ -483,6 +484,42 @@ export async function encryptPendingKeys(event, arg) {
         console.log({ error });
         throw new Error('Encryption failure');
     }
+}
+
+/**
+ * Derives public keys for the supplied encrypted WIFs.
+ * Used by `bts.js:getSigningKey` to determine which key type the blockchain
+ * requires via `get_required_signatures`, without leaking private key material
+ * to the renderer. No persistent cache — callers cache in the renderer if needed.
+ *
+ * @param {Electron.IpcMainInvokeEvent} event - The IPC event.
+ * @param {{ encryptedKeys: {active?: string, owner?: string}, chain: string }} arg
+ * @returns {Promise<{active: string|null, owner: string|null}>}
+ */
+export async function derivePubkeys(event, arg) {
+    const senderFrame = requireValidMainSender(event);
+    const { encryptedKeys, chain } = arg || {};
+    if (!encryptedKeys || typeof encryptedKeys !== 'object') {
+        throw new Error('Missing encryptedKeys');
+    }
+    const seed = decryptSeed();
+    if (!seed) {
+        throw new Error('Wallet not unlocked');
+    }
+    const prefix = chain === 'BTS_TEST' ? 'TEST' : 'BTS';
+    const pubkeys = { active: null, owner: null };
+    for (const keyType of ['active', 'owner']) {
+        const enc = encryptedKeys[keyType];
+        if (!enc) continue;
+        try {
+            const wif = await decryptWithCache(enc, seed, { get: _getCachedKeys, set: _setCachedKeys });
+            if (!wif) continue;
+            pubkeys[keyType] = PrivateKey.fromWif(wif).toPublicKey().toPublicKeyString(prefix);
+        } catch (e) {
+            console.log({ error: e, location: 'derivePubkeys', keyType });
+        }
+    }
+    return pubkeys;
 }
 
 /**

@@ -354,6 +354,15 @@ export function registerIPCHandlers({
         if (!validateMainSender(event.senderFrame)) return;
         sessionManager.clearSeed();
     });
+
+    /**
+     * Derives public keys for the supplied encrypted WIFs.
+     * Used by bts.js:getSigningKey to determine owner vs active without
+     * leaking private key material to the renderer.
+     */
+    ipcMain.handle('derivePubkeys', async (event, arg) => {
+        return sessionManager.derivePubkeys(event, arg);
+    });
 }
 
 /**
